@@ -1,0 +1,31 @@
+{
+  "center": {
+    "latitude": 19.25046,
+    "longitude": 75.69894
+  },
+  "bbox": [
+    75.68893999999999,
+    19.24046,
+    75.70894,
+    19.260460000000002
+  ],
+  "source": "Sentinel-2 L2A",
+  "time_range": {
+    "from": "2026-08-15T00:00:00Z",
+    "to": "2026-09-16T23:59:59Z"
+  },
+  "mosaicking_order": "leastCC",
+  "output": {
+    "width": 210,
+    "height": 223,
+    "target_resolution_m": 10,
+    "approx_width_m": 2101.9139018194583,
+    "approx_height_m": 2226.400000000348
+  },
+  "thresholds": {
+    "vegetation_ndvi_min": 0.2,
+    "z_threshold": -1.5,
+    "minimum_component_pixels": 6
+  },
+  "candidate_cluster_count": 11
+}

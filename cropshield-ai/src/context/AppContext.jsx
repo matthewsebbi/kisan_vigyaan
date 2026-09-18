@@ -372,7 +372,29 @@ export const AppProvider = ({ children }) => {
   const role = currentUser.role;
 
   // Active navigation tab for farmer: 'home' | 'scan' | 'market' | 'alerts' | 'more'
-  const [activeTab, setActiveTab] = useState('home');
+  const [activeTab, setActiveTab] = useState(() => {
+    try {
+      const hash = window.location.hash.replace('#', '');
+      if (['scan', 'home', 'market', 'alerts', 'more'].includes(hash)) return hash;
+      const params = new URLSearchParams(window.location.search);
+      const tab = params.get('tab');
+      if (tab && ['scan', 'home', 'market', 'alerts', 'more'].includes(tab)) return tab;
+    } catch {}
+    return 'home';
+  });
+
+  useEffect(() => {
+    const handleHash = () => {
+      try {
+        const hash = window.location.hash.replace('#', '');
+        if (['scan', 'home', 'market', 'alerts', 'more'].includes(hash)) {
+          setActiveTab(hash);
+        }
+      } catch {}
+    };
+    window.addEventListener('hashchange', handleHash);
+    return () => window.removeEventListener('hashchange', handleHash);
+  }, []);
   // Active navigation tab for officer
   const [officerTab, setOfficerTab] = useState('dashboard');
 

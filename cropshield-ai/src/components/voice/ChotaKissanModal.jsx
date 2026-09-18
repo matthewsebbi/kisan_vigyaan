@@ -504,7 +504,7 @@ export const ChotaKissanModal = ({ isOpen, onClose, onNavigate }) => {
             <div>
               <h2 className="text-base sm:text-lg font-black tracking-tight flex items-center gap-1.5">
                 <span>{ui.name}</span>
-                <span className="text-xs text-emerald-300 font-mono font-bold">(Chota Kissan)</span>
+                <span className="text-xs text-emerald-300 font-mono font-bold">(Kisan One)</span>
               </h2>
               <p className="text-[10px] text-emerald-100/80 font-medium pb-1.5">
                 {ui.title} • Google Assistant + Siri for Indian Farmers
@@ -633,7 +633,7 @@ export const ChotaKissanModal = ({ isOpen, onClose, onNavigate }) => {
               >
                 {/* Language / Sender Badge */}
                 <div className="flex items-center gap-1.5 text-[10px] text-slate-500 font-mono px-2 flex-wrap">
-                  <span>{isAssistant ? '🌱 Chota Kissan' : '👨‍🌾 You'}</span>
+                  <span>{isAssistant ? 'Kisan One' : '👨‍🌾 You'}</span>
                   <span>•</span>
                   <span className={`inline-flex items-center gap-1 ${
                     msg.detectionSource === 'whisper' ? 'text-violet-500' : ''
@@ -807,7 +807,7 @@ export const ChotaKissanModal = ({ isOpen, onClose, onNavigate }) => {
                   ? 'bg-amber-600 opacity-80 cursor-wait'
                   : 'bg-gradient-to-tr from-[#047857] to-[#065F46] hover:scale-105 ring-4 ring-emerald-500/20 cursor-pointer'
               }`}
-              title={assistantState === 'speaking' ? "Stop Audio" : "Speak to Chota Kissan"}
+              title={assistantState === 'speaking' ? "Stop Audio" : "Speak to Kisan One"}
             >
               {(assistantState === 'listening' || assistantState === 'recording') ? (
                 <MicOff className="w-7 h-7 animate-pulse" />

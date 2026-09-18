@@ -19,13 +19,22 @@ const MIME_TYPES = {
 };
 
 const server = http.createServer((req, res) => {
-  // Proxy API predict requests to Python ML Model server on port 8000
-  if (req.url.startsWith('/api/predict') && req.method === 'POST') {
+  // Proxy all /api/* and /predict requests to Python ML Model / FastAPI server on port 8000
+  if (req.url.startsWith('/api') || req.url.startsWith('/predict')) {
+    // If it's a health check specifically intended for the node server, handle it
+    if (req.url === '/api/frontend-health') {
+      res.writeHead(200, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ frontend: 'online', ml_server: 'http://localhost:8000' }));
+      return;
+    }
+
+    const targetPath = req.url.startsWith('/api/predict') ? '/predict' : req.url;
+
     const proxyReq = http.request({
       hostname: '127.0.0.1',
       port: 8000,
-      path: '/predict',
-      method: 'POST',
+      path: targetPath,
+      method: req.method,
       headers: req.headers
     }, (proxyRes) => {
       res.writeHead(proxyRes.statusCode, proxyRes.headers);
@@ -34,7 +43,7 @@ const server = http.createServer((req, res) => {
 
     proxyReq.on('error', (err) => {
       res.writeHead(502, { 'Content-Type': 'application/json' });
-      res.end(JSON.stringify({ error: 'ML Inference Service Unavailable', details: err.message }));
+      res.end(JSON.stringify({ error: 'Backend ML Inference Service Unavailable', details: err.message }));
     });
 
     req.pipe(proxyReq, { end: true });

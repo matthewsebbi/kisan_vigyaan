@@ -203,22 +203,22 @@ export const WebFarmerMarket = ({ onNavigate }) => {
         </div>
       )}
 
-      {/* Header Banner (Light Green Card) */}
-      <div className={`p-6 rounded-3xl border shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4 ${
+      {/* Header Banner (Stitch Card) */}
+      <div className={`p-6 rounded-2xl border stitch-card flex flex-col md:flex-row md:items-center justify-between gap-4 ${
         isDark 
           ? 'bg-[#091222] border-[#182a4a] text-white' 
-          : 'bg-[#F0FDF4] border-emerald-200/90 text-slate-900 shadow-xs'
+          : 'bg-white border-[#E2E8F0] text-slate-900'
       }`}>
         <div className="flex items-center space-x-3.5">
-          <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#047857] to-[#0D9488] text-white flex items-center justify-center shadow-md shrink-0">
+          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#1B4332] to-[#2D6A4F] text-white flex items-center justify-center shadow-xs shrink-0">
             <ShoppingBag className="w-6 h-6 text-emerald-100" />
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <h1 className="text-base sm:text-xl font-black tracking-tight text-slate-900 dark:text-white">
+              <h1 className="text-base sm:text-xl font-extrabold tracking-tight text-slate-900 dark:text-white">
                 {lang === 'ta' ? 'விவசாய சந்தை & நேரடி பயிர் விற்பனை' : lang === 'mr' ? 'शेतकरी बाजारपेठ व थेट धान्य विक्री केंद्र' : lang === 'hi' ? 'किसान बाजार व फसल बिक्री केंद्र' : 'Farmer Marketplace & Direct Crop Selling'}
               </h1>
-              <span className="hidden sm:inline-flex px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase bg-emerald-100 text-emerald-900 dark:bg-emerald-950 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800">
+              <span className="hidden sm:inline-flex px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase bg-emerald-50 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">
                 Farmer Direct Sale
               </span>
             </div>
@@ -232,7 +232,7 @@ export const WebFarmerMarket = ({ onNavigate }) => {
           {/* Post Crop for Sale Button */}
           <button
             onClick={() => setIsSellModalOpen(true)}
-            className="px-4 py-2.5 rounded-2xl bg-gradient-to-r from-amber-500 to-emerald-600 hover:from-amber-600 hover:to-emerald-700 text-white font-black text-xs shadow-lg flex items-center justify-center gap-2 cursor-pointer transition-all active:scale-95 border border-amber-300/40 animate-pulse"
+            className="px-4 py-2.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs shadow-xs flex items-center justify-center gap-2 cursor-pointer transition-all active:scale-95 border border-amber-500/40"
           >
             <Plus className="w-4 h-4" />
             <span>{lang === 'ta' ? 'பயிர் விற்பனை பதிவு' : lang === 'mr' ? 'पीक विक्रीसाठी टाका' : lang === 'hi' ? 'फसल बेचने के लिए जोड़ें' : 'Sell Crop / Post Produce'}</span>
@@ -241,7 +241,7 @@ export const WebFarmerMarket = ({ onNavigate }) => {
           {/* View Cart Button */}
           <button
             onClick={() => setIsCartModalOpen(true)}
-            className="px-4 py-2.5 rounded-2xl bg-gradient-to-r from-[#047857] to-[#059669] hover:from-[#065F46] hover:to-[#047857] text-white font-black text-xs shadow-md flex items-center justify-center gap-2 cursor-pointer transition-all active:scale-95"
+            className="px-4 py-2.5 rounded-xl bg-[#1B4332] hover:bg-[#2D6A4F] text-white font-bold text-xs shadow-xs flex items-center justify-center gap-2 cursor-pointer transition-all active:scale-95"
           >
             <ShoppingBag className="w-4 h-4" />
             <span>{lang === 'ta' ? `கூடை (${(cart || []).reduce((s, i) => s + (i.quantity || 1), 0)})` : lang === 'mr' ? `कार्ट (${(cart || []).reduce((s, i) => s + (i.quantity || 1), 0)})` : `Cart (${(cart || []).reduce((s, i) => s + (i.quantity || 1), 0)})`}</span>
@@ -251,24 +251,24 @@ export const WebFarmerMarket = ({ onNavigate }) => {
 
       {/* Category Filter Tabs & Search Strip */}
       <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3 pt-1">
-        <div className="flex flex-wrap items-center gap-2">
+        <div className="flex flex-wrap items-center gap-1.5 p-1 bg-slate-100 dark:bg-slate-900 rounded-xl border border-slate-200/80 dark:border-slate-800">
           {[
             { id: 'all', label: lang === 'ta' ? `அனைத்தும் (${combinedAllListings.length})` : lang === 'mr' ? `सर्व (${combinedAllListings.length})` : `All Items (${combinedAllListings.length})` },
-            { id: 'farmerSell', label: lang === 'ta' ? `🌾 விவசாயிகள் பயிர் விற்பனை (${farmerListings.length})` : lang === 'mr' ? `🌾 शेतकरी धान्य विक्री (${farmerListings.length})` : lang === 'hi' ? `🌾 किसान फसल बिक्री (${farmerListings.length})` : `🌾 Farmer Crop Sales (${farmerListings.length})` },
+            { id: 'farmerSell', label: lang === 'ta' ? `பயிர் விற்பனை (${farmerListings.length})` : lang === 'mr' ? `धान्य विक्री (${farmerListings.length})` : lang === 'hi' ? `फसल बिक्री (${farmerListings.length})` : `Farmer Sales (${farmerListings.length})` },
             { id: 'medicine', label: lang === 'ta' ? `🧪 மருந்துகள் (${marketplaceCropMedicines.length})` : lang === 'mr' ? `🧪 पीक औषधे (${marketplaceCropMedicines.length})` : `🧪 Crop Medicines (${marketplaceCropMedicines.length})` },
             { id: 'seeds', label: lang === 'ta' ? `🌱 விதைகள் & உரங்கள் (${marketplaceSeedsAndFertilizers.length})` : lang === 'mr' ? `🌱 बियाणे व खते (${marketplaceSeedsAndFertilizers.length})` : `🌱 Seeds & Fertilizers (${marketplaceSeedsAndFertilizers.length})` },
-            { id: 'services', label: lang === 'ta' ? `🚁 ட்ரோன் சேவைகள் (${marketplaceDroneServices.length})` : lang === 'mr' ? `🚁 ड्रोन सेवा (${marketplaceDroneServices.length})` : `🚁 Drone Services (${marketplaceDroneServices.length})` },
-            { id: 'mandi', label: lang === 'ta' ? `📊 மண்டி விலை (${liveMandiRatesComprehensive.length})` : lang === 'mr' ? `📊 थेट बाजारभाव (${liveMandiRatesComprehensive.length})` : `📊 Live Mandi Rates (${liveMandiRatesComprehensive.length})` }
+            { id: 'services', label: lang === 'ta' ? `🚁 ட்ரோன் (${marketplaceDroneServices.length})` : lang === 'mr' ? `🚁 ड्रोन (${marketplaceDroneServices.length})` : `🚁 Drones (${marketplaceDroneServices.length})` },
+            { id: 'mandi', label: lang === 'ta' ? `📊 மண்டி விலை (${liveMandiRatesComprehensive.length})` : lang === 'mr' ? `📊 बाजारभाव (${liveMandiRatesComprehensive.length})` : `📊 Mandi Rates (${liveMandiRatesComprehensive.length})` }
           ].map(tab => (
             <button
               key={tab.id}
               onClick={() => setActiveCategory(tab.id)}
-              className={`px-4 py-2.5 rounded-2xl text-xs font-black whitespace-nowrap transition-all cursor-pointer active:scale-95 ${
+              className={`px-3.5 py-2 rounded-lg text-xs font-semibold whitespace-nowrap transition-all cursor-pointer ${
                 activeCategory === tab.id
-                  ? 'bg-gradient-to-r from-[#047857] to-[#059669] text-white shadow-md shadow-emerald-950/20'
+                  ? 'bg-[#1B4332] text-white shadow-xs'
                   : isDark 
-                  ? 'bg-[#0a1324] border border-[#182a4a] text-slate-300 hover:text-white hover:border-emerald-500/50' 
-                  : 'bg-[#F0FDF4] border border-emerald-200/90 text-slate-700 hover:text-[#047857] hover:border-emerald-400 shadow-2xs'
+                  ? 'text-slate-300 hover:text-white hover:bg-slate-800' 
+                  : 'text-slate-600 hover:text-slate-900 hover:bg-white/80'
               }`}
             >
               {tab.label}
@@ -284,10 +284,10 @@ export const WebFarmerMarket = ({ onNavigate }) => {
             placeholder={activeCategory === 'mandi' ? (lang === 'ta' ? 'பயிர் அல்லது சந்தையைத் தேடவும்...' : 'Search crop or APMC mandi...') : (lang === 'ta' ? 'மருந்து, விதை, ட்ரோன் அல்லது பயிரைத் தேடவும்...' : 'Search crop, seed, medicine, or mandi...')}
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className={`w-full pl-10 pr-4 py-2.5 rounded-2xl text-xs font-medium focus:outline-none focus:border-emerald-500 transition-colors ${
+            className={`w-full pl-10 pr-4 py-2.5 rounded-xl text-xs font-medium focus:outline-none focus:border-[#1B4332] transition-colors border ${
               isDark 
-                ? 'bg-[#0a1324] border border-[#182a4a] text-white placeholder-slate-500' 
-                : 'bg-[#F0FDF4] border border-emerald-200/90 text-slate-900 placeholder-slate-400 shadow-2xs'
+                ? 'bg-[#0a1324] border-[#182a4a] text-white placeholder-slate-500' 
+                : 'bg-white border-[#E2E8F0] text-slate-900 placeholder-slate-400 shadow-2xs'
             }`}
           />
         </div>
@@ -308,10 +308,10 @@ export const WebFarmerMarket = ({ onNavigate }) => {
             return (
               <div 
                 key={product.id}
-                className={`rounded-3xl border overflow-hidden flex flex-col justify-between hover:shadow-xl transition-all duration-300 group ${
+                className={`rounded-2xl border stitch-card overflow-hidden flex flex-col justify-between transition-all duration-200 group ${
                   isFarmerProduce
-                    ? (isDark ? 'bg-[#09152b] border-amber-500/40 text-white' : 'bg-[#FFFBEB] hover:bg-[#FEF3C7] border-amber-300 text-slate-900 shadow-sm')
-                    : (isDark ? 'bg-[#0a1324] border-[#182a4a] hover:border-emerald-500/50 text-white' : 'bg-[#F0FDF4] hover:bg-[#E8F5EB] border-emerald-200/90 text-slate-900 shadow-xs')
+                    ? (isDark ? 'bg-[#09152b] border-amber-500/40 text-white' : 'bg-white border-amber-200 text-slate-900')
+                    : (isDark ? 'bg-[#0a1324] border-[#182a4a] text-white' : 'bg-white border-[#E2E8F0] text-slate-900')
                 }`}
               >
                 <div>

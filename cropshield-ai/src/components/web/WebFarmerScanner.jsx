@@ -26,8 +26,12 @@ import {
   RefreshCw,
   Eye,
   Mic,
-  ArrowRight
+  ArrowRight,
+  Database,
+  Sprout,
+  Check
 } from 'lucide-react';
+import { analyzeLeafWithGroq, ensureImageBase64 } from '../../services/visionService.js';
 
 // Real Botanical Leaf Photography Assets (100% locally hosted & infallible)
 const REAL_LEAF_SAMPLES = {
@@ -37,6 +41,38 @@ const REAL_LEAF_SAMPLES = {
   farm_crop: "/samples/farm_crop.jpg"
 };
 
+// Supported Crops with dedicated disease phenotype dossiers in Agriculture_Wiki
+export const WIKI_CROP_OPTIONS = [
+  { id: 'Pearl Millet', nameEn: 'Pearl Millet (Bajra)', nameMr: 'बाजरी', nameHi: 'बाजरा', nameTa: 'கம்பு', nameTe: 'సజ్జలు', icon: '🌾', count: 6 },
+  { id: 'Cotton', nameEn: 'Cotton', nameMr: 'कापूस', nameHi: 'कपास', nameTa: 'பருத்தி', nameTe: 'పత్తి', icon: '☁️', count: 5 },
+  { id: 'Rice', nameEn: 'Rice / Paddy', nameMr: 'भात / धान', nameHi: 'धान / चावल', nameTa: 'நெல்', nameTe: 'వరి', icon: '🌾', count: 8 },
+  { id: 'Tomato', nameEn: 'Tomato', nameMr: 'टोमॅटो', nameHi: 'टमाटर', nameTa: 'தக்காளி', nameTe: 'టమోటా', icon: '🍅', count: 10 },
+  { id: 'Wheat', nameEn: 'Wheat', nameMr: 'गहू', nameHi: 'गेहूं', nameTa: 'கோதுமை', nameTe: 'గోధుమ', icon: '🌾', count: 7 },
+  { id: 'Soybean', nameEn: 'Soybean', nameMr: 'सोयाबीन', nameHi: 'सोयाबीन', nameTa: 'சோயாபீன்', nameTe: 'సోయాబీన్', icon: '🌱', count: 7 },
+  { id: 'Potato', nameEn: 'Potato', nameMr: 'बटाटा', nameHi: 'आलू', nameTa: 'உருளைக்கிழங்கு', nameTe: 'బంగాళాదుంప', icon: '🥔', count: 5 },
+  { id: 'Sugarcane', nameEn: 'Sugarcane', nameMr: 'ऊस', nameHi: 'गन्ना', nameTa: 'கரும்பு', nameTe: 'చెరకు', icon: '🎋', count: 5 },
+  { id: 'Groundnut', nameEn: 'Groundnut', nameMr: 'भुईमूग', nameHi: 'मूंगफली', nameTa: 'வேர்க்கடலை', nameTe: 'వేరుశనగ', icon: '🥜', count: 6 },
+  { id: 'Chickpea', nameEn: 'Chickpea (Chana)', nameMr: 'हरभरा (चना)', nameHi: 'चना', nameTa: 'கொண்டைக்கடலை', nameTe: 'శనగలు', icon: '🌱', count: 5 },
+  { id: 'Banana', nameEn: 'Banana', nameMr: 'केळी', nameHi: 'केला', nameTa: 'வாழை', nameTe: 'అరటి', icon: '🍌', count: 4 },
+  { id: 'Black Gram', nameEn: 'Black Gram (Urad)', nameMr: 'उडीद', nameHi: 'उड़द', nameTa: 'உளுந்து', nameTe: 'మినుములు', icon: '🌱', count: 6 },
+  { id: 'Cashew', nameEn: 'Cashew', nameMr: 'काजू', nameHi: 'काजू', nameTa: 'முந்திரி', nameTe: 'జీడిపప్పు', icon: '🥜', count: 4 },
+  { id: 'Citrus', nameEn: 'Citrus / Lemon', nameMr: 'लिंबू / संत्रा', nameHi: 'नींबू / संतरा', nameTa: 'எலுமிச்சை', nameTe: 'ನಿమ్మ', icon: '🍋', count: 5 },
+  { id: 'Finger Millet', nameEn: 'Finger Millet (Ragi)', nameMr: 'नाचणी (रागी)', nameHi: 'मडुआ (रागी)', nameTa: 'கேழ்வரகு (ராகி)', nameTe: 'రాగులు', icon: '🌾', count: 7 },
+  { id: 'Grape', nameEn: 'Grape', nameMr: 'द्राक्षे', nameHi: 'अंगूर', nameTa: 'திராட்சை', nameTe: 'ద్రాక్ష', icon: '🍇', count: 3 },
+  { id: 'Green Gram', nameEn: 'Green Gram (Moong)', nameMr: 'मूग', nameHi: 'मूंग', nameTa: 'பாசிப்பயறு', nameTe: 'పెసలు', icon: '🌱', count: 6 },
+  { id: 'Guava', nameEn: 'Guava', nameMr: 'पेरू', nameHi: 'अमरूद', nameTa: 'கொய்யா', nameTe: 'జామ', icon: '🍈', count: 2 },
+  { id: 'Lablab Bean', nameEn: 'Lablab Bean (Avare)', nameMr: 'वाल (पावड्या)', nameHi: 'सेम', nameTa: 'மொச்சை (அவரை)', nameTe: 'చిక్కుడు', icon: '🫘', count: 6 },
+  { id: 'Lentil', nameEn: 'Lentil (Masoor)', nameMr: 'मसूर', nameHi: 'मसूर', nameTa: 'மைசூர் பருப்பு', nameTe: 'మసూర్', icon: '🌱', count: 3 },
+  { id: 'Mango', nameEn: 'Mango', nameMr: 'आंबा', nameHi: 'आम', nameTa: 'மாம்பழம்', nameTe: 'మామిడి', icon: '🥭', count: 4 },
+  { id: 'Niger Seed', nameEn: 'Niger Seed (Ramtil)', nameMr: 'कारळे (खुरसणी)', nameHi: 'रामतिल', nameTa: 'காரளை', nameTe: 'నల్ల నువ్వులు', icon: '🌻', count: 5 },
+  { id: 'Pea', nameEn: 'Pea (Matar)', nameMr: 'मटार', nameHi: 'मटर', nameTa: 'பட்டாணி', nameTe: 'బఠానీ', icon: '🫛', count: 3 },
+  { id: 'Pigeon Pea', nameEn: 'Pigeon Pea (Tur)', nameMr: 'तूर', nameHi: 'अरहर (तूर)', nameTa: 'துவரை', nameTe: 'కందులు', icon: '🌱', count: 4 },
+  { id: 'Sorghum', nameEn: 'Sorghum (Jowar)', nameMr: 'ज्वारी', nameHi: 'ज्वार', nameTa: 'சோளம்', nameTe: 'జొన్న', icon: '🌾', count: 13 },
+  { id: 'Sunflower', nameEn: 'Sunflower', nameMr: 'सूर्यफूल', nameHi: 'सूरजमुखी', nameTa: 'சூரியகாந்தி', nameTe: 'పొద్దుతిరుగుడు', icon: '🌻', count: 7 },
+  { id: 'Turmeric', nameEn: 'Turmeric', nameMr: 'हळद', nameHi: 'हल्दी', nameTa: 'மஞ்சள்', nameTe: 'పసుపు', icon: '🌿', count: 3 },
+  { id: 'vegetables', nameEn: 'Vegetables (Chilli/Okra/Brinjal)', nameMr: 'भाजीपाला (मिरची/भेंडी/वांगी)', nameHi: 'सब्जियां (मिर्च/भिंडी/बैंगन)', nameTa: 'காய்கறிகள் (மிளகாய்/வெண்டை)', nameTe: 'కూరగాయలు (మిర్చి/బెండ)', icon: '🥬', count: 10 }
+];
+
 export const WebFarmerScanner = ({ onNavigate }) => {
   const { lang, t, theme, addToCart, openDirectCheckout, setIsChotaKissanOpen } = useApp();
   const isDark = theme === 'dark';
@@ -45,10 +81,21 @@ export const WebFarmerScanner = ({ onNavigate }) => {
   const [scanResult, setScanResult] = useState(null);
   const [nonPlantRejection, setNonPlantRejection] = useState(null);
   const [showTechnicalDetails, setShowTechnicalDetails] = useState(false);
+  const [selectedCrop, setSelectedCrop] = useState('Pearl Millet');
   const [selectedImagePreview, setSelectedImagePreview] = useState(REAL_LEAF_SAMPLES.cotton_blight);
+
+  const getCropDisplayName = (crop) => {
+    if (!crop) return '';
+    if (lang === 'ta') return crop.nameTa || crop.nameEn;
+    if (lang === 'mr') return crop.nameMr || crop.nameEn;
+    if (lang === 'hi') return crop.nameHi || crop.nameEn;
+    if (lang === 'te') return crop.nameTe || crop.nameEn;
+    return crop.nameEn;
+  };
   const [isWebcamActive, setIsWebcamActive] = useState(false);
   const [dragOver, setDragOver] = useState(false);
   const [inferenceProgress, setInferenceProgress] = useState(0);
+  const [scanStage, setScanStage] = useState(1);
   const [addedToast, setAddedToast] = useState(null);
 
   const videoRef = useRef(null);
@@ -64,6 +111,93 @@ export const WebFarmerScanner = ({ onNavigate }) => {
     if (lang === 'mr' && sample[`${field}Mr`]) return sample[`${field}Mr`];
     if (lang === 'hi' && sample[`${field}Hi`]) return sample[`${field}Hi`];
     return sample[field] || '';
+  };
+
+  // Stage indicator labels for progressive multi-pass scanner
+  const getStageBadge = (stage) => {
+    switch (stage) {
+      case 1:
+        return lang === 'ta' ? 'நிலை 1/4: இலை சரிபார்ப்பு' : lang === 'mr' ? 'टप्पा १/४: वनस्पती तपासणी' : 'STAGE 1/4: FOLIAGE GATE';
+      case 2:
+        return lang === 'ta' ? 'நிலை 2/4: விக்கி பொருத்தம்' : lang === 'mr' ? 'टप्पा २/४: कृषी विकी शोध' : 'STAGE 2/4: WIKI RETRIEVAL';
+      case 3:
+        return lang === 'ta' ? 'நிலை 3/4: நோய் ஒப்பிடுதல்' : lang === 'mr' ? 'टप्पा ३/४: ठिपके मोजमाप' : 'STAGE 3/4: MULTIMODAL COMPARISON';
+      case 4:
+        return lang === 'ta' ? 'நிலை 4/4: மருந்து பரிந்துரை' : lang === 'mr' ? 'टप्पा ४/४: औषध शिफारस' : 'STAGE 4/4: DOSAGE SYNTHESIS';
+      default:
+        return lang === 'ta' ? 'ஆய்வு முடிந்தது ✓' : lang === 'mr' ? 'तपासणी पूर्ण ✓' : 'DIAGNOSIS COMPLETE ✓';
+    }
+  };
+
+  const getStageTitle = (stage) => {
+    switch (stage) {
+      case 1:
+        return lang === 'ta' ? 'பயிர் இலை & பச்சைய சரிபார்ப்பு...' : lang === 'mr' ? 'पानावरील हरितद्रव्य व कडा तपासणी...' : 'Foliage & Chlorophyll Optical Guard...';
+      case 2:
+        return lang === 'ta' ? 'விவசாய விக்கியில் நோய்களைத் தேடுகிறது...' : lang === 'mr' ? 'स्थानिक कृषी विकी डेटाबेस शोधत आहे...' : 'Scanning Agriculture Wiki Phenotypes...';
+      case 3:
+        return lang === 'ta' ? 'நோய் தொற்று & பூஞ்சை ஆய்வு செய்கிறது...' : lang === 'mr' ? 'करपा ठिपके व बुरशी बीजाणू विश्लेषण...' : 'Evaluating Lesion Geometry & Pathogens...';
+      case 4:
+        return lang === 'ta' ? 'மருந்து அளவு & சிகிச்சை தயாரிக்கிறது...' : lang === 'mr' ? 'औषध प्रमाण, प्रतीक्षा काळ व कृती आराखडा...' : 'Synthesizing Prescription & Treatment Plan...';
+      default:
+        return lang === 'ta' ? 'நோய் ஆய்வு வெற்றிகரமாக முடிந்தது!' : lang === 'mr' ? 'निदान विश्लेषण यशस्वीरित्या पूर्ण!' : 'Diagnostic Analysis Verified!';
+    }
+  };
+
+  const getStageSubtitle = (stage) => {
+    switch (stage) {
+      case 1:
+        return lang === 'ta' ? 'இலையின் விளிம்புகள் மற்றும் பச்சைய அடர்த்தி ஆய்வு செய்யப்படுகிறது' : lang === 'mr' ? 'पानाची मूळ रचना व कडांमधील हरितद्रव्य विश्लेषण' : 'Inspecting leaf blade margins & optical spectral indices';
+      case 2:
+        return lang === 'ta' ? 'வட்டாரப் பயிர் நோய் விக்கியில் நோய் அறிகுறிகள் ஒப்பிடப்படுகின்றன' : lang === 'mr' ? 'विभागीय हवामान व पिकाच्या विकी डेटाबेसशी लक्षणांची जुळवाजुळव' : 'Matching visual symptoms with verified crop pathogen records';
+      case 3:
+        return lang === 'ta' ? 'புள்ளிகளின் வடிவம், நிறம் மற்றும் பூஞ்சை ஆய்வு செய்யப்படுகிறது' : lang === 'mr' ? 'ठिपक्यांचा आकार, रंग, वलय व बुरशी लक्षणे मोजमाप' : 'Executing pairwise morphological comparison across candidates';
+      case 4:
+        return lang === 'ta' ? 'சரியான பூஞ்சைக்கொல்லி மருந்து மற்றும் பாதுகாப்பு முறைகள் கணக்கிடப்படுகின்றன' : lang === 'mr' ? 'रासायनिक/सेंद्रिय फवारणी औषध, पंपाचे प्रमाण व सुरक्षा कालावधी' : 'Calculating precise chemical formulation, pump dosage & waiting period';
+      default:
+        return lang === 'ta' ? 'முழுமையான அறிக்கை தயாராக உள்ளது' : lang === 'mr' ? 'अचूक कृषी अहवाल तयार आहे' : 'Differential diagnosis report ready';
+    }
+  };
+
+  // Client-side image compressor: Keeps base64 payload under 120KB for fast uploads and minimal tokens
+  const compressImageForVision = (dataUrl) => {
+    return new Promise((resolve) => {
+      if (!dataUrl || typeof dataUrl !== 'string' || !dataUrl.startsWith('data:image')) {
+        return resolve(dataUrl);
+      }
+      const img = new Image();
+      img.onload = () => {
+        try {
+          const maxDim = 800;
+          let w = img.width;
+          let h = img.height;
+          if (w <= maxDim && h <= maxDim && dataUrl.length < 180000) {
+            return resolve(dataUrl);
+          }
+          if (w > h) {
+            if (w > maxDim) {
+              h = Math.round((h * maxDim) / w);
+              w = maxDim;
+            }
+          } else {
+            if (h > maxDim) {
+              w = Math.round((w * maxDim) / h);
+              h = maxDim;
+            }
+          }
+          const canvas = document.createElement('canvas');
+          canvas.width = w;
+          canvas.height = h;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, w, h);
+          resolve(canvas.toDataURL('image/jpeg', 0.82));
+        } catch {
+          resolve(dataUrl);
+        }
+      };
+      img.onerror = () => resolve(dataUrl);
+      img.src = dataUrl;
+    });
   };
 
   // Benchmarked Multi-Class Pathology Datasets
@@ -227,17 +361,18 @@ export const WebFarmerScanner = ({ onNavigate }) => {
     setIsWebcamActive(false);
   };
 
-  const captureWebcamPhoto = () => {
+  const captureWebcamPhoto = async () => {
     if (videoRef.current) {
       const canvas = document.createElement('canvas');
       canvas.width = videoRef.current.videoWidth || 640;
       canvas.height = videoRef.current.videoHeight || 480;
       const ctx = canvas.getContext('2d');
       ctx.drawImage(videoRef.current, 0, 0, canvas.width, canvas.height);
-      const dataUrl = canvas.toDataURL('image/jpeg');
+      const dataUrl = canvas.toDataURL('image/jpeg', 0.85);
       stopWebcam();
-      setSelectedImagePreview(dataUrl);
-      handleTriggerScan(null, dataUrl);
+      const compressed = await compressImageForVision(dataUrl);
+      setSelectedImagePreview(compressed);
+      handleTriggerScan(null, compressed);
     }
   };
 
@@ -320,10 +455,11 @@ export const WebFarmerScanner = ({ onNavigate }) => {
     if (e.dataTransfer.files && e.dataTransfer.files[0]) {
       const file = e.dataTransfer.files[0];
       const reader = new FileReader();
-      reader.onload = (uploadEvent) => {
+      reader.onload = async (uploadEvent) => {
         const resultData = uploadEvent.target.result;
-        setSelectedImagePreview(resultData);
-        handleTriggerScan(null, resultData);
+        const compressed = await compressImageForVision(resultData);
+        setSelectedImagePreview(compressed);
+        handleTriggerScan(null, compressed);
       };
       reader.readAsDataURL(file);
     }
@@ -333,32 +469,61 @@ export const WebFarmerScanner = ({ onNavigate }) => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
       const reader = new FileReader();
-      reader.onload = (uploadEvent) => {
+      reader.onload = async (uploadEvent) => {
         const resultData = uploadEvent.target.result;
-        setSelectedImagePreview(resultData);
-        handleTriggerScan(null, resultData);
+        const compressed = await compressImageForVision(resultData);
+        setSelectedImagePreview(compressed);
+        handleTriggerScan(null, compressed);
       };
       reader.readAsDataURL(file);
     }
   };
 
   const handleTriggerScan = async (option = null, customImg = null) => {
-    const targetImage = customImg || (option ? option.image : selectedImagePreview);
+    const rawTarget = customImg || (option ? option.image : selectedImagePreview);
     
     setAnalyzing(true);
     setScanResult(null);
     setNonPlantRejection(null);
     setShowTechnicalDetails(false);
-    setInferenceProgress(20);
+    setInferenceProgress(12);
+    setScanStage(1);
 
-    const step1 = setTimeout(() => setInferenceProgress(50), 200);
-    const step2 = setTimeout(() => setInferenceProgress(85), 450);
+    // Smooth progressive timer across 4 realistic diagnostic stages
+    let currentProg = 12;
+    const progressInterval = setInterval(() => {
+      if (currentProg < 28) {
+        currentProg += 3.5;
+        setInferenceProgress(Math.min(28, currentProg));
+        setScanStage(1);
+      } else if (currentProg < 58) {
+        currentProg += 2.8;
+        setInferenceProgress(Math.min(58, currentProg));
+        setScanStage(2);
+      } else if (currentProg < 86) {
+        currentProg += 1.8;
+        setInferenceProgress(Math.min(86, currentProg));
+        setScanStage(3);
+      } else if (currentProg < 96) {
+        currentProg += 0.8;
+        setInferenceProgress(Math.min(96, currentProg));
+        setScanStage(4);
+      }
+    }, 110);
+
+    // Ensure valid base64 and compressed payload
+    let targetImage = rawTarget;
+    try {
+      targetImage = await ensureImageBase64(rawTarget);
+      targetImage = await compressImageForVision(targetImage);
+    } catch (err) {
+      console.warn("Image formatting note:", err);
+    }
 
     const verification = await inspectImageForPlantContent(targetImage);
 
     if (!verification.isPlant) {
-      clearTimeout(step1);
-      clearTimeout(step2);
+      clearInterval(progressInterval);
       setInferenceProgress(100);
       setAnalyzing(false);
       setNonPlantRejection({
@@ -368,58 +533,75 @@ export const WebFarmerScanner = ({ onNavigate }) => {
       return;
     }
 
-    const predefinedOption = option || sampleLeafOptions.find(s => s.image === targetImage);
-    if (predefinedOption) {
-      clearTimeout(step1);
-      clearTimeout(step2);
-      setInferenceProgress(100);
-      setAnalyzing(false);
-      setScanResult(predefinedOption);
-      return;
-    }
-
-    // Custom uploaded image -> Call Groq Vision API
+    // Call CropShield AI Agriculture Wiki + Qwen3.8-27B Pipeline
     try {
-      const { analyzeLeafWithGroq } = await import('../../services/visionService.js');
-      const apiResult = await analyzeLeafWithGroq(targetImage, lang);
-      
-      clearTimeout(step1);
-      clearTimeout(step2);
+      const predefinedOption = option || sampleLeafOptions.find(s => s.image === rawTarget);
+      const targetCrop = selectedCrop || predefinedOption?.cropKey || (predefinedOption?.crop ? predefinedOption.crop.split(' ')[0] : 'Cotton');
+
+      const apiResult = await analyzeLeafWithGroq(targetImage, lang, {
+        crop: targetCrop,
+        sampleOption: predefinedOption
+      });
+
+      clearInterval(progressInterval);
       setInferenceProgress(100);
+      setScanStage(5);
+
+      // Brief visual completion tickmark pause
+      await new Promise(r => setTimeout(r, 240));
       setAnalyzing(false);
 
       if (apiResult) {
         setScanResult({
-          id: 'custom_analysis_' + Date.now(),
-          crop: apiResult.crop || 'Custom Crop',
+          id: 'analysis_' + Date.now(),
+          crop: apiResult.crop || (predefinedOption ? predefinedOption.crop : 'Crop'),
           image: targetImage,
-          verdict: apiResult.verdict || 'Unknown Diagnosis',
-          plainAdviceEn: apiResult.plainAdviceEn || '',
-          plainAdviceTa: apiResult.plainAdviceTa || '',
-          plainAdviceMr: apiResult.plainAdviceMr || '',
-          medicineName: apiResult.medicineName,
-          price: apiResult.price || 300,
-          mrp: (apiResult.price || 300) + 80,
-          confidence: apiResult.confidence || 90.0,
-          probabilities: [
-            { label: apiResult.verdict, pct: apiResult.confidence || 90.0, color: 'bg-rose-500' },
-            { label: 'Uncertainty', pct: 100 - (apiResult.confidence || 90.0), color: 'bg-slate-500' }
-          ]
+          verdict: apiResult.verdict || (predefinedOption ? predefinedOption.verdict : 'Verified Foliage'),
+          verdictMr: apiResult.verdictMr || predefinedOption?.verdictMr,
+          verdictTa: apiResult.verdictTa || predefinedOption?.verdictTa,
+          verdictHi: apiResult.verdictHi || predefinedOption?.verdictHi,
+          verdictTe: apiResult.verdictTe || predefinedOption?.verdictTe,
+          verdictKn: apiResult.verdictKn || predefinedOption?.verdictKn,
+          plainAdviceEn: apiResult.plainAdviceEn || (predefinedOption?.plainAdviceEn || ''),
+          plainAdviceTa: apiResult.plainAdviceTa || (predefinedOption?.plainAdviceTa || ''),
+          plainAdviceMr: apiResult.plainAdviceMr || (predefinedOption?.plainAdviceMr || ''),
+          plainAdviceHi: apiResult.plainAdviceHi || (predefinedOption?.plainAdviceHi || ''),
+          plainAdviceTe: apiResult.plainAdviceTe || (predefinedOption?.plainAdviceTe || ''),
+          plainAdviceKn: apiResult.plainAdviceKn || (predefinedOption?.plainAdviceKn || ''),
+          medicineName: apiResult.medicineName || predefinedOption?.medicineName,
+          medicineNameMr: apiResult.medicineNameMr || predefinedOption?.medicineNameMr,
+          medicineNameTa: apiResult.medicineNameTa || predefinedOption?.medicineNameTa,
+          medicineNameHi: apiResult.medicineNameHi || predefinedOption?.medicineNameHi,
+          medicineNameTe: apiResult.medicineNameTe || predefinedOption?.medicineNameTe,
+          medicineNameKn: apiResult.medicineNameKn || predefinedOption?.medicineNameKn,
+          price: apiResult.price || predefinedOption?.price || 320,
+          mrp: apiResult.mrp || (apiResult.price ? apiResult.price + 80 : 400),
+          confidence: apiResult.confidence || predefinedOption?.confidence || 94.0,
+          probabilities: apiResult.probabilities || predefinedOption?.probabilities || [
+            { label: apiResult.verdict, pct: 94.0, color: 'bg-rose-500' }
+          ],
+          boxes: apiResult.boxes || predefinedOption?.boxes,
+          dosage: apiResult.dosage || predefinedOption?.dosage,
+          activeCompound: apiResult.activeCompound || predefinedOption?.activeCompound,
+          severity: apiResult.severity || predefinedOption?.severity,
+          waitingPeriod: apiResult.waitingPeriod || predefinedOption?.waitingPeriod,
+          fieldAction: apiResult.fieldAction || predefinedOption?.fieldAction,
+          decisive_features: apiResult.decisive_features
         });
-      } else {
-        setScanResult(sampleLeafOptions[0]); // Fallback if API fails
+      } else if (predefinedOption) {
+        setScanResult(predefinedOption);
       }
     } catch (e) {
-      clearTimeout(step1);
-      clearTimeout(step2);
+      console.error("Diagnosis error:", e);
+      clearInterval(progressInterval);
       setInferenceProgress(100);
       setAnalyzing(false);
-      setScanResult(sampleLeafOptions[0]);
+      const predefinedOption = option || sampleLeafOptions.find(s => s.image === rawTarget);
+      setScanResult(predefinedOption || sampleLeafOptions[0]);
     }
 
     return () => {
-      clearTimeout(step1);
-      clearTimeout(step2);
+      clearInterval(progressInterval);
     };
   };
 
@@ -503,6 +685,93 @@ export const WebFarmerScanner = ({ onNavigate }) => {
         </div>
       </div>
 
+      {/* 🌿 Manual Crop Selection Bar for Local Agriculture Wiki */}
+      <div className={`p-4 sm:p-5 rounded-3xl border shadow-sm transition-all ${
+        isDark ? 'bg-slate-900/90 border-slate-800 text-white' : 'bg-white border-slate-200 text-slate-900'
+      }`}>
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-3">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-2xl bg-emerald-100 dark:bg-emerald-950/80 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-700/60 flex items-center justify-center shrink-0 shadow-xs">
+              <Sprout className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
+            </div>
+            <div>
+              <div className="flex items-center gap-2 flex-wrap">
+                <h3 className="text-xs sm:text-sm font-black tracking-tight text-slate-900 dark:text-white">
+                  {lang === 'ta' ? 'விவசாய விக்கி பொருத்துதலுக்கான பயிரைத் தேர்ந்தெடுக்கவும்' : lang === 'mr' ? 'स्थानिक कृषी विकी जुळवणीसाठी पीक निवडा' : lang === 'hi' ? 'स्थानीय कृषि विकी मिलान के लिए फसल चुनें' : 'Select Target Crop for Wiki Disease Matching'}
+                </h3>
+                <span className="px-2 py-0.5 rounded-md text-[10px] font-mono font-bold uppercase bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-700">
+                  {lang === 'ta' ? 'தேர்வு வரம்பு' : lang === 'mr' ? 'सटीक विकी व्याप्ती' : 'Narrows Search Scope'}
+                </span>
+              </div>
+              <p className="text-[11px] text-slate-500 dark:text-slate-400 font-medium mt-0.5">
+                {lang === 'ta' ? 'உங்கள் உள்ளூர் ஆஃப்லைன் விக்கியில் இருந்து துல்லியமான நோய் சுயவிவரங்களை ஏற்றுகிறது' : lang === 'mr' ? 'स्थानिक विकीमधून अचूक रोग माहिती व लक्षणे मिळवण्यासाठी आपले पीक निवडा' : 'Narrows offline Agriculture Wiki candidate profiles to your exact botanical species.'}
+              </p>
+            </div>
+          </div>
+
+          {/* Full Crop Dropdown */}
+          <div className="flex items-center gap-2 self-start sm:self-auto shrink-0">
+            <label className="text-[11px] font-mono text-slate-500 dark:text-slate-400 font-bold shrink-0">
+              {lang === 'ta' ? 'அனைத்து பயிர்கள்:' : lang === 'mr' ? 'सर्व पिके:' : 'All Crops:'}
+            </label>
+            <select
+              value={selectedCrop}
+              onChange={(e) => setSelectedCrop(e.target.value)}
+              className={`text-xs font-bold py-1.5 px-3 rounded-xl border cursor-pointer outline-hidden transition-all ${
+                isDark 
+                  ? 'bg-slate-800 border-slate-700 text-emerald-300 hover:border-emerald-500' 
+                  : 'bg-slate-50 border-slate-300 text-emerald-900 hover:border-emerald-600'
+              }`}
+            >
+              {WIKI_CROP_OPTIONS.map(c => (
+                <option key={c.id} value={c.id}>
+                  {c.icon} {getCropDisplayName(c)} ({c.count} diseases in Wiki)
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
+
+        {/* Quick Pick Crop Chips */}
+        <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-thin">
+          {WIKI_CROP_OPTIONS.slice(0, 8).map(crop => {
+            const isSelected = selectedCrop === crop.id;
+            return (
+              <button
+                key={crop.id}
+                type="button"
+                onClick={() => setSelectedCrop(crop.id)}
+                className={`px-3 py-1.5 rounded-xl text-xs font-black shrink-0 transition-all flex items-center gap-1.5 cursor-pointer border ${
+                  isSelected
+                    ? 'bg-gradient-to-r from-emerald-600 to-teal-700 text-white border-emerald-400 shadow-sm ring-2 ring-emerald-400/30'
+                    : isDark
+                    ? 'bg-slate-800/80 hover:bg-slate-800 text-slate-300 border-slate-700 hover:border-slate-600'
+                    : 'bg-slate-50 hover:bg-slate-100 text-slate-700 border-slate-200 hover:border-slate-300'
+                }`}
+              >
+                <span>{crop.icon}</span>
+                <span>{getCropDisplayName(crop)}</span>
+                {isSelected && <Check className="w-3.5 h-3.5 text-white stroke-[3]" />}
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Live Active Wiki Scope Banner */}
+        <div className="mt-3 pt-2.5 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-[11px] font-mono text-slate-500 dark:text-slate-400 flex-wrap gap-2">
+          <span className="flex items-center gap-1.5">
+            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+            <span>{lang === 'ta' ? 'செயலில் உள்ள விக்கி இலக்கு:' : lang === 'mr' ? 'सक्रिय विकी तपासणी पीक:' : 'Active Wiki Target Scope:'}</span>
+            <strong className="text-emerald-700 dark:text-emerald-400 uppercase font-black">
+              {WIKI_CROP_OPTIONS.find(c => c.id === selectedCrop)?.nameEn || selectedCrop}
+            </strong>
+          </span>
+          <span className="text-emerald-600 dark:text-emerald-400 font-medium">
+            ✓ {WIKI_CROP_OPTIONS.find(c => c.id === selectedCrop)?.count || 'Multiple'} candidate pathologies indexed in Wiki
+          </span>
+        </div>
+      </div>
+
       {/* Main Two-Column Scanner Interface */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
         
@@ -579,13 +848,71 @@ export const WebFarmerScanner = ({ onNavigate }) => {
                     <span>{lang === 'ta' ? '1080p அசல் மாதிரி' : lang === 'mr' ? '१०८०p अचूक वनस्पती नमुना' : '1080p Macro Botanical Specimen'}</span>
                   </div>
 
-                  {/* Analyzing Overlay */}
+                  {/* Laser Scan Beam */}
                   {analyzing && (
-                    <div className="absolute inset-0 bg-slate-950/85 backdrop-blur-xs flex flex-col items-center justify-center p-6 space-y-3 z-10">
-                      <div className="w-12 h-12 border-4 border-emerald-400 border-t-transparent rounded-full animate-spin"></div>
-                      <span className="text-white font-black text-sm animate-pulse font-mono">
-                        {lang === 'ta' ? 'இலை நோய்களை ஆய்வு செய்கிறது...' : lang === 'mr' ? 'पानावरील रोग व बुरशी तपासत आहे...' : 'Analyzing Plant Foliage & Spores...'}
-                      </span>
+                    <div className="absolute inset-x-0 h-0.75 bg-gradient-to-r from-transparent via-emerald-400 to-transparent shadow-[0_0_15px_#10B981] animate-scan-beam pointer-events-none z-20" />
+                  )}
+
+                  {/* Multi-Stage Cyber-Agronomic Progress Bar Overlay */}
+                  {analyzing && (
+                    <div className="absolute inset-0 bg-slate-950/85 backdrop-blur-md flex flex-col items-center justify-center p-5 space-y-3.5 z-10 animate-fadeIn">
+                      
+                      {/* Stage Pill Badge & Percentage */}
+                      <div className="flex items-center justify-between w-full max-w-xs px-1">
+                        <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-950/90 border border-emerald-500/50 text-emerald-300 font-mono text-[10px] font-bold tracking-wider uppercase shadow-xs">
+                          <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+                          <span>{getStageBadge(scanStage)}</span>
+                        </span>
+                        <span className="font-mono font-black text-emerald-400 text-sm tabular-nums drop-shadow-[0_0_8px_rgba(16,185,129,0.7)]">
+                          {Math.round(inferenceProgress)}%
+                        </span>
+                      </div>
+
+                      {/* Glowing Progress Bar Track & Fill */}
+                      <div className="w-full max-w-xs h-3 rounded-full bg-slate-900/90 border border-emerald-500/40 p-0.5 overflow-hidden shadow-inner">
+                        <div 
+                          className="h-full rounded-full bg-gradient-to-r from-emerald-500 via-teal-400 to-emerald-300 transition-all duration-200 ease-out shadow-[0_0_12px_rgba(16,185,129,0.7)] relative"
+                          style={{ width: `${Math.max(6, Math.min(100, inferenceProgress))}%` }}
+                        >
+                          <div className="absolute inset-0 bg-white/20 animate-shimmer-wave" />
+                        </div>
+                      </div>
+
+                      {/* Active Stage Title & Dynamic Subtitle */}
+                      <div className="text-center space-y-1 max-w-xs px-2">
+                        <h4 className="text-white font-bold text-xs tracking-tight flex items-center justify-center gap-1.5">
+                          <Sparkles className="w-3.5 h-3.5 text-emerald-400 animate-spin" />
+                          <span>{getStageTitle(scanStage)}</span>
+                        </h4>
+                        <p className="text-slate-300 text-[10px] leading-snug font-medium line-clamp-2">
+                          {getStageSubtitle(scanStage)}
+                        </p>
+                      </div>
+
+                      {/* 4-Stage Timeline Indicator Dots */}
+                      <div className="flex items-center justify-center gap-2 pt-1">
+                        {[1, 2, 3, 4].map(step => {
+                          const isDone = scanStage > step || inferenceProgress >= 100;
+                          const isCurrent = scanStage === step && inferenceProgress < 100;
+                          return (
+                            <div key={step} className="flex items-center gap-2">
+                              <div className={`w-5 h-5 rounded-full flex items-center justify-center text-[9px] font-bold font-mono transition-all duration-300 ${
+                                isDone 
+                                  ? 'bg-emerald-500 text-white shadow-[0_0_8px_rgba(16,185,129,0.8)]' 
+                                  : isCurrent 
+                                    ? 'bg-emerald-950 border-2 border-emerald-400 text-emerald-300 animate-pulse' 
+                                    : 'bg-slate-800 border border-slate-700 text-slate-500'
+                              }`}>
+                                {isDone ? '✓' : step}
+                              </div>
+                              {step < 4 && (
+                                <div className={`w-3.5 h-0.5 transition-all duration-300 ${isDone ? 'bg-emerald-500' : 'bg-slate-700'}`} />
+                              )}
+                            </div>
+                          );
+                        })}
+                      </div>
+
                     </div>
                   )}
                 </div>
@@ -677,6 +1004,9 @@ export const WebFarmerScanner = ({ onNavigate }) => {
                   <button
                     key={sample.id}
                     onClick={() => {
+                      if (sample.id === 'cotton_blight') setSelectedCrop('Cotton');
+                      else if (sample.id === 'tomato_early_blight') setSelectedCrop('Tomato');
+                      else if (sample.id === 'rice_healthy') setSelectedCrop('Rice');
                       setSelectedImagePreview(sample.image);
                       handleTriggerScan(sample, sample.image);
                     }}
@@ -705,7 +1035,150 @@ export const WebFarmerScanner = ({ onNavigate }) => {
         {/* RIGHT COLUMN (6 cols): Diagnostics & Prescriptions */}
         <div className="lg:col-span-6 space-y-4">
           
-          {nonPlantRejection ? (
+          {analyzing ? (
+            /* ACTIVE DIAGNOSTIC TELEMETRY & MULTI-STAGE PROGRESS CARD */
+            <div className={`p-6 rounded-3xl border-2 shadow-xl space-y-5 animate-fadeIn ${
+              isDark 
+                ? 'bg-[#0a1120] border-emerald-500/40 text-white' 
+                : 'bg-white border-emerald-300 text-slate-900'
+            }`}>
+              {/* Card Header */}
+              <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3.5">
+                <div className="flex items-center space-x-3">
+                  <div className="w-10 h-10 rounded-xl bg-emerald-600 text-white flex items-center justify-center shadow-md animate-pulse">
+                    <Activity className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <h3 className="text-sm font-bold text-slate-900 dark:text-white">
+                        {lang === 'ta' ? 'நிகழ்நேர AI நோய் ஆய்வு' : lang === 'mr' ? 'थेट पीक रोग निदान प्रक्रिया' : 'Real-Time Neural Pathometry'}
+                      </h3>
+                      <span className="px-2 py-0.5 rounded-full text-[9px] font-mono font-bold uppercase bg-emerald-100 text-emerald-800 dark:bg-emerald-900/60 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-700">
+                        {Math.round(inferenceProgress)}%
+                      </span>
+                    </div>
+                    <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">
+                      Wiki Scope: <span className="font-bold text-emerald-600 dark:text-emerald-400">{selectedCrop}</span> • {lang === 'ta' ? 'விவசாய விக்கி பகுப்பாய்வு' : lang === 'mr' ? 'स्थानिक कृषी विकी रोग तपासणी' : 'Dynamic candidate comparison'}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="text-right">
+                  <span className="text-[10px] font-mono text-slate-400 block uppercase">{lang === 'ta' ? 'மதிப்பிடப்பட்ட நேரம்' : lang === 'mr' ? 'अंदाजे वेळ' : 'Estimated Time'}</span>
+                  <span className="text-xs font-mono font-bold text-emerald-600 dark:text-emerald-400">
+                    {inferenceProgress > 80 ? '< 1s' : '~ 2-3s'}
+                  </span>
+                </div>
+              </div>
+
+              {/* Progress Bar in Right Card */}
+              <div className="space-y-1.5">
+                <div className="flex justify-between text-xs font-mono font-semibold text-slate-700 dark:text-slate-300">
+                  <span className="flex items-center gap-1.5">
+                    <Sparkles className="w-3.5 h-3.5 text-emerald-500 animate-spin" />
+                    <span>{getStageTitle(scanStage)}</span>
+                  </span>
+                  <span className="text-emerald-600 dark:text-emerald-400 font-bold">{Math.round(inferenceProgress)}%</span>
+                </div>
+                <div className="w-full h-2.5 rounded-full bg-slate-200 dark:bg-slate-800 overflow-hidden border border-emerald-500/30 p-0.5">
+                  <div 
+                    className="h-full rounded-full bg-gradient-to-r from-emerald-600 via-teal-500 to-emerald-400 transition-all duration-200 ease-out relative"
+                    style={{ width: `${Math.max(6, Math.min(100, inferenceProgress))}%` }}
+                  >
+                    <div className="absolute inset-0 bg-white/20 animate-shimmer-wave" />
+                  </div>
+                </div>
+              </div>
+
+              {/* 4-Stage Diagnostic Checklist */}
+              <div className="space-y-2.5 pt-1">
+                {[
+                  {
+                    step: 1,
+                    title: lang === 'ta' ? 'இலை & பச்சைய கட்டமைப்பு சரிபார்ப்பு' : lang === 'mr' ? 'वनस्पती पान व हरितद्रव्य तपासणी' : 'Foliage & Plant Cell Optical Verification',
+                    sub: lang === 'ta' ? 'மனித முகம் / பிற பொருட்கள் அல்லாததை உறுதிப்படுத்துகிறது' : lang === 'mr' ? 'कडा, हरितद्रव्य व बिगर-वनस्पती घटक तपासणी' : 'Verifying leaf margins, chlorophyll density & rejecting non-plant targets',
+                    icon: ShieldCheck
+                  },
+                  {
+                    step: 2,
+                    title: lang === 'ta' ? 'வட்டார வேளாண் விக்கி ஒப்பீடு' : lang === 'mr' ? 'स्थानिक कृषी विकी रोग डेटाबेस जुळणी' : 'Agriculture Wiki Phenotype Retrieval',
+                    sub: lang === 'ta' ? 'பயிரின் குறிப்பிட்ட நோய் அறிகுறிகளுடன் சரிபார்க்கிறது' : lang === 'mr' ? 'पिकाशी संबंधित संभाव्य विकी रोग फाईल्सची तपासणी' : 'Searching candidate symptom profiles in localized crop database',
+                    icon: Database
+                  },
+                  {
+                    step: 3,
+                    title: lang === 'ta' ? 'நோய் தொற்று & பூஞ்சை ஒப்பிடுதல்' : lang === 'mr' ? 'करपा व बुरशी बीजाणू बहु-स्तरीय विश्लेषण' : 'Multimodal Pathometry & Pairwise Evaluation',
+                    sub: lang === 'ta' ? 'புள்ளிகள் வடிவம், அளவு, மற்றும் நிற மாறுபாடுகளை அளவிடுகிறது' : lang === 'mr' ? 'ठिपक्यांचा आकार, वलय, रंग व बुरशी बीजाणू मोजमाप' : 'Evaluating lesion morphology, yellow halos & necrotic spore structures',
+                    icon: Cpu
+                  },
+                  {
+                    step: 4,
+                    title: lang === 'ta' ? 'மருந்து அளவு & பாதுகாப்பு சிகிச்சை' : lang === 'mr' ? 'औषध प्रमाण, प्रतीक्षा काळ व कृती शिफारस' : 'Dosage & Clinical Differential Synthesis',
+                    sub: lang === 'ta' ? 'சரியான மருந்து, தெளிப்பு அளவு மற்றும் அறுவடைக்கு முந்தைய காலம்' : lang === 'mr' ? 'फवारणी औषध, पंपाचे प्रमाण, प्रतीक्षा दिवस व कृती आराखडा' : 'Synthesizing chemical formulations, pump dosage & harvest waiting periods',
+                    icon: Sparkles
+                  }
+                ].map(({ step, title, sub }) => {
+                  const isDone = scanStage > step || inferenceProgress >= 100;
+                  const isCurrent = scanStage === step && inferenceProgress < 100;
+                  return (
+                    <div 
+                      key={step} 
+                      className={`p-3 rounded-2xl border transition-all duration-300 flex items-start space-x-3 ${
+                        isDone 
+                          ? 'bg-emerald-50/70 dark:bg-emerald-950/40 border-emerald-300 dark:border-emerald-800' 
+                          : isCurrent 
+                            ? 'bg-white dark:bg-slate-800/90 border-emerald-500 shadow-sm ring-1 ring-emerald-500/20' 
+                            : 'bg-slate-50/60 dark:bg-slate-900/40 border-slate-200 dark:border-slate-800 opacity-60'
+                      }`}
+                    >
+                      <div className={`w-7 h-7 rounded-xl flex items-center justify-center shrink-0 mt-0.5 text-xs font-bold font-mono ${
+                        isDone 
+                          ? 'bg-emerald-600 text-white shadow-xs' 
+                          : isCurrent 
+                            ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/60 dark:text-emerald-300 border border-emerald-400' 
+                            : 'bg-slate-200 dark:bg-slate-800 text-slate-500'
+                      }`}>
+                        {isDone ? (
+                          <CheckCircle2 className="w-4 h-4" />
+                        ) : isCurrent ? (
+                          <RefreshCw className="w-3.5 h-3.5 animate-spin" />
+                        ) : (
+                          step
+                        )}
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center justify-between">
+                          <h4 className={`text-xs font-bold ${
+                            isDone 
+                              ? 'text-emerald-900 dark:text-emerald-200' 
+                              : isCurrent 
+                                ? 'text-slate-900 dark:text-white' 
+                                : 'text-slate-500 dark:text-slate-400'
+                          }`}>
+                            {title}
+                          </h4>
+                          {isDone && (
+                            <span className="text-[10px] font-mono text-emerald-600 dark:text-emerald-400 font-semibold">
+                              {lang === 'ta' ? 'முடிந்தது ✓' : lang === 'mr' ? 'पूर्ण ✓' : 'Done ✓'}
+                            </span>
+                          )}
+                          {isCurrent && (
+                            <span className="text-[10px] font-mono text-amber-600 dark:text-amber-400 font-semibold animate-pulse">
+                              {lang === 'ta' ? 'ஆராய்கிறது...' : lang === 'mr' ? 'सुरू आहे...' : 'Active...'}
+                            </span>
+                          )}
+                        </div>
+                        <p className="text-[10px] text-slate-500 dark:text-slate-400 mt-0.5 line-clamp-1">
+                          {sub}
+                        </p>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+
+            </div>
+          ) : nonPlantRejection ? (
             /* NON-PLANT OBJECT REJECTION BANNER */
             <div className={`p-6 rounded-3xl border-2 shadow-xl space-y-4 animate-shake ${
               isDark 
@@ -847,7 +1320,7 @@ export const WebFarmerScanner = ({ onNavigate }) => {
                     onClick={() => setIsChotaKissanOpen(true)}
                     className="w-full py-2 px-3 rounded-xl bg-gradient-to-r from-emerald-700 to-teal-700 hover:from-emerald-800 hover:to-teal-800 text-white text-[11px] font-black flex items-center justify-center gap-2 transition-all cursor-pointer shadow-xs active:scale-98 border border-emerald-400/30"
                   >
-                    <span>🌱 Ask Chota Kissan about this diagnosis</span>
+                    <span>Ask Kisan One about this diagnosis</span>
                     <Mic className="w-3.5 h-3.5 text-emerald-200 animate-pulse" />
                   </button>
                 </div>

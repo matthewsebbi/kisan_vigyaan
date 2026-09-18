@@ -486,7 +486,7 @@ export const ChotaKissanDashboardView = () => {
           <div>
             <div className="flex flex-wrap items-center gap-2">
               <h1 className="text-xl sm:text-2xl font-black tracking-tight text-slate-900 dark:text-white">
-                🌱 Chota Kissan — Multilingual AI Voice Assistant
+                Kisan One — Multilingual AI Voice Assistant
               </h1>
               <span className="px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-700 font-mono flex items-center gap-1">
                 <Radio className="w-2.5 h-2.5 animate-ping text-emerald-600" />
@@ -494,7 +494,7 @@ export const ChotaKissanDashboardView = () => {
               </span>
             </div>
             <p className="text-xs text-slate-600 dark:text-slate-400 font-medium mt-1 leading-relaxed max-w-3xl">
-              Speak naturally without typing in Hindi, Marathi, Tamil, Telugu, Kannada, Gujarati, Bengali, Punjabi, Malayalam, or English. Chota Kissan automatically connects with live farm sensors, weather forecasts, and disease prediction models to answer aloud.
+              Speak naturally without typing in Hindi, Marathi, Tamil, Telugu, Kannada, Gujarati, Bengali, Punjabi, Malayalam, or English. Kisan One automatically connects with live farm sensors, weather forecasts, and disease prediction models to answer aloud.
             </p>
           </div>
         </div>
@@ -582,7 +582,7 @@ export const ChotaKissanDashboardView = () => {
                 className={`flex flex-col ${isAssistant ? 'items-start' : 'items-end'} space-y-1.5 animate-fadeIn`}
               >
                 <div className="flex items-center gap-1.5 text-[10px] text-slate-500 font-mono px-2 flex-wrap">
-                  <span>{isAssistant ? '🌱 Chota Kissan' : '👨‍🌾 You'}</span>
+                  <span>{isAssistant ? 'Kisan One' : '👨‍🌾 You'}</span>
                   <span>•</span>
                   <span className={`inline-flex items-center gap-1 ${
                     msg.detectionSource === 'whisper' ? 'text-violet-500' : ''
@@ -755,7 +755,7 @@ export const ChotaKissanDashboardView = () => {
                   ? 'bg-amber-600 opacity-80 cursor-wait'
                   : 'bg-gradient-to-tr from-[#047857] to-[#065F46] hover:scale-105 ring-6 ring-emerald-500/20 cursor-pointer'
               }`}
-              title={assistantState === 'speaking' ? "Stop Audio" : "Speak to Chota Kissan"}
+              title={assistantState === 'speaking' ? "Stop Audio" : "Speak to Kisan One"}
             >
               {(assistantState === 'listening' || assistantState === 'recording') ? (
                 <MicOff className="w-8 h-8 animate-pulse" />

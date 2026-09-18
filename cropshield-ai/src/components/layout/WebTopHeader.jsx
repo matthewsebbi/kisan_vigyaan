@@ -8,9 +8,12 @@ import {
   Moon, 
   Sprout, 
   CloudSun,
-  ShieldCheck,
+  ShieldCheck, 
   ChevronDown,
-  Mic
+  Mic,
+  Activity,
+  Radio,
+  Sparkles
 } from 'lucide-react';
 
 export const WebTopHeader = ({ activeTab, onNavigate, onOpenMobileMenu }) => {
@@ -31,114 +34,144 @@ export const WebTopHeader = ({ activeTab, onNavigate, onOpenMobileMenu }) => {
   const isDark = theme === 'dark';
   const totalCartCount = (cart || []).reduce((sum, item) => sum + (item.quantity || 1), 0);
 
-  const getPageTitle = () => {
-    switch (activeTab) {
-      case 'home': return t('navHome', 'Home');
-      case 'scan': return t('navScan', 'Leaf Pathology Scanner');
-      case 'market': return t('navMarket', 'Farmer Marketplace & Mandi');
-      case 'alerts': return t('navAlerts', 'Field Advisories & Outbreak Map');
-      case 'more': return t('navMore', 'Knowledge Hub & Advanced Tools');
-      case 'satelliteMapping': return lang === 'ta' ? 'இஸ்ரோ செயற்கைக்கோள் வரைபடம்' : lang === 'mr' ? 'इस्रो उपग्रह नकाशा' : 'ISRO Satellite GIS Map';
-      case 'proTips': return lang === 'ta' ? 'விவசாய வல்லுநர் குறிப்புகள்' : lang === 'mr' ? 'तज्ज्ञ कृषी सल्ला' : 'Pro Agronomy Tips';
-      case 'govtSchemes': return lang === 'ta' ? 'அரசு திட்டங்கள் & மானியங்கள்' : lang === 'mr' ? 'शासकीय योजना व अनुदान' : 'Govt Schemes & DBT';
-      case 'statistics': return lang === 'ta' ? 'பருவநிலை புள்ளிவிவரங்கள்' : lang === 'mr' ? 'हवामान आकडेवारी' : 'Climate Statistics';
-      case 'farmerCommunity': return lang === 'ta' ? 'விவசாயிகள் மன்றம்' : lang === 'mr' ? 'शेतकरी मंच' : 'Farmer Community';
-      case 'reports': return lang === 'ta' ? 'கள அறிக்கைகள்' : lang === 'mr' ? 'शेत अहवाल' : 'My Reports';
-      case 'deviceManagement': return lang === 'ta' ? 'சூரியசக்தி பூச்சி பொறிகள்' : lang === 'mr' ? 'सौर कीटक सापळे' : 'IoT Solar Traps';
-      default: return 'CropShield AI';
-    }
+  const navTabs = [
+    { id: 'home', label: 'Dashboard & Telemetry', labelMr: 'डॅशबोर्ड व टेलीमेट्री', labelHi: 'डैशबोर्ड व टेलीमेट्री', labelTa: 'முகப்பு பலகை' },
+    { id: 'scan', label: 'AI Leaf Scanner', labelMr: 'एआय पान स्कॅनर', labelHi: 'एआई पत्ती स्कैनर', labelTa: 'AI இலை ஸ்கேனர்' },
+    { id: 'satelliteMapping', label: 'Satellite GIS & Yield', labelMr: 'उपग्रह पीक नकाशा', labelHi: 'उपग्रह फसल मानचित्र', labelTa: 'செயற்கைக்கோள் வரைபடம்' },
+    { id: 'market', label: 'Market & Schemes', labelMr: 'बाजार व योजना', labelHi: 'मंडी व योजनाएं', labelTa: 'சந்தை & மானியம்' },
+  ];
+
+  const getTabLabel = (tab) => {
+    if (lang === 'mr' && tab.labelMr) return tab.labelMr;
+    if (lang === 'hi' && tab.labelHi) return tab.labelHi;
+    if (lang === 'ta' && tab.labelTa) return tab.labelTa;
+    return tab.label;
   };
 
   return (
-    <header className={`sticky top-0 z-30 border-b transition-colors backdrop-blur-md ${
+    <header className={`sticky top-0 z-30 border-b transition-colors ${
       isDark 
-        ? 'bg-[#0B1426]/90 border-[#182B48] text-slate-100' 
-        : 'bg-[#063B2A]/95 border-[#0A4D37] text-white'
-    }`}>
-      {/* Indian Tricolor Accent Strip */}
-      <div className="h-1 w-full bg-gradient-to-r from-[#FF9933] via-[#FFFFFF] to-[#138808]" role="presentation" />
-
-      <div className="px-4 sm:px-6 lg:px-8 h-14 flex items-center justify-between">
+        ? 'bg-[#0B1426]/95 border-[#182B48] text-slate-100 shadow-sm' 
+        : 'bg-[#FFFFFF]/95 border-[#E2E8F0] text-[#0B1C30] shadow-[0_1px_4px_rgba(0,0,0,0.03)]'
+    } backdrop-blur-md`}>
+      
+      <div className="px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
         
-        {/* Left: Mobile Menu Toggle & Page Breadcrumb */}
-        <div className="flex items-center space-x-3">
-          {/* Mobile Hamburger Button */}
+        {/* Left: Mobile Toggle & Brand / Title */}
+        <div className="flex items-center gap-3 shrink-0">
           <button
             onClick={onOpenMobileMenu}
-            className="p-2 rounded-xl text-emerald-200 hover:bg-[#0B4A35] hover:text-white dark:text-slate-300 dark:hover:bg-slate-800 lg:hidden cursor-pointer"
+            className="p-2 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800 lg:hidden cursor-pointer"
             aria-label="Open Navigation Menu"
           >
             <Menu className="w-5 h-5" />
           </button>
 
-          {/* Page Title & Status */}
-          <div className="flex items-center space-x-2">
-            <h1 className="font-extrabold text-sm sm:text-base tracking-tight text-white">
-              {getPageTitle()}
-            </h1>
-            {role === 'officer' && (
-              <span className="hidden sm:inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-black uppercase bg-blue-100 text-blue-900 dark:bg-blue-950 dark:text-blue-300 border border-blue-300 dark:border-blue-800 font-mono">
-                <ShieldCheck className="w-3 h-3 text-blue-600" />
-                <span>Agri Officer</span>
-              </span>
-            )}
+          <div className="flex items-center gap-2">
+            <span className="font-bold text-base tracking-tight text-[#012D1D] dark:text-emerald-400">
+              CropShield AI
+            </span>
+            <span className="hidden sm:inline-flex px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-emerald-50 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">
+              v2.4 Pro
+            </span>
           </div>
         </div>
 
-        {/* Right: Weather Telemetry Chip & Quick Actions */}
-        <div className="flex items-center space-x-2 sm:space-x-3">
+        {/* Center: Segmented Navigation Pills (Desktop View) */}
+        {role === 'farmer' && (
+          <nav className="hidden xl:flex items-center p-1 bg-slate-100 dark:bg-[#121E36] rounded-xl border border-slate-200 dark:border-slate-800">
+            {navTabs.map((tab) => {
+              const isActive = activeTab === tab.id;
+              return (
+                <button
+                  key={tab.id}
+                  onClick={() => onNavigate(tab.id)}
+                  className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer whitespace-nowrap ${
+                    isActive
+                      ? 'bg-white dark:bg-[#1B4332] text-[#012D1D] dark:text-white shadow-xs font-bold'
+                      : 'text-slate-600 dark:text-slate-300 hover:text-[#012D1D] dark:hover:text-white'
+                  }`}
+                >
+                  {getTabLabel(tab)}
+                </button>
+              );
+            })}
+          </nav>
+        )}
 
-          {/* Quick Voice Assistant Trigger (Chota Kissan) */}
-          <button
-            onClick={() => setIsChotaKissanOpen(true)}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white text-xs font-black shadow-md border border-emerald-300/40 transition-all cursor-pointer hover:scale-105 active:scale-95"
-            title="Talk to Chota Kissan AI Voice Assistant"
-          >
-            <span>🌱</span>
-            <span className="hidden sm:inline font-mono">Chota Kissan</span>
-            <Mic className="w-3.5 h-3.5 text-emerald-100 animate-pulse" />
-          </button>
-
-          {/* Live Farm Weather Chip */}
-          <div className={`hidden sm:flex items-center space-x-2 px-3 py-1.5 rounded-xl border text-xs font-black font-mono ${
-            isDark ? 'bg-[#0c1626] border-[#1c2c4a] text-slate-300' : 'bg-[#0B4A35] border-[#0E5B42] text-emerald-100'
+        {/* Right: Telemetry Status, Language, Chota Kissan AI, User Profile */}
+        <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+          
+          {/* Live ESP32 Hardware Status Pill */}
+          <div className={`hidden md:flex items-center gap-2 px-3 py-1.5 rounded-full border text-xs font-semibold ${
+            isDark 
+              ? 'bg-[#121F38] border-[#1E2E4A] text-emerald-300' 
+              : 'bg-[#ECFDF5] border-[#A7F3D0] text-[#065F46]'
           }`}>
-            <CloudSun className="w-4 h-4 text-amber-400" />
-            <span>Sangli • 29.4°C • 68% RH</span>
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+            </span>
+            <span className="tabular-nums font-mono text-[11px]">ESP32: Node 14 (Live)</span>
           </div>
 
-          {/* Quick Cart Trigger (Mobile View) */}
-          {role === 'farmer' && (
-            <button
-              onClick={() => setIsCartModalOpen(true)}
-              className="lg:hidden relative p-2 rounded-xl bg-[#0B4A35] dark:bg-slate-800 border border-[#0E5B42] dark:border-slate-700 text-emerald-200 dark:text-emerald-400 cursor-pointer"
-              title="Open Cart"
-            >
-              <ShoppingBag className="w-4 h-4" />
-              {totalCartCount > 0 && (
-                <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-emerald-500 text-white text-[9px] font-mono font-black flex items-center justify-center">
-                  {totalCartCount}
-                </span>
-              )}
-            </button>
-          )}
-
-          {/* Language Quick Trigger (Mobile View) */}
+          {/* Language Toggle Pill */}
           <button
             onClick={() => setIsLanguageModalOpen(true)}
-            className="lg:hidden p-2 rounded-xl border border-[#0E5B42] dark:border-slate-800 bg-[#0B4A35] text-emerald-200 dark:text-slate-300 cursor-pointer"
-            title="Language"
+            className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl border text-xs font-semibold transition-colors cursor-pointer ${
+              isDark 
+                ? 'bg-[#121F38] border-[#1E2E4A] text-slate-200 hover:border-emerald-500/50' 
+                : 'bg-white border-slate-200 text-slate-700 hover:bg-slate-50'
+            }`}
+            title="Change Language"
           >
-            <Globe className="w-4 h-4 text-emerald-300 dark:text-emerald-400" />
+            <Globe className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
+            <span className="hidden sm:inline font-mono uppercase text-[11px]">
+              {lang}
+            </span>
+            <ChevronDown className="w-3 h-3 text-slate-400" />
           </button>
 
-          {/* User Quick Switcher (Mobile View) */}
+          {/* Theme Toggle */}
+          <button
+            onClick={toggleTheme}
+            className={`p-2 rounded-xl border transition-colors cursor-pointer ${
+              isDark 
+                ? 'bg-[#121F38] border-[#1E2E4A] text-amber-400 hover:bg-slate-800' 
+                : 'bg-white border-slate-200 text-slate-600 hover:bg-slate-50'
+            }`}
+            title="Toggle Light/Dark Theme"
+          >
+            {isDark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+          </button>
+
+          {/* Kisan One AI Voice Button */}
+          <button
+            onClick={() => setIsChotaKissanOpen(true)}
+            className="flex items-center gap-1.5 h-9 px-3.5 rounded-full bg-[#1B4332] hover:bg-[#2D6A4F] text-white text-xs font-semibold shadow-sm transition-all cursor-pointer group"
+            title="Talk to Kisan One AI Voice Assistant"
+          >
+            <span className="hidden sm:inline">Kisan One AI</span>
+            <Mic className="w-3.5 h-3.5 text-emerald-300 animate-pulse" />
+          </button>
+
+          {/* User Profile Avatar */}
           <div
             onClick={() => setIsAccountSwitcherOpen(true)}
-            className="lg:hidden w-8 h-8 rounded-xl bg-gradient-to-br from-amber-500 to-orange-600 text-white flex items-center justify-center font-black text-xs cursor-pointer shadow-xs"
-            title="Profile"
+            className="flex items-center gap-2 pl-1 cursor-pointer group"
+            title="Profile & Account Switcher"
           >
-            {currentUser.avatar || '👨‍🌾'}
+            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-emerald-600 to-teal-700 text-white flex items-center justify-center font-bold text-xs shadow-xs border border-white/50">
+              {currentUser.avatar || '👨‍🌾'}
+            </div>
+            <div className="hidden 2xl:flex flex-col text-left leading-tight">
+              <span className="text-xs font-bold text-slate-800 dark:text-slate-100 group-hover:text-emerald-600">
+                {currentUser.name}
+              </span>
+              <span className="text-[10px] text-slate-500 dark:text-slate-400">
+                {currentUser.village || 'Farmer'}
+              </span>
+            </div>
           </div>
 
         </div>
@@ -147,3 +180,4 @@ export const WebTopHeader = ({ activeTab, onNavigate, onOpenMobileMenu }) => {
     </header>
   );
 };
+

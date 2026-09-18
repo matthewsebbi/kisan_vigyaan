@@ -348,26 +348,16 @@ export const WebFarmerHomeScreen = ({ onNavigate }) => {
   return (
     <div className="space-y-6 pb-12 animate-fadeIn font-sans">
       
-      {/* 1. TOP HERO ACTION BANNER (LIGHT GREEN & EMERALD GRADIENT) */}
-      <div className={`p-6 sm:p-7 rounded-3xl border transition-all duration-300 relative overflow-hidden shadow-md ${
-        isDark 
-          ? 'bg-gradient-to-br from-[#0c172c] via-[#08101e] to-[#121c17] border-[#1a2f52] text-white' 
-          : 'bg-gradient-to-br from-[#DCFCE7] via-[#F0FDF4] to-[#E2F7E7] border-emerald-300/80 text-slate-900 shadow-emerald-950/5'
-      }`}>
-        
-        {/* Ambient background glow accents */}
-        <div className="absolute top-0 right-0 w-80 h-80 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute bottom-0 left-1/3 w-60 h-60 bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
-
-        <div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+      {/* 1. DAILY BRIEFING & MICROCLIMATE HEADER (STITCH BLUEPRINT) */}
+      <div className="stitch-card p-6 sm:p-7 relative overflow-hidden">
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
           
           <div className="flex items-start space-x-4 sm:space-x-5">
-            {/* Status Pulse Orb */}
-            <div className={`w-14 h-14 rounded-2xl border-2 flex items-center justify-center shrink-0 shadow-md relative ${
-              isDark ? 'bg-amber-500/15 border-amber-500/80' : 'bg-amber-100/90 border-amber-500'
+            {/* Status Live Orb */}
+            <div className={`w-12 h-12 rounded-xl flex items-center justify-center shrink-0 border ${
+              isDark ? 'bg-[#121F38] border-[#1E2E4A]' : 'bg-[#ECFDF5] border-[#A7F3D0]'
             }`}>
-              <span className="w-5 h-5 rounded-full bg-amber-500 shadow-[0_0_15px_rgba(245,158,11,1)] animate-pulse" />
-              <span className="absolute -bottom-1 -right-1 flex h-3.5 w-3.5">
+              <span className="relative flex h-3.5 w-3.5">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-3.5 w-3.5 bg-emerald-500"></span>
               </span>
@@ -375,105 +365,150 @@ export const WebFarmerHomeScreen = ({ onNavigate }) => {
 
             <div>
               <div className="flex items-center gap-2 flex-wrap">
-                <span className="text-[11px] font-black uppercase tracking-wider text-emerald-800 dark:text-emerald-300 font-mono">
-                  {t('todayFarmStatus', "Today's Farm Status")}
+                <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-emerald-100 text-emerald-900 dark:bg-emerald-950/60 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800">
+                  Telemetry Live
                 </span>
-                <span className="px-2.5 py-0.5 rounded-full text-[10px] font-black bg-amber-200/70 text-amber-950 dark:bg-amber-500/20 dark:text-amber-300 border border-amber-400/60 font-mono">
-                  {t('actionItemsCount', '2 Action Items')}
-                </span>
-                <span className="hidden sm:inline-flex px-2.5 py-0.5 rounded-full text-[10px] font-black bg-emerald-200/60 text-emerald-950 dark:bg-emerald-950/60 dark:text-emerald-300 border border-emerald-400/60 font-mono">
-                  GPS Fixed • 14.5 Total Acres
+                <span className="text-slate-400">•</span>
+                <span className="text-xs text-slate-600 dark:text-slate-400 font-medium">
+                  {currentUser.village || 'Nashik Valley'} • Parcel #4 (14.5 Ha)
                 </span>
               </div>
               
-              <h1 className="text-xl sm:text-2xl font-black tracking-tight mt-1.5 leading-tight text-slate-900 dark:text-white">
-                {t('statusHeroTwoPlots', '2 of your 6 plots need attention today')}
+              <h1 className="text-xl sm:text-2xl font-bold tracking-tight mt-1 leading-tight text-[#012D1D] dark:text-white">
+                {t('welcomeFarmer', 'Good morning')}, {currentUser.name || 'Farmer'} <span className="text-slate-500 dark:text-slate-400 text-base font-normal">(नमस्ते / शुभ सकाळ)</span>
               </h1>
               
               {/* Telemetry Micro-Pills */}
-              <div className="flex items-center gap-3 mt-2 flex-wrap text-xs text-slate-700 dark:text-slate-400 font-medium">
+              <div className="flex items-center gap-3 mt-2 flex-wrap text-xs text-slate-600 dark:text-slate-400 font-medium">
                 <span className="flex items-center gap-1">
-                  <MapPin className="w-3.5 h-3.5 text-emerald-700 dark:text-emerald-400" />
-                  <strong className="text-slate-900 dark:text-slate-200">Sangli (Miraj Block)</strong>
+                  <MapPin className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
+                  <strong className="text-slate-800 dark:text-slate-200">Sangli • Miraj Block</strong>
                 </span>
                 <span>•</span>
                 <span className="flex items-center gap-1">
-                  <Sun className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
-                  <span>29.4°C Sunny</span>
+                  <Sun className="w-3.5 h-3.5 text-amber-500" />
+                  <span className="tabular-nums">28.4°C Clear</span>
                 </span>
                 <span>•</span>
                 <span className="flex items-center gap-1">
                   <Droplets className="w-3.5 h-3.5 text-cyan-600 dark:text-cyan-400" />
-                  <span>68% RH</span>
+                  <span className="tabular-nums">68% RH</span>
                 </span>
                 <span>•</span>
-                <span className="flex items-center gap-1 font-mono">
-                  <Wind className="w-3.5 h-3.5 text-indigo-500 dark:text-indigo-400" />
-                  <span>Wind 12 km/h</span>
+                <span className="flex items-center gap-1">
+                  <Wind className="w-3.5 h-3.5 text-slate-500" />
+                  <span className="tabular-nums">Wind 8 km/h NW</span>
                 </span>
               </div>
             </div>
           </div>
 
-          {/* Quick Primary Actions */}
-          <div className="flex items-center space-x-3 self-start lg:self-center shrink-0">
+          {/* Quick Primary Action Buttons */}
+          <div className="flex items-center space-x-2.5 self-start lg:self-center shrink-0 flex-wrap">
             <button
               onClick={() => onNavigate('scan')}
-              className="px-5 py-3 rounded-2xl bg-gradient-to-r from-[#047857] to-[#059669] hover:from-[#065F46] hover:to-[#047857] text-white font-black text-xs sm:text-sm shadow-xl shadow-emerald-950/25 flex items-center gap-2 transition-all active:scale-95 cursor-pointer"
+              className="px-4 py-2.5 rounded-xl bg-[#1B4332] hover:bg-[#2D6A4F] text-white font-semibold text-xs shadow-sm flex items-center gap-2 transition-all cursor-pointer"
             >
-              <Camera className="w-4 h-4 text-emerald-100" />
-              <span>{t('scanWithCamera', 'Scan Leaf with Camera')}</span>
+              <Camera className="w-4 h-4 text-emerald-300" />
+              <span>{t('scanCropDisease', 'Scan Crop Disease')}</span>
             </button>
 
             <button
               onClick={() => setIsChotaKissanOpen(true)}
-              className="px-4 py-3 rounded-2xl bg-gradient-to-r from-emerald-700 to-teal-700 hover:from-emerald-800 hover:to-teal-800 text-white font-black text-xs sm:text-sm shadow-md flex items-center gap-2 transition-all active:scale-95 cursor-pointer border border-emerald-300/30"
+              className="px-4 py-2.5 rounded-xl bg-white dark:bg-[#121F38] hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-200 font-semibold text-xs border border-slate-200 dark:border-slate-700 shadow-xs flex items-center gap-2 transition-all cursor-pointer"
             >
-              <span>🌱</span>
-              <span>Ask Chota Kissan</span>
-              <Mic className="w-4 h-4 text-emerald-200 animate-pulse" />
+              <span>Ask Kisan One</span>
+              <Mic className="w-3.5 h-3.5 text-emerald-600 animate-pulse" />
             </button>
 
             <button
               onClick={() => onNavigate('market')}
-              className={`px-4 py-3 rounded-2xl font-black text-xs sm:text-sm border shadow-sm flex items-center gap-2 transition-all active:scale-95 cursor-pointer ${
-                isDark 
-                  ? 'bg-[#0f1d38] hover:bg-[#162a52] text-slate-200 border-[#22365e]' 
-                  : 'bg-[#F5FCF7] hover:bg-[#E8F7EC] text-slate-900 border-[#D2EBD7]'
-              }`}
+              className="px-4 py-2.5 rounded-xl bg-white dark:bg-[#121F38] hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-200 font-semibold text-xs border border-slate-200 dark:border-slate-700 shadow-xs flex items-center gap-2 transition-all cursor-pointer"
             >
-              <ShoppingBag className="w-4 h-4 text-emerald-700 dark:text-emerald-400" />
-              <span>{t('orderMedicines', 'Order Medicines')}</span>
+              <ShoppingBag className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+              <span>{t('orderMedicines', 'Market & Seeds')}</span>
             </button>
           </div>
 
         </div>
       </div>
 
-      {/* 2. FOUR PROMINENT SHORTCUT TILES (LIGHT GREEN CARDS) */}
+      {/* 2. LIVE ESP32 HARDWARE TELEMETRY GAUGES ROW (STITCH BLUEPRINT) */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        {/* Card 1: Soil Moisture */}
+        <div className="stitch-card p-5 flex flex-col justify-between">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-semibold text-slate-600 dark:text-slate-400">Soil Moisture (VWC)</span>
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+            </span>
+          </div>
+          <div className="flex items-baseline gap-1 mt-2">
+            <span className="text-3xl font-bold tabular-nums text-[#012D1D] dark:text-white">38.2</span>
+            <span className="text-sm font-semibold text-slate-500">%</span>
+          </div>
+          <div className="mt-3 flex items-center justify-between text-[11px] text-slate-500">
+            <span className="font-semibold text-emerald-700 dark:text-emerald-400">Optimal (30–45%)</span>
+            <span>Sensor #14-A</span>
+          </div>
+        </div>
+
+        {/* Card 2: Leaf Wetness & Spore Index */}
+        <div className="stitch-card p-5 flex flex-col justify-between">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-semibold text-slate-600 dark:text-slate-400">Leaf Wetness Duration</span>
+            <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300">
+              Spore Risk
+            </span>
+          </div>
+          <div className="flex items-baseline gap-1 mt-2">
+            <span className="text-3xl font-bold tabular-nums text-amber-700 dark:text-amber-400">11.5</span>
+            <span className="text-sm font-semibold text-slate-500">hrs</span>
+          </div>
+          <div className="mt-3 flex items-center justify-between text-[11px] text-slate-500">
+            <span className="font-semibold text-amber-700 dark:text-amber-400">Blight Alert Window</span>
+            <span>Canopy Probe B</span>
+          </div>
+        </div>
+
+        {/* Card 3: Canopy Temperature */}
+        <div className="stitch-card p-5 flex flex-col justify-between">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-semibold text-slate-600 dark:text-slate-400">Canopy Temperature</span>
+            <span className="text-xs font-mono text-slate-500">DHT22 Live</span>
+          </div>
+          <div className="flex items-baseline gap-1 mt-2">
+            <span className="text-3xl font-bold tabular-nums text-[#012D1D] dark:text-white">28.4</span>
+            <span className="text-sm font-semibold text-slate-500">°C</span>
+          </div>
+          <div className="mt-3 flex items-center justify-between text-[11px] text-slate-500">
+            <span className="font-semibold text-emerald-700 dark:text-emerald-400">68% RH Microclimate</span>
+            <span>Target: 22–30°C</span>
+          </div>
+        </div>
+      </div>
+
+      {/* 3. FOUR PROMINENT SHORTCUT TILES (MODULAR MINIMAL CARDS) */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         
         {/* Tile 1: AI Leaf Pathology */}
         <div 
           onClick={() => onNavigate('scan')}
-          className={`p-5 rounded-3xl border transition-all duration-200 cursor-pointer flex items-center space-x-4 hover:scale-[1.02] hover:shadow-lg group ${
-            isDark 
-              ? 'bg-[#0a1324] border-[#182a4a] hover:border-emerald-500/60 text-white' 
-              : 'bg-[#F0FDF4] hover:bg-[#E8F5EB] border-emerald-200/90 text-slate-900 shadow-xs'
-          }`}
+          className="stitch-card p-4.5 cursor-pointer flex items-center space-x-3.5 group"
         >
-          <div className="w-12 h-12 rounded-2xl bg-emerald-100 dark:bg-emerald-500/20 border border-emerald-300 dark:border-emerald-500/40 text-emerald-800 dark:text-emerald-400 flex items-center justify-center text-2xl shrink-0 group-hover:scale-110 transition-transform">
+          <div className="w-11 h-11 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-800 text-emerald-800 dark:text-emerald-400 flex items-center justify-center text-xl shrink-0 group-hover:scale-105 transition-transform">
             📷
           </div>
           <div>
-            <span className="text-[10px] font-black uppercase text-emerald-800 dark:text-emerald-400 tracking-wider block font-mono">
+            <span className="text-[10px] font-bold uppercase text-emerald-700 dark:text-emerald-400 tracking-wider block font-mono">
               {t('leafPathologyBadge', 'LEAF PATHOLOGY')}
             </span>
-            <h3 className="text-sm font-black text-slate-900 dark:text-white leading-tight">
+            <h3 className="text-sm font-bold text-slate-900 dark:text-white leading-tight">
               {t('scanCropDisease', 'Scan Crop Disease')}
             </h3>
-            <p className="text-[11px] text-slate-600 dark:text-slate-400 font-medium">
-              {t('instantDiagnosisSub', 'Instant leaf pathology & dosage')}
+            <p className="text-[11px] text-slate-500 dark:text-slate-400">
+              {t('instantDiagnosisSub', 'Instant diagnosis & dosage')}
             </p>
           </div>
         </div>
@@ -481,49 +516,41 @@ export const WebFarmerHomeScreen = ({ onNavigate }) => {
         {/* Tile 2: Subsidized Farm Inputs */}
         <div 
           onClick={() => onNavigate('market')}
-          className={`p-5 rounded-3xl border transition-all duration-200 cursor-pointer flex items-center space-x-4 hover:scale-[1.02] hover:shadow-lg group ${
-            isDark 
-              ? 'bg-[#0a1324] border-[#182a4a] hover:border-amber-500/60 text-white' 
-              : 'bg-[#F0FDF4] hover:bg-[#E8F5EB] border-emerald-200/90 text-slate-900 shadow-xs'
-          }`}
+          className="stitch-card p-4.5 cursor-pointer flex items-center space-x-3.5 group"
         >
-          <div className="w-12 h-12 rounded-2xl bg-amber-100 dark:bg-amber-500/20 border border-amber-300 dark:border-amber-500/40 text-amber-800 dark:text-amber-400 flex items-center justify-center text-2xl shrink-0 group-hover:scale-110 transition-transform">
+          <div className="w-11 h-11 rounded-xl bg-amber-50 dark:bg-amber-950/60 border border-amber-200 dark:border-amber-800 text-amber-800 dark:text-amber-400 flex items-center justify-center text-xl shrink-0 group-hover:scale-105 transition-transform">
             🧪
           </div>
           <div>
-            <span className="text-[10px] font-black uppercase text-amber-800 dark:text-amber-400 tracking-wider block font-mono">
+            <span className="text-[10px] font-bold uppercase text-amber-700 dark:text-amber-400 tracking-wider block font-mono">
               {t('dbtSubsidiesBadge', 'DBT SUBSIDIES')}
             </span>
-            <h3 className="text-sm font-black text-slate-900 dark:text-white leading-tight">
+            <h3 className="text-sm font-bold text-slate-900 dark:text-white leading-tight">
               {t('orderFarmInputs', 'Order Farm Inputs')}
             </h3>
-            <p className="text-[11px] text-slate-600 dark:text-slate-400 font-medium">
-              {t('farmInputsSub', 'Seeds, fertilizers & bio-agents')}
+            <p className="text-[11px] text-slate-500 dark:text-slate-400">
+              {t('farmInputsSub', 'Seeds & bio-agents')}
             </p>
           </div>
         </div>
 
-        {/* Tile 3: Drone Booking Service */}
+        {/* Tile 3: Satellite GIS Mapping */}
         <div 
-          onClick={() => onNavigate('market')}
-          className={`p-5 rounded-3xl border transition-all duration-200 cursor-pointer flex items-center space-x-4 hover:scale-[1.02] hover:shadow-lg group ${
-            isDark 
-              ? 'bg-[#0a1324] border-[#182a4a] hover:border-indigo-500/60 text-white' 
-              : 'bg-[#F0FDF4] hover:bg-[#E8F5EB] border-emerald-200/90 text-slate-900 shadow-xs'
-          }`}
+          onClick={() => onNavigate('satelliteMapping')}
+          className="stitch-card p-4.5 cursor-pointer flex items-center space-x-3.5 group"
         >
-          <div className="w-12 h-12 rounded-2xl bg-indigo-100 dark:bg-indigo-500/20 border border-indigo-300 dark:border-indigo-500/40 text-indigo-800 dark:text-indigo-400 flex items-center justify-center text-2xl shrink-0 group-hover:scale-110 transition-transform">
-            🚁
+          <div className="w-11 h-11 rounded-xl bg-cyan-50 dark:bg-cyan-950/60 border border-cyan-200 dark:border-cyan-800 text-cyan-800 dark:text-cyan-400 flex items-center justify-center text-xl shrink-0 group-hover:scale-105 transition-transform">
+            🛰️
           </div>
           <div>
-            <span className="text-[10px] font-black uppercase text-indigo-800 dark:text-indigo-400 tracking-wider block font-mono">
-              DRONE SERVICE
+            <span className="text-[10px] font-bold uppercase text-cyan-700 dark:text-cyan-400 tracking-wider block font-mono">
+              ISRO SENTINEL-2
             </span>
-            <h3 className="text-sm font-black text-slate-900 dark:text-white leading-tight">
-              Book Drone Spraying
+            <h3 className="text-sm font-bold text-slate-900 dark:text-white leading-tight">
+              Satellite GIS & NDVI
             </h3>
-            <p className="text-[11px] text-slate-600 dark:text-slate-400 font-medium">
-              7-min/acre GPS foliar spray
+            <p className="text-[11px] text-slate-500 dark:text-slate-400">
+              District multi-spectral scans
             </p>
           </div>
         </div>
@@ -531,104 +558,25 @@ export const WebFarmerHomeScreen = ({ onNavigate }) => {
         {/* Tile 4: Live Mandi Rates */}
         <div 
           onClick={() => onNavigate('market')}
-          className={`p-5 rounded-3xl border transition-all duration-200 cursor-pointer flex items-center space-x-4 hover:scale-[1.02] hover:shadow-lg group ${
-            isDark 
-              ? 'bg-[#0a1324] border-[#182a4a] hover:border-cyan-500/60 text-white' 
-              : 'bg-[#F0FDF4] hover:bg-[#E8F5EB] border-emerald-200/90 text-slate-900 shadow-xs'
-          }`}
+          className="stitch-card p-4.5 cursor-pointer flex items-center space-x-3.5 group"
         >
-          <div className="w-12 h-12 rounded-2xl bg-cyan-100 dark:bg-cyan-500/20 border border-cyan-300 dark:border-cyan-500/40 text-cyan-800 dark:text-cyan-400 flex items-center justify-center text-2xl shrink-0 group-hover:scale-110 transition-transform">
+          <div className="w-11 h-11 rounded-xl bg-indigo-50 dark:bg-indigo-950/60 border border-indigo-200 dark:border-indigo-800 text-indigo-800 dark:text-indigo-400 flex items-center justify-center text-xl shrink-0 group-hover:scale-105 transition-transform">
             📊
           </div>
           <div>
-            <span className="text-[10px] font-black uppercase text-cyan-800 dark:text-cyan-400 tracking-wider block font-mono">
+            <span className="text-[10px] font-bold uppercase text-indigo-700 dark:text-indigo-400 tracking-wider block font-mono">
               {t('liveMandiBadge', 'LIVE MANDI')}
             </span>
-            <h3 className="text-sm font-black text-slate-900 dark:text-white leading-tight">
+            <h3 className="text-sm font-bold text-slate-900 dark:text-white leading-tight">
               {t('apmcRates', 'APMC Crop Rates')}
             </h3>
-            <p className="text-[11px] text-slate-600 dark:text-slate-400 font-medium">
-              {t('buyerConnectSub', 'Direct APMC trader connect')}
+            <p className="text-[11px] text-slate-500 dark:text-slate-400">
+              {t('buyerConnectSub', 'Real-time commodity ticker')}
             </p>
           </div>
         </div>
       </div>
 
-      {/* 2.5 LIVE ESP32 HARDWARE SENSOR DATA BANNER (FULL WIDTH ALIGNED) */}
-      <div 
-        onClick={() => onNavigate('esp32LiveData')}
-        className={`p-5.5 rounded-3xl border-2 transition-all cursor-pointer shadow-sm hover:shadow-md group ${
-          isDark 
-            ? 'bg-gradient-to-r from-[#09152b] via-[#091a1e] to-[#0a1324] border-emerald-500/50 text-white' 
-            : 'bg-gradient-to-r from-emerald-50 via-teal-50/50 to-white border-emerald-400 text-slate-900'
-        }`}
-      >
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <div className="flex items-start sm:items-center space-x-4">
-            <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#047857] to-[#0D9488] text-white flex items-center justify-center shadow-sm shrink-0 group-hover:scale-105 transition-transform">
-              <Cpu className="w-6 h-6 animate-pulse text-emerald-200" />
-            </div>
-            <div className="space-y-1">
-              <div className="flex items-center gap-2 flex-wrap">
-                <span className="text-[10px] font-black uppercase tracking-wider text-emerald-800 dark:text-emerald-400 font-mono">
-                  LIVE SENSOR COLUMN DATA
-                </span>
-                <span className="px-2.5 py-0.5 rounded-full text-[9px] font-black uppercase bg-emerald-500 text-white font-mono animate-pulse">
-                  10,000ms Loop
-                </span>
-              </div>
-              <h3 className="font-black text-sm sm:text-base text-slate-900 dark:text-white leading-tight">
-                ⚡ Zone Monitoring
-              </h3>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-2 shrink-0 self-end sm:self-auto">
-            <span className="text-xs font-black text-emerald-700 dark:text-emerald-400 font-mono flex items-center gap-1">
-              <span>View Live Data</span>
-              <ArrowRight className="w-4 h-4" />
-            </span>
-          </div>
-        </div>
-      </div>
-
-      {/* 2.6 YIELD & ROI CALCULATOR BANNER (FULL WIDTH ALIGNED) */}
-      <div 
-        onClick={() => onNavigate('roiCalculator')}
-        className={`p-5.5 rounded-3xl border-2 transition-all cursor-pointer shadow-sm hover:shadow-md group ${
-          isDark 
-            ? 'bg-gradient-to-r from-[#0d1629] via-[#101c36] to-[#0a1324] border-blue-500/50 text-white' 
-            : 'bg-gradient-to-r from-blue-50 via-indigo-50/50 to-white border-blue-400 text-slate-900'
-        }`}
-      >
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <div className="flex items-start sm:items-center space-x-4">
-            <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-blue-600 to-indigo-700 text-white flex items-center justify-center shadow-sm shrink-0 group-hover:scale-105 transition-transform">
-              <Calculator className="w-6 h-6 text-blue-100" />
-            </div>
-            <div className="space-y-1">
-              <div className="flex items-center gap-2 flex-wrap">
-                <span className="text-[10px] font-black uppercase tracking-wider text-blue-800 dark:text-blue-400 font-mono">
-                  AGRI-BUSINESS INTELLIGENCE
-                </span>
-                <span className="px-2.5 py-0.5 rounded-full text-[9px] font-black uppercase bg-blue-500 text-white font-mono">
-                  NEW
-                </span>
-              </div>
-              <h3 className="font-black text-sm sm:text-base text-slate-900 dark:text-white leading-tight">
-                Dynamic Yield & ROI Calculator
-              </h3>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-2 shrink-0 self-end sm:self-auto">
-            <span className="text-xs font-black text-blue-700 dark:text-blue-400 font-mono flex items-center gap-1">
-              <span>Plan Finances</span>
-              <ArrowRight className="w-4 h-4" />
-            </span>
-          </div>
-        </div>
-      </div>
 
       {/* 3. MAIN DASHBOARD CONTENT (Two-Column Split) */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
@@ -695,81 +643,69 @@ export const WebFarmerHomeScreen = ({ onNavigate }) => {
               const plotTitle = getPlotLocalized(plot, 'name');
               const plotCropName = getPlotLocalized(plot, 'cropName');
 
-              const cardStyle = isDark
-                ? isRed 
-                  ? 'bg-[#0f1422] border-2 border-rose-500/70 hover:border-rose-400 shadow-rose-950/20' 
-                  : isAmber 
-                  ? 'bg-[#0f1422] border-2 border-amber-500/70 hover:border-amber-400 shadow-amber-950/20' 
-                  : 'bg-[#0a1324] border border-[#182a4a] hover:border-emerald-500/60 shadow-emerald-950/20'
-                : isRed 
-                  ? 'bg-[#FFF1F2] border-2 border-rose-400 shadow-xs' 
-                  : isAmber 
-                  ? 'bg-[#FFFBEB] border-2 border-amber-400 shadow-xs' 
-                  : 'bg-[#F0FDF4] hover:bg-[#E8F5EB] border border-emerald-200/90 hover:border-emerald-400 shadow-xs';
-
-              const badgeStyle = isRed 
-                ? 'bg-rose-600 text-white' 
+              const badgeClass = isRed 
+                ? 'badge-critical' 
                 : isAmber 
-                ? 'bg-amber-600 text-white' 
-                : 'bg-[#047857] text-white';
+                ? 'badge-advisory' 
+                : 'badge-optimal';
 
               return (
                 <div
                   key={plot.id}
                   onClick={() => setSelectedPlot(plot)}
-                  className={`p-5 rounded-3xl cursor-pointer transition-all duration-200 hover:-translate-y-1 hover:shadow-md flex flex-col justify-between min-h-[210px] ${cardStyle}`}
+                  className="stitch-card p-5 cursor-pointer flex flex-col justify-between min-h-[210px] group"
                 >
                   <div>
                     {/* Top Row: Crop Icon + Status Pill */}
                     <div className="flex items-start justify-between">
-                      <div className="w-12 h-12 rounded-2xl bg-emerald-100/80 dark:bg-slate-900 border border-emerald-200 dark:border-slate-800 flex items-center justify-center text-3xl shadow-xs">
+                      <div className="w-11 h-11 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 flex items-center justify-center text-2xl shadow-2xs group-hover:scale-105 transition-transform">
                         {plot.cropIcon}
                       </div>
 
-                      <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider font-mono shadow-xs ${badgeStyle}`}>
-                        {isRed ? t('sprayNeeded', 'Spray Needed') : isAmber ? t('checkLeaves', 'Check Leaves') : t('healthy', 'Healthy')}
+                      <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider font-mono ${badgeClass}`}>
+                        {isRed ? t('sprayNeeded', 'Spray Needed') : isAmber ? t('checkLeaves', 'Check Leaves') : t('healthy', 'Optimal')}
                       </span>
                     </div>
 
                     {/* Plot Title */}
-                    <h3 className="font-black text-base text-slate-900 dark:text-white mt-3.5 leading-tight">
+                    <h3 className="font-bold text-sm text-slate-900 dark:text-white mt-3 leading-tight">
                       {plotTitle}
                     </h3>
-                    <p className="text-xs text-slate-600 dark:text-slate-400 font-bold mt-0.5">
+                    <p className="text-xs text-slate-500 dark:text-slate-400 font-medium mt-0.5">
                       {plotCropName} • {getPlotLocalized(plot, 'acreage')}
                     </p>
 
                     {/* Visual Telemetry Bars */}
                     <div className="mt-3 space-y-1.5">
-                      <div className="flex items-center justify-between text-[11px] font-mono font-bold">
-                        <span className="text-slate-600 dark:text-slate-400">NDVI Canopy Health:</span>
-                        <strong className={isRed ? 'text-rose-600 dark:text-rose-400' : isAmber ? 'text-amber-600 dark:text-amber-400' : 'text-emerald-800 dark:text-emerald-400'}>
+                      <div className="flex items-center justify-between text-[11px] font-mono font-semibold">
+                        <span className="text-slate-500 dark:text-slate-400">NDVI Canopy:</span>
+                        <strong className={isRed ? 'text-rose-600 dark:text-rose-400' : isAmber ? 'text-amber-600 dark:text-amber-400' : 'text-emerald-700 dark:text-emerald-400'}>
                           {plot.ndvi} / 1.0
                         </strong>
                       </div>
-                      <div className="w-full h-1.5 rounded-full bg-emerald-200/60 dark:bg-slate-800 overflow-hidden">
+                      <div className="w-full h-1.5 rounded-full bg-slate-100 dark:bg-slate-800 overflow-hidden">
                         <div 
-                          className={`h-full rounded-full ${isRed ? 'bg-rose-500' : isAmber ? 'bg-amber-500' : 'bg-[#047857]'}`}
+                          className={`h-full rounded-full ${isRed ? 'bg-rose-500' : isAmber ? 'bg-amber-500' : 'bg-[#006C48]'}`}
                           style={{ width: `${plot.ndvi * 100}%` }}
                         />
                       </div>
 
-                      <div className="flex items-center justify-between text-[11px] font-mono text-slate-600 dark:text-slate-400 pt-0.5">
-                        <span>Soil Moisture: <strong className="text-cyan-800 dark:text-cyan-400 font-bold">{plot.soilVWC}% VWC</strong></span>
-                        <span>Temp: <strong className="text-amber-800 dark:text-amber-400 font-bold">{plot.temp}°C</strong></span>
+                      <div className="flex items-center justify-between text-[11px] font-mono text-slate-500 dark:text-slate-400 pt-0.5">
+                        <span>VWC: <strong className="text-slate-800 dark:text-slate-200">{plot.soilVWC}%</strong></span>
+                        <span>Temp: <strong className="text-slate-800 dark:text-slate-200">{plot.temp}°C</strong></span>
                       </div>
                     </div>
                   </div>
 
                   {/* Action Link */}
-                  <div className="mt-4 pt-3 border-t border-emerald-200/70 dark:border-slate-800/80 flex items-center justify-between text-xs">
-                    <span className={`font-black text-xs flex items-center gap-1 ${
-                      isRed ? 'text-rose-600 dark:text-rose-400' : isAmber ? 'text-amber-600 dark:text-amber-400' : 'text-emerald-800 dark:text-emerald-400'
+                  <div className="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-xs">
+                    <span className={`font-semibold text-xs flex items-center gap-1 ${
+                      isRed ? 'text-rose-600 dark:text-rose-400' : isAmber ? 'text-amber-600 dark:text-amber-400' : 'text-emerald-700 dark:text-emerald-400'
                     }`}>
-                      {isRed ? t('immediateActionRequired', 'Immediate Action Required') : isAmber ? t('cautionNeeded', 'Caution Advised') : t('optimalGrowth', 'Optimal Growth')}
+                      {isRed ? t('immediateActionRequired', 'Action Required') : isAmber ? t('cautionNeeded', 'Caution Advised') : t('optimalGrowth', 'Optimal Growth')}
                     </span>
 
-                    <span className="flex items-center gap-1 font-bold text-slate-700 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white">
+                    <span className="flex items-center gap-1 font-semibold text-slate-600 dark:text-slate-400 group-hover:text-emerald-700 dark:group-hover:text-emerald-400 transition-colors">
                       <span>{t('inspect', 'Inspect')}</span>
                       <ChevronRight className="w-4 h-4" />
                     </span>
@@ -779,6 +715,7 @@ export const WebFarmerHomeScreen = ({ onNavigate }) => {
             })}
           </div>
         </div>
+
 
         {/* RIGHT COLUMN (5 cols): Live Advisories & GIS Radar */}
         <div className="lg:col-span-5 space-y-4">

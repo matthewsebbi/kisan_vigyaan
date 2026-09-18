@@ -33,12 +33,12 @@ export const WebFarmerMoreMenu = ({ onNavigate }) => {
   const menuItems = [
     {
       id: 'chotaKissan',
-      labelEn: '🌱 Chota Kissan — Multilingual AI Voice Assistant',
-      labelMr: '🌱 छोटा किसान — बहुभाषिक एआय कृषी आवाज सहाय्यक',
-      labelHi: '🌱 छोटा किसान — बहुभाषी एआई कृषि वॉयस सहायक',
-      labelTa: '🌱 சோட்டா கிசான் — பன்மொழி AI விவசாய குரல் உதவியாளர்',
-      labelTe: '🌱 చోటా కిసాన్ — బహుభాషా AI వాయిస్ అసిస్టెంట్',
-      labelKn: '🌱 ಛೋಟಾ ಕಿಸಾನ್ — ಬಹುಭಾಷಾ AI ಧ್ವನಿ ಸಹಾಯಕ',
+      labelEn: 'Kisan One — Multilingual AI Voice Assistant',
+      labelMr: 'किसान वन — बहुभाषिक एआय कृषी आवाज सहाय्यक',
+      labelHi: 'किसान वन — बहुभाषी एआई कृषि वॉयस सहायक',
+      labelTa: 'கிசான் ஒன் — பன்மொழி AI விவசாய குரல் உதவியாளர்',
+      labelTe: 'కిసాన్ వన్ — బహుభాషా AI వాయిస్ అసిస్టెంట్',
+      labelKn: 'ಕಿಸಾನ್ ಒನ್ — ಬಹುಭಾಷಾ AI ಧ್ವನಿ ಸಹಾಯಕ',
       icon: Mic,
       iconBg: 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950/80 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-700/50',
       descEn: 'Natural voice conversations in 10 Indian languages. Connects with live farm sensors, mandi rates, and disease models.',

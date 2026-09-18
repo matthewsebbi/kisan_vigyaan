@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useApp } from '../../context/AppContext';
+import { SoilZone3DGlobe } from './SoilZone3DGlobe';
+import { getDistrictAgroProfile } from '../../data/maharashtraHydrologyData';
+import { DISTRICT_NODES } from '../../data/maharashtraDistrictBoundaries';
 import { 
   Cpu, 
   Thermometer, 
@@ -15,7 +18,9 @@ import {
   Waves, 
   Gauge, 
   Info,
-  Radio
+  Radio,
+  Globe,
+  MapPin
 } from 'lucide-react';
 
 export const LiveESP32TelemetryPanel = () => {
@@ -36,6 +41,10 @@ export const LiveESP32TelemetryPanel = () => {
   const [isLiveConnected, setIsLiveConnected] = useState(true);
   const [serialLog, setSerialLog] = useState([]);
   const [portConnected, setPortConnected] = useState(false);
+  const [selectedDistrictId, setSelectedDistrictId] = useState('sangli');
+
+  const selectedDistrict = DISTRICT_NODES.find(d => d.id === selectedDistrictId) || DISTRICT_NODES[0];
+  const activeAgroProfile = getDistrictAgroProfile(selectedDistrictId);
 
   // ESP32 Calibration Constants
   const SOIL_DRY_RAW = 3253;
@@ -146,7 +155,7 @@ export const LiveESP32TelemetryPanel = () => {
           <div>
             <div className="flex items-center gap-2 flex-wrap">
               <h1 className="text-lg sm:text-2xl font-black tracking-tight">
-                {lang === 'ta' ? '⚡ மண்டல கண்காணிப்பு (Zone Monitoring)' : lang === 'mr' ? '⚡ झोन मॉनिटरिंग (Zone Monitoring)' : lang === 'hi' ? '⚡ ज़ोन निगरानी (Zone Monitoring)' : '⚡ Zone Monitoring'}
+                {lang === 'ta' ? 'மண்டல கண்காணிப்பு (Zone Monitoring)' : lang === 'mr' ? 'झोन मॉनिटरिंग (Zone Monitoring)' : lang === 'hi' ? 'ज़ोन निगरानी (Zone Monitoring)' : 'Zone Monitoring'}
               </h1>
               <span className="px-3 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-emerald-500 text-white shadow-xs font-mono flex items-center gap-1.5">
                 <span className="w-2 h-2 rounded-full bg-white animate-ping" />
@@ -175,7 +184,44 @@ export const LiveESP32TelemetryPanel = () => {
         </div>
       </div>
 
-      {/* 2. MAIN 2-COLUMN LAYOUT: LEFT SIDEBAR DATA COLUMN & RIGHT ANALYSIS */}
+      {/* 2. MAHARASHTRA SATELLITE FARMLAND & FIELD LEVEL HERO SECTION */}
+      <SoilZone3DGlobe 
+        selectedDistrictId={selectedDistrictId}
+        onSelectDistrict={setSelectedDistrictId}
+      />
+
+      {/* SYNCHRONIZATION BANNER: SATELLITE FARMLAND -> HARDWARE IOT SENSORS */}
+      <div className={`p-4 rounded-2xl border flex flex-col sm:flex-row sm:items-center justify-between gap-3 ${
+        isDark ? 'bg-[#0b162c] border-[#1e3458] text-white' : 'bg-emerald-50/70 border-emerald-200 text-slate-800'
+      }`}>
+        <div className="flex items-center space-x-3">
+          <div className="w-9 h-9 rounded-xl bg-emerald-600 text-white flex items-center justify-center font-black shrink-0">
+            <Radio className="w-5 h-5 animate-pulse" />
+          </div>
+          <div>
+            <div className="flex items-center gap-2">
+              <span className="text-xs font-black uppercase tracking-wider text-emerald-600 dark:text-emerald-400 font-mono">
+                Active Zone Sensor Field
+              </span>
+              <span className="px-2 py-0.5 rounded-md text-[10px] font-black bg-emerald-500/20 text-emerald-600 dark:text-emerald-300 font-mono">
+                {selectedDistrict.name} ({selectedDistrict.nameMr})
+              </span>
+            </div>
+            <p className="text-xs text-slate-500 dark:text-slate-300 mt-0.5">
+              Regional Soil Classification: <strong className="text-amber-500 dark:text-amber-300">{activeAgroProfile.soilGroup}</strong> • Clay Content: <strong className="text-emerald-500 dark:text-emerald-300">{activeAgroProfile.clayPercent}</strong> • Soil pH: <strong className="text-cyan-500 dark:text-cyan-300">{activeAgroProfile.phRange}</strong>
+            </p>
+          </div>
+        </div>
+
+        <div className="flex items-center gap-2 self-end sm:self-auto text-xs font-mono text-slate-500 dark:text-slate-400">
+          <span>Telemetry Link:</span>
+          <span className="px-2 py-1 rounded-lg bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-bold border border-emerald-500/30">
+            Synced with Satellite Farmland Map
+          </span>
+        </div>
+      </div>
+
+      {/* 3. MAIN 2-COLUMN LAYOUT: LEFT SIDEBAR DATA COLUMN & RIGHT ANALYSIS */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         
         {/* LEFT HAND SIDE COLUMN: LIVE SENSOR DATA PANELS */}
