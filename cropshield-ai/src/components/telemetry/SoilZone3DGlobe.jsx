@@ -1645,10 +1645,10 @@ export const SoilZone3DGlobe = ({ onSelectDistrict, selectedDistrictId = 'sangli
 
         {/* FLOATING SENTINEL-2 ANALYSIS RESULT CARD (When Scan is Complete) */}
         {analysisResult && (
-          <div className="absolute top-4 right-4 z-20 max-w-sm w-full p-4 rounded-3xl bg-[#FAF8F2]/98 dark:bg-[#151D18]/98 border border-[#D8D1BE] dark:border-[#2C3B30] backdrop-blur-md shadow-vintage-md text-xs">
-            <div className="flex items-center justify-between pb-2.5 border-b border-[#E5DFCF] dark:border-[#2C3B30]">
+          <div className="absolute top-4 right-4 z-20 max-w-sm w-full p-4 rounded-3xl bg-[#FAF8F2]/82 dark:bg-[#151D18]/85 border border-[#D8D1BE]/90 dark:border-[#2C3B30]/90 backdrop-blur-md shadow-vintage-md text-xs">
+            <div className="flex items-center justify-between pb-2.5 border-b border-[#E5DFCF]/90 dark:border-[#2C3B30]">
               <div className="flex items-center gap-2">
-                <span className="p-1.5 rounded-xl bg-[#E8F0EA] dark:bg-[#1F2E23] text-[#1D3D2C] dark:text-[#A7D8B4] border border-[#C6D8CA] dark:border-[#2F4A37]">
+                <span className="p-1.5 rounded-xl bg-[#E8F0EA]/90 dark:bg-[#1F2E23]/90 text-[#1D3D2C] dark:text-[#A7D8B4] border border-[#C6D8CA] dark:border-[#2F4A37]">
                   <ShieldAlert className="w-4 h-4 text-[#1D3D2C] dark:text-emerald-400" />
                 </span>
                 <div>
@@ -1669,7 +1669,7 @@ export const SoilZone3DGlobe = ({ onSelectDistrict, selectedDistrictId = 'sangli
 
             {/* Health Status & Coverage Overview */}
             <div className="grid grid-cols-3 gap-2 my-2.5">
-              <div className="p-2 rounded-xl bg-[#F4EFE6] dark:bg-[#1C251F] border border-[#E2DAC8] dark:border-[#2B3B2E] text-center">
+              <div className="p-2 rounded-xl bg-[#F4EFE6]/80 dark:bg-[#1C251F]/80 border border-[#E2DAC8]/90 dark:border-[#2B3B2E]/90 text-center">
                 <span className="text-[9px] text-[#7A7569] dark:text-slate-400 block uppercase font-bold">Health Status</span>
                 <span className={`text-xs font-bold font-serif-vintage mt-0.5 block ${
                   analysisResult.health_status.includes('Severe') ? 'text-[#9F4D35]' : analysisResult.health_status.includes('Moderate') ? 'text-[#8A5A18]' : 'text-[#1D3D2C] dark:text-emerald-400'
@@ -1678,14 +1678,14 @@ export const SoilZone3DGlobe = ({ onSelectDistrict, selectedDistrictId = 'sangli
                 </span>
               </div>
 
-              <div className="p-2 rounded-xl bg-[#F4EFE6] dark:bg-[#1C251F] border border-[#E2DAC8] dark:border-[#2B3B2E] text-center">
+              <div className="p-2 rounded-xl bg-[#F4EFE6]/80 dark:bg-[#1C251F]/80 border border-[#E2DAC8]/90 dark:border-[#2B3B2E]/90 text-center">
                 <span className="text-[9px] text-[#7A7569] dark:text-slate-400 block uppercase font-bold">Vegetation</span>
                 <span className="text-xs font-bold text-[#1D3D2C] dark:text-emerald-300 mt-0.5 block font-mono">
                   {analysisResult.vegetation_coverage_percent || 86.5}%
                 </span>
               </div>
 
-              <div className="p-2 rounded-xl bg-[#F4EFE6] dark:bg-[#1C251F] border border-[#E2DAC8] dark:border-[#2B3B2E] text-center">
+              <div className="p-2 rounded-xl bg-[#F4EFE6]/80 dark:bg-[#1C251F]/80 border border-[#E2DAC8]/90 dark:border-[#2B3B2E]/90 text-center">
                 <span className="text-[9px] text-[#7A7569] dark:text-slate-400 block uppercase font-bold">Stressed Zones</span>
                 <span className="text-xs font-bold text-[#9F4D35] mt-0.5 block font-mono">
                   {analysisResult.unhealthy_spots_count} Spots
@@ -1694,7 +1694,7 @@ export const SoilZone3DGlobe = ({ onSelectDistrict, selectedDistrictId = 'sangli
             </div>
 
             {/* Complete 4-Index Multispectral Telemetry Matrix (NDVI, NDRE, EVI, NDMI) */}
-            <div className="p-2.5 rounded-2xl bg-[#F4EFE6] dark:bg-[#1C251F] border border-[#E2DAC8] dark:border-[#2B3B2E] mb-3 space-y-1.5">
+            <div className="p-2.5 rounded-2xl bg-[#F4EFE6]/80 dark:bg-[#1C251F]/80 border border-[#E2DAC8]/90 dark:border-[#2B3B2E]/90 mb-3 space-y-1.5">
               <span className="text-[10px] font-bold uppercase tracking-wider text-[#7A7569] dark:text-slate-400 flex items-center justify-between">
                 <span>Multispectral Indices (Sentinel-2)</span>
                 <span className="text-[#1D3D2C] dark:text-cyan-400 font-mono text-[9px]">10m L2A</span>
@@ -1702,7 +1702,7 @@ export const SoilZone3DGlobe = ({ onSelectDistrict, selectedDistrictId = 'sangli
               
               <div className="grid grid-cols-4 gap-1.5 text-center">
                 {/* 1. NDVI */}
-                <div className="p-1.5 rounded-lg bg-[#FAF8F2] dark:bg-[#151D18] border border-[#D8D1BE] dark:border-[#2C3B30]">
+                <div className="p-1.5 rounded-lg bg-[#FAF8F2]/80 dark:bg-[#151D18]/80 border border-[#D8D1BE]/80 dark:border-[#2C3B30]/80">
                   <span className="text-[9px] font-bold text-[#1D3D2C] dark:text-emerald-400 block">🌱 NDVI</span>
                   <span className="text-xs font-bold text-[#1F2E22] dark:text-white font-mono block mt-0.5">
                     {analysisResult.mean_ndvi}
@@ -1711,7 +1711,7 @@ export const SoilZone3DGlobe = ({ onSelectDistrict, selectedDistrictId = 'sangli
                 </div>
 
                 {/* 2. NDRE */}
-                <div className="p-1.5 rounded-lg bg-[#FAF8F2] dark:bg-[#151D18] border border-[#D8D1BE] dark:border-[#2C3B30]">
+                <div className="p-1.5 rounded-lg bg-[#FAF8F2]/80 dark:bg-[#151D18]/80 border border-[#D8D1BE]/80 dark:border-[#2C3B30]/80">
                   <span className="text-[9px] font-bold text-[#1E4D56] dark:text-teal-300 block">🍃 NDRE</span>
                   <span className="text-xs font-bold text-[#1F2E22] dark:text-white font-mono block mt-0.5">
                     {analysisResult.mean_ndre || (analysisResult.mean_ndvi * 0.65).toFixed(2)}
@@ -1720,7 +1720,7 @@ export const SoilZone3DGlobe = ({ onSelectDistrict, selectedDistrictId = 'sangli
                 </div>
 
                 {/* 3. EVI */}
-                <div className="p-1.5 rounded-lg bg-[#FAF8F2] dark:bg-[#151D18] border border-[#D8D1BE] dark:border-[#2C3B30]">
+                <div className="p-1.5 rounded-lg bg-[#FAF8F2]/80 dark:bg-[#151D18]/80 border border-[#D8D1BE]/80 dark:border-[#2C3B30]/80">
                   <span className="text-[9px] font-bold text-[#1D3D2C] dark:text-sky-400 block">🌿 EVI</span>
                   <span className="text-xs font-bold text-[#1F2E22] dark:text-white font-mono block mt-0.5">
                     {analysisResult.mean_evi || (analysisResult.mean_ndvi * 0.85).toFixed(2)}
@@ -1729,7 +1729,7 @@ export const SoilZone3DGlobe = ({ onSelectDistrict, selectedDistrictId = 'sangli
                 </div>
 
                 {/* 4. NDMI */}
-                <div className="p-1.5 rounded-lg bg-[#FAF8F2] dark:bg-[#151D18] border border-[#D8D1BE] dark:border-[#2C3B30]">
+                <div className="p-1.5 rounded-lg bg-[#FAF8F2]/80 dark:bg-[#151D18]/80 border border-[#D8D1BE]/80 dark:border-[#2C3B30]/80">
                   <span className="text-[9px] font-bold text-[#1E4D56] dark:text-cyan-300 block">💧 NDMI</span>
                   <span className="text-xs font-bold text-[#1F2E22] dark:text-white font-mono block mt-0.5">
                     {analysisResult.mean_ndmi ?? 0.34}
@@ -1782,7 +1782,7 @@ export const SoilZone3DGlobe = ({ onSelectDistrict, selectedDistrictId = 'sangli
                 })}
               </div>
             ) : (
-              <div className="p-3 rounded-2xl bg-[#E8F0EA] dark:bg-emerald-950/40 border border-[#C6D8CA] dark:border-emerald-500/30 text-[#1D3D2C] dark:text-emerald-300 text-xs flex items-center gap-2">
+              <div className="p-3 rounded-2xl bg-[#E8F0EA]/80 dark:bg-emerald-950/40 border border-[#C6D8CA]/90 dark:border-emerald-500/30 text-[#1D3D2C] dark:text-emerald-300 text-xs flex items-center gap-2">
                 <ShieldCheck className="w-5 h-5 shrink-0 text-[#1D3D2C] dark:text-emerald-400" />
                 <span>Entire marked field exhibits robust vegetative vigor with no severe stress clusters detected!</span>
               </div>
