@@ -144,45 +144,7 @@ export const LiveESP32TelemetryPanel = () => {
   return (
     <div className="space-y-6 animate-fadeIn font-sans pb-12">
       
-      {/* 1. TOP HEADER BANNER */}
-      <div className={`p-6 rounded-3xl border shadow-vintage flex flex-col md:flex-row md:items-center justify-between gap-4 relative overflow-hidden transition-colors ${
-        isDark ? 'bg-[#141C17] border-[#293A2E] text-[#F3F5F1]' : 'bg-[#FAF8F2] border-[#D8D1BE] text-[#1F2E22]'
-      }`}>
-        <div className="flex items-start space-x-4 relative z-10">
-          <div className="w-14 h-14 rounded-2xl bg-[#1D3D2C] text-[#E8F0EA] flex items-center justify-center shadow-md shrink-0 border border-[#2B543D]">
-            <Cpu className="w-7 h-7 text-emerald-300 animate-pulse" />
-          </div>
-          <div>
-            <div className="flex items-center gap-2 flex-wrap">
-              <h1 className="text-xl sm:text-3xl font-serif-vintage font-bold tracking-tight text-[#1D3D2C] dark:text-[#E8F0EA]">
-                {lang === 'ta' ? 'மண்டல கண்காணிப்பு (Zone Monitoring)' : lang === 'mr' ? 'झोन मॉनिटरिंग (Zone Monitoring)' : lang === 'hi' ? 'ज़ोन निगरानी (Zone Monitoring)' : 'Zone Monitoring'}
-              </h1>
-              <span className="px-3 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-[#E8F0EA] text-[#1D3D2C] dark:bg-[#1E2E23] dark:text-[#A7D8B4] border border-[#C6D8CA] dark:border-[#2F4A37] shadow-xs font-mono flex items-center gap-1.5">
-                <span className="w-2 h-2 rounded-full bg-[#1D3D2C] dark:bg-[#4ADE80] animate-ping" />
-                <span>10,000ms Live Loop</span>
-              </span>
-            </div>
-            <p className="text-xs text-[#635E52] dark:text-[#A8A497] mt-1 font-medium">
-              ESP32 Microcontroller + DHT22 + DS18B20 + Soil Moisture + pH Sensor (115200 Baud Rate)
-            </p>
-          </div>
-        </div>
 
-        {/* Live Controls */}
-        <div className="flex items-center gap-2 shrink-0 self-start md:self-auto relative z-10">
-          <button
-            onClick={handleConnectHardwareUSB}
-            className={`px-4 py-2.5 rounded-2xl text-xs font-bold shadow-sm flex items-center gap-2 cursor-pointer transition-all active:scale-95 border ${
-              portConnected 
-                ? 'bg-[#1D3D2C] text-white border-[#2E583F]' 
-                : 'bg-[#1D3D2C] hover:bg-[#28523C] text-white border-[#2E583F] dark:bg-[#1E3024] dark:hover:bg-[#284131]'
-            }`}
-          >
-            <Usb className="w-4 h-4 text-emerald-300" />
-            <span>{portConnected ? 'ESP32 Serial Connected' : 'Connect ESP32 Hardware (USB)'}</span>
-          </button>
-        </div>
-      </div>
 
       {/* 2. MAHARASHTRA SATELLITE FARMLAND & FIELD LEVEL HERO SECTION */}
       <SoilZone3DGlobe 
@@ -214,6 +176,17 @@ export const LiveESP32TelemetryPanel = () => {
         </div>
 
         <div className="flex items-center gap-2 self-end sm:self-auto text-xs font-mono text-[#635E52] dark:text-[#A8A497]">
+          <button
+            onClick={handleConnectHardwareUSB}
+            className={`px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 cursor-pointer transition-all active:scale-95 border ${
+              portConnected 
+                ? 'bg-[#1D3D2C] text-white border-[#2E583F]' 
+                : 'bg-[#FAF8F2] dark:bg-[#1B241E] text-[#1D3D2C] dark:text-[#A7D8B4] border-[#D5CEBC] dark:border-[#2E3C32] hover:bg-[#EFE9DA]'
+            }`}
+          >
+            <Usb className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
+            <span>{portConnected ? 'ESP32 Connected' : 'Connect USB'}</span>
+          </button>
           <span>Telemetry Link:</span>
           <span className="px-2 py-1 rounded-lg bg-[#E8F0EA] text-[#1D3D2C] dark:bg-[#1E2E23] dark:text-[#A7D8B4] font-bold border border-[#C6D8CA] dark:border-[#2F4A37]">
             Synced with Satellite Farmland Map
