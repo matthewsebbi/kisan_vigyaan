@@ -55,25 +55,50 @@ export const WebLeftSidebar = ({ activeTab, onNavigate, mobileOpen, setMobileOpe
   const isDark = theme === 'dark';
   const pendingOfficerCount = (fieldReviewQueue || []).filter(s => s.status === 'pending').length;
 
-  // 1. Farmer Primary Navigation Sections
+  // 1. Farmer Primary Navigation Sections (Core Dashboard)
   const primaryNavItems = [
-    { id: 'home', labelKey: 'navHome', defaultLabel: 'Home Dashboard', labelTa: 'முகப்பு பக்கம்', labelMr: 'मुख्य मुख्यपृष्ठ', labelHi: 'मुख्य डैशबोर्ड', icon: Home },
-    { id: 'scan', labelKey: 'navScan', defaultLabel: 'AI Leaf Scanner', labelTa: 'AI இலை ஸ்கேனர்', labelMr: 'एआय पान स्कॅनर', labelHi: 'एआय पत्ती स्कैनर', icon: Camera },
-    { id: 'cropSell', labelEn: 'Sell Crops & Products', defaultLabel: 'Sell Crops & Products', labelTa: 'பயிர் விற்பனை சந்தை', labelMr: 'शेतकरी पीक विक्री केंद्र', labelHi: 'किसान फसल बिक्री', icon: Sprout },
-    { id: 'market', labelKey: 'navMarket', defaultLabel: 'Kisan Market & Mandi', labelTa: 'சந்தை & மண்டி நிலவரம்', labelMr: 'बाजार समिती व माल भाव', labelHi: 'बाजार समिति व माल भाव', icon: ShoppingBag },
-    { id: 'alerts', labelKey: 'navAlerts', defaultLabel: 'Outbreak Alerts', labelTa: 'எச்சரிக்கைகள்', labelMr: 'रोग प्रादुर्भाव इशारा', labelHi: 'रोग चेतावनी', icon: Bell, badge: '3' }
-  ];
-
-  // 2. Farmer Knowledge Hub & Advanced Tools
-  const knowledgeNavItems = [
     { 
       id: 'esp32LiveData', 
       labelEn: 'Zone Monitoring', 
       labelTa: 'மண்டல கண்காணிப்பு (Zone Monitoring)', 
       labelMr: 'झोन मॉनिटरिंग (Zone Monitoring)', 
       labelHi: 'ज़ोन निगरानी (Zone Monitoring)', 
-      icon: Cpu
+      icon: Cpu 
     },
+    { 
+      id: 'scan', 
+      defaultLabel: 'AI Crop Scanner',
+      labelEn: 'AI Crop Scanner', 
+      labelTa: 'AI பயிர் ஸ்கேனர்', 
+      labelMr: 'एआय पीक स्कॅनर', 
+      labelHi: 'एआय फसल स्कैनर', 
+      icon: Camera 
+    },
+    { 
+      id: 'market', 
+      defaultLabel: 'Kisan Mandi',
+      labelEn: 'Kisan Mandi', 
+      labelTa: 'சந்தை & கிசான் மண்டி', 
+      labelMr: 'बाजार समिती व किसान मंडी', 
+      labelHi: 'किसान मंडी व भाव', 
+      icon: ShoppingBag 
+    },
+    { 
+      id: 'govtSchemes', 
+      defaultLabel: 'Govt Schemes',
+      labelEn: 'Govt Schemes', 
+      labelTa: 'அரசு திட்டங்கள் & மானியம்', 
+      labelMr: 'शासकीय योजना व पीएम-किसान', 
+      labelHi: 'सरकारी योजनाएं व पीएम-किसान', 
+      icon: Landmark 
+    }
+  ];
+
+  // 2. Farmer Knowledge Hub & Advanced Tools
+  const knowledgeNavItems = [
+    { id: 'home', labelKey: 'navHome', defaultLabel: 'Home Dashboard', labelTa: 'முகப்பு பக்கம்', labelMr: 'मुख्य मुख्यपृष्ठ', labelHi: 'मुख्य डैशबोर्ड', icon: Home },
+    { id: 'cropSell', labelEn: 'Sell Crops & Products', defaultLabel: 'Sell Crops & Products', labelTa: 'பயிர் விற்பனை சந்தை', labelMr: 'शेतकरी पीक विक्री केंद्र', labelHi: 'किसान फसल बिक्री', icon: Sprout },
+    { id: 'alerts', labelKey: 'navAlerts', defaultLabel: 'Outbreak Alerts', labelTa: 'எச்சரிக்கைகள்', labelMr: 'रोग प्रादुर्भाव इशारा', labelHi: 'रोग चेतावनी', icon: Bell, badge: '3' },
     { 
       id: 'chotaKissan', 
       labelEn: 'Kisan One (Voice AI)', 
@@ -121,14 +146,6 @@ export const WebLeftSidebar = ({ activeTab, onNavigate, mobileOpen, setMobileOpe
       labelMr: 'खत व फवारणी वेळापत्रक', 
       labelHi: 'उर्वरक व छिड़काव अनुसूची', 
       icon: Lightbulb
-    },
-    { 
-      id: 'govtSchemes', 
-      labelEn: 'Govt Schemes & PM-KISAN', 
-      labelTa: 'அரசு திட்டங்கள் & மானியம்', 
-      labelMr: 'शासकीय योजना व पीएम-किसान', 
-      labelHi: 'सरकारी योजनाएं व पीएम-किसान', 
-      icon: Landmark
     },
     { 
       id: 'statistics', 
@@ -501,7 +518,7 @@ export const WebLeftSidebar = ({ activeTab, onNavigate, mobileOpen, setMobileOpe
               <div className="space-y-1 pt-1 border-t border-[#0A4D37]/80 dark:border-slate-800">
                 <span className="text-[10px] font-black uppercase tracking-wider text-emerald-300/80 dark:text-slate-400 px-3 py-1.5 flex items-center justify-between font-mono">
                   <span>{lang === 'ta' ? 'அறிவு மையம் & கருவிகள்' : lang === 'mr' ? 'ज्ञान केंद्र व साधने' : 'Knowledge Hub & Tools'}</span>
-                  <span className="text-[9px] text-emerald-400/70 font-mono">9 Tools</span>
+                  <span className="text-[9px] text-emerald-400/70 font-mono">{knowledgeNavItems.length} Tools</span>
                 </span>
 
                 <nav className="space-y-1">
