@@ -981,55 +981,6 @@ export const WebFarmerScanner = ({ onNavigate }) => {
             />
           </div>
 
-          {/* Quick Real Leaf Benchmark Samples */}
-          <div className={`p-4 sm:p-5 rounded-3xl border shadow-sm space-y-3 ${
-            isDark ? 'border-slate-800 bg-[#0a1120]' : 'border-slate-200 bg-white'
-          }`}>
-            <div className="flex items-center justify-between">
-              <span className="text-xs font-black text-slate-800 dark:text-slate-300 flex items-center gap-2">
-                <Sparkles className="w-3.5 h-3.5 text-amber-500" />
-                <span>{t('benchmarkSpecimens', 'Original Agricultural Leaf Benchmark Specimens:')}</span>
-              </span>
-              <span className="text-[10px] font-mono text-emerald-700 dark:text-emerald-400 font-bold">
-                {lang === 'ta' ? 'அசல் புகைப்படங்கள்' : lang === 'mr' ? 'खरे फोटो' : 'Real Photos'}
-              </span>
-            </div>
-
-            <div className="grid grid-cols-3 gap-3">
-              {sampleLeafOptions.map(sample => {
-                const isCurrent = selectedImagePreview === sample.image;
-                const sampleName = getSampleLocalized(sample, 'crop') || sample.crop;
-
-                return (
-                  <button
-                    key={sample.id}
-                    onClick={() => {
-                      if (sample.id === 'cotton_blight') setSelectedCrop('Cotton');
-                      else if (sample.id === 'tomato_early_blight') setSelectedCrop('Tomato');
-                      else if (sample.id === 'rice_healthy') setSelectedCrop('Rice');
-                      setSelectedImagePreview(sample.image);
-                      handleTriggerScan(sample, sample.image);
-                    }}
-                    className={`p-2.5 rounded-2xl border text-left transition-all cursor-pointer group flex flex-col justify-between min-h-[90px] hover:-translate-y-0.5 relative overflow-hidden ${
-                      isCurrent
-                        ? 'border-emerald-600 bg-emerald-50/80 dark:bg-emerald-950/40 ring-2 ring-emerald-500/20'
-                        : isDark 
-                        ? 'bg-slate-800/80 border-slate-700 hover:border-emerald-500' 
-                        : 'bg-slate-50 border-slate-200 hover:border-emerald-400'
-                    }`}
-                  >
-                    <div className="w-full h-10 rounded-xl overflow-hidden border border-slate-300 dark:border-slate-700 mb-1.5">
-                      <img src={sample.image} alt={sample.cropKey} className="w-full h-full object-cover" />
-                    </div>
-                    <span className="text-[11px] font-black text-slate-900 dark:text-white leading-tight truncate">
-                      {sampleName}
-                    </span>
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-
         </div>
 
         {/* RIGHT COLUMN (6 cols): Diagnostics & Prescriptions */}
@@ -1414,7 +1365,7 @@ export const WebFarmerScanner = ({ onNavigate }) => {
                 </div>
                 <div className="flex items-start space-x-3">
                   <span className="w-6 h-6 rounded-full bg-[#1B5E20] text-white flex items-center justify-center font-bold text-xs shrink-0 font-mono">2</span>
-                  <p>{lang === 'ta' ? 'இலையை வெளிச்சத்தில் வைத்து புகைப்படம் எடுக்கவும் அல்லது மாதிரி இலையைத் தேர்ந்தெடுக்கவும்.' : lang === 'mr' ? 'पान चांगल्या प्रकाशात धरून फोटो काढा किंवा खालील नमुना निवडा.' : 'Hold the leaf under natural light or select one of the real benchmark specimens below.'}</p>
+                  <p>{lang === 'ta' ? 'இலையை வெளிச்சத்தில் வைத்து தெளிவான புகைப்படம் எடுக்கவும்.' : lang === 'mr' ? 'पान चांगल्या प्रकाशात धरून स्पष्ट फोटो काढा.' : 'Hold the leaf under natural light and capture a clear photo.'}</p>
                 </div>
                 <div className="flex items-start space-x-3">
                   <span className="w-6 h-6 rounded-full bg-[#1B5E20] text-white flex items-center justify-center font-bold text-xs shrink-0 font-mono">3</span>
