@@ -29,9 +29,12 @@ import {
   ArrowRight,
   Database,
   Sprout,
-  Check
+  Check,
+  Volume2,
+  VolumeX
 } from 'lucide-react';
 import { analyzeLeafWithGroq, ensureImageBase64 } from '../../services/visionService.js';
+import { speakDiagnosisPrediction, stopSpeech, isSpeaking } from '../../utils/speechUtils';
 
 // Real Botanical Leaf Photography Assets (100% locally hosted & infallible)
 const REAL_LEAF_SAMPLES = {
@@ -97,6 +100,60 @@ export const WebFarmerScanner = ({ onNavigate }) => {
   const [inferenceProgress, setInferenceProgress] = useState(0);
   const [scanStage, setScanStage] = useState(1);
   const [addedToast, setAddedToast] = useState(null);
+  const [isSpeakingTTS, setIsSpeakingTTS] = useState(false);
+
+  // Stop speech if scanner unmounts
+  useEffect(() => {
+    return () => {
+      stopSpeech();
+    };
+  }, []);
+
+  const handleToggleDiagnosisTTS = () => {
+    if (!scanResult) return;
+    if (isSpeakingTTS) {
+      stopSpeech();
+      setIsSpeakingTTS(false);
+    } else {
+      speakDiagnosisPrediction(scanResult, lang, {
+        onStart: () => setIsSpeakingTTS(true),
+        onEnd: () => setIsSpeakingTTS(false),
+        onError: () => setIsSpeakingTTS(false)
+      });
+    }
+  };
+
+  const getSpeakTTSLabel = () => {
+    switch (lang) {
+      case 'mr': return 'निदान ऐका (Audio)';
+      case 'hi': return 'निदान सुनें (Audio)';
+      case 'ta': return 'அறிக்கையைக் கேட்க (Audio)';
+      case 'te': return 'ఫలితం వినండి (Audio)';
+      case 'kn': return 'ಫಲಿತಾಂಶ ಆಲಿಸಿ (Audio)';
+      case 'gu': return 'પરિણામ સાંભળો (Audio)';
+      case 'bn': return 'ফলাফল শুনুন (Audio)';
+      case 'pa': return 'ਨਤੀਜਾ ਸੁਣੋ (Audio)';
+      case 'ml': return 'ഫലം കേൾക്കുക (Audio)';
+      case 'en':
+      default: return 'Listen to Prediction (Audio)';
+    }
+  };
+
+  const getStopTTSLabel = () => {
+    switch (lang) {
+      case 'mr': return 'आवाज थांबवा';
+      case 'hi': return 'आवाज रोकें';
+      case 'ta': return 'ஒலியை நிறுத்து';
+      case 'te': return 'ఆపండి';
+      case 'kn': return 'ನಿಲ್ಲಿಸಿ';
+      case 'gu': return 'અટકાવો';
+      case 'bn': return 'থামান';
+      case 'pa': return 'ਰੋਕੋ';
+      case 'ml': return 'നിർത്തുക';
+      case 'en':
+      default: return 'Stop Audio';
+    }
+  };
 
   const videoRef = useRef(null);
   const fileInputRef = useRef(null);
@@ -482,6 +539,8 @@ export const WebFarmerScanner = ({ onNavigate }) => {
   const handleTriggerScan = async (option = null, customImg = null) => {
     const rawTarget = customImg || (option ? option.image : selectedImagePreview);
     
+    stopSpeech();
+    setIsSpeakingTTS(false);
     setAnalyzing(true);
     setScanResult(null);
     setNonPlantRejection(null);
@@ -1189,21 +1248,54 @@ export const WebFarmerScanner = ({ onNavigate }) => {
                     : 'bg-emerald-50/90 border-emerald-400 text-slate-900'
               }`}>
                 
-                <div className="flex items-center space-x-3.5">
-                  <div className={`w-14 h-14 rounded-2xl flex items-center justify-center shrink-0 shadow-md ${
-                    scanResult.medicineName ? 'bg-rose-600 text-white' : 'bg-emerald-600 text-white'
-                  }`}>
-                    {scanResult.medicineName ? <AlertOctagon className="w-7 h-7" /> : <CheckCircle2 className="w-7 h-7" />}
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b pb-4 border-slate-200/50 dark:border-slate-800">
+                  <div className="flex items-center space-x-3.5 min-w-0">
+                    <div className={`w-14 h-14 rounded-2xl flex items-center justify-center shrink-0 shadow-md ${
+                      scanResult.medicineName ? 'bg-rose-600 text-white' : 'bg-emerald-600 text-white'
+                    }`}>
+                      {scanResult.medicineName ? <AlertOctagon className="w-7 h-7" /> : <CheckCircle2 className="w-7 h-7" />}
+                    </div>
+
+                    <div className="min-w-0">
+                      <span className="text-[10px] font-black uppercase tracking-wider text-slate-500 dark:text-slate-400 font-mono block">
+                        {t('pathologyVerdict', 'Crop Pathological Diagnosis Verdict')}
+                      </span>
+                      <h3 className="text-xl font-black leading-tight mt-0.5 text-slate-900 dark:text-white truncate">
+                        {getSampleLocalized(scanResult, 'verdict') || scanResult.verdict}
+                      </h3>
+                    </div>
                   </div>
 
-                  <div>
-                    <span className="text-[10px] font-black uppercase tracking-wider text-slate-500 dark:text-slate-400 font-mono block">
-                      {t('pathologyVerdict', 'Crop Pathological Diagnosis Verdict')}
-                    </span>
-                    <h3 className="text-xl font-black leading-tight mt-0.5 text-slate-900 dark:text-white">
-                      {getSampleLocalized(scanResult, 'verdict') || scanResult.verdict}
-                    </h3>
-                  </div>
+                  {/* Manual Audio TTS Voice Button (Non-automatic) */}
+                  <button
+                    type="button"
+                    onClick={handleToggleDiagnosisTTS}
+                    className={`px-4 py-2.5 rounded-2xl font-bold text-xs flex items-center gap-2 transition-all cursor-pointer shadow-md active:scale-95 shrink-0 border ${
+                      isSpeakingTTS
+                        ? 'bg-rose-600 hover:bg-rose-700 text-white border-rose-500 animate-pulse ring-2 ring-rose-400/40'
+                        : isDark
+                        ? 'bg-emerald-950/80 hover:bg-emerald-900 text-emerald-300 border-emerald-700/80 hover:border-emerald-500'
+                        : 'bg-white hover:bg-emerald-50 text-emerald-800 border-emerald-300 hover:border-emerald-400'
+                    }`}
+                    title={isSpeakingTTS ? 'Stop audio playback' : 'Listen to analysis output prediction in your language'}
+                  >
+                    {isSpeakingTTS ? (
+                      <>
+                        <VolumeX className="w-4 h-4 text-white" />
+                        <span>{getStopTTSLabel()}</span>
+                        <span className="flex gap-0.5 items-end h-3 ml-1">
+                          <span className="w-1 bg-white animate-bounce h-2 rounded-full"></span>
+                          <span className="w-1 bg-white animate-bounce h-3 rounded-full" style={{ animationDelay: '0.15s' }}></span>
+                          <span className="w-1 bg-white animate-bounce h-1.5 rounded-full" style={{ animationDelay: '0.3s' }}></span>
+                        </span>
+                      </>
+                    ) : (
+                      <>
+                        <Volume2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+                        <span>{getSpeakTTSLabel()}</span>
+                      </>
+                    )}
+                  </button>
                 </div>
 
                 <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-300 font-medium leading-relaxed">
@@ -1338,7 +1430,12 @@ export const WebFarmerScanner = ({ onNavigate }) => {
 
               {/* Scan Another Button */}
               <button
-                onClick={() => { setScanResult(null); setNonPlantRejection(null); }}
+                onClick={() => {
+                  stopSpeech();
+                  setIsSpeakingTTS(false);
+                  setScanResult(null);
+                  setNonPlantRejection(null);
+                }}
                 className={`w-full py-3.5 font-black text-xs rounded-2xl flex items-center justify-center gap-2 cursor-pointer border ${
                   isDark ? 'bg-slate-800 hover:bg-slate-700 text-slate-200 border-slate-700' : 'bg-slate-100 hover:bg-slate-200 text-slate-800 border-slate-300'
                 }`}

@@ -1,16 +1,18 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useApp } from '../../context/AppContext';
 import { 
   ArrowLeft, 
   Volume2, 
+  VolumeX,
   Check, 
   ChevronRight, 
   AlertTriangle, 
   ShieldAlert, 
   Share2, 
-  Sparkles,
+  Sparkles, 
   Info
 } from 'lucide-react';
+import { speakText, stopSpeech, isSpeaking } from '../../utils/speechUtils';
 
 export const DiagnosisResult = () => {
   const { 
@@ -18,9 +20,16 @@ export const DiagnosisResult = () => {
     lang, 
     setActiveTab, 
     currentDiagnosis, 
-    selectedLeafImage,
-    speakText 
+    selectedLeafImage 
   } = useApp();
+
+  const [isSpeakingAudio, setIsSpeakingAudio] = useState(false);
+
+  useEffect(() => {
+    return () => {
+      stopSpeech();
+    };
+  }, []);
 
   const d = currentDiagnosis;
 
@@ -30,13 +39,26 @@ export const DiagnosisResult = () => {
 
   // Speech summary text
   const handleListenAdvisory = () => {
+    if (isSpeakingAudio) {
+      stopSpeech();
+      setIsSpeakingAudio(false);
+      return;
+    }
+
     let text = `Disease detected: ${d.name}. Scientific name: ${d.scientificName}. Confidence ${d.confidence} percent. Early risk score is ${d.riskScore} percent.`;
     if (lang === 'mr') {
       text = `आढळलेला रोग: ${d.marathiName}. अचूकता ${d.confidence} टक्के. पुढील ७ दिवसांत जास्त धोका असण्याची शक्यता. त्वरित शिफारस केलेले उपाय करा.`;
     } else if (lang === 'hi') {
       text = `पहचाना गया रोग: ${d.hindiName}. सटीकता ${d.confidence} प्रतिशत। उच्च जोखिम पाया गया है। तत्काल उपचार शुरू करें।`;
+    } else if (lang === 'ta') {
+      text = `கண்டறியப்பட்ட நோய்: ${d.name}. துல்லியம் ${d.confidence} சதவீதம். பரிந்துரைக்கப்பட்ட சிகிச்சை நடவடிக்கைகளை உடனடியாக தொடங்கவும்.`;
     }
-    speakText(text);
+
+    speakText(text, lang, {
+      onStart: () => setIsSpeakingAudio(true),
+      onEnd: () => setIsSpeakingAudio(false),
+      onError: () => setIsSpeakingAudio(false)
+    });
   };
 
   const isHighSeverity = d.severity === 'High';
@@ -57,10 +79,17 @@ export const DiagnosisResult = () => {
 
         <button
           onClick={handleListenAdvisory}
-          className="p-2 bg-emerald-700/80 hover:bg-emerald-600 text-white rounded-full transition-colors flex items-center gap-1 text-xs"
-          title="Listen in your language"
+          className={`p-2 rounded-full transition-all flex items-center gap-1.5 text-xs cursor-pointer shadow-sm ${
+            isSpeakingAudio
+              ? 'bg-rose-600 hover:bg-rose-700 text-white animate-pulse'
+              : 'bg-emerald-700/80 hover:bg-emerald-600 text-white'
+          }`}
+          title={isSpeakingAudio ? "Stop reading" : "Listen in your language"}
         >
-          <Volume2 className="w-4 h-4" />
+          {isSpeakingAudio ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
+          <span className="hidden sm:inline font-bold text-[11px]">
+            {isSpeakingAudio ? (lang === 'mr' ? 'थांबवा' : lang === 'ta' ? 'நிறுத்து' : 'Stop') : (lang === 'mr' ? 'ऐका' : lang === 'ta' ? 'கேட்க' : 'Listen')}
+          </span>
         </button>
       </div>
 

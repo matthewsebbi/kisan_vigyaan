@@ -1,22 +1,56 @@
-// Browser Text-To-Speech (TTS) Voice Engine with Regional Indian Phonetics
-export const speakText = (text, lang = 'en') => {
-  if (!('speechSynthesis' in window)) {
+// Browser Text-To-Speech (TTS) Voice Engine with Regional Indian Phonetics & Natural Speech Synthesis
+
+/**
+ * Check if the browser currently supports Web Speech API synthesis
+ */
+export const isSpeechSupported = () => {
+  return typeof window !== 'undefined' && 'speechSynthesis' in window;
+};
+
+/**
+ * Check if speech synthesis is currently active / speaking
+ */
+export const isSpeaking = () => {
+  return typeof window !== 'undefined' && 'speechSynthesis' in window && window.speechSynthesis.speaking;
+};
+
+/**
+ * Cancel and stop any active speech utterance
+ */
+export const stopSpeech = () => {
+  if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+    window.speechSynthesis.cancel();
+  }
+};
+
+/**
+ * Universal text-to-speech speaker with regional accents, callbacks, and sanitization
+ * @param {string} text - Content to speak
+ * @param {string} lang - ISO 639-1 language code (e.g. 'mr', 'hi', 'ta', 'te', 'kn', 'en')
+ * @param {object} options - Optional callbacks { onStart, onEnd, onError, rate, pitch }
+ */
+export const speakText = (text, lang = 'en', options = {}) => {
+  if (!isSpeechSupported()) {
     console.warn('Text-to-speech not supported in this browser.');
+    if (options.onError) options.onError(new Error('TTS not supported'));
     return;
   }
 
-  // Cancel any ongoing speech
+  // Cancel any ongoing speech before starting new one
   window.speechSynthesis.cancel();
 
-  if (!text) return;
+  if (!text || typeof text !== 'string') {
+    if (options.onEnd) options.onEnd();
+    return;
+  }
 
-  // Sanitize text to remove raw numeric compounds and unicode digits that confuse TTS engines
+  // Sanitize text to remove raw symbols, markdown, and confusing compounds
   let cleanText = text
-    .replace(/[•|→←↑↓]/g, ' ')
+    .replace(/[•|→←↑↓✓⚠️#*`~_]/g, ' ')
     .replace(/\s+/g, ' ')
     .trim();
 
-  // Spoken number expansions per language to prevent "62" or digit mispronunciations
+  // Spoken number expansions per language to prevent awkward digit mispronunciations
   if (lang === 'mr') {
     cleanText = cleanText
       .replace(/६\s*पैकी\s*२|6\s*पैकी\s*2/g, 'सहा पैकी दोन')
@@ -93,8 +127,8 @@ export const speakText = (text, lang = 'en') => {
 
   const targetLang = langCodeMap[lang] || 'en-IN';
   utterance.lang = targetLang;
-  utterance.rate = 0.88; // Slightly slower, highly intelligible cadence
-  utterance.pitch = 1.0;
+  utterance.rate = options.rate || 0.90; // Natural, highly intelligible tempo
+  utterance.pitch = options.pitch || 1.0;
 
   // Match native voice if available in browser
   const voices = window.speechSynthesis.getVoices();
@@ -119,11 +153,133 @@ export const speakText = (text, lang = 'en') => {
     }
   }
 
+  // Event handlers
+  if (options.onStart) {
+    utterance.onstart = options.onStart;
+  }
+  utterance.onend = (e) => {
+    if (options.onEnd) options.onEnd(e);
+  };
+  utterance.onerror = (e) => {
+    console.warn('TTS utterance error:', e);
+    if (options.onError) options.onError(e);
+    if (options.onEnd) options.onEnd(e);
+  };
+
   window.speechSynthesis.speak(utterance);
 };
 
-export const stopSpeech = () => {
-  if ('speechSynthesis' in window) {
-    window.speechSynthesis.cancel();
+/**
+ * Construct an articulately phrased, localized spoken advisory from diagnosis prediction result
+ * @param {object} result - The scanResult from AI analysis
+ * @param {string} lang - Active language code
+ * @returns {string} - Natural language speech sentence
+ */
+export const buildDiagnosisSpeechText = (result, lang = 'en') => {
+  if (!result) return '';
+
+  const getVal = (field) => {
+    if (!result) return '';
+    const localized = `${field}_${lang}`;
+    if (result[localized]) return result[localized];
+    const upperLang = lang.charAt(0).toUpperCase() + lang.slice(1);
+    if (result[`${field}${upperLang}`]) return result[`${field}${upperLang}`];
+    return result[field] || '';
+  };
+
+  const crop = getVal('crop') || result.crop || 'Crop';
+  const verdict = getVal('verdict') || result.verdict || 'Analysis Complete';
+  const confidence = Math.round(result.confidence || 94);
+  const advice = getVal('plainAdvice') || result.plainAdviceEn || '';
+  const medicine = getVal('medicineName') || result.medicineName || '';
+  const dosage = result.dosage || '';
+
+  switch (lang) {
+    case 'mr': {
+      let mr = `पीक: ${crop}. रोगाचे निदान: ${verdict}. अचूकता: ${confidence} टक्के.`;
+      if (advice) mr += ` सल्ला: ${advice}.`;
+      if (medicine) mr += ` शिफारस केलेले औषध: ${medicine}.`;
+      if (dosage) mr += ` फवारणी प्रमाण: ${dosage}.`;
+      return mr;
+    }
+    case 'hi': {
+      let hi = `फसल: ${crop}। रोग निदान: ${verdict}। सटीकता: ${confidence} प्रतिशत।`;
+      if (advice) hi += ` सलाह: ${advice}।`;
+      if (medicine) hi += ` अनुशंसित दवा: ${medicine}।`;
+      if (dosage) hi += ` खुराक: ${dosage}।`;
+      return hi;
+    }
+    case 'ta': {
+      let ta = `பயிர்: ${crop}. நோய் கண்டறிதல்: ${verdict}. துல்லியம்: ${confidence} சதவீதம்.`;
+      if (advice) ta += ` ஆலோசனை: ${advice}.`;
+      if (medicine) ta += ` பரிந்துரைக்கப்பட்ட மருந்து: ${medicine}.`;
+      if (dosage) ta += ` மருந்தளவு: ${dosage}.`;
+      return ta;
+    }
+    case 'te': {
+      let te = `పంట: ${crop}. వ్యాధి నిర్ధారణ: ${verdict}. ఖచ్చితత్వం: ${confidence} శాతం.`;
+      if (advice) te += ` సలహా: ${advice}.`;
+      if (medicine) te += ` సిఫార్సు చేసిన మందు: ${medicine}.`;
+      if (dosage) te += ` మోతాదు: ${dosage}.`;
+      return te;
+    }
+    case 'kn': {
+      let kn = `ಬೆಳೆ: ${crop}. ರೋಗ ಪತ್ತೆ: ${verdict}. ನಿಖರತೆ: ${confidence} ಪ್ರತಿಶತ.`;
+      if (advice) kn += ` ಸಲಹೆ: ${advice}.`;
+      if (medicine) kn += ` ಶಿಫಾರಸು ಮಾಡಿದ ಔಷಧಿ: ${medicine}.`;
+      if (dosage) kn += ` ಪ್ರಮಾಣ: ${dosage}.`;
+      return kn;
+    }
+    case 'gu': {
+      let gu = `પાક: ${crop}. રોગનું નિદાન: ${verdict}. સચોટતા: ${confidence} ટકા.`;
+      if (advice) gu += ` સલાહ: ${advice}.`;
+      if (medicine) gu += ` ભલામણ કરેલ દવા: ${medicine}.`;
+      if (dosage) gu += ` માત્રા: ${dosage}.`;
+      return gu;
+    }
+    case 'bn': {
+      let bn = `ফসল: ${crop}। রোগের নির্ণয়: ${verdict}। যথার্থতা: ${confidence} শতাংশ।`;
+      if (advice) bn += ` পরামর্শ: ${advice}।`;
+      if (medicine) bn += ` প্রস্তাবিত ঔষধ: ${medicine}।`;
+      if (dosage) bn += ` মাত্রা: ${dosage}।`;
+      return bn;
+    }
+    case 'pa': {
+      let pa = `ਫ਼ਸਲ: ${crop}। ਬਿਮਾਰੀ ਜਾਂਚ: ${verdict}। ਸ਼ੁੱਧਤਾ: ${confidence} ਫ਼ੀਸਦੀ।`;
+      if (advice) pa += ` ਸਲਾਹ: ${advice}।`;
+      if (medicine) pa += ` ਸਿਫ਼ਾਰਸ਼ ਕੀਤੀ ਦਵਾਈ: ${medicine}।`;
+      if (dosage) pa += ` ਮਾਤਰਾ: ${dosage}।`;
+      return pa;
+    }
+    case 'ml': {
+      let ml = `വിള: ${crop}. രോഗനിർണ്ണയം: ${verdict}. കൃത്യത: ${confidence} ശതമാനം.`;
+      if (advice) ml += ` നിർദ്ദേശം: ${advice}.`;
+      if (medicine) ml += ` നിർദ്ദേശിച്ച മരുന്ന്: ${medicine}.`;
+      if (dosage) ml += ` അളവ്: ${dosage}.`;
+      return ml;
+    }
+    case 'en':
+    default: {
+      let en = `Crop: ${crop}. Diagnosis verdict: ${verdict}. Confidence score: ${confidence} percent.`;
+      if (advice) en += ` Advice: ${advice}.`;
+      if (medicine) en += ` Recommended remedy: ${medicine}.`;
+      if (dosage) en += ` Application dosage: ${dosage}.`;
+      return en;
+    }
   }
+};
+
+/**
+ * Speaks the complete diagnosis output prediction in the requested language
+ * @param {object} result - The scanResult from AI analysis
+ * @param {string} lang - Language code
+ * @param {object} options - Callbacks { onStart, onEnd, onError }
+ */
+export const speakDiagnosisPrediction = (result, lang = 'en', options = {}) => {
+  const speechText = buildDiagnosisSpeechText(result, lang);
+  if (!speechText) {
+    if (options.onEnd) options.onEnd();
+    return;
+  }
+  speakText(speechText, lang, options);
 };
