@@ -26,13 +26,14 @@ import {
   Calculator,
   Wind,
   Mic,
-  Sprout,
-  Cpu
+  Cpu,
+  Bot
 } from 'lucide-react';
 import { PlotDrawerPanel } from './PlotDrawerPanel';
+import { KisanChatBot } from '../chat/KisanChatBot';
 
 export const WebFarmerHomeScreen = ({ onNavigate }) => {
-  const { lang, t, theme, currentUser, setIsChotaKissanOpen } = useApp();
+  const { lang, t, theme, currentUser, setIsChotaKissanOpen, setIsChatbotOpen } = useApp();
   const isDark = theme === 'dark';
 
   // Helper to retrieve localized text for plots
@@ -414,11 +415,20 @@ export const WebFarmerHomeScreen = ({ onNavigate }) => {
             </button>
 
             <button
-              onClick={() => setIsChotaKissanOpen(true)}
+              onClick={() => {
+                const el = document.getElementById('core-dashboard-chatbot');
+                if (el) {
+                  el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                  const input = el.querySelector('input');
+                  if (input) input.focus();
+                } else if (setIsChatbotOpen) {
+                  setIsChatbotOpen(true);
+                }
+              }}
               className="px-4 py-2.5 rounded-xl bg-white dark:bg-[#121F38] hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-200 font-semibold text-xs border border-slate-200 dark:border-slate-700 shadow-xs flex items-center gap-2 transition-all cursor-pointer"
             >
-              <span>Ask Kisan One</span>
-              <Mic className="w-3.5 h-3.5 text-emerald-600 animate-pulse" />
+              <Bot className="w-3.5 h-3.5 text-emerald-600 animate-pulse" />
+              <span>AI Chatbot (TTS)</span>
             </button>
 
             <button
@@ -577,6 +587,30 @@ export const WebFarmerHomeScreen = ({ onNavigate }) => {
         </div>
       </div>
 
+      {/* 2.5 CORE DASHBOARD EMBEDDED KISAN AI CHATBOT (WITH MULTILINGUAL TTS AUDIO SERVICE) */}
+      <div className="space-y-2.5">
+        <div className="flex items-center justify-between px-1">
+          <div className="flex items-center gap-2">
+            <h2 className="text-base sm:text-lg font-black text-slate-900 dark:text-white flex items-center gap-2">
+              <Bot className="w-5 h-5 text-emerald-600 dark:text-emerald-400 animate-pulse" />
+              <span>{lang === 'mr' ? 'किसान एआय कृषी चॅटबॉट (थेट आवाज व टीटीएस)' : lang === 'ta' ? 'கிசான் AI விவசாய சாட்போட் (TTS)' : lang === 'hi' ? 'किसान एआई कृषि चैटबॉट (ऑडियो व टीटीएस)' : 'Kisan AI Agronomist Chatbot (Interactive TTS)'}</span>
+            </h2>
+            <span className="px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300 font-mono">
+              Live Core Assistant
+            </span>
+          </div>
+          <span className="text-xs text-slate-500 dark:text-slate-400 font-medium hidden sm:inline">
+            Voice Typing • Audio Readout • Instant Agronomy Solutions
+          </span>
+        </div>
+
+        <KisanChatBot 
+          id="core-dashboard-chatbot"
+          isWidget={false} 
+          embedded={true} 
+          onNavigate={onNavigate} 
+        />
+      </div>
 
       {/* 3. MAIN DASHBOARD CONTENT (Two-Column Split) */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">

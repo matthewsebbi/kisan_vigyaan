@@ -31,7 +31,14 @@ import {
   SUPPORTED_LANGUAGES 
 } from '../../services/chotaKissanEngine';
 
-export const KisanChatBot = ({ isWidget = false, isOpen = true, onClose, onNavigate }) => {
+export const KisanChatBot = ({ 
+  isWidget = false, 
+  isOpen = true, 
+  onClose, 
+  onNavigate, 
+  id = null, 
+  embedded = false 
+}) => {
   const { lang, theme, currentUser, activeTab, setActiveTab } = useApp();
   const isDark = theme === 'dark';
 
@@ -256,11 +263,15 @@ export const KisanChatBot = ({ isWidget = false, isOpen = true, onClose, onNavig
   if (isWidget && !isOpen) return null;
 
   return (
-    <div className={`transition-all duration-300 ${
-      isWidget 
-        ? 'fixed bottom-5 right-5 z-50 w-full sm:w-[420px] max-w-[94vw] shadow-2xl rounded-3xl overflow-hidden border border-emerald-500/30' 
-        : 'w-full max-w-5xl mx-auto space-y-4 animate-fadeIn'
-    } ${isDark ? 'bg-[#0b121e] text-slate-100' : 'bg-white text-slate-900'}`}>
+    <div 
+      id={id}
+      className={`transition-all duration-300 ${
+        isWidget 
+          ? 'fixed bottom-5 right-5 z-50 w-full sm:w-[420px] max-w-[94vw] shadow-2xl rounded-3xl overflow-hidden border border-emerald-500/30' 
+          : embedded
+          ? 'w-full rounded-3xl overflow-hidden border shadow-sm ' + (isDark ? 'border-slate-800 bg-[#0a1120]' : 'border-emerald-200 bg-white')
+          : 'w-full max-w-5xl mx-auto space-y-4 animate-fadeIn'
+      } ${isDark ? 'bg-[#0b121e] text-slate-100' : 'bg-white text-slate-900'}`}>
 
       {/* HEADER BAR */}
       <div className={`p-4 flex items-center justify-between border-b ${
@@ -385,7 +396,11 @@ export const KisanChatBot = ({ isWidget = false, isOpen = true, onClose, onNavig
 
           {/* CHAT MESSAGES CONTAINER */}
           <div className={`p-4 sm:p-5 overflow-y-auto space-y-3.5 ${
-            isWidget ? 'h-[360px] sm:h-[420px]' : 'h-[520px] rounded-3xl border ' + (isDark ? 'border-slate-800 bg-[#090f1a]' : 'border-slate-200 bg-slate-50/50')
+            isWidget 
+              ? 'h-[360px] sm:h-[420px]' 
+              : embedded
+              ? 'h-[360px] sm:h-[400px]'
+              : 'h-[520px] rounded-3xl border ' + (isDark ? 'border-slate-800 bg-[#090f1a]' : 'border-slate-200 bg-slate-50/50')
           }`}>
             {messages.map((msg) => {
               const isBot = msg.sender === 'bot';
