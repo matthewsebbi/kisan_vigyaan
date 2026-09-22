@@ -478,6 +478,7 @@ export const AppProvider = ({ children }) => {
   const [isAccountSwitcherOpen, setIsAccountSwitcherOpen] = useState(false);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const [isChotaKissanOpen, setIsChotaKissanOpen] = useState(false);
+  const [isChatbotOpen, setIsChatbotOpen] = useState(false);
 
   // Isolated Cart
   const [cart, setCart] = useState(() => {
@@ -1446,6 +1447,8 @@ export const AppProvider = ({ children }) => {
         setIsLanguageModalOpen,
         isChotaKissanOpen,
         setIsChotaKissanOpen,
+        isChatbotOpen,
+        setIsChatbotOpen,
         t,
 
         // Cart & Checkout

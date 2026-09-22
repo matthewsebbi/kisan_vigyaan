@@ -36,7 +36,8 @@ import { EnvironmentalPredictionDashboard } from './components/prediction/Enviro
 import { YieldROICalculator } from './components/calculator/YieldROICalculator';
 import { ChotaKissanModal } from './components/voice/ChotaKissanModal';
 import { ChotaKissanDashboardView } from './components/voice/ChotaKissanDashboardView';
-import { ArrowLeft, Layers, Mic } from 'lucide-react';
+import { KisanChatBot } from './components/chat/KisanChatBot';
+import { ArrowLeft, Layers, Mic, Bot } from 'lucide-react';
 
 class AppErrorBoundary extends React.Component {
   constructor(props) {
@@ -85,6 +86,8 @@ function MainAppShell() {
     setActiveTab, 
     isChotaKissanOpen, 
     setIsChotaKissanOpen,
+    isChatbotOpen,
+    setIsChatbotOpen,
     isLoggedIn 
   } = useApp();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -95,10 +98,11 @@ function MainAppShell() {
     return <LoginPage isModal={false} />;
   }
 
-  const isSubView = ['proTips', 'govtSchemes', 'statistics', 'satelliteMapping', 'farmerCommunity', 'reports', 'riskConsequences', 'environmentalPrediction', 'chotaKissan', 'roiCalculator'].includes(activeTab);
+  const isSubView = ['chatbot', 'proTips', 'govtSchemes', 'statistics', 'satelliteMapping', 'farmerCommunity', 'reports', 'riskConsequences', 'environmentalPrediction', 'chotaKissan', 'roiCalculator'].includes(activeTab);
 
   const getSubViewTitle = () => {
     switch (activeTab) {
+      case 'chatbot': return lang === 'ta' ? 'கிசான் AI வேளாண் சாட்போட் (TTS)' : lang === 'mr' ? 'किसान एआय कृषी चॅटबॉट (TTS)' : 'Kisan AI Agronomist Chatbot (TTS Voice)';
       case 'roiCalculator': return lang === 'ta' ? 'வருவாய் மற்றும் லாப கால்குலேட்டர்' : lang === 'mr' ? 'उत्पन्न आणि नफा कॅल्क्युलेटर' : 'Dynamic Yield & ROI Calculator';
       case 'chotaKissan': return lang === 'ta' ? 'கிசான் ஒன் (AI குரல் உதவியாளர்)' : lang === 'mr' ? 'किसान वन (एआय आवाज सहाय्यक)' : 'Kisan One AI Voice Assistant';
       case 'environmentalPrediction': return lang === 'ta' ? 'சுற்றுச்சூழல் நோய் முன்கணிப்பு இயந்திரம்' : lang === 'mr' ? 'हवामान आधारित पीक रोग अंदाज प्रणाली' : 'AI Environmental Disease Prediction Engine';
@@ -173,7 +177,9 @@ function MainAppShell() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 pb-24 lg:pb-12">
             {/* If Active Role is Officer or NGO Partner, Render Command Center or Advanced Tools */}
             {(role === 'officer' || role === 'ngo') ? (
-              activeTab === 'chotaKissan' ? (
+              activeTab === 'chatbot' ? (
+                <KisanChatBot isWidget={false} onNavigate={setActiveTab} />
+              ) : activeTab === 'chotaKissan' ? (
                 <ChotaKissanDashboardView />
               ) : activeTab === 'environmentalPrediction' ? (
                 <EnvironmentalPredictionDashboard />
@@ -199,6 +205,7 @@ function MainAppShell() {
                 {activeTab === 'more' && <WebFarmerMoreMenu onNavigate={setActiveTab} />}
 
                 {/* Reference Sub-Views from More Menu */}
+                {activeTab === 'chatbot' && <KisanChatBot isWidget={false} onNavigate={setActiveTab} />}
                 {activeTab === 'esp32LiveData' && <LiveESP32TelemetryPanel />}
                 {activeTab === 'chotaKissan' && <ChotaKissanDashboardView />}
                 {activeTab === 'environmentalPrediction' && <EnvironmentalPredictionDashboard />}
@@ -215,25 +222,33 @@ function MainAppShell() {
           </div>
         </main>
 
-        {/* Global Floating Kissan One Voice Trigger Button (Bottom-Right) */}
+        {/* Global Floating AI Chatbot Trigger Button (Bottom-Right) */}
         <div className="fixed bottom-20 lg:bottom-6 right-5 z-40">
           <button
-            onClick={() => setIsChotaKissanOpen(true)}
-            className="group relative flex items-center gap-2.5 px-4 py-3 bg-[#1B4332] hover:bg-[#2D6A4F] text-white rounded-full shadow-lg transition-all duration-200 hover:scale-105 active:scale-95 border border-emerald-400/30 cursor-pointer"
-            aria-label="Open Kissan One AI Voice Assistant"
+            onClick={() => setIsChatbotOpen(prev => !prev)}
+            className="group relative flex items-center gap-2.5 px-4 py-3 bg-gradient-to-r from-emerald-800 to-teal-800 hover:from-emerald-700 hover:to-teal-700 text-white rounded-full shadow-2xl transition-all duration-200 hover:scale-105 active:scale-95 border border-emerald-400/40 cursor-pointer"
+            aria-label="Open Kisan AI Chatbot with TTS"
           >
             {/* Ambient Pulse Ring */}
             <span className="absolute -inset-1 rounded-full bg-emerald-500/20 blur-xs animate-ping group-hover:opacity-100 opacity-60 pointer-events-none" />
             
             <div className="w-7 h-7 rounded-full bg-white/20 flex items-center justify-center shadow-xs shrink-0">
-              <Mic className="w-4 h-4 text-emerald-300 animate-pulse" />
+              <Bot className="w-4 h-4 text-emerald-300 animate-pulse" />
             </div>
             
             <span className="text-xs font-bold tracking-tight pr-1">
-              <span>Kissan One</span>
+              <span>AI Chatbot (TTS)</span>
             </span>
           </button>
         </div>
+
+        {/* Global Floating Kisan Chatbot Drawer / Widget */}
+        <KisanChatBot 
+          isWidget={true} 
+          isOpen={isChatbotOpen} 
+          onClose={() => setIsChatbotOpen(false)} 
+          onNavigate={setActiveTab} 
+        />
 
         {/* Global Chota Kissan Voice Assistant Modal */}
         <ChotaKissanModal 

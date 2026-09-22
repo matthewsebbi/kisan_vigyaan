@@ -33,7 +33,8 @@ import {
   FileSpreadsheet,
   Compass,
   MapPin,
-  LogOut
+  LogOut,
+  Bot
 } from 'lucide-react';
 
 export const WebLeftSidebar = ({ activeTab, onNavigate, mobileOpen, setMobileOpen }) => {
@@ -93,6 +94,16 @@ export const WebLeftSidebar = ({ activeTab, onNavigate, mobileOpen, setMobileOpe
       labelMr: 'शासकीय योजना व पीएम-किसान', 
       labelHi: 'सरकारी योजनाएं व पीएम-किसान', 
       icon: Landmark 
+    },
+    { 
+      id: 'chatbot', 
+      defaultLabel: 'AI Agronomist Chatbot',
+      labelEn: 'AI Agronomist Chatbot', 
+      labelTa: 'AI வேளாண் சாட்போட்', 
+      labelMr: 'एआय कृषी चॅटबॉट', 
+      labelHi: 'एआई कृषि चैटबॉट', 
+      icon: Bot,
+      badge: 'TTS'
     }
   ];
 
@@ -217,6 +228,15 @@ export const WebLeftSidebar = ({ activeTab, onNavigate, mobileOpen, setMobileOpe
       labelMr: 'शेतकरी नोंदणी', 
       labelHi: 'किसान रजिस्ट्री', 
       icon: Users 
+    },
+    { 
+      id: 'chatbot', 
+      labelEn: 'AI Agronomist Chatbot', 
+      labelTa: 'AI வேளாண் சாட்போட்',
+      labelMr: 'एआय कृषी चॅटबॉट', 
+      labelHi: 'एआई कृषि चैटबॉट', 
+      icon: Bot,
+      badge: 'TTS'
     }
   ];
 
