@@ -1,12 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useApp } from '../../context/AppContext';
 import { SoilZone3DGlobe } from './SoilZone3DGlobe';
-import { getDistrictAgroProfile } from '../../data/maharashtraHydrologyData';
-import { DISTRICT_NODES } from '../../data/maharashtraDistrictBoundaries';
 import { 
   Thermometer, 
   Droplets, 
-  Usb, 
   Gauge, 
   Radio
 } from 'lucide-react';
@@ -27,11 +24,7 @@ export const LiveESP32TelemetryPanel = () => {
   });
 
   const [isLiveConnected, setIsLiveConnected] = useState(true);
-  const [portConnected, setPortConnected] = useState(false);
   const [selectedDistrictId, setSelectedDistrictId] = useState('sangli');
-
-  const selectedDistrict = DISTRICT_NODES.find(d => d.id === selectedDistrictId) || DISTRICT_NODES[0];
-  const activeAgroProfile = getDistrictAgroProfile(selectedDistrictId);
 
   // Compute calculated values
   const environmentTemperature = telemetry.environmentTemperature;
@@ -64,22 +57,6 @@ export const LiveESP32TelemetryPanel = () => {
     return () => clearInterval(interval);
   }, [isLiveConnected]);
 
-  // Web Serial API USB Hardware Connection
-  const handleConnectHardwareUSB = async () => {
-    if (!('serial' in navigator)) {
-      alert('Web Serial API is supported in Chrome, Edge, and Opera. Please plug your ESP32 into USB!');
-      return;
-    }
-    try {
-      const port = await navigator.serial.requestPort();
-      await port.open({ baudRate: 115200 });
-      setPortConnected(true);
-      alert('Connected to ESP32 via Serial Port @ 115200 Baud! Real sensor readings active.');
-    } catch (err) {
-      console.warn('Web Serial connection attempt:', err);
-    }
-  };
-
   return (
     <div className="space-y-6 animate-fadeIn font-sans pb-12">
       
@@ -90,48 +67,6 @@ export const LiveESP32TelemetryPanel = () => {
         selectedDistrictId={selectedDistrictId}
         onSelectDistrict={setSelectedDistrictId}
       />
-
-      {/* SYNCHRONIZATION BANNER: SATELLITE FARMLAND -> HARDWARE IOT SENSORS */}
-      <div className={`p-4 rounded-2xl border shadow-vintage flex flex-col sm:flex-row sm:items-center justify-between gap-3 transition-colors ${
-        isDark ? 'bg-[#151D18] border-[#293A2E] text-[#E8EAE6]' : 'bg-[#F5F2E8] border-[#D8D1BE] text-[#2C3527]'
-      }`}>
-        <div className="flex items-center space-x-3">
-          <div className="w-9 h-9 rounded-xl bg-[#1D3D2C] text-white flex items-center justify-center font-black shrink-0 border border-[#2B543D]">
-            <Radio className="w-5 h-5 text-emerald-300 animate-pulse" />
-          </div>
-          <div>
-            <div className="flex items-center gap-2">
-              <span className="text-xs font-bold uppercase tracking-wider text-[#1D3D2C] dark:text-[#A7D8B4] font-mono">
-                Active Zone Sensor Field
-              </span>
-              <span className="px-2 py-0.5 rounded-md text-[10px] font-bold bg-[#E8F0EA] text-[#1D3D2C] dark:bg-[#1F2E23] dark:text-[#A7D8B4] border border-[#C6D8CA] dark:border-[#2E4836] font-mono">
-                {selectedDistrict.name} ({selectedDistrict.nameMr})
-              </span>
-            </div>
-            <p className="text-xs text-[#635E52] dark:text-[#A8A497] mt-0.5">
-              Regional Soil Classification: <strong className="text-[#8A5A18] dark:text-[#FCD34D]">{activeAgroProfile.soilGroup}</strong> • Clay Content: <strong className="text-[#1D3D2C] dark:text-[#86EFAC]">{activeAgroProfile.clayPercent}</strong> • Soil pH: <strong className="text-[#1C4E5B] dark:text-[#67E8F9]">{activeAgroProfile.phRange}</strong>
-            </p>
-          </div>
-        </div>
-
-        <div className="flex items-center gap-2 self-end sm:self-auto text-xs font-mono text-[#635E52] dark:text-[#A8A497]">
-          <button
-            onClick={handleConnectHardwareUSB}
-            className={`px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 cursor-pointer transition-all active:scale-95 border ${
-              portConnected 
-                ? 'bg-[#1D3D2C] text-white border-[#2E583F]' 
-                : 'bg-[#FAF8F2] dark:bg-[#1B241E] text-[#1D3D2C] dark:text-[#A7D8B4] border-[#D5CEBC] dark:border-[#2E3C32] hover:bg-[#EFE9DA]'
-            }`}
-          >
-            <Usb className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
-            <span>{portConnected ? 'ESP32 Connected' : 'Connect USB'}</span>
-          </button>
-          <span>Telemetry Link:</span>
-          <span className="px-2 py-1 rounded-lg bg-[#E8F0EA] text-[#1D3D2C] dark:bg-[#1E2E23] dark:text-[#A7D8B4] font-bold border border-[#C6D8CA] dark:border-[#2F4A37]">
-            Synced with Satellite Farmland Map
-          </span>
-        </div>
-      </div>
 
       {/* 3. LIVE HARDWARE SENSOR PANELS */}
       <div className="space-y-4">
