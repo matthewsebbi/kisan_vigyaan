@@ -1836,71 +1836,7 @@ export const SoilZone3DGlobe = ({ onSelectDistrict, selectedDistrictId = 'sangli
           </div>
         )}
 
-        {/* 4. BOTTOM TELEMETRY BAR & ACTIVE DISTRICT SYNC */}
-        <div className="absolute bottom-4 left-4 right-4 z-20">
-          <div className="p-3.5 sm:p-4 rounded-2xl bg-[#FAF8F2]/95 dark:bg-[#151D18]/95 border border-[#D8D1BE] dark:border-[#2B3B2E] backdrop-blur-md shadow-vintage-md flex flex-col lg:flex-row lg:items-center justify-between gap-3 sm:gap-4">
-            
-            <div className="flex items-start space-x-3">
-              <div className="w-11 h-11 rounded-2xl bg-[#1D3D2C] text-[#E8F0EA] flex items-center justify-center font-black shadow-sm shrink-0 border border-[#2B543D]">
-                <MapPin className="w-5 h-5 text-emerald-300" />
-              </div>
-              <div>
-                <div className="flex items-center gap-2">
-                  <h3 className="font-serif-vintage font-bold text-base text-[#1D3D2C] dark:text-white">
-                    {activeDistrict.name} ({activeDistrict.nameMr})
-                  </h3>
-                  <span className="px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-[#E8F0EA] text-[#1D3D2C] dark:bg-emerald-950/60 dark:text-emerald-300 border border-[#C6D8CA] dark:border-emerald-500/40">
-                    Active Telemetry Zone
-                  </span>
-                </div>
-                <p className="text-xs text-[#635E52] dark:text-slate-300 mt-0.5">
-                  Soil Profile: <span className="font-bold text-[#8A5A18] dark:text-amber-300">{activeProfile.soilNameEn}</span> ({activeProfile.soilGroup})
-                </p>
-              </div>
-            </div>
 
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 text-xs">
-              <div className="p-2 rounded-xl bg-[#F4EFE6] dark:bg-[#1C251F] border border-[#E2DAC8] dark:border-[#2B3B2E]">
-                <span className="text-[9px] font-bold text-[#7A7569] dark:text-slate-400 uppercase block">Soil Classification</span>
-                <span className="text-xs font-bold text-[#8A5A18] dark:text-amber-300 mt-0.5 block">{activeProfile.soilGroup}</span>
-                <span className="text-[9px] text-[#7A7569] dark:text-slate-400">Clay: {activeProfile.clayPercent}</span>
-              </div>
-
-              <div className="p-2 rounded-xl bg-[#F4EFE6] dark:bg-[#1C251F] border border-[#E2DAC8] dark:border-[#2B3B2E]">
-                <span className="text-[9px] font-bold text-[#7A7569] dark:text-slate-400 uppercase block">Reaction (pH)</span>
-                <span className="text-xs font-bold text-[#1D3D2C] dark:text-emerald-400 mt-0.5 block">{activeProfile.phRange}</span>
-                <span className="text-[9px] text-[#7A7569] dark:text-slate-400">Optimal Field Range</span>
-              </div>
-
-              <div className="p-2 rounded-xl bg-[#F4EFE6] dark:bg-[#1C251F] border border-[#E2DAC8] dark:border-[#2B3B2E] col-span-2 sm:col-span-1">
-                <span className="text-[9px] font-bold text-[#7A7569] dark:text-slate-400 uppercase block">Farmland Sync</span>
-                <span className="text-xs font-bold text-[#1E4D56] dark:text-cyan-300 mt-0.5 block">{activeDistrict.name} Agro Belt</span>
-                <span className="text-[9px] text-[#1D3D2C] dark:text-emerald-400 flex items-center gap-1 font-bold">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#1D3D2C] dark:bg-emerald-400"></span>
-                  <span>ESP32 Hardware Linked</span>
-                </span>
-              </div>
-            </div>
-
-            <div className="shrink-0 flex items-center gap-2">
-              <label className="text-[11px] font-bold text-[#635E52] dark:text-slate-400 whitespace-nowrap hidden sm:inline">
-                District:
-              </label>
-              <select
-                value={activeDistrict.id}
-                onChange={(e) => handleSelectDistrict(e.target.value)}
-                className="px-3 py-2 rounded-xl text-xs font-bold bg-[#FAF8F2] dark:bg-[#1C251F] text-[#1F2E22] dark:text-white border border-[#D5CEBC] dark:border-[#2B3B2E] cursor-pointer hover:border-[#1D3D2C] focus:outline-hidden shadow-xs"
-              >
-                {DISTRICT_NODES.map(d => (
-                  <option key={d.id} value={d.id}>
-                    {d.name} ({d.nameMr})
-                  </option>
-                ))}
-              </select>
-            </div>
-
-          </div>
-        </div>
 
       </div>
 
