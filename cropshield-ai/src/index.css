@@ -261,14 +261,14 @@ body.dark {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 26px;
-  height: 26px;
+  width: 19px;
+  height: 19px;
   border-radius: 50%;
   background: #ffffff;
-  border: 3px solid #10b981;
-  box-shadow: 0 0 14px rgba(16, 185, 129, 0.8), 0 3px 8px rgba(0,0,0,0.4);
+  border: 2px solid #10b981;
+  box-shadow: 0 0 10px rgba(16, 185, 129, 0.7), 0 2px 5px rgba(0,0,0,0.35);
   color: #064e3b;
   font-weight: 800;
-  font-size: 11px;
+  font-size: 9.5px;
 }
 

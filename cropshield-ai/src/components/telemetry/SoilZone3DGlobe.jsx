@@ -299,15 +299,15 @@ function createCornerPointIcon(index, total, color = '#10b981') {
         display: flex;
         align-items: center;
         justify-content: center;
-        width: 26px;
-        height: 26px;
+        width: 19px;
+        height: 19px;
         border-radius: 50%;
         background: #ffffff;
         color: #1D3D2C;
         font-weight: 900;
-        font-size: 11px;
-        border: 3px solid #10b981;
-        box-shadow: 0 0 14px #10b981, 0 3px 8px rgba(0,0,0,0.5);
+        font-size: 9.5px;
+        border: 2px solid ${color || '#10b981'};
+        box-shadow: 0 0 10px ${color || '#10b981'}, 0 2px 5px rgba(0,0,0,0.4);
         transform: translate(-50%, -50%);
         font-family: monospace;
       ">
@@ -1498,13 +1498,7 @@ export const SoilZone3DGlobe = ({ onSelectDistrict, selectedDistrictId = 'sangli
                     key={`saved-corner-${land.id}-${idx}`}
                     position={[pt.lat, pt.lng]}
                     icon={createCornerPointIcon(idx, land.cornerPoints.length, land.color)}
-                  >
-                    <Tooltip permanent direction="top">
-                      <span className="font-bold text-[10px] bg-slate-900 text-white px-1 py-0.5 rounded shadow">
-                        {land.name} • C#{idx + 1}
-                      </span>
-                    </Tooltip>
-                  </Marker>
+                  />
                 ))}
               </React.Fragment>
             );
@@ -1516,13 +1510,7 @@ export const SoilZone3DGlobe = ({ onSelectDistrict, selectedDistrictId = 'sangli
               key={`corner-${idx}`}
               position={[pt.lat, pt.lng]}
               icon={createCornerPointIcon(idx, cornerPoints.length, '#0284c7')}
-            >
-              <Tooltip permanent direction="top">
-                <span className="font-bold text-[10px] bg-slate-900 text-white px-1 py-0.5 rounded shadow">
-                  {savedLands.length > 0 ? `Land #${savedLands.length + 1} ` : ''}Corner #{idx + 1}
-                </span>
-              </Tooltip>
-            </Marker>
+            />
           ))}
 
           {/* CURRENT IN-PROGRESS ENCLOSED POLYGON BOUNDARY */}
