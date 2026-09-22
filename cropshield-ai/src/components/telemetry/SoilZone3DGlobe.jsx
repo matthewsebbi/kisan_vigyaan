@@ -23,6 +23,7 @@ import {
   DISTRICT_NODES 
 } from '../../data/maharashtraDistrictBoundaries';
 import { 
+  CloudSun,
   Satellite, 
   Layers, 
   ZoomIn, 
@@ -55,6 +56,8 @@ import {
   Edit3,
   X
 } from 'lucide-react';
+
+import { WeatherClimateGraphWidget } from './WeatherClimateGraphWidget';
 
 // Pre-defined High-Definition Agricultural Farmland Presets
 const MAHARASHTRA_FARMLAND_PRESETS = [
@@ -561,6 +564,7 @@ export const SoilZone3DGlobe = ({ onSelectDistrict, selectedDistrictId = 'sangli
   const [showFarmPolygon, setShowFarmPolygon] = useState(true);
   const [showHeatmapOverlay, setShowHeatmapOverlay] = useState(true);
   const [showUnhealthyMarkers, setShowUnhealthyMarkers] = useState(true);
+  const [isClimateOpen, setIsClimateOpen] = useState(false);
 
   // Multi-Land Saved Lands State (Persisted in localStorage with benchmark defaults)
   const [savedLands, setSavedLands] = useState(() => {
@@ -1116,6 +1120,25 @@ export const SoilZone3DGlobe = ({ onSelectDistrict, selectedDistrictId = 'sangli
           >
             <Crosshair className="w-3.5 h-3.5 text-[#1D3D2C] dark:text-emerald-400" />
             <span>State View</span>
+          </button>
+
+          {/* Toggle Agricultural Climate & Weather Graph */}
+          <button
+            onClick={() => setIsClimateOpen(!isClimateOpen)}
+            className={`px-2.5 py-1.5 rounded-xl font-bold flex items-center gap-1.5 border transition-all cursor-pointer shadow-xs active:scale-95 ${
+              isClimateOpen
+                ? 'bg-[#1D3D2C] text-white border-[#2A4F39] ring-2 ring-emerald-500/30 font-extrabold'
+                : 'bg-[#FAF8F2] dark:bg-[#1B241E] text-[#1F2E22] dark:text-[#E8F0EA] border-[#D5CEBC] dark:border-[#2E3C32] hover:bg-[#EFE9DA] dark:hover:bg-[#25332A]'
+            }`}
+            title="Toggle Agricultural Climate & Weather Graph (Live 7-Day & 24-Hour Forecast)"
+          >
+            <CloudSun className={`w-3.5 h-3.5 ${isClimateOpen ? 'text-amber-300 animate-pulse' : 'text-[#8A5A18] dark:text-amber-400'}`} />
+            <span>Climate</span>
+            <span className={`text-[9px] px-1.5 py-0.2 rounded-full font-mono font-bold ${
+              isClimateOpen ? 'bg-emerald-500/30 text-emerald-200' : 'bg-[#E5DFCF] dark:bg-[#2A372E] text-[#635E52] dark:text-[#A8A497]'
+            }`}>
+              {isClimateOpen ? 'On' : 'Live'}
+            </span>
           </button>
 
           {/* Fullscreen Toggle */}
@@ -1827,6 +1850,22 @@ export const SoilZone3DGlobe = ({ onSelectDistrict, selectedDistrictId = 'sangli
 
 
       </div>
+
+      {/* 4. CLIMATE & WEATHER GRAPH WIDGET (Hidden by default, only shown when user clicks Climate) */}
+      {isClimateOpen && (
+        <div className="p-3 sm:p-4 animate-fadeIn border-t border-[#D8D1BE] dark:border-[#293A2E]">
+          <WeatherClimateGraphWidget 
+            lat={mapCenter[0]}
+            lon={mapCenter[1]}
+            locationName={
+              activeLandId 
+                ? savedLands.find(l => l.id === activeLandId)?.name || (selectedDistrict ? `${selectedDistrict.name} District` : 'Farmland')
+                : (selectedDistrict ? `${selectedDistrict.name} District` : 'Maharashtra Farmland')
+            }
+            onClose={() => setIsClimateOpen(false)}
+          />
+        </div>
+      )}
 
     </div>
   );
