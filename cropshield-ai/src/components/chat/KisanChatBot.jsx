@@ -30,6 +30,10 @@ import {
   classifyAgriculturalIntent,
   SUPPORTED_LANGUAGES 
 } from '../../services/chotaKissanEngine';
+import { 
+  generateGroqChatReply, 
+  PRIMARY_GROQ_MODEL 
+} from '../../services/groqChatService';
 
 export const KisanChatBot = ({ 
   isWidget = false, 
@@ -215,13 +219,12 @@ export const KisanChatBot = ({
     setMessages(prev => [...prev, newUserMsg]);
     setIsTyping(true);
 
-    // Simulate smart agronomist thinking pause
-    setTimeout(() => {
-      const intent = classifyAgriculturalIntent(query);
-      const botResponse = generateChotaKissanResponse({
-        userQuery: query,
-        detectedLang: lang,
-        classifiedIntent: intent,
+    try {
+      // Dynamic agronomic reply powered by Groq GPT-OSS (120B / 20B)
+      const botResponse = await generateGroqChatReply({
+        query,
+        lang,
+        conversationHistory: [...messages, newUserMsg],
         farmContext: {
           crop: 'cotton',
           telemetry: {
@@ -238,10 +241,10 @@ export const KisanChatBot = ({
       const newBotMsg = {
         id: botMsgId,
         sender: 'bot',
-        text: botResponse.responseText,
+        text: botResponse.text,
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
         actionButtons: botResponse.actionButtons,
-        navigationTarget: botResponse.navigationTarget
+        source: botResponse.source || PRIMARY_GROQ_MODEL
       };
 
       setMessages(prev => [...prev, newBotMsg]);
@@ -250,14 +253,29 @@ export const KisanChatBot = ({
       // If autoSpeak toggle is enabled, read automatically
       if (autoSpeak) {
         setSpeakingMessageId(botMsgId);
-        speakText(botResponse.responseText, lang, {
+        speakText(botResponse.text, lang, {
           rate: speechRate,
           onStart: () => setSpeakingMessageId(botMsgId),
           onEnd: () => setSpeakingMessageId(null),
           onError: () => setSpeakingMessageId(null)
         });
       }
-    }, 450);
+    } catch (err) {
+      console.error('Groq GPT-OSS reply generation error:', err);
+      setIsTyping(false);
+      const fallbackMsgId = 'bot-err-' + Date.now();
+      setMessages(prev => [
+        ...prev,
+        {
+          id: fallbackMsgId,
+          sender: 'bot',
+          text: lang === 'mr' 
+            ? "क्षमस्व, प्रतिसादात त्रुटी आली. कृपया पुन्हा विचारून पहा." 
+            : "Apologies, there was an issue generating the reply. Please try asking again.",
+          timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+        }
+      ]);
+    }
   };
 
   if (isWidget && !isOpen) return null;
@@ -286,12 +304,13 @@ export const KisanChatBot = ({
               <h2 className="text-sm font-black tracking-tight text-white">
                 {lang === 'mr' ? 'किसान एआय कृषी चॅटबॉट' : lang === 'ta' ? 'கிசான் AI வேளாண் சாட்போட்' : lang === 'hi' ? 'किसान एआई कृषि चैटबॉट' : 'Kisan AI Agronomist Chatbot'}
               </h2>
-              <span className="px-2 py-0.5 rounded-full text-[9px] font-black uppercase tracking-wider bg-emerald-500 text-white">
-                TTS Voice Active
+              <span className="px-2 py-0.5 rounded-full text-[9px] font-black uppercase tracking-wider bg-emerald-500 text-white flex items-center gap-1">
+                <Sparkles className="w-2.5 h-2.5" />
+                Groq GPT-OSS • TTS
               </span>
             </div>
             <p className="text-[11px] text-emerald-100/80 font-medium">
-              Multilingual Agricultural Voice & Text Intelligence
+              Powered by Groq OpenAI GPT-OSS (120B) • Multi-dialect Voice
             </p>
           </div>
         </div>
@@ -414,6 +433,12 @@ export const KisanChatBot = ({
                   {/* Sender & Timestamp */}
                   <div className="flex items-center gap-1.5 text-[10px] font-mono text-slate-500 px-1">
                     <span>{isBot ? '🤖 Kisan AI' : '👨‍🌾 You'}</span>
+                    {isBot && msg.source && (
+                      <span className="px-1.5 py-0.5 rounded-md bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-sans font-semibold text-[9px] flex items-center gap-1 border border-emerald-500/20">
+                        <Sparkles className="w-2.5 h-2.5" />
+                        {msg.source.includes('120b') ? 'GPT-OSS 120B' : msg.source.includes('20b') ? 'GPT-OSS 20B' : msg.source}
+                      </span>
+                    )}
                     <span>•</span>
                     <span>{msg.timestamp}</span>
                   </div>
