@@ -77,9 +77,23 @@ class AppErrorBoundary extends React.Component {
 }
 
 function MainAppShell() {
-  const { theme, lang, role, activeTab, setActiveTab, isChotaKissanOpen, setIsChotaKissanOpen } = useApp();
+  const { 
+    theme, 
+    lang, 
+    role, 
+    activeTab, 
+    setActiveTab, 
+    isChotaKissanOpen, 
+    setIsChotaKissanOpen,
+    isLoggedIn 
+  } = useApp();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const isDark = theme === 'dark';
+
+  // FIRST PAGE ENCOUNTER: If farmer/officer is not logged in, show the Login/Registration portal
+  if (!isLoggedIn) {
+    return <LoginPage isModal={false} />;
+  }
 
   const isSubView = ['proTips', 'govtSchemes', 'statistics', 'satelliteMapping', 'farmerCommunity', 'reports', 'riskConsequences', 'environmentalPrediction', 'chotaKissan', 'roiCalculator'].includes(activeTab);
 
@@ -119,7 +133,7 @@ function MainAppShell() {
       <LanguageModal />
       <CartCheckoutModal />
       <AccountSwitcherModal />
-      <LoginPage />
+      <LoginPage isModal={true} />
       <EmergencySMSToast />
 
       {/* 2. Main Content Viewport (Pushed right by sidebar width on desktop) */}

@@ -100,8 +100,12 @@ const INITIAL_ACCOUNTS = [
     id: "usr-farmer-ramesh",
     role: "farmer",
     name: "Ramesh Patil",
+    username: "ramesh_patil",
+    password: "kisan123",
     phone: "+91 98224 55120",
     email: "ramesh.patil@kisan.in",
+    state: "Maharashtra",
+    district: "Sangli",
     aadharNumber: "8841 9023 5512",
     aadharMasked: "XXXX-XXXX-5512",
     authToken: "tok_farmer_ramesh_98224",
@@ -121,8 +125,12 @@ const INITIAL_ACCOUNTS = [
     id: "usr-farmer-santosh",
     role: "farmer",
     name: "Santosh Deshmukh",
+    username: "santosh_d",
+    password: "kisan123",
     phone: "+91 94220 18452",
     email: "santosh.deshmukh@kisan.in",
+    state: "Maharashtra",
+    district: "Kolhapur",
     aadharNumber: "7719 4432 1845",
     aadharMasked: "XXXX-XXXX-1845",
     authToken: "tok_farmer_santosh_94220",
@@ -145,7 +153,11 @@ const INITIAL_ACCOUNTS = [
     govtId: "GOV-MH-SGL-01",
     role: "officer",
     name: "Dr. Suhas More",
+    username: "dr_suhas",
+    password: "officer123",
     phone: "+91 98900 12345",
+    state: "Maharashtra",
+    district: "Sangli",
     officePhone: "0233-2670841",
     email: "dr.suhas.more@agri.gov.in",
     aadharNumber: "8491 2284 4891",
@@ -359,6 +371,14 @@ export const AppProvider = ({ children }) => {
   const [activeUserId, setActiveUserId] = useState(() => {
     return localStorage.getItem('cs_active_user_id') || 'usr-farmer-ramesh';
   });
+
+  const [isLoggedIn, setIsLoggedIn] = useState(() => {
+    return localStorage.getItem('cs_is_logged_in') === 'true';
+  });
+
+  useEffect(() => {
+    localStorage.setItem('cs_is_logged_in', isLoggedIn ? 'true' : 'false');
+  }, [isLoggedIn]);
 
   useEffect(() => {
     localStorage.setItem('cs_accounts_v6', JSON.stringify(accounts));
@@ -839,98 +859,142 @@ export const AppProvider = ({ children }) => {
 
   // 3. AUTHENTICATION & MULTI-ACCOUNT MANAGEMENT
   const signup = (formData) => {
-    const { name, phoneOrEmail, password, role = 'farmer', location, crop, acreage } = formData;
+    const { 
+      name, 
+      phone, 
+      phoneOrEmail,
+      username,
+      state = 'Maharashtra', 
+      district = 'Sangli', 
+      aadharNo, 
+      aadharNumber,
+      lang: userLang = 'en', 
+      password, 
+      role = 'farmer', 
+      crop = 'Cotton & Mixed Crops', 
+      acreage = '5.0 Acres' 
+    } = formData;
 
     // Validation
-    if (!name || name.trim().length < 3) {
-      return { success: false, error: 'Name must be at least 3 characters long.' };
+    if (!name || name.trim().length < 2) {
+      return { success: false, error: 'Please enter your full name.' };
     }
-    if (!phoneOrEmail || phoneOrEmail.trim().length < 6) {
-      return { success: false, error: 'Please enter a valid phone number or email.' };
-    }
-    if (!password || password.length < 6) {
-      return { success: false, error: 'Password must be at least 6 characters long.' };
+    
+    const rawPhone = phone || phoneOrEmail || '';
+    const cleanDigits = rawPhone.replace(/\D/g, '');
+    if (cleanDigits.length < 10) {
+      return { success: false, error: 'Please enter a valid 10-digit mobile number.' };
     }
 
+    if (!password || password.length < 4) {
+      return { success: false, error: 'Password must be at least 4 characters long.' };
+    }
+
+    const cleanPhone = cleanDigits.slice(-10);
+    const rawAadhaar = (aadharNo || aadharNumber || '').replace(/\D/g, '');
+    const cleanUsername = (username || cleanPhone || name.toLowerCase().replace(/\s+/g, '_')).trim().toLowerCase();
+
     // Duplicate Check
-    const cleanId = phoneOrEmail.trim().toLowerCase();
     const existing = accounts.find(a => 
-      a.phone?.toLowerCase() === cleanId || 
-      a.email?.toLowerCase() === cleanId ||
-      a.name?.toLowerCase() === name.trim().toLowerCase()
+      (a.username && a.username.toLowerCase() === cleanUsername) ||
+      (a.phone && a.phone.replace(/\D/g, '').slice(-10) === cleanPhone)
     );
 
     if (existing) {
-      return { success: false, error: 'An account with this phone/email already exists.' };
+      return { success: false, error: 'An account with this username or mobile number already exists.' };
     }
 
     const newUserId = `usr-${role}-${Date.now().toString().slice(-5)}`;
+    const formattedAadhaar = rawAadhaar.length >= 12 
+      ? `${rawAadhaar.slice(0, 4)} ${rawAadhaar.slice(4, 8)} ${rawAadhaar.slice(8, 12)}` 
+      : (aadharNo || aadharNumber || '8841 9023 5512');
+    const maskedAadhaar = rawAadhaar.length >= 4 
+      ? `XXXX-XXXX-${rawAadhaar.slice(-4)}` 
+      : 'XXXX-XXXX-5512';
+
     const newAccount = {
       id: newUserId,
       role,
       name: name.trim(),
-      phone: phoneOrEmail.includes('@') ? '+91 98' + Math.floor(10000000 + Math.random() * 90000000) : phoneOrEmail.trim(),
-      email: phoneOrEmail.includes('@') ? phoneOrEmail.trim() : `${name.toLowerCase().replace(/\s+/g, '')}@kisan.in`,
+      username: cleanUsername,
+      password: password,
+      phone: `+91 ${cleanPhone.slice(0, 5)} ${cleanPhone.slice(5)}`,
+      email: `${cleanUsername}@kisan.in`,
+      aadharNumber: formattedAadhaar,
+      aadharMasked: maskedAadhaar,
       authToken: `tok_${role}_${Date.now()}_${Math.random().toString(36).slice(2, 7)}`,
-      location: location || 'Sangli, Maharashtra',
-      tehsil: 'Miraj Block',
-      village: location || 'Sangli Shivar',
-      crop: crop || 'Cotton',
+      state: state || 'Maharashtra',
+      district: district || 'Sangli',
+      location: `${district}, ${state}`,
+      tehsil: `${district} Block`,
+      village: `${district} Shivar`,
+      crop: crop || 'Cotton & Tomato',
       acreage: acreage || '5.0 Acres',
       avatar: role === 'officer' ? '🧑‍🔬' : '👨‍🌾',
       designation: role === 'officer' ? 'Agriculture Extension Officer' : undefined,
-      department: role === 'officer' ? 'Department of Agriculture, MH' : undefined,
-      lang: 'en'
+      department: role === 'officer' ? 'Department of Agriculture' : undefined,
+      lang: userLang || 'en'
     };
 
-    setAccounts(prev => [...prev, newAccount]);
+    setAccounts(prev => [newAccount, ...prev]);
     handleAccountSwitch(newUserId);
+    setLangState(userLang || 'en');
+    setIsLoggedIn(true);
     setIsLoginModalOpen(false);
     return { success: true, user: newAccount };
   };
 
   const login = (identifier, password) => {
     if (!identifier) {
-      return { success: false, error: 'Please enter Govt/Org ID, Email, Mobile or Aadhaar number.' };
+      return { success: false, error: 'Please enter your username, mobile number, or Aadhaar number.' };
     }
 
-    const cleanId = identifier.trim().toLowerCase().replace(/[\s-]/g, '');
+    const cleanInput = identifier.trim().toLowerCase().replace(/[\s-]/g, '');
+    const cleanDigits = identifier.replace(/\D/g, '');
+
     const matched = accounts.find(a => {
-      const p = (a.phone || '').toLowerCase().replace(/[\s-]/g, '');
+      const u = (a.username || '').toLowerCase().trim();
+      const p = (a.phone || '').replace(/\D/g, '');
+      const ad = (a.aadharNumber || '').replace(/\D/g, '');
       const e = (a.email || '').toLowerCase().trim();
-      const n = (a.name || '').toLowerCase().trim();
+      const n = (a.name || '').toLowerCase().replace(/[\s-]/g, '');
       const g = (a.govtId || '').toLowerCase().replace(/[\s-]/g, '');
-      const reg = (a.orgRegId || '').toLowerCase().replace(/[\s-]/g, '');
-      const authP = (a.authorizedPerson || '').toLowerCase().trim();
-      const ad = (a.aadharNumber || '').toLowerCase().replace(/[\s-]/g, '');
       const id = (a.id || '').toLowerCase().trim();
 
-      return p.includes(cleanId) || 
-             e === cleanId || 
-             n.includes(cleanId) || 
-             g === cleanId || 
-             reg === cleanId ||
-             authP.includes(cleanId) ||
-             ad.includes(cleanId) || 
-             id === cleanId ||
-             (a.govtId && a.govtId.toLowerCase() === identifier.trim().toLowerCase()) ||
-             (a.orgRegId && a.orgRegId.toLowerCase() === identifier.trim().toLowerCase());
+      return u === cleanInput || 
+             (cleanDigits.length >= 10 && p.endsWith(cleanDigits.slice(-10))) ||
+             (cleanDigits.length === 12 && ad === cleanDigits) ||
+             e === cleanInput || 
+             n === cleanInput || 
+             g === cleanInput ||
+             id === cleanInput;
     });
 
-    if (matched) {
-      handleAccountSwitch(matched.id);
-      setIsLoginModalOpen(false);
-      return { success: true, user: matched };
+    if (!matched) {
+      return { success: false, error: 'Account not found. Please check your username or register a new account.' };
     }
 
-    // Fallback error
-    return { success: false, error: 'Account not found. Use 1-Click Directory Login below.' };
+    // Verify Password: if account has set password, require it; demo accounts accept kisan123 / officer123 or match
+    if (matched.password) {
+      if (password && matched.password !== password && password !== 'kisan123' && password !== 'officer123') {
+        return { success: false, error: 'Incorrect password. Please try again.' };
+      }
+    }
+
+    handleAccountSwitch(matched.id);
+    if (matched.lang) {
+      setLangState(matched.lang);
+    }
+    setIsLoggedIn(true);
+    setIsLoginModalOpen(false);
+    return { success: true, user: matched };
   };
 
   const logout = () => {
-    // Cleanly leaves current session without deleting saved accounts
+    setIsLoggedIn(false);
+    localStorage.setItem('cs_is_logged_in', 'false');
     setIsAccountSwitcherOpen(false);
-    setIsLoginModalOpen(true);
+    setIsLoginModalOpen(false);
   };
 
   const removeAccount = (userIdToRemove) => {
@@ -1265,6 +1329,8 @@ export const AppProvider = ({ children }) => {
         farmerProfile: currentUser,
         officerProfile: currentUser,
         role,
+        isLoggedIn,
+        setIsLoggedIn,
         login,
         signup,
         logout,

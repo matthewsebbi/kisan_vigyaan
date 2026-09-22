@@ -13,7 +13,8 @@ import {
   Mic,
   Activity,
   Radio,
-  Sparkles
+  Sparkles,
+  LogOut
 } from 'lucide-react';
 
 export const WebTopHeader = ({ activeTab, onNavigate, onOpenMobileMenu }) => {
@@ -28,7 +29,8 @@ export const WebTopHeader = ({ activeTab, onNavigate, onOpenMobileMenu }) => {
     setIsAccountSwitcherOpen,
     setIsChotaKissanOpen,
     currentUser,
-    role 
+    role,
+    logout
   } = useApp();
 
   const isDark = theme === 'dark';
@@ -173,6 +175,17 @@ export const WebTopHeader = ({ activeTab, onNavigate, onOpenMobileMenu }) => {
               </span>
             </div>
           </div>
+
+          {/* Logout Action Button */}
+          <button
+            onClick={logout}
+            className={`p-2 rounded-xl border transition-colors cursor-pointer text-slate-400 hover:text-rose-400 hover:border-rose-500/50 ${
+              isDark ? 'bg-[#121F38] border-[#1E2E4A]' : 'bg-white border-slate-200'
+            }`}
+            title="Log Out (Sign Out of Farmland)"
+          >
+            <LogOut className="w-4 h-4" />
+          </button>
 
         </div>
 

@@ -32,7 +32,8 @@ import {
   LayoutDashboard,
   FileSpreadsheet,
   Compass,
-  MapPin
+  MapPin,
+  LogOut
 } from 'lucide-react';
 
 export const WebLeftSidebar = ({ activeTab, onNavigate, mobileOpen, setMobileOpen }) => {
@@ -49,7 +50,8 @@ export const WebLeftSidebar = ({ activeTab, onNavigate, mobileOpen, setMobileOpe
     role,
     fieldReviewQueue,
     officerTab,
-    setOfficerTab
+    setOfficerTab,
+    logout
   } = useApp();
 
   const isDark = theme === 'dark';
@@ -641,35 +643,49 @@ export const WebLeftSidebar = ({ activeTab, onNavigate, mobileOpen, setMobileOpe
             </button>
           </div>
 
-          {/* User Account Switcher Card */}
-          <div 
-            onClick={() => setIsAccountSwitcherOpen(true)}
-            className={`p-2.5 rounded-2xl border transition-all cursor-pointer flex items-center justify-between group shadow-2xs ${
-              isDark 
-                ? 'bg-[#0c1527] border-[#1c2e50] hover:border-emerald-500/60' 
-                : 'bg-[#0B4A35] border-[#0E5B42] hover:border-emerald-400 text-white'
-            }`}
-            title="Click to Switch Accounts or Manage Profile"
-          >
-            <div className="flex items-center space-x-2.5 truncate">
-              <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-amber-500 to-orange-600 text-white flex items-center justify-center font-black text-xs shadow-xs shrink-0">
-                {currentUser.avatar || '👨‍🌾'}
+          {/* User Account Switcher Card & Logout */}
+          <div className="flex items-center gap-1.5">
+            <div 
+              onClick={() => setIsAccountSwitcherOpen(true)}
+              className={`flex-1 p-2 rounded-2xl border transition-all cursor-pointer flex items-center justify-between group shadow-2xs min-w-0 ${
+                isDark 
+                  ? 'bg-[#0c1527] border-[#1c2e50] hover:border-emerald-500/60' 
+                  : 'bg-[#0B4A35] border-[#0E5B42] hover:border-emerald-400 text-white'
+              }`}
+              title="Click to Switch Accounts or Manage Profile"
+            >
+              <div className="flex items-center space-x-2 truncate">
+                <div className="w-7 h-7 rounded-xl bg-gradient-to-br from-amber-500 to-orange-600 text-white flex items-center justify-center font-black text-xs shadow-xs shrink-0">
+                  {currentUser.avatar || '👨‍🌾'}
+                </div>
+                <div className="truncate text-left leading-tight">
+                  <span className="text-xs font-black block text-white group-hover:text-emerald-300 truncate">
+                    {currentUser.name}
+                  </span>
+                  <span className="text-[10px] text-emerald-200 dark:text-slate-400 font-bold block truncate">
+                    {currentUser.role === 'ngo'
+                      ? 'NGO Partner'
+                      : currentUser.role === 'officer' 
+                      ? 'Agri Officer' 
+                      : (currentUser.village || 'Farmer')}
+                  </span>
+                </div>
               </div>
-              <div className="truncate text-left leading-tight">
-                <span className="text-xs font-black block text-white group-hover:text-emerald-300 truncate">
-                  {currentUser.name}
-                </span>
-                <span className="text-[10px] text-emerald-200 dark:text-slate-400 font-bold block truncate">
-                  {currentUser.role === 'ngo'
-                    ? 'Agri Org / NGO Partner'
-                    : currentUser.role === 'officer' 
-                    ? (lang === 'ta' ? 'வேளாண் அதிகாரி' : 'Agri Officer') 
-                    : (currentUser.village || 'Farmer')}
-                </span>
-              </div>
+
+              <ChevronDown className="w-3.5 h-3.5 text-emerald-300 group-hover:text-white shrink-0 ml-1" />
             </div>
 
-            <ChevronDown className="w-3.5 h-3.5 text-emerald-300 group-hover:text-white shrink-0 ml-1" />
+            <button
+              onClick={logout}
+              className={`p-2.5 rounded-2xl border transition-all cursor-pointer text-slate-400 hover:text-rose-400 hover:border-rose-500/50 shadow-2xs shrink-0 ${
+                isDark 
+                  ? 'bg-[#0c1527] border-[#1c2e50]' 
+                  : 'bg-[#0B4A35] border-[#0E5B42] text-white hover:text-rose-300'
+              }`}
+              title="Log Out (Sign Out)"
+            >
+              <LogOut className="w-4 h-4" />
+            </button>
           </div>
 
           {/* Toll-free Kisan Helpline Button */}
