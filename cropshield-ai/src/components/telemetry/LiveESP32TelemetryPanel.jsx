@@ -410,34 +410,7 @@ export const LiveESP32TelemetryPanel = () => {
             </div>
           </div>
 
-          {/* ESP32 Serial Terminal Output Monitor (Vintage Terminal Style) */}
-          <div className="p-5 rounded-3xl bg-[#19221B] border border-[#2D3F30] text-[#D8E6DA] font-mono space-y-3 shadow-vintage">
-            <div className="flex items-center justify-between border-b border-[#2D3F30] pb-2.5">
-              <div className="flex items-center space-x-2">
-                <Terminal className="w-4 h-4 text-emerald-400" />
-                <span className="text-xs font-bold uppercase tracking-wider text-emerald-300 font-mono">
-                  ESP32 Serial Monitor Stream (115200 Baud)
-                </span>
-              </div>
-              <span className="text-[10px] text-[#86A08A]">READ_INTERVAL: 10000ms</span>
-            </div>
 
-            <div className="h-44 overflow-y-auto space-y-1 text-[11px] font-mono scrollbar-thin scrollbar-thumb-[#2E4433]">
-              <div className="text-emerald-400">================================================</div>
-              <div className="text-emerald-300">          SMART CROP MONITORING SYSTEM          </div>
-              <div className="text-emerald-400">================================================</div>
-              <div className="text-[#8FA893]">ESP32 + DHT22 + DS18B20 + Soil Moisture + pH Sensor</div>
-              <div className="text-[#8FA893]">DS18B20 sensors found: 1</div>
-              <div className="text-emerald-400">[10:12:00 AM] Temp: 26.40°C | RH: 58.0% | Soil Moisture: 38% (NORMAL) | pH: 6.70 (NORMAL) | Risk: NORMAL</div>
-              <div className="text-emerald-400">[10:12:10 AM] Temp: 26.42°C | RH: 57.8% | Soil Moisture: 38% (NORMAL) | pH: 6.70 (NORMAL) | Risk: NORMAL</div>
-              <div className="text-emerald-400">[10:12:20 AM] Temp: 26.38°C | RH: 58.2% | Soil Moisture: 38% (NORMAL) | pH: 6.70 (NORMAL) | Risk: NORMAL</div>
-              {serialLog.map((log, idx) => (
-                <div key={idx} className="text-[#BDD3C2] hover:bg-[#223326] px-1 py-0.5 rounded">
-                  {log}
-                </div>
-              ))}
-            </div>
-          </div>
 
         </div>
 
