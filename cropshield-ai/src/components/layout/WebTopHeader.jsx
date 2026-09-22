@@ -103,19 +103,6 @@ export const WebTopHeader = ({ activeTab, onNavigate, onOpenMobileMenu }) => {
 
         {/* Right: Telemetry Status, Language, Chota Kissan AI, User Profile */}
         <div className="flex items-center gap-2 sm:gap-3 shrink-0">
-          
-          {/* Live ESP32 Hardware Status Pill */}
-          <div className={`hidden md:flex items-center gap-2 px-3 py-1.5 rounded-full border text-xs font-semibold ${
-            isDark 
-              ? 'bg-[#121F38] border-[#1E2E4A] text-emerald-300' 
-              : 'bg-[#ECFDF5] border-[#A7F3D0] text-[#065F46]'
-          }`}>
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-            </span>
-            <span className="tabular-nums font-mono text-[11px]">ESP32: Node 14 (Live)</span>
-          </div>
 
           {/* Language Toggle Pill */}
           <button
