@@ -291,7 +291,7 @@ function getPolygonCentroid(rawPoints) {
 }
 
 // Custom DivIcon for Farmland Corner Points (supports custom color)
-function createCornerPointIcon(index, total, color = '#0284c7') {
+function createCornerPointIcon(index, total, color = '#10b981') {
   return L.divIcon({
     className: 'custom-corner-pin',
     html: `
@@ -299,15 +299,15 @@ function createCornerPointIcon(index, total, color = '#0284c7') {
         display: flex;
         align-items: center;
         justify-content: center;
-        width: 28px;
-        height: 28px;
+        width: 26px;
+        height: 26px;
         border-radius: 50%;
-        background: ${color};
-        color: #ffffff;
+        background: #ffffff;
+        color: #1D3D2C;
         font-weight: 900;
         font-size: 11px;
-        border: 2px solid #ffffff;
-        box-shadow: 0 0 12px ${color}, 0 2px 6px rgba(0,0,0,0.5);
+        border: 3px solid #10b981;
+        box-shadow: 0 0 14px #10b981, 0 3px 8px rgba(0,0,0,0.5);
         transform: translate(-50%, -50%);
         font-family: monospace;
       ">
@@ -325,12 +325,12 @@ function createLandBadgeIcon(name, acres, color = '#10b981', isSelected = false)
     className: 'custom-land-badge-marker',
     html: `
       <div style="
-        background: rgba(8, 18, 36, 0.95);
-        color: #ffffff;
+        background: #FAF8F2;
+        color: #1D3D2C;
         padding: 4px 10px;
         border-radius: 9999px;
         border: 2px solid ${color};
-        box-shadow: 0 4px 14px rgba(0,0,0,0.7), 0 0 10px ${color}80;
+        box-shadow: 0 4px 14px rgba(45,40,30,0.2), 0 0 10px ${color}80;
         font-size: 11px;
         font-weight: 800;
         white-space: nowrap;
@@ -341,11 +341,11 @@ function createLandBadgeIcon(name, acres, color = '#10b981', isSelected = false)
         cursor: pointer;
         pointer-events: auto;
         font-family: sans-serif;
-        ${isSelected ? 'outline: 2px solid #ffffff; box-shadow: 0 0 16px ' + color + ';' : ''}
+        ${isSelected ? 'outline: 2px solid #1D3D2C; box-shadow: 0 0 16px ' + color + ';' : ''}
       ">
         <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:${color};box-shadow:0 0 6px ${color};"></span>
         <span style="letter-spacing:-0.2px;">${name}</span>
-        <span style="color:${color};font-family:monospace;font-weight:900;font-size:10px;background:rgba(255,255,255,0.1);padding:1px 6px;border-radius:6px;">${acres} Ac</span>
+        <span style="color:#1D3D2C;font-family:monospace;font-weight:900;font-size:10px;background:rgba(29,61,44,0.08);padding:1px 6px;border-radius:6px;">${acres} Ac</span>
       </div>
     `,
     iconSize: [0, 0],
@@ -1001,36 +1001,38 @@ export const SoilZone3DGlobe = ({ onSelectDistrict, selectedDistrictId = 'sangli
   return (
     <div 
       ref={containerRef}
-      className={`relative w-full rounded-3xl overflow-hidden border shadow-2xl transition-all duration-300 ${
+      className={`relative w-full rounded-3xl overflow-hidden border shadow-vintage-md transition-all duration-300 ${
         isFullscreen 
           ? 'fixed inset-0 z-50 rounded-none h-screen w-screen' 
           : 'h-auto'
       } ${
         isDark 
-          ? 'bg-[#060c18] border-[#18294a] text-white' 
-          : 'bg-[#081224] border-[#1e3b6d] text-white'
+          ? 'bg-[#141C17] border-[#293A2E] text-[#F3F5F1]' 
+          : 'bg-[#FAF8F2] border-[#D8D1BE] text-[#1F2E22]'
       }`}
     >
       
       {/* 1. TOP HEADER & TELEMETRY CONTROLS BAR */}
-      <div className="relative z-30 p-3.5 sm:p-4 bg-slate-950/90 backdrop-blur-md border-b border-white/10 flex flex-col xl:flex-row xl:items-center justify-between gap-3">
+      <div className={`relative z-30 p-3.5 sm:p-4 border-b flex flex-col xl:flex-row xl:items-center justify-between gap-3 transition-colors ${
+        isDark ? 'bg-[#18231C] border-[#293A2E]' : 'bg-[#F7F4EB] border-[#D8D1BE]'
+      }`}>
         
         {/* Title & Live Status */}
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-emerald-600 to-cyan-500 text-white flex items-center justify-center shadow-lg shadow-emerald-500/20 shrink-0">
-            <Satellite className="w-5 h-5 text-white" />
+          <div className="w-10 h-10 rounded-2xl bg-[#1D3D2C] text-[#E8F0EA] flex items-center justify-center shadow-md border border-[#2B543D] shrink-0">
+            <Satellite className="w-5 h-5 text-emerald-300" />
           </div>
           <div>
             <div className="flex items-center gap-2 flex-wrap">
-              <h2 className="text-sm sm:text-base font-black tracking-tight text-white flex items-center gap-1.5">
+              <h2 className="text-sm sm:text-base font-serif-vintage font-bold tracking-tight text-[#1D3D2C] dark:text-[#E8F0EA] flex items-center gap-1.5">
                 <span>Maharashtra Farmland Satellite & Corner Boundary Scanner</span>
               </h2>
-              <span className="px-2 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 font-mono flex items-center gap-1">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping" />
+              <span className="px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-[#E8F0EA] text-[#1D3D2C] dark:bg-[#1E2E23] dark:text-[#A7D8B4] border border-[#C6D8CA] dark:border-[#2F4A37] font-mono flex items-center gap-1">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#1D3D2C] dark:bg-[#4ADE80] animate-ping" />
                 <span>Sentinel-2 Process API Ready</span>
               </span>
             </div>
-            <p className="text-[11px] sm:text-xs text-slate-300 font-medium mt-0.5">
+            <p className="text-[11px] sm:text-xs text-[#635E52] dark:text-[#A8A497] font-medium mt-0.5">
               Pin corners of your farm on high-res satellite imagery to set your boundary & scan unhealthy crop stress spots
             </p>
           </div>
@@ -1042,25 +1044,25 @@ export const SoilZone3DGlobe = ({ onSelectDistrict, selectedDistrictId = 'sangli
           {/* Farm Boundary Marking Mode Button */}
           <button
             onClick={() => setIsMarkingCorners(!isMarkingCorners)}
-            className={`px-3 py-1.5 rounded-xl font-black flex items-center gap-1.5 transition-all cursor-pointer border shadow-md active:scale-95 ${
+            className={`px-3 py-1.5 rounded-xl font-bold flex items-center gap-1.5 transition-all cursor-pointer border shadow-xs active:scale-95 ${
               isMarkingCorners
-                ? 'bg-gradient-to-r from-sky-500 to-blue-600 text-white border-sky-300 ring-2 ring-sky-500/40 font-extrabold'
-                : 'bg-slate-900/90 text-slate-200 border-slate-700 hover:border-sky-400 hover:text-white'
+                ? 'bg-[#1D3D2C] text-white border-[#2A4F39] ring-2 ring-[#1D3D2C]/40 font-extrabold'
+                : 'bg-[#FAF8F2] dark:bg-[#1B241E] text-[#1F2E22] dark:text-[#E8F0EA] border-[#D5CEBC] dark:border-[#2E3C32] hover:bg-[#EFE9DA] dark:hover:bg-[#25332A]'
             }`}
             title="Toggle Corner Placement Mode to mark the corners of your farm"
           >
-            <MapPin className={`w-3.5 h-3.5 ${isMarkingCorners ? 'animate-bounce' : 'text-sky-400'}`} />
+            <MapPin className={`w-3.5 h-3.5 ${isMarkingCorners ? 'animate-bounce text-emerald-300' : 'text-[#1D3D2C] dark:text-emerald-400'}`} />
             <span>{isMarkingCorners ? 'Corner Pinning Active' : 'Mark Farm Corners'}</span>
           </button>
 
           {/* Satellite Layer Switcher */}
-          <div className="flex items-center p-0.5 rounded-xl bg-slate-900 border border-slate-700/80">
+          <div className="flex items-center p-0.5 rounded-xl bg-[#EBE5D6] dark:bg-[#1C261F] border border-[#D5CEBC] dark:border-[#2E3C32]">
             <button
               onClick={() => setSatelliteSource('google-sat')}
               className={`px-2.5 py-1.5 rounded-lg font-bold flex items-center gap-1 transition-all cursor-pointer ${
                 satelliteSource === 'google-sat'
-                  ? 'bg-emerald-600 text-white shadow-sm'
-                  : 'text-slate-300 hover:text-white'
+                  ? 'bg-[#1D3D2C] text-white shadow-xs font-extrabold'
+                  : 'text-[#4F4B41] dark:text-[#C5C2B8] hover:text-[#1D3D2C] dark:hover:text-white'
               }`}
               title="Raw high-definition satellite imagery showing farms, fields, and houses clearly"
             >
@@ -1071,8 +1073,8 @@ export const SoilZone3DGlobe = ({ onSelectDistrict, selectedDistrictId = 'sangli
               onClick={() => setSatelliteSource('google-hyb')}
               className={`px-2.5 py-1.5 rounded-lg font-bold flex items-center gap-1 transition-all cursor-pointer ${
                 satelliteSource === 'google-hyb'
-                  ? 'bg-emerald-600 text-white shadow-sm'
-                  : 'text-slate-300 hover:text-white'
+                  ? 'bg-[#1D3D2C] text-white shadow-xs font-extrabold'
+                  : 'text-[#4F4B41] dark:text-[#C5C2B8] hover:text-[#1D3D2C] dark:hover:text-white'
               }`}
               title="Satellite view with road names and village boundaries"
             >
@@ -1083,8 +1085,8 @@ export const SoilZone3DGlobe = ({ onSelectDistrict, selectedDistrictId = 'sangli
               onClick={() => setSatelliteSource('esri')}
               className={`px-2.5 py-1.5 rounded-lg font-bold flex items-center gap-1 transition-all cursor-pointer ${
                 satelliteSource === 'esri'
-                  ? 'bg-emerald-600 text-white shadow-sm'
-                  : 'text-slate-300 hover:text-white'
+                  ? 'bg-[#1D3D2C] text-white shadow-xs font-extrabold'
+                  : 'text-[#4F4B41] dark:text-[#C5C2B8] hover:text-[#1D3D2C] dark:hover:text-white'
               }`}
               title="Esri World Satellite Imagery"
             >
@@ -1098,30 +1100,30 @@ export const SoilZone3DGlobe = ({ onSelectDistrict, selectedDistrictId = 'sangli
             onClick={() => setShowBorders(!showBorders)}
             className={`px-2.5 py-1.5 rounded-xl font-bold flex items-center gap-1.5 border transition-all cursor-pointer ${
               showBorders
-                ? 'bg-cyan-950/70 text-cyan-300 border-cyan-500/50'
-                : 'bg-slate-900/80 text-slate-400 border-slate-700 hover:text-white'
+                ? 'bg-[#E8F0EA] text-[#1D3D2C] border-[#C6D8CA] dark:bg-[#1E2E23] dark:text-[#A7D8B4] dark:border-[#2F4A37]'
+                : 'bg-[#FAF8F2] dark:bg-[#1B241E] text-[#635E52] dark:text-[#A8A497] border-[#D5CEBC] dark:border-[#2E3C32] hover:text-[#1D3D2C]'
             }`}
           >
-            {showBorders ? <Eye className="w-3.5 h-3.5 text-cyan-400" /> : <EyeOff className="w-3.5 h-3.5 text-slate-400" />}
+            {showBorders ? <Eye className="w-3.5 h-3.5 text-[#1D3D2C] dark:text-emerald-400" /> : <EyeOff className="w-3.5 h-3.5 text-[#8A857A]" />}
             <span>Districts</span>
           </button>
 
           {/* Reset Overview */}
           <button
             onClick={handleResetOverview}
-            className="px-2.5 py-1.5 rounded-xl font-bold bg-slate-900 hover:bg-slate-800 text-slate-200 border border-slate-700 flex items-center gap-1.5 cursor-pointer transition-all active:scale-95"
+            className="px-2.5 py-1.5 rounded-xl font-bold bg-[#FAF8F2] hover:bg-[#EFE9DA] dark:bg-[#1B241E] dark:hover:bg-[#25332A] text-[#1F2E22] dark:text-[#E8F0EA] border border-[#D5CEBC] dark:border-[#2E3C32] flex items-center gap-1.5 cursor-pointer transition-all active:scale-95"
             title="Fit whole Maharashtra State into view"
           >
-            <Crosshair className="w-3.5 h-3.5 text-cyan-400" />
+            <Crosshair className="w-3.5 h-3.5 text-[#1D3D2C] dark:text-emerald-400" />
             <span>State View</span>
           </button>
 
           {/* Fullscreen Toggle */}
           <button
             onClick={toggleFullscreen}
-            className="p-1.5 rounded-xl font-bold bg-slate-900 hover:bg-slate-800 text-slate-200 border border-slate-700 flex items-center justify-center cursor-pointer transition-all active:scale-95"
+            className="p-1.5 rounded-xl font-bold bg-[#FAF8F2] hover:bg-[#EFE9DA] dark:bg-[#1B241E] dark:hover:bg-[#25332A] text-[#1F2E22] dark:text-[#E8F0EA] border border-[#D5CEBC] dark:border-[#2E3C32] flex items-center justify-center cursor-pointer transition-all active:scale-95"
           >
-            {isFullscreen ? <Minimize2 className="w-4 h-4 text-amber-400" /> : <Maximize2 className="w-4 h-4 text-cyan-400" />}
+            {isFullscreen ? <Minimize2 className="w-4 h-4 text-[#8A5A18] dark:text-amber-400" /> : <Maximize2 className="w-4 h-4 text-[#1D3D2C] dark:text-emerald-400" />}
           </button>
 
         </div>
@@ -1131,16 +1133,16 @@ export const SoilZone3DGlobe = ({ onSelectDistrict, selectedDistrictId = 'sangli
       {statusNotification && (
         <div className={`relative z-20 px-4 py-2 border-b flex items-center justify-between gap-3 text-xs font-semibold shadow-inner ${
           statusNotification.type === 'success'
-            ? 'bg-emerald-950/90 text-emerald-200 border-emerald-500/40'
-            : 'bg-sky-950/90 text-sky-200 border-sky-500/40'
+            ? 'bg-[#E8F0EA] text-[#1D3D2C] border-[#C6D8CA] dark:bg-[#1E2E23] dark:text-[#A7D8B4] dark:border-[#2F4A37]'
+            : 'bg-[#F2ECE1] text-[#2C3527] border-[#D5CEBC] dark:bg-[#1A251D] dark:text-[#E8F0EA] dark:border-[#2C3B30]'
         }`}>
           <div className="flex items-center gap-2">
-            <Sparkles className="w-4 h-4 text-emerald-400 shrink-0" />
+            <Sparkles className="w-4 h-4 text-[#1D3D2C] dark:text-emerald-400 shrink-0" />
             <span>{statusNotification.message}</span>
           </div>
           <button
             onClick={() => setStatusNotification(null)}
-            className="text-slate-400 hover:text-white p-1 cursor-pointer"
+            className="text-[#635E52] hover:text-[#1D3D2C] dark:text-slate-400 dark:hover:text-white p-1 cursor-pointer"
           >
             ✕
           </button>
@@ -1149,29 +1151,29 @@ export const SoilZone3DGlobe = ({ onSelectDistrict, selectedDistrictId = 'sangli
 
       {/* 2. DEDICATED FARM CORNER PINNING TOOLBAR (Active when marking corners or when corners exist) */}
       {(isMarkingCorners || cornerPoints.length > 0) && (
-        <div className="relative z-20 px-3.5 py-2.5 bg-gradient-to-r from-slate-950 via-sky-950/60 to-slate-950 border-b border-sky-500/30 flex flex-wrap items-center justify-between gap-3 text-xs">
+        <div className="relative z-20 px-3.5 py-2.5 bg-[#F2ECE1] dark:bg-[#1A251D] border-b border-[#D5CEBC] dark:border-[#2C3B30] flex flex-wrap items-center justify-between gap-3 text-xs">
           
           {/* Status & Point Count */}
           <div className="flex items-center gap-3">
-            <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-sky-500/20 text-sky-300 border border-sky-500/40 font-bold font-mono">
-              <MapPin className="w-3.5 h-3.5 text-sky-400" />
+            <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-[#FAF8F2] dark:bg-[#151D18] text-[#1D3D2C] dark:text-[#A7D8B4] border border-[#C6D8CA] dark:border-[#2F4A37] font-bold font-mono">
+              <MapPin className="w-3.5 h-3.5 text-[#1D3D2C] dark:text-emerald-400" />
               <span>{cornerPoints.length} Corners Marked</span>
             </div>
 
             {cornerPoints.length >= 3 && (
-              <div className="flex items-center gap-2 text-slate-200">
+              <div className="flex items-center gap-2 text-[#1F2E22] dark:text-slate-200">
                 <span>Enclosed Farmland Area:</span>
-                <span className="font-extrabold text-emerald-400 font-mono">
+                <span className="font-extrabold text-[#1D3D2C] dark:text-emerald-400 font-mono">
                   {farmAreaMetrics.acres} Acres
                 </span>
-                <span className="text-slate-400">
+                <span className="text-[#635E52] dark:text-slate-400">
                   ({farmAreaMetrics.gunthas} Gunthas / {farmAreaMetrics.sqm.toLocaleString()} m²)
                 </span>
               </div>
             )}
 
             {cornerPoints.length < 3 && (
-              <span className="text-slate-400 italic">
+              <span className="text-[#635E52] dark:text-slate-400 italic">
                 Click {3 - cornerPoints.length} more corner{3 - cornerPoints.length === 1 ? '' : 's'} on the map to enclose your farmland
               </span>
             )}
@@ -1182,20 +1184,20 @@ export const SoilZone3DGlobe = ({ onSelectDistrict, selectedDistrictId = 'sangli
             
             {/* When user has finished plotting (>= 3 corners), show Name Input & SET LAND BUTTON */}
             {cornerPoints.length >= 3 && (
-              <div className="flex items-center gap-2 bg-slate-900/90 p-1 rounded-2xl border border-emerald-500/40">
+              <div className="flex items-center gap-2 bg-[#FAF8F2] dark:bg-[#151D18] p-1 rounded-2xl border border-[#D5CEBC] dark:border-[#2C3B30]">
                 <input
                   type="text"
                   value={newLandName}
                   onChange={(e) => setNewLandName(e.target.value)}
                   placeholder={`Land ${savedLands.length + 1} Name`}
-                  className="px-2.5 py-1 text-xs rounded-xl bg-slate-950 border border-slate-700 text-white font-bold placeholder-slate-500 w-28 sm:w-36 focus:ring-1 focus:ring-emerald-400 focus:outline-hidden"
+                  className="px-2.5 py-1 text-xs rounded-xl bg-[#F4EFE6] dark:bg-[#1E2922] border border-[#D5CEBC] dark:border-[#2E3C32] text-[#1F2E22] dark:text-white font-bold placeholder-[#8A857A] w-28 sm:w-36 focus:ring-1 focus:ring-[#1D3D2C] focus:outline-hidden"
                 />
                 <button
                   onClick={handleSetCurrentLand}
-                  className="px-3.5 py-1.5 rounded-xl font-black bg-gradient-to-r from-emerald-500 via-teal-500 to-green-600 hover:from-emerald-400 hover:to-green-500 text-white shadow-lg shadow-emerald-500/40 flex items-center gap-1.5 cursor-pointer ring-2 ring-emerald-400/80 animate-pulse active:scale-95 text-xs transition-all"
+                  className="px-3.5 py-1.5 rounded-xl font-bold bg-[#1D3D2C] hover:bg-[#28523C] text-white shadow-sm flex items-center gap-1.5 cursor-pointer border border-[#2B543D] active:scale-95 text-xs transition-all"
                   title="Save and set this plotted land boundary so you can plot another if needed"
                 >
-                  <CheckCircle2 className="w-4 h-4 text-white" />
+                  <CheckCircle2 className="w-4 h-4 text-emerald-300" />
                   <span>Set Land #{savedLands.length + 1}</span>
                 </button>
               </div>
@@ -1205,18 +1207,18 @@ export const SoilZone3DGlobe = ({ onSelectDistrict, selectedDistrictId = 'sangli
               <>
                 <button
                   onClick={handleUndoCorner}
-                  className="px-2.5 py-1.5 rounded-xl font-bold bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-700 flex items-center gap-1 cursor-pointer"
+                  className="px-2.5 py-1.5 rounded-xl font-bold bg-[#FAF8F2] hover:bg-[#EFE9DA] dark:bg-[#1B241E] dark:hover:bg-[#25332A] text-[#1F2E22] dark:text-[#E8F0EA] border border-[#D5CEBC] dark:border-[#2E3C32] flex items-center gap-1 cursor-pointer"
                   title="Remove last placed corner pin"
                 >
-                  <Undo className="w-3 h-3 text-amber-400" />
+                  <Undo className="w-3 h-3 text-[#8A5A18] dark:text-amber-400" />
                   <span>Undo</span>
                 </button>
                 <button
                   onClick={handleClearCorners}
-                  className="px-2.5 py-1.5 rounded-xl font-bold bg-slate-900 hover:bg-slate-800 text-rose-300 border border-slate-700 flex items-center gap-1 cursor-pointer"
+                  className="px-2.5 py-1.5 rounded-xl font-bold bg-[#FAF8F2] hover:bg-[#EFE9DA] dark:bg-[#1B241E] dark:hover:bg-[#25332A] text-[#9F4D35] border border-[#D5CEBC] dark:border-[#2E3C32] flex items-center gap-1 cursor-pointer"
                   title="Clear all marked points in current buffer"
                 >
-                  <Trash2 className="w-3 h-3 text-rose-400" />
+                  <Trash2 className="w-3 h-3 text-[#9F4D35]" />
                   <span>Clear</span>
                 </button>
               </>
@@ -1225,12 +1227,12 @@ export const SoilZone3DGlobe = ({ onSelectDistrict, selectedDistrictId = 'sangli
             {/* Quick 1-Click Sample Farmland Presets */}
             {cornerPoints.length === 0 && (
               <div className="flex items-center gap-1.5">
-                <span className="text-[11px] text-slate-400 font-semibold">Quick Test:</span>
+                <span className="text-[11px] text-[#635E52] dark:text-slate-400 font-semibold">Quick Test:</span>
                 {MAHARASHTRA_FARMLAND_PRESETS.slice(0, 3).map(preset => (
                   <button
                     key={`sample-${preset.id}`}
                     onClick={() => handleLoadSampleFarm(preset)}
-                    className="px-2.5 py-1 rounded-lg text-[11px] font-bold bg-slate-900/90 hover:bg-slate-800 text-sky-300 border border-sky-500/30 cursor-pointer"
+                    className="px-2.5 py-1 rounded-lg text-[11px] font-bold bg-[#FAF8F2] hover:bg-[#EFE9DA] dark:bg-[#1B241E] dark:hover:bg-[#25332A] text-[#1D3D2C] dark:text-emerald-300 border border-[#D5CEBC] dark:border-[#2E3C32] cursor-pointer"
                   >
                     + {preset.name.split(' ')[0]} ({preset.crop.split('&')[0].trim()})
                   </button>
@@ -1238,14 +1240,14 @@ export const SoilZone3DGlobe = ({ onSelectDistrict, selectedDistrictId = 'sangli
               </div>
             )}
 
-            {/* Primary Action: Sentinel-2 Stress Scan */}
+            {/* Primary Action: Sentinel-2 Stress Scan (Warm Terracotta / Rust Button) */}
             <button
               onClick={() => handleAnalyzeFarmlandStress()}
               disabled={isAnalyzing}
-              className={`px-3.5 py-1.5 rounded-xl font-black flex items-center gap-2 transition-all cursor-pointer shadow-lg active:scale-95 ${
+              className={`px-3.5 py-1.5 rounded-xl font-bold flex items-center gap-2 transition-all cursor-pointer shadow-sm active:scale-95 ${
                 !isAnalyzing
-                  ? 'bg-gradient-to-r from-emerald-600 via-teal-500 to-cyan-600 hover:from-emerald-500 hover:to-cyan-500 text-white shadow-emerald-500/30 ring-2 ring-emerald-400/50'
-                  : 'bg-slate-800 text-slate-500 border border-slate-700 cursor-not-allowed'
+                  ? 'bg-[#9F4D35] hover:bg-[#8B402B] text-white border border-[#B85B40] shadow-vintage'
+                  : 'bg-[#C5BEB0] text-[#6E685C] border border-[#B5AEA0] cursor-not-allowed'
               }`}
             >
               {isAnalyzing ? (
@@ -1268,10 +1270,12 @@ export const SoilZone3DGlobe = ({ onSelectDistrict, selectedDistrictId = 'sangli
 
       {/* 3. SAVED PLOTTED LANDS RIBBON (Allows switching between multiple lands, viewing acres, and plotting more) */}
       {savedLands.length > 0 && (
-        <div className="relative z-20 px-3.5 py-2 bg-slate-950/95 border-b border-slate-800 flex flex-wrap items-center justify-between gap-2.5 text-xs">
+        <div className={`relative z-20 px-3.5 py-2 border-b flex flex-wrap items-center justify-between gap-2.5 text-xs transition-colors ${
+          isDark ? 'bg-[#151D18] border-[#293A2E]' : 'bg-[#F8F5EC] border-[#D8D1BE]'
+        }`}>
           <div className="flex items-center gap-2 overflow-x-auto max-w-full py-0.5 scrollbar-thin">
-            <div className="flex items-center gap-1.5 text-slate-400 font-bold whitespace-nowrap text-[11px]">
-              <Tractor className="w-3.5 h-3.5 text-emerald-400" />
+            <div className="flex items-center gap-1.5 text-[#635E52] dark:text-slate-400 font-bold whitespace-nowrap text-[11px]">
+              <Tractor className="w-3.5 h-3.5 text-[#1D3D2C] dark:text-emerald-400" />
               <span>Your Plotted Lands ({savedLands.length}):</span>
             </div>
 
@@ -1282,13 +1286,13 @@ export const SoilZone3DGlobe = ({ onSelectDistrict, selectedDistrictId = 'sangli
                   key={land.id}
                   onClick={() => handleSelectLand(land)}
                   style={{
-                    borderColor: isSelected ? land.color : 'rgba(255,255,255,0.12)',
-                    boxShadow: isSelected ? `0 0 12px ${land.color}60` : undefined
+                    borderColor: isSelected ? land.color : undefined,
+                    boxShadow: isSelected ? `0 0 10px ${land.color}40` : undefined
                   }}
                   className={`group flex items-center gap-2 px-2.5 py-1 rounded-xl border transition-all cursor-pointer whitespace-nowrap ${
                     isSelected
-                      ? 'bg-slate-900 text-white font-black ring-1 ring-white/50'
-                      : 'bg-slate-900/70 hover:bg-slate-800 text-slate-300 font-semibold'
+                      ? 'bg-[#E8F0EA] text-[#1D3D2C] font-bold border-[#1D3D2C] shadow-2xs dark:bg-[#1E2E23] dark:text-[#A7D8B4]'
+                      : 'bg-[#FAF8F2] hover:bg-[#EFE9DA] dark:bg-[#1B241E] dark:hover:bg-[#25332A] text-[#2C3527] dark:text-[#E8EAE6] border-[#D8D1BE] dark:border-[#2D3C31] font-medium'
                   }`}
                 >
                   <span
@@ -1296,12 +1300,12 @@ export const SoilZone3DGlobe = ({ onSelectDistrict, selectedDistrictId = 'sangli
                     style={{ backgroundColor: land.color }}
                   />
                   <span>{land.name}</span>
-                  <span className="font-mono text-[11px] text-emerald-400 font-bold">
+                  <span className="font-mono text-[11px] text-[#1D3D2C] dark:text-emerald-400 font-bold">
                     {land.area?.acres} Ac
                   </span>
                   <button
                     onClick={(e) => handleDeleteLand(land.id, e)}
-                    className="opacity-40 group-hover:opacity-100 hover:text-rose-400 text-slate-400 transition-opacity p-0.5 cursor-pointer ml-1"
+                    className="opacity-40 group-hover:opacity-100 hover:text-[#9F4D35] text-[#7A7569] transition-opacity p-0.5 cursor-pointer ml-1"
                     title="Remove this land"
                   >
                     <Trash2 className="w-3 h-3" />
@@ -1313,8 +1317,8 @@ export const SoilZone3DGlobe = ({ onSelectDistrict, selectedDistrictId = 'sangli
 
           {/* Active Land Scan Action, Total Combined Acreage, & Plot Another Land Button */}
           <div className="flex items-center gap-2.5 ml-auto flex-wrap">
-            <div className="text-[11px] text-slate-400 font-mono hidden md:inline">
-              Total: <strong className="text-emerald-400 font-black">{totalSavedMetrics.acres} Acres</strong> ({totalSavedMetrics.gunthas} G)
+            <div className="text-[11px] text-[#635E52] dark:text-slate-400 font-mono hidden md:inline">
+              Total: <strong className="text-[#1D3D2C] dark:text-emerald-400 font-bold">{totalSavedMetrics.acres} Acres</strong> ({totalSavedMetrics.gunthas} G)
             </div>
 
             {/* DIRECT SCAN BUTTON FOR ACTIVE LAND */}
@@ -1325,7 +1329,7 @@ export const SoilZone3DGlobe = ({ onSelectDistrict, selectedDistrictId = 'sangli
                 <button
                   onClick={() => handleAnalyzeFarmlandStress(activeLand)}
                   disabled={isAnalyzing}
-                  className="px-3.5 py-1.5 rounded-xl font-extrabold bg-gradient-to-r from-emerald-600 via-teal-500 to-cyan-600 hover:from-emerald-500 hover:to-cyan-500 text-white shadow-lg shadow-emerald-500/30 flex items-center gap-1.5 cursor-pointer border border-emerald-400/50 text-xs transition-all active:scale-95"
+                  className="px-3.5 py-1.5 rounded-xl font-bold bg-[#9F4D35] hover:bg-[#8B402B] text-white shadow-sm flex items-center gap-1.5 cursor-pointer border border-[#B85B40] text-xs transition-all active:scale-95"
                   title={`Run Sentinel-2 multispectral crop stress scan on ${activeLand.name}`}
                 >
                   {isAnalyzing ? (
@@ -1346,7 +1350,7 @@ export const SoilZone3DGlobe = ({ onSelectDistrict, selectedDistrictId = 'sangli
             {!isMarkingCorners && (
               <button
                 onClick={handleStartPlotAnotherLand}
-                className="px-3 py-1.5 rounded-xl font-bold bg-gradient-to-r from-sky-600 to-cyan-600 hover:from-sky-500 hover:to-cyan-500 text-white shadow-md shadow-cyan-500/20 flex items-center gap-1.5 cursor-pointer border border-cyan-400/40 text-xs transition-all active:scale-95"
+                className="px-3 py-1.5 rounded-xl font-bold bg-[#1D3D2C] hover:bg-[#28523C] text-white shadow-sm flex items-center gap-1.5 cursor-pointer border border-[#2B543D] text-xs transition-all active:scale-95"
                 title="Plot another land boundary on the satellite map"
               >
                 <Plus className="w-3.5 h-3.5 text-white" />
@@ -1526,10 +1530,10 @@ export const SoilZone3DGlobe = ({ onSelectDistrict, selectedDistrictId = 'sangli
             <Polygon
               positions={cornerPoints.map(p => [p.lat, p.lng])}
               pathOptions={{
-                color: '#38bdf8',
+                color: '#22c55e',
                 weight: 3,
                 opacity: 0.95,
-                fillColor: '#0284c7',
+                fillColor: '#10b981',
                 fillOpacity: 0.28,
                 dashArray: '6, 6'
               }}
@@ -1540,7 +1544,7 @@ export const SoilZone3DGlobe = ({ onSelectDistrict, selectedDistrictId = 'sangli
           {cornerPoints.length === 2 && (
             <Polyline
               positions={cornerPoints.map(p => [p.lat, p.lng])}
-              pathOptions={{ color: '#0ea5e9', weight: 2.5, dashArray: '4, 4' }}
+              pathOptions={{ color: '#22c55e', weight: 2.5, dashArray: '4, 4' }}
             />
           )}
 
@@ -1631,20 +1635,20 @@ export const SoilZone3DGlobe = ({ onSelectDistrict, selectedDistrictId = 'sangli
 
         {/* FLOATING SCANNER RADAR MODAL WHEN ANALYZING */}
         {isAnalyzing && (
-          <div className="absolute inset-0 z-40 bg-slate-950/70 backdrop-blur-sm flex flex-col items-center justify-center p-6">
-            <div className="p-6 rounded-3xl bg-slate-900 border border-emerald-500/40 shadow-2xl flex flex-col items-center text-center max-w-md">
+          <div className="absolute inset-0 z-40 bg-[#141C17]/60 backdrop-blur-xs flex flex-col items-center justify-center p-6">
+            <div className="p-6 rounded-3xl bg-[#FAF8F2] dark:bg-[#151D18] border border-[#D8D1BE] dark:border-[#2C3B30] shadow-vintage-md flex flex-col items-center text-center max-w-md">
               <div className="relative w-16 h-16 flex items-center justify-center mb-4">
-                <div className="absolute inset-0 rounded-full border-2 border-emerald-400 animate-ping opacity-50" />
-                <div className="w-12 h-12 rounded-full bg-emerald-600 text-white flex items-center justify-center shadow-lg">
-                  <Satellite className="w-6 h-6 animate-pulse" />
+                <div className="absolute inset-0 rounded-full border-2 border-[#1D3D2C] dark:border-emerald-400 animate-ping opacity-40" />
+                <div className="w-12 h-12 rounded-full bg-[#1D3D2C] text-white flex items-center justify-center shadow-md">
+                  <Satellite className="w-6 h-6 text-emerald-300 animate-pulse" />
                 </div>
               </div>
-              <h3 className="text-base font-black text-white">Sentinel-2 Multispectral Processing</h3>
-              <p className="text-xs text-slate-300 mt-2 leading-relaxed">
+              <h3 className="text-base font-serif-vintage font-bold text-[#1D3D2C] dark:text-white">Sentinel-2 Multispectral Processing</h3>
+              <p className="text-xs text-[#635E52] dark:text-slate-300 mt-2 leading-relaxed">
                 Querying Copernicus Sentinel-2 L2A 10-meter bands (B02, B04, B05, B08, B8A) across your custom farmland boundary...
               </p>
-              <div className="mt-4 flex items-center gap-2 text-xs font-mono text-emerald-400 bg-emerald-950/60 px-3 py-1.5 rounded-xl border border-emerald-500/30">
-                <Loader2 className="w-3.5 h-3.5 animate-spin" />
+              <div className="mt-4 flex items-center gap-2 text-xs font-mono text-[#1D3D2C] dark:text-emerald-400 bg-[#E8F0EA] dark:bg-emerald-950/60 px-3.5 py-1.5 rounded-xl border border-[#C6D8CA] dark:border-emerald-500/30">
+                <Loader2 className="w-3.5 h-3.5 animate-spin text-[#1D3D2C] dark:text-emerald-400" />
                 <span>Computing NDVI, NDRE, & Isolating Unhealthy Spots</span>
               </div>
             </div>
@@ -1653,22 +1657,22 @@ export const SoilZone3DGlobe = ({ onSelectDistrict, selectedDistrictId = 'sangli
 
         {/* FLOATING SENTINEL-2 ANALYSIS RESULT CARD (When Scan is Complete) */}
         {analysisResult && (
-          <div className="absolute top-4 right-4 z-20 max-w-sm w-full p-4 rounded-3xl bg-slate-950/95 border border-emerald-500/40 backdrop-blur-md shadow-2xl text-xs">
-            <div className="flex items-center justify-between pb-2.5 border-b border-white/10">
+          <div className="absolute top-4 right-4 z-20 max-w-sm w-full p-4 rounded-3xl bg-[#FAF8F2]/98 dark:bg-[#151D18]/98 border border-[#D8D1BE] dark:border-[#2C3B30] backdrop-blur-md shadow-vintage-md text-xs">
+            <div className="flex items-center justify-between pb-2.5 border-b border-[#E5DFCF] dark:border-[#2C3B30]">
               <div className="flex items-center gap-2">
-                <span className="p-1.5 rounded-xl bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
-                  <ShieldAlert className="w-4 h-4 text-emerald-400" />
+                <span className="p-1.5 rounded-xl bg-[#E8F0EA] dark:bg-[#1F2E23] text-[#1D3D2C] dark:text-[#A7D8B4] border border-[#C6D8CA] dark:border-[#2F4A37]">
+                  <ShieldAlert className="w-4 h-4 text-[#1D3D2C] dark:text-emerald-400" />
                 </span>
                 <div>
-                  <h4 className="font-black text-sm text-white flex items-center gap-1.5">
+                  <h4 className="font-serif-vintage font-bold text-sm text-[#1D3D2C] dark:text-white flex items-center gap-1.5">
                     <span>{activeLandId ? savedLands.find(l => l.id === activeLandId)?.name || 'Farmland' : 'Farmland'} Diagnosis</span>
                   </h4>
-                  <span className="text-[10px] text-emerald-400 font-mono">Sentinel-2 L2A Multispectral</span>
+                  <span className="text-[10px] text-[#1D3D2C] dark:text-emerald-400 font-mono">Sentinel-2 L2A Multispectral</span>
                 </div>
               </div>
               <button 
                 onClick={() => setAnalysisResult(null)}
-                className="text-slate-400 hover:text-white p-1"
+                className="text-[#7A7569] hover:text-[#1D3D2C] dark:text-slate-400 dark:hover:text-white p-1 cursor-pointer"
                 title="Dismiss Card"
               >
                 ✕
@@ -1677,72 +1681,72 @@ export const SoilZone3DGlobe = ({ onSelectDistrict, selectedDistrictId = 'sangli
 
             {/* Health Status & Coverage Overview */}
             <div className="grid grid-cols-3 gap-2 my-2.5">
-              <div className="p-2 rounded-xl bg-slate-900 border border-slate-800 text-center">
-                <span className="text-[9px] text-slate-400 block uppercase font-bold">Health Status</span>
-                <span className={`text-xs font-black mt-0.5 block ${
-                  analysisResult.health_status.includes('Severe') ? 'text-rose-400' : analysisResult.health_status.includes('Moderate') ? 'text-amber-400' : 'text-emerald-400'
+              <div className="p-2 rounded-xl bg-[#F4EFE6] dark:bg-[#1C251F] border border-[#E2DAC8] dark:border-[#2B3B2E] text-center">
+                <span className="text-[9px] text-[#7A7569] dark:text-slate-400 block uppercase font-bold">Health Status</span>
+                <span className={`text-xs font-bold font-serif-vintage mt-0.5 block ${
+                  analysisResult.health_status.includes('Severe') ? 'text-[#9F4D35]' : analysisResult.health_status.includes('Moderate') ? 'text-[#8A5A18]' : 'text-[#1D3D2C] dark:text-emerald-400'
                 }`}>
                   {analysisResult.health_status.split(' ')[0]}
                 </span>
               </div>
 
-              <div className="p-2 rounded-xl bg-slate-900 border border-slate-800 text-center">
-                <span className="text-[9px] text-slate-400 block uppercase font-bold">Vegetation</span>
-                <span className="text-xs font-black text-emerald-300 mt-0.5 block font-mono">
+              <div className="p-2 rounded-xl bg-[#F4EFE6] dark:bg-[#1C251F] border border-[#E2DAC8] dark:border-[#2B3B2E] text-center">
+                <span className="text-[9px] text-[#7A7569] dark:text-slate-400 block uppercase font-bold">Vegetation</span>
+                <span className="text-xs font-bold text-[#1D3D2C] dark:text-emerald-300 mt-0.5 block font-mono">
                   {analysisResult.vegetation_coverage_percent || 86.5}%
                 </span>
               </div>
 
-              <div className="p-2 rounded-xl bg-slate-900 border border-slate-800 text-center">
-                <span className="text-[9px] text-slate-400 block uppercase font-bold">Stressed Zones</span>
-                <span className="text-xs font-black text-rose-400 mt-0.5 block font-mono">
+              <div className="p-2 rounded-xl bg-[#F4EFE6] dark:bg-[#1C251F] border border-[#E2DAC8] dark:border-[#2B3B2E] text-center">
+                <span className="text-[9px] text-[#7A7569] dark:text-slate-400 block uppercase font-bold">Stressed Zones</span>
+                <span className="text-xs font-bold text-[#9F4D35] mt-0.5 block font-mono">
                   {analysisResult.unhealthy_spots_count} Spots
                 </span>
               </div>
             </div>
 
             {/* Complete 4-Index Multispectral Telemetry Matrix (NDVI, NDRE, EVI, NDMI) */}
-            <div className="p-2.5 rounded-2xl bg-slate-900/90 border border-slate-800 mb-3 space-y-1.5">
-              <span className="text-[10px] font-black uppercase tracking-wider text-slate-400 flex items-center justify-between">
+            <div className="p-2.5 rounded-2xl bg-[#F4EFE6] dark:bg-[#1C251F] border border-[#E2DAC8] dark:border-[#2B3B2E] mb-3 space-y-1.5">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-[#7A7569] dark:text-slate-400 flex items-center justify-between">
                 <span>Multispectral Indices (Sentinel-2)</span>
-                <span className="text-cyan-400 font-mono text-[9px]">10m L2A</span>
+                <span className="text-[#1D3D2C] dark:text-cyan-400 font-mono text-[9px]">10m L2A</span>
               </span>
               
               <div className="grid grid-cols-4 gap-1.5 text-center">
                 {/* 1. NDVI */}
-                <div className="p-1.5 rounded-lg bg-slate-950 border border-emerald-500/30">
-                  <span className="text-[9px] font-black text-emerald-400 block">🌱 NDVI</span>
-                  <span className="text-xs font-extrabold text-white font-mono block mt-0.5">
+                <div className="p-1.5 rounded-lg bg-[#FAF8F2] dark:bg-[#151D18] border border-[#D8D1BE] dark:border-[#2C3B30]">
+                  <span className="text-[9px] font-bold text-[#1D3D2C] dark:text-emerald-400 block">🌱 NDVI</span>
+                  <span className="text-xs font-bold text-[#1F2E22] dark:text-white font-mono block mt-0.5">
                     {analysisResult.mean_ndvi}
                   </span>
-                  <span className="text-[8px] text-slate-400 block">Vigor</span>
+                  <span className="text-[8px] text-[#7A7569] dark:text-slate-400 block">Vigor</span>
                 </div>
 
                 {/* 2. NDRE */}
-                <div className="p-1.5 rounded-lg bg-slate-950 border border-teal-500/30">
-                  <span className="text-[9px] font-black text-teal-300 block">🍃 NDRE</span>
-                  <span className="text-xs font-extrabold text-white font-mono block mt-0.5">
+                <div className="p-1.5 rounded-lg bg-[#FAF8F2] dark:bg-[#151D18] border border-[#D8D1BE] dark:border-[#2C3B30]">
+                  <span className="text-[9px] font-bold text-[#1E4D56] dark:text-teal-300 block">🍃 NDRE</span>
+                  <span className="text-xs font-bold text-[#1F2E22] dark:text-white font-mono block mt-0.5">
                     {analysisResult.mean_ndre || (analysisResult.mean_ndvi * 0.65).toFixed(2)}
                   </span>
-                  <span className="text-[8px] text-slate-400 block">Chlorophyll</span>
+                  <span className="text-[8px] text-[#7A7569] dark:text-slate-400 block">Chlorophyll</span>
                 </div>
 
                 {/* 3. EVI */}
-                <div className="p-1.5 rounded-lg bg-slate-950 border border-sky-500/30">
-                  <span className="text-[9px] font-black text-sky-400 block">🌿 EVI</span>
-                  <span className="text-xs font-extrabold text-white font-mono block mt-0.5">
+                <div className="p-1.5 rounded-lg bg-[#FAF8F2] dark:bg-[#151D18] border border-[#D8D1BE] dark:border-[#2C3B30]">
+                  <span className="text-[9px] font-bold text-[#1D3D2C] dark:text-sky-400 block">🌿 EVI</span>
+                  <span className="text-xs font-bold text-[#1F2E22] dark:text-white font-mono block mt-0.5">
                     {analysisResult.mean_evi || (analysisResult.mean_ndvi * 0.85).toFixed(2)}
                   </span>
-                  <span className="text-[8px] text-slate-400 block">Biomass</span>
+                  <span className="text-[8px] text-[#7A7569] dark:text-slate-400 block">Biomass</span>
                 </div>
 
                 {/* 4. NDMI */}
-                <div className="p-1.5 rounded-lg bg-slate-950 border border-cyan-500/30">
-                  <span className="text-[9px] font-black text-cyan-300 block">💧 NDMI</span>
-                  <span className="text-xs font-extrabold text-white font-mono block mt-0.5">
+                <div className="p-1.5 rounded-lg bg-[#FAF8F2] dark:bg-[#151D18] border border-[#D8D1BE] dark:border-[#2C3B30]">
+                  <span className="text-[9px] font-bold text-[#1E4D56] dark:text-cyan-300 block">💧 NDMI</span>
+                  <span className="text-xs font-bold text-[#1F2E22] dark:text-white font-mono block mt-0.5">
                     {analysisResult.mean_ndmi ?? 0.34}
                   </span>
-                  <span className="text-[8px] text-slate-400 block">Moisture</span>
+                  <span className="text-[8px] text-[#7A7569] dark:text-slate-400 block">Moisture</span>
                 </div>
               </div>
             </div>
@@ -1750,7 +1754,7 @@ export const SoilZone3DGlobe = ({ onSelectDistrict, selectedDistrictId = 'sangli
             {/* Unhealthy Spots List */}
             {analysisResult.unhealthy_spots && analysisResult.unhealthy_spots.length > 0 ? (
               <div className="space-y-1.5 max-h-48 overflow-y-auto pr-1 scrollbar-thin">
-                <span className="text-[10px] uppercase tracking-wider text-rose-400 font-black flex items-center gap-1">
+                <span className="text-[10px] uppercase tracking-wider text-[#9F4D35] font-bold flex items-center gap-1">
                   <Flame className="w-3 h-3" />
                   <span>Detected Unhealthy Spots:</span>
                 </span>
@@ -1766,23 +1770,23 @@ export const SoilZone3DGlobe = ({ onSelectDistrict, selectedDistrictId = 'sangli
                       }}
                       className={`p-2.5 rounded-xl border transition-all cursor-pointer ${
                         isSelected 
-                          ? 'bg-rose-950/60 border-rose-500 text-white' 
-                          : 'bg-slate-900/80 border-slate-800 hover:border-slate-700 text-slate-300'
+                          ? 'bg-[#FDF0EE] dark:bg-[#2D1B18] border-[#9F4D35] text-[#1F2E22] dark:text-white' 
+                          : 'bg-[#FAF8F2] dark:bg-[#1B241E] border-[#D8D1BE] dark:border-[#2B3B2E] hover:border-[#9F4D35] text-[#2C3527] dark:text-[#E8EAE6]'
                       }`}
                     >
                       <div className="flex items-center justify-between">
-                        <span className="font-extrabold flex items-center gap-1.5 text-xs text-white">
-                          <span className={`w-2 h-2 rounded-full ${spot.severity === 'Severe' ? 'bg-rose-500' : 'bg-amber-400'}`} />
+                        <span className="font-bold flex items-center gap-1.5 text-xs text-[#1F2E22] dark:text-white">
+                          <span className={`w-2 h-2 rounded-full ${spot.severity === 'Severe' ? 'bg-[#9F4D35]' : 'bg-[#8A5A18]'}`} />
                           <span>Spot #{spot.id} ({spot.severity})</span>
                         </span>
-                        <span className="text-[10px] font-mono text-slate-400">
+                        <span className="text-[10px] font-mono text-[#7A7569] dark:text-slate-400">
                           {spot.area_sqm} m² ({spot.area_gunthas} G)
                         </span>
                       </div>
-                      <p className="text-[11px] text-slate-300 mt-1 leading-snug">
+                      <p className="text-[11px] text-[#635E52] dark:text-slate-300 mt-1 leading-snug">
                         {spot.detected_issue}
                       </p>
-                      <div className="mt-1.5 text-[10px] text-emerald-400 bg-emerald-950/40 p-1.5 rounded border border-emerald-500/20">
+                      <div className="mt-1.5 text-[10px] text-[#1D3D2C] bg-[#E8F0EA] dark:bg-emerald-950/40 p-1.5 rounded border border-[#C6D8CA] dark:border-emerald-500/20">
                         <strong>Remedy:</strong> {spot.actionable_recommendation}
                       </div>
                     </div>
@@ -1790,20 +1794,20 @@ export const SoilZone3DGlobe = ({ onSelectDistrict, selectedDistrictId = 'sangli
                 })}
               </div>
             ) : (
-              <div className="p-3 rounded-2xl bg-emerald-950/40 border border-emerald-500/30 text-emerald-300 text-xs flex items-center gap-2">
-                <ShieldCheck className="w-5 h-5 shrink-0 text-emerald-400" />
+              <div className="p-3 rounded-2xl bg-[#E8F0EA] dark:bg-emerald-950/40 border border-[#C6D8CA] dark:border-emerald-500/30 text-[#1D3D2C] dark:text-emerald-300 text-xs flex items-center gap-2">
+                <ShieldCheck className="w-5 h-5 shrink-0 text-[#1D3D2C] dark:text-emerald-400" />
                 <span>Entire marked field exhibits robust vegetative vigor with no severe stress clusters detected!</span>
               </div>
             )}
 
             {/* Layer Display Toggles */}
-            <div className="mt-3 pt-2.5 border-t border-white/10 flex items-center justify-between text-[10px] text-slate-400">
+            <div className="mt-3 pt-2.5 border-t border-[#E5DFCF] dark:border-[#2C3B30] flex items-center justify-between text-[10px] text-[#635E52] dark:text-slate-400">
               <label className="flex items-center gap-1 cursor-pointer">
                 <input
                   type="checkbox"
                   checked={showUnhealthyMarkers}
                   onChange={(e) => setShowUnhealthyMarkers(e.target.checked)}
-                  className="rounded accent-rose-500"
+                  className="rounded accent-[#9F4D35]"
                 />
                 <span>Spots</span>
               </label>
@@ -1813,7 +1817,7 @@ export const SoilZone3DGlobe = ({ onSelectDistrict, selectedDistrictId = 'sangli
                   type="checkbox"
                   checked={showHeatmapOverlay}
                   onChange={(e) => setShowHeatmapOverlay(e.target.checked)}
-                  className="rounded accent-emerald-500"
+                  className="rounded accent-[#1D3D2C]"
                 />
                 <span>Heatmap</span>
               </label>
@@ -1823,7 +1827,7 @@ export const SoilZone3DGlobe = ({ onSelectDistrict, selectedDistrictId = 'sangli
                   type="checkbox"
                   checked={showFarmPolygon}
                   onChange={(e) => setShowFarmPolygon(e.target.checked)}
-                  className="rounded accent-sky-500"
+                  className="rounded accent-[#1D3D2C]"
                 />
                 <span>Boundary</span>
               </label>
@@ -1834,58 +1838,58 @@ export const SoilZone3DGlobe = ({ onSelectDistrict, selectedDistrictId = 'sangli
 
         {/* 4. BOTTOM TELEMETRY BAR & ACTIVE DISTRICT SYNC */}
         <div className="absolute bottom-4 left-4 right-4 z-20">
-          <div className="p-3.5 sm:p-4 rounded-2xl bg-slate-950/92 border border-emerald-500/30 backdrop-blur-md shadow-2xl flex flex-col lg:flex-row lg:items-center justify-between gap-3 sm:gap-4">
+          <div className="p-3.5 sm:p-4 rounded-2xl bg-[#FAF8F2]/95 dark:bg-[#151D18]/95 border border-[#D8D1BE] dark:border-[#2B3B2E] backdrop-blur-md shadow-vintage-md flex flex-col lg:flex-row lg:items-center justify-between gap-3 sm:gap-4">
             
             <div className="flex items-start space-x-3">
-              <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-emerald-600 to-teal-700 text-white flex items-center justify-center font-black shadow-lg shrink-0">
-                <MapPin className="w-5 h-5 text-emerald-100" />
+              <div className="w-11 h-11 rounded-2xl bg-[#1D3D2C] text-[#E8F0EA] flex items-center justify-center font-black shadow-sm shrink-0 border border-[#2B543D]">
+                <MapPin className="w-5 h-5 text-emerald-300" />
               </div>
               <div>
                 <div className="flex items-center gap-2">
-                  <h3 className="font-black text-base text-white">
+                  <h3 className="font-serif-vintage font-bold text-base text-[#1D3D2C] dark:text-white">
                     {activeDistrict.name} ({activeDistrict.nameMr})
                   </h3>
-                  <span className="px-2 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">
+                  <span className="px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-[#E8F0EA] text-[#1D3D2C] dark:bg-emerald-950/60 dark:text-emerald-300 border border-[#C6D8CA] dark:border-emerald-500/40">
                     Active Telemetry Zone
                   </span>
                 </div>
-                <p className="text-xs text-slate-300 mt-0.5">
-                  Soil Profile: <span className="font-bold text-amber-300">{activeProfile.soilNameEn}</span> ({activeProfile.soilGroup})
+                <p className="text-xs text-[#635E52] dark:text-slate-300 mt-0.5">
+                  Soil Profile: <span className="font-bold text-[#8A5A18] dark:text-amber-300">{activeProfile.soilNameEn}</span> ({activeProfile.soilGroup})
                 </p>
               </div>
             </div>
 
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 text-xs">
-              <div className="p-2 rounded-xl bg-slate-900/90 border border-slate-800">
-                <span className="text-[9px] font-bold text-slate-400 uppercase block">Soil Classification</span>
-                <span className="text-xs font-black text-amber-300 mt-0.5 block">{activeProfile.soilGroup}</span>
-                <span className="text-[9px] text-slate-400">Clay: {activeProfile.clayPercent}</span>
+              <div className="p-2 rounded-xl bg-[#F4EFE6] dark:bg-[#1C251F] border border-[#E2DAC8] dark:border-[#2B3B2E]">
+                <span className="text-[9px] font-bold text-[#7A7569] dark:text-slate-400 uppercase block">Soil Classification</span>
+                <span className="text-xs font-bold text-[#8A5A18] dark:text-amber-300 mt-0.5 block">{activeProfile.soilGroup}</span>
+                <span className="text-[9px] text-[#7A7569] dark:text-slate-400">Clay: {activeProfile.clayPercent}</span>
               </div>
 
-              <div className="p-2 rounded-xl bg-slate-900/90 border border-slate-800">
-                <span className="text-[9px] font-bold text-slate-400 uppercase block">Reaction (pH)</span>
-                <span className="text-xs font-black text-emerald-400 mt-0.5 block">{activeProfile.phRange}</span>
-                <span className="text-[9px] text-slate-400">Optimal Field Range</span>
+              <div className="p-2 rounded-xl bg-[#F4EFE6] dark:bg-[#1C251F] border border-[#E2DAC8] dark:border-[#2B3B2E]">
+                <span className="text-[9px] font-bold text-[#7A7569] dark:text-slate-400 uppercase block">Reaction (pH)</span>
+                <span className="text-xs font-bold text-[#1D3D2C] dark:text-emerald-400 mt-0.5 block">{activeProfile.phRange}</span>
+                <span className="text-[9px] text-[#7A7569] dark:text-slate-400">Optimal Field Range</span>
               </div>
 
-              <div className="p-2 rounded-xl bg-slate-900/90 border border-slate-800 col-span-2 sm:col-span-1">
-                <span className="text-[9px] font-bold text-slate-400 uppercase block">Farmland Sync</span>
-                <span className="text-xs font-black text-cyan-300 mt-0.5 block">{activeDistrict.name} Agro Belt</span>
-                <span className="text-[9px] text-emerald-400 flex items-center gap-1">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+              <div className="p-2 rounded-xl bg-[#F4EFE6] dark:bg-[#1C251F] border border-[#E2DAC8] dark:border-[#2B3B2E] col-span-2 sm:col-span-1">
+                <span className="text-[9px] font-bold text-[#7A7569] dark:text-slate-400 uppercase block">Farmland Sync</span>
+                <span className="text-xs font-bold text-[#1E4D56] dark:text-cyan-300 mt-0.5 block">{activeDistrict.name} Agro Belt</span>
+                <span className="text-[9px] text-[#1D3D2C] dark:text-emerald-400 flex items-center gap-1 font-bold">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#1D3D2C] dark:bg-emerald-400"></span>
                   <span>ESP32 Hardware Linked</span>
                 </span>
               </div>
             </div>
 
             <div className="shrink-0 flex items-center gap-2">
-              <label className="text-[11px] font-bold text-slate-400 whitespace-nowrap hidden sm:inline">
+              <label className="text-[11px] font-bold text-[#635E52] dark:text-slate-400 whitespace-nowrap hidden sm:inline">
                 District:
               </label>
               <select
                 value={activeDistrict.id}
                 onChange={(e) => handleSelectDistrict(e.target.value)}
-                className="px-3 py-2 rounded-xl text-xs font-bold bg-slate-900 text-white border border-slate-700 cursor-pointer hover:border-emerald-500 focus:outline-hidden shadow-md"
+                className="px-3 py-2 rounded-xl text-xs font-bold bg-[#FAF8F2] dark:bg-[#1C251F] text-[#1F2E22] dark:text-white border border-[#D5CEBC] dark:border-[#2B3B2E] cursor-pointer hover:border-[#1D3D2C] focus:outline-hidden shadow-xs"
               >
                 {DISTRICT_NODES.map(d => (
                   <option key={d.id} value={d.id}>

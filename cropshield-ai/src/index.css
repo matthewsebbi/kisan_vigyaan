@@ -225,3 +225,50 @@ body.dark {
   background-size: 200% 100%;
   animation: shimmerWave 2s linear infinite;
 }
+
+/* ==========================================================================
+   Retro / Vintage Agronomic Theme Styles & Typography
+   ========================================================================== */
+.font-serif-vintage {
+  font-family: 'Newsreader', 'Playfair Display', Georgia, Cambria, 'Times New Roman', Times, serif;
+  letter-spacing: -0.015em;
+}
+
+/* Vintage Warm Soft Shadow */
+.shadow-vintage {
+  box-shadow: 0 4px 20px -2px rgba(45, 40, 30, 0.08), 0 2px 6px -1px rgba(45, 40, 30, 0.04);
+}
+
+.shadow-vintage-md {
+  box-shadow: 0 10px 30px -4px rgba(45, 40, 30, 0.12), 0 4px 10px -2px rgba(45, 40, 30, 0.06);
+}
+
+/* Vintage Subtle Paper Texture Pattern */
+.bg-parchment-pattern {
+  background-color: #FAF8F2;
+  background-image: radial-gradient(#E5DFCF 0.75px, transparent 0.75px);
+  background-size: 16px 16px;
+}
+
+.dark .bg-parchment-pattern {
+  background-color: #121814;
+  background-image: radial-gradient(#1E2922 0.75px, transparent 0.75px);
+  background-size: 16px 16px;
+}
+
+/* Custom Vintage Map Corner Pin */
+.vintage-corner-pin {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 3px solid #10b981;
+  box-shadow: 0 0 14px rgba(16, 185, 129, 0.8), 0 3px 8px rgba(0,0,0,0.4);
+  color: #064e3b;
+  font-weight: 800;
+  font-size: 11px;
+}
+
