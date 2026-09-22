@@ -1669,72 +1669,72 @@ export const SoilZone3DGlobe = ({ onSelectDistrict, selectedDistrictId = 'sangli
 
             {/* Health Status & Coverage Overview */}
             <div className="grid grid-cols-3 gap-2 my-2.5">
-              <div className="p-2 rounded-xl bg-[#F4EFE6]/80 dark:bg-[#1C251F]/80 border border-[#E2DAC8]/90 dark:border-[#2B3B2E]/90 text-center">
-                <span className="text-[9px] text-[#7A7569] dark:text-slate-400 block uppercase font-bold">Health Status</span>
+              <div className="p-2 rounded-xl bg-[#E8F0EA]/85 dark:bg-[#1E3024]/85 border border-[#BDD6C3] dark:border-[#2F4D38] text-center shadow-xs">
+                <span className="text-[9px] text-[#2D5A3E] dark:text-[#A7D8B4] block uppercase font-bold">Health Status</span>
                 <span className={`text-xs font-bold font-serif-vintage mt-0.5 block ${
-                  analysisResult.health_status.includes('Severe') ? 'text-[#9F4D35]' : analysisResult.health_status.includes('Moderate') ? 'text-[#8A5A18]' : 'text-[#1D3D2C] dark:text-emerald-400'
+                  analysisResult.health_status.includes('Severe') ? 'text-[#9F4D35]' : analysisResult.health_status.includes('Moderate') ? 'text-[#B45309]' : 'text-[#1D3D2C] dark:text-emerald-300'
                 }`}>
                   {analysisResult.health_status.split(' ')[0]}
                 </span>
               </div>
 
-              <div className="p-2 rounded-xl bg-[#F4EFE6]/80 dark:bg-[#1C251F]/80 border border-[#E2DAC8]/90 dark:border-[#2B3B2E]/90 text-center">
-                <span className="text-[9px] text-[#7A7569] dark:text-slate-400 block uppercase font-bold">Vegetation</span>
+              <div className="p-2 rounded-xl bg-[#EAF2EC]/85 dark:bg-[#1B2F23]/85 border border-[#BDD6C3] dark:border-[#2F4D38] text-center shadow-xs">
+                <span className="text-[9px] text-[#2D5A3E] dark:text-[#A7D8B4] block uppercase font-bold">Vegetation</span>
                 <span className="text-xs font-bold text-[#1D3D2C] dark:text-emerald-300 mt-0.5 block font-mono">
                   {analysisResult.vegetation_coverage_percent || 86.5}%
                 </span>
               </div>
 
-              <div className="p-2 rounded-xl bg-[#F4EFE6]/80 dark:bg-[#1C251F]/80 border border-[#E2DAC8]/90 dark:border-[#2B3B2E]/90 text-center">
-                <span className="text-[9px] text-[#7A7569] dark:text-slate-400 block uppercase font-bold">Stressed Zones</span>
-                <span className="text-xs font-bold text-[#9F4D35] mt-0.5 block font-mono">
+              <div className="p-2 rounded-xl bg-[#FBF0EC]/85 dark:bg-[#341F1A]/85 border border-[#ECC5BA] dark:border-[#523027] text-center shadow-xs">
+                <span className="text-[9px] text-[#9F4D35] dark:text-[#F3A490] block uppercase font-bold">Stressed Zones</span>
+                <span className="text-xs font-bold text-[#9F4D35] dark:text-[#FF886B] mt-0.5 block font-mono">
                   {analysisResult.unhealthy_spots_count} Spots
                 </span>
               </div>
             </div>
 
             {/* Complete 4-Index Multispectral Telemetry Matrix (NDVI, NDRE, EVI, NDMI) */}
-            <div className="p-2.5 rounded-2xl bg-[#F4EFE6]/80 dark:bg-[#1C251F]/80 border border-[#E2DAC8]/90 dark:border-[#2B3B2E]/90 mb-3 space-y-1.5">
-              <span className="text-[10px] font-bold uppercase tracking-wider text-[#7A7569] dark:text-slate-400 flex items-center justify-between">
+            <div className="p-2.5 rounded-2xl bg-[#F5F2E9]/75 dark:bg-[#1A231C]/75 border border-[#DDD6C5] dark:border-[#2B3B2E] mb-3 space-y-1.5 shadow-xs">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-[#5A6E5F] dark:text-slate-400 flex items-center justify-between font-mono">
                 <span>Multispectral Indices (Sentinel-2)</span>
                 <span className="text-[#1D3D2C] dark:text-cyan-400 font-mono text-[9px]">10m L2A</span>
               </span>
               
               <div className="grid grid-cols-4 gap-1.5 text-center">
                 {/* 1. NDVI */}
-                <div className="p-1.5 rounded-lg bg-[#FAF8F2]/80 dark:bg-[#151D18]/80 border border-[#D8D1BE]/80 dark:border-[#2C3B30]/80">
+                <div className="p-1.5 rounded-lg bg-[#EAF2EC]/90 dark:bg-[#1B2F23]/90 border border-[#BDD6C3] dark:border-[#2F4D38] shadow-2xs">
                   <span className="text-[9px] font-bold text-[#1D3D2C] dark:text-emerald-400 block">🌱 NDVI</span>
-                  <span className="text-xs font-bold text-[#1F2E22] dark:text-white font-mono block mt-0.5">
+                  <span className="text-xs font-bold text-[#163524] dark:text-white font-mono block mt-0.5">
                     {analysisResult.mean_ndvi}
                   </span>
-                  <span className="text-[8px] text-[#7A7569] dark:text-slate-400 block">Vigor</span>
+                  <span className="text-[8px] font-semibold text-[#48735A] dark:text-[#8BB89C] block">Vigor</span>
                 </div>
 
                 {/* 2. NDRE */}
-                <div className="p-1.5 rounded-lg bg-[#FAF8F2]/80 dark:bg-[#151D18]/80 border border-[#D8D1BE]/80 dark:border-[#2C3B30]/80">
-                  <span className="text-[9px] font-bold text-[#1E4D56] dark:text-teal-300 block">🍃 NDRE</span>
-                  <span className="text-xs font-bold text-[#1F2E22] dark:text-white font-mono block mt-0.5">
+                <div className="p-1.5 rounded-lg bg-[#E6F4EE]/90 dark:bg-[#172D24]/90 border border-[#B2DECA] dark:border-[#284E3F] shadow-2xs">
+                  <span className="text-[9px] font-bold text-[#0E583B] dark:text-emerald-300 block">🍃 NDRE</span>
+                  <span className="text-xs font-bold text-[#093D28] dark:text-white font-mono block mt-0.5">
                     {analysisResult.mean_ndre || (analysisResult.mean_ndvi * 0.65).toFixed(2)}
                   </span>
-                  <span className="text-[8px] text-[#7A7569] dark:text-slate-400 block">Chlorophyll</span>
+                  <span className="text-[8px] font-semibold text-[#3B7F64] dark:text-[#83C6AA] block">Chlorophyll</span>
                 </div>
 
                 {/* 3. EVI */}
-                <div className="p-1.5 rounded-lg bg-[#FAF8F2]/80 dark:bg-[#151D18]/80 border border-[#D8D1BE]/80 dark:border-[#2C3B30]/80">
-                  <span className="text-[9px] font-bold text-[#1D3D2C] dark:text-sky-400 block">🌿 EVI</span>
-                  <span className="text-xs font-bold text-[#1F2E22] dark:text-white font-mono block mt-0.5">
+                <div className="p-1.5 rounded-lg bg-[#F5F5E4]/90 dark:bg-[#2B2B1B]/90 border border-[#DDDDAA] dark:border-[#4B4B2F] shadow-2xs">
+                  <span className="text-[9px] font-bold text-[#5B5E14] dark:text-amber-300 block">🌿 EVI</span>
+                  <span className="text-xs font-bold text-[#3F420B] dark:text-white font-mono block mt-0.5">
                     {analysisResult.mean_evi || (analysisResult.mean_ndvi * 0.85).toFixed(2)}
                   </span>
-                  <span className="text-[8px] text-[#7A7569] dark:text-slate-400 block">Biomass</span>
+                  <span className="text-[8px] font-semibold text-[#717527] dark:text-[#AEB357] block">Biomass</span>
                 </div>
 
                 {/* 4. NDMI */}
-                <div className="p-1.5 rounded-lg bg-[#FAF8F2]/80 dark:bg-[#151D18]/80 border border-[#D8D1BE]/80 dark:border-[#2C3B30]/80">
-                  <span className="text-[9px] font-bold text-[#1E4D56] dark:text-cyan-300 block">💧 NDMI</span>
-                  <span className="text-xs font-bold text-[#1F2E22] dark:text-white font-mono block mt-0.5">
+                <div className="p-1.5 rounded-lg bg-[#EAF3F8]/90 dark:bg-[#192A36]/90 border border-[#BEDDEE] dark:border-[#28485E] shadow-2xs">
+                  <span className="text-[9px] font-bold text-[#175C7E] dark:text-cyan-300 block">💧 NDMI</span>
+                  <span className="text-xs font-bold text-[#0C3B53] dark:text-white font-mono block mt-0.5">
                     {analysisResult.mean_ndmi ?? 0.34}
                   </span>
-                  <span className="text-[8px] text-[#7A7569] dark:text-slate-400 block">Moisture</span>
+                  <span className="text-[8px] font-semibold text-[#3B7D9E] dark:text-[#84BEDB] block">Moisture</span>
                 </div>
               </div>
             </div>
