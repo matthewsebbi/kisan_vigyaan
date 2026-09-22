@@ -4,23 +4,11 @@ import { SoilZone3DGlobe } from './SoilZone3DGlobe';
 import { getDistrictAgroProfile } from '../../data/maharashtraHydrologyData';
 import { DISTRICT_NODES } from '../../data/maharashtraDistrictBoundaries';
 import { 
-  Cpu, 
   Thermometer, 
   Droplets, 
-  Activity, 
-  ShieldAlert, 
-  AlertTriangle, 
-  CheckCircle2, 
-  Zap, 
-  RefreshCw, 
-  Terminal, 
   Usb, 
-  Waves, 
   Gauge, 
-  Info,
-  Radio,
-  Globe,
-  MapPin
+  Radio
 } from 'lucide-react';
 
 export const LiveESP32TelemetryPanel = () => {
@@ -39,61 +27,16 @@ export const LiveESP32TelemetryPanel = () => {
   });
 
   const [isLiveConnected, setIsLiveConnected] = useState(true);
-  const [serialLog, setSerialLog] = useState([]);
   const [portConnected, setPortConnected] = useState(false);
   const [selectedDistrictId, setSelectedDistrictId] = useState('sangli');
 
   const selectedDistrict = DISTRICT_NODES.find(d => d.id === selectedDistrictId) || DISTRICT_NODES[0];
   const activeAgroProfile = getDistrictAgroProfile(selectedDistrictId);
 
-  // ESP32 Calibration Constants
-  const SOIL_DRY_RAW = 3253;
-  const SOIL_WET_RAW = 1500;
-  const SOIL_DRY_PERCENT = 30;
-  const SOIL_WET_PERCENT = 45;
-
-  const ADC_MAX = 4095.0;
-  const ADC_VREF = 3.3;
-
-  const TEMP_MIN = 20.0;
-  const TEMP_MAX = 30.0;
-
   // Compute calculated values
   const environmentTemperature = telemetry.environmentTemperature;
   const environmentHumidity = telemetry.environmentHumidity;
   const soilTemperature = telemetry.soilTemperature;
-  const soilMoistureRaw = telemetry.soilMoistureRaw;
-  const highHumidityMinutes = telemetry.highHumidityMinutes;
-
-  // 1. Soil Moisture Mapping & Condition
-  let soilMoisturePercent = Math.round(((SOIL_DRY_RAW - soilMoistureRaw) / (SOIL_DRY_RAW - SOIL_WET_RAW)) * 100);
-  soilMoisturePercent = Math.max(0, Math.min(100, soilMoisturePercent));
-
-  let soilCondition = 'NORMAL';
-  if (soilMoisturePercent < SOIL_DRY_PERCENT) soilCondition = 'DRY';
-  else if (soilMoisturePercent >= SOIL_WET_PERCENT) soilCondition = 'WET';
-
-  const irrigationRequired = false;
-
-  // 2. Stable pH 6.70
-  const calculatedPH = 6.70;
-  const phVoltage = 2.568;
-  const phRaw = 2568;
-  const phCondition = 'NORMAL';
-
-  // 3. Disease Risk Scoring Matrix (Normal / Safe)
-  let temperatureScore = 1;
-  if (environmentTemperature >= TEMP_MIN && environmentTemperature <= TEMP_MAX) temperatureScore = 1;
-
-  let humidityScore = 0; // Humidity < 70% is 0 pts
-
-  let durationScore = 0;
-
-  const diseaseRiskScore = temperatureScore + humidityScore + durationScore;
-
-  const diseaseRisk = 'NORMAL';
-  const diseaseStatusMsg = 'STATUS: Environment conditions are NORMAL & safe.';
-  const diseaseColor = 'text-emerald-700 bg-emerald-100 border-emerald-300 dark:bg-emerald-950 dark:text-emerald-400';
 
   // 10-Second Telemetry Loop Simulation (#define READ_INTERVAL 10000UL)
   useEffect(() => {
@@ -108,10 +51,6 @@ export const LiveESP32TelemetryPanel = () => {
         const nextHum = Math.min(65, Math.max(50, Math.round((prev.environmentHumidity + humVar) * 100) / 100));
 
         const timeStr = new Date().toLocaleTimeString();
-
-        // Push formatted Serial Log line with stable pH 6.70 and NORMAL Risk
-        const logLine = `[${timeStr}] Temp: ${nextTemp}°C | RH: ${nextHum}% | Soil Moisture: 38% (NORMAL) | pH: 6.70 (NORMAL) | Risk: NORMAL`;
-        setSerialLog(log => [logLine, ...log.slice(0, 15)]);
 
         return {
           ...prev,
@@ -194,20 +133,18 @@ export const LiveESP32TelemetryPanel = () => {
         </div>
       </div>
 
-      {/* 3. MAIN 2-COLUMN LAYOUT: LEFT SIDEBAR DATA COLUMN & RIGHT ANALYSIS */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+      {/* 3. LIVE HARDWARE SENSOR PANELS */}
+      <div className="space-y-4">
         
-        {/* LEFT HAND SIDE COLUMN: LIVE SENSOR DATA PANELS */}
-        <div className="lg:col-span-5 space-y-4">
-          
-          <div className="flex items-center justify-between px-1">
-            <h2 className="text-xs font-bold uppercase tracking-wider text-[#1D3D2C] dark:text-[#A7D8B4] font-mono flex items-center gap-2">
-              <Radio className="w-4 h-4 animate-pulse text-[#1D3D2C] dark:text-[#4ADE80]" />
-              <span>Live Sensor Column Data</span>
-            </h2>
-            <span className="text-[10px] text-[#7A7569] dark:text-[#8E8B81] font-mono">Updated: {telemetry.lastUpdated}</span>
-          </div>
+        <div className="flex items-center justify-between px-1">
+          <h2 className="text-xs font-bold uppercase tracking-wider text-[#1D3D2C] dark:text-[#A7D8B4] font-mono flex items-center gap-2">
+            <Radio className="w-4 h-4 animate-pulse text-[#1D3D2C] dark:text-[#4ADE80]" />
+            <span>Live Hardware Sensor Telemetry</span>
+          </h2>
+          <span className="text-[10px] text-[#7A7569] dark:text-[#8E8B81] font-mono">Updated: {telemetry.lastUpdated}</span>
+        </div>
 
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           {/* Panel 1: DHT22 Environment Data */}
           <div className={`p-5 rounded-3xl border shadow-vintage transition-all hover:shadow-vintage-md ${
             isDark ? 'bg-[#151D18] border-[#293A2E] text-[#F3F5F1]' : 'bg-[#FAF8F2] border-[#D8D1BE] text-[#1F2E22]'
@@ -336,84 +273,7 @@ export const LiveESP32TelemetryPanel = () => {
               </div>
             </div>
           </div>
-
         </div>
-
-        {/* RIGHT HAND SIDE COLUMN: DISEASE ANALYSIS & SERIAL LOG MONITOR */}
-        <div className="lg:col-span-7 space-y-4">
-          
-          {/* Disease Risk Matrix Banner (NORMAL RISK) */}
-          <div className={`p-6 rounded-3xl border shadow-vintage space-y-4 transition-colors ${
-            isDark ? 'bg-[#151D18] border-[#293A2E] text-[#F3F5F1]' : 'bg-[#FAF8F2] border-[#D8D1BE] text-[#1F2E22]'
-          }`}>
-            <div className="flex items-center justify-between border-b pb-4 border-[#E5DFCF] dark:border-[#293A2E]">
-              <div className="flex items-center space-x-3">
-                <div className="w-11 h-11 rounded-2xl bg-[#1D3D2C] text-[#E8F0EA] flex items-center justify-center shadow-sm border border-[#2B543D]">
-                  <CheckCircle2 className="w-6 h-6 text-emerald-300" />
-                </div>
-                <div>
-                  <h2 className="text-base sm:text-xl font-serif-vintage font-bold text-[#1D3D2C] dark:text-[#E8F0EA]">
-                    ESP32 Real-Time Disease Risk Analysis
-                  </h2>
-                  <p className="text-xs text-[#635E52] dark:text-[#A8A497] font-mono mt-0.5">
-                    Temperature + Humidity + High RH Duration Matrix
-                  </p>
-                </div>
-              </div>
-
-              <span className="px-3.5 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider font-mono border shadow-2xs text-[#1D3D2C] bg-[#E8F0EA] border-[#C6D8CA] dark:bg-[#1E2E23] dark:text-[#A7D8B4] dark:border-[#2E4836]">
-                NORMAL RISK (1 pt)
-              </span>
-            </div>
-
-            {/* Score Breakup Grid */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-              <div className="p-3.5 rounded-2xl bg-[#F4EFE6] dark:bg-[#1B241E] border border-[#E2DAC8] dark:border-[#2A392F]">
-                <span className="text-[10px] font-bold uppercase text-[#7A7569] dark:text-[#8E8B81] font-mono block">Temp Score</span>
-                <span className="text-lg font-bold font-serif-vintage text-[#1D3D2C] dark:text-[#E8F0EA] mt-1 block">
-                  1 / 2
-                </span>
-                <span className="text-[9px] text-[#7A7569] dark:text-[#8E8B81] font-mono block mt-0.5">Optimal Range</span>
-              </div>
-
-              <div className="p-3.5 rounded-2xl bg-[#F4EFE6] dark:bg-[#1B241E] border border-[#E2DAC8] dark:border-[#2A392F]">
-                <span className="text-[10px] font-bold uppercase text-[#7A7569] dark:text-[#8E8B81] font-mono block">Humidity Score</span>
-                <span className="text-lg font-bold font-serif-vintage text-[#1E4D56] dark:text-[#67E8F9] mt-1 block">
-                  0 / 3
-                </span>
-                <span className="text-[9px] text-[#7A7569] dark:text-[#8E8B81] font-mono block mt-0.5">58% RH Safe</span>
-              </div>
-
-              <div className="p-3.5 rounded-2xl bg-[#F4EFE6] dark:bg-[#1B241E] border border-[#E2DAC8] dark:border-[#2A392F]">
-                <span className="text-[10px] font-bold uppercase text-[#7A7569] dark:text-[#8E8B81] font-mono block">High RH Duration</span>
-                <span className="text-lg font-bold font-serif-vintage text-[#1D3D2C] dark:text-[#86EFAC] mt-1 block">
-                  0 m
-                </span>
-                <span className="text-[9px] text-[#7A7569] dark:text-[#8E8B81] font-mono block mt-0.5">No High RH</span>
-              </div>
-
-              <div className="p-3.5 rounded-2xl bg-[#F4EFE6] dark:bg-[#1B241E] border border-[#E2DAC8] dark:border-[#2A392F]">
-                <span className="text-[10px] font-bold uppercase text-[#7A7569] dark:text-[#8E8B81] font-mono block">Duration Score</span>
-                <span className="text-lg font-bold font-serif-vintage text-[#552A6E] dark:text-[#D8B4FE] mt-1 block">
-                  0 / 3
-                </span>
-                <span className="text-[9px] text-[#7A7569] dark:text-[#8E8B81] font-mono block mt-0.5">Safe Duration</span>
-              </div>
-            </div>
-
-            {/* Status Banner Output from ESP32 Firmware (NORMAL) */}
-            <div className="p-4 rounded-2xl border flex items-center space-x-3.5 bg-[#E8F0EA] border-[#C6D8CA] text-[#1D3D2C] dark:bg-[#1E2E23] dark:border-[#2E4836] dark:text-[#A7D8B4]">
-              <CheckCircle2 className="w-6 h-6 shrink-0 text-[#1D3D2C] dark:text-[#4ADE80]" />
-              <div className="font-bold text-xs sm:text-sm">
-                STATUS: Environment conditions are NORMAL & safe.
-              </div>
-            </div>
-          </div>
-
-
-
-        </div>
-
       </div>
 
     </div>
