@@ -24,6 +24,9 @@ import {
   ArrowUpRight,
   ShieldCheck,
   MapPin,
+  Phone,
+  BadgeCheck,
+  UserCheck,
   Sprout,
   BarChart3,
   Percent,
@@ -60,10 +63,16 @@ export const OfficerDashboard = () => {
     modelAccuracy,
     theme,
     lang,
-    t
+    t,
+    registeredFarmersRegistry = []
   } = useApp();
 
   const isDark = theme === 'dark';
+
+  const officerState = officerProfile?.state || 'Maharashtra';
+  const stateEnrolledFarmers = registeredFarmersRegistry.filter(f => 
+    !f.state || f.state.toLowerCase() === officerState.toLowerCase()
+  );
 
   // Filters State
   const [selectedRegion, setSelectedRegion] = useState('all'); // 'all' | 'miraj' | 'kupwad' | 'tasgaon' | 'walwa' | 'jath'
@@ -200,6 +209,107 @@ export const OfficerDashboard = () => {
       {officerTab === 'dashboard' && (
         <div className="space-y-6 animate-fadeIn">
           
+          {/* State Farmer Enrolments & Portal Registrations Live Feed */}
+          <div className={`p-5 sm:p-6 rounded-3xl border shadow-sm ${
+            isDark ? 'bg-[#0a1120] border-slate-800' : 'bg-gradient-to-r from-emerald-50/70 via-white to-teal-50/50 border-emerald-200'
+          }`}>
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pb-4 border-b border-slate-200/80 dark:border-slate-800">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-2xl bg-emerald-600 text-white flex items-center justify-center shadow-md">
+                  <UserCheck className="w-5 h-5" />
+                </div>
+                <div>
+                  <div className="flex items-center gap-2">
+                    <h3 className="text-base font-black text-slate-900 dark:text-white">
+                      {officerState} State Farmer Enrolment Dispatches
+                    </h3>
+                    <span className="px-2.5 py-0.5 rounded-full text-xs font-black bg-emerald-100 text-emerald-800 dark:bg-emerald-900/60 dark:text-emerald-300">
+                      {stateEnrolledFarmers.length} Enrolled
+                    </span>
+                  </div>
+                  <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+                    Farmer registrations automatically transmitted to the {officerState} State Agricultural Office upon portal signup.
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-center gap-2 text-xs font-semibold px-3 py-1.5 rounded-full bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border border-emerald-500/20">
+                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                <span>Live State Sync Active</span>
+              </div>
+            </div>
+
+            {stateEnrolledFarmers.length === 0 ? (
+              <div className="py-8 text-center">
+                <p className="text-xs text-slate-500 dark:text-slate-400">
+                  No newly registered farmers for {officerState} yet. When a farmer signs up with state {officerState}, their username and phone number will immediately appear here.
+                </p>
+              </div>
+            ) : (
+              <div className="mt-4 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3.5">
+                {stateEnrolledFarmers.map((farmer) => (
+                  <div 
+                    key={farmer.id}
+                    className={`p-4 rounded-2xl border transition-all hover:shadow-md ${
+                      isDark 
+                        ? 'bg-slate-900/90 border-slate-800 hover:border-emerald-600/50' 
+                        : 'bg-white border-slate-200/90 hover:border-emerald-400'
+                    }`}
+                  >
+                    <div className="flex items-start justify-between gap-2">
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2">
+                          <span className="font-bold text-sm text-slate-900 dark:text-white truncate">
+                            {farmer.name}
+                          </span>
+                          <span className="px-1.5 py-0.5 text-[10px] font-black uppercase tracking-wider rounded bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-400">
+                            Registered
+                          </span>
+                        </div>
+                        <div className="mt-1 flex items-center gap-1.5 text-xs font-mono font-bold text-emerald-600 dark:text-emerald-400">
+                          <span>User ID:</span>
+                          <span className="px-2 py-0.5 rounded bg-emerald-50 dark:bg-emerald-950/70 border border-emerald-200 dark:border-emerald-800">
+                            @{farmer.username}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="mt-3 pt-2.5 border-t border-slate-100 dark:border-slate-800/80 space-y-1.5 text-xs text-slate-600 dark:text-slate-300">
+                      <div className="flex items-center gap-2 font-bold text-slate-800 dark:text-slate-200">
+                        <Phone className="w-3.5 h-3.5 text-emerald-600" />
+                        <span>Phone:</span>
+                        <a 
+                          href={`tel:${farmer.phone}`}
+                          className="font-mono text-emerald-700 dark:text-emerald-400 hover:underline"
+                        >
+                          {farmer.phone || 'Not provided'}
+                        </a>
+                      </div>
+
+                      <div className="flex items-center justify-between text-[11px] text-slate-500 dark:text-slate-400 pt-1">
+                        <span className="flex items-center gap-1">
+                          <MapPin className="w-3 h-3 text-slate-400" />
+                          <span>{farmer.district}, {farmer.state}</span>
+                        </span>
+                        <span className="font-mono text-[10px]">
+                          {farmer.maskedAadhaar || 'Aadhaar Verified'}
+                        </span>
+                      </div>
+
+                      <div className="flex items-center justify-between pt-1 text-[10px] text-slate-400 border-t border-slate-100 dark:border-slate-800/60">
+                        <span className="flex items-center gap-1 text-emerald-600 dark:text-emerald-400 font-semibold">
+                          <BadgeCheck className="w-3 h-3" />
+                          <span>Dispatched to Agri Office</span>
+                        </span>
+                        <span>{farmer.registeredAt}</span>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+
           {/* Interactive Filters Bar (Region, Crop, Date Range) */}
           <div className={`p-4 sm:p-5 rounded-3xl border flex flex-col md:flex-row items-center justify-between gap-3 shadow-sm ${
             isDark ? 'bg-[#0a1120] border-slate-800' : 'bg-white border-slate-200'

@@ -14,13 +14,14 @@ import {
 } from 'lucide-react';
 
 export const FarmerDirectory = () => {
-  const { reports } = useApp();
+  const { reports, registeredFarmersRegistry = [] } = useApp();
   const [searchQuery, setSearchQuery] = useState('');
 
-  const registeredFarmers = [
+  const baseRegisteredFarmers = [
     {
       id: "f-1",
       name: "Ramesh Patil",
+      username: "ramesh_patil",
       phone: "+91 98224 55120",
       location: "Kupwad, Sangli",
       crop: "Tomato (Abhinav Variety)",
@@ -34,6 +35,7 @@ export const FarmerDirectory = () => {
     {
       id: "f-2",
       name: "Sunita Ghorpade",
+      username: "sunita_g",
       phone: "+91 94233 11890",
       location: "Tasgaon Rural",
       crop: "Capsicum & Tomato",
@@ -47,6 +49,7 @@ export const FarmerDirectory = () => {
     {
       id: "f-3",
       name: "Anand Shinde",
+      username: "anand_shinde",
       phone: "+91 97654 88321",
       location: "Miraj Agricultural Zone",
       crop: "Tomato",
@@ -60,6 +63,7 @@ export const FarmerDirectory = () => {
     {
       id: "f-4",
       name: "Ganesh Kadam",
+      username: "ganesh_k",
       phone: "+91 91580 44231",
       location: "Walwa, Sangli",
       crop: "Tomato & Sugarcane",
@@ -73,6 +77,7 @@ export const FarmerDirectory = () => {
     {
       id: "f-5",
       name: "Babanrao Patil",
+      username: "babanrao_p",
       phone: "+91 98901 33214",
       location: "Palus Riverbed",
       crop: "Tomato (Heirloom)",
@@ -85,8 +90,28 @@ export const FarmerDirectory = () => {
     }
   ];
 
-  const filteredFarmers = registeredFarmers.filter(f =>
+  const newlyRegistered = registeredFarmersRegistry.map(rf => ({
+    id: rf.id,
+    name: rf.name,
+    username: rf.username,
+    phone: rf.phone,
+    location: `${rf.district || 'Sangli'}, ${rf.state || 'Maharashtra'}`,
+    crop: "Enrolled Farmer (Portal Registration)",
+    acreage: "Registered Account",
+    soilType: "Verified Farmer Profile",
+    lastScan: `Enrolled ${rf.registeredAt || 'Recently'}`,
+    healthStatus: "Registered",
+    totalScans: rf.scansCount || 0,
+    verifiedScans: 0,
+    isNewPortalRegistration: true
+  }));
+
+  const combinedFarmers = [...newlyRegistered, ...baseRegisteredFarmers];
+
+  const filteredFarmers = combinedFarmers.filter(f =>
     f.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    (f.username && f.username.toLowerCase().includes(searchQuery.toLowerCase())) ||
+    (f.phone && f.phone.includes(searchQuery)) ||
     f.location.toLowerCase().includes(searchQuery.toLowerCase()) ||
     f.crop.toLowerCase().includes(searchQuery.toLowerCase())
   );
@@ -121,6 +146,11 @@ export const FarmerDirectory = () => {
                 </div>
                 <div>
                   <h3 className="text-sm font-extrabold text-gray-900 leading-tight">{farmer.name}</h3>
+                  {farmer.username && (
+                    <span className="inline-block text-[11px] font-mono font-bold text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded mt-0.5">
+                      @{farmer.username}
+                    </span>
+                  )}
                   <p className="text-[11px] text-gray-500 flex items-center gap-1 mt-0.5">
                     <MapPin className="w-3 h-3 text-emerald-600" />
                     {farmer.location}

@@ -12,6 +12,7 @@ import {
   seedFarmerReports,
   seedCommunityPosts
 } from '../data/mockData';
+import { STATE_AGRI_OFFICERS } from '../data/indiaGeographicData';
 
 export const seedSoilHealthCards = [
   {
@@ -150,16 +151,17 @@ const INITIAL_ACCOUNTS = [
   // 🏛️ GOVERNMENT OFFICIALS DIRECTORY & LOGIN IDS (Area-Wise)
   {
     id: "usr-officer-suhas",
-    govtId: "GOV-MH-SGL-01",
+    govtId: "GOV-AGRI-MH-01",
     role: "officer",
     name: "Dr. Suhas More",
-    username: "dr_suhas",
+    username: "officer_maharashtra",
+    altUsername: "dr_suhas",
     password: "officer123",
     phone: "+91 98900 12345",
     state: "Maharashtra",
     district: "Sangli",
     officePhone: "0233-2670841",
-    email: "dr.suhas.more@agri.gov.in",
+    email: "officer.maharashtra@agri.gov.in",
     aadharNumber: "8491 2284 4891",
     aadharMasked: "XXXX-XXXX-4891",
     authToken: "tok_officer_suhas_98900",
@@ -376,9 +378,42 @@ export const AppProvider = ({ children }) => {
     return localStorage.getItem('cs_is_logged_in') === 'true';
   });
 
+  // 1b. State-Wise Farmer Registrations Registry (Dispatched to State Agri Officers)
+  const [registeredFarmersRegistry, setRegisteredFarmersRegistry] = useState(() => {
+    const saved = localStorage.getItem('cs_farmer_registrations_v2');
+    return saved ? JSON.parse(saved) : [
+      {
+        id: "usr-farmer-ramesh",
+        name: "Ramesh Patil",
+        username: "ramesh_patil",
+        phone: "+91 98224 55120",
+        state: "Maharashtra",
+        district: "Sangli",
+        crop: "Cotton & Tomato",
+        acreage: "14.5 Acres",
+        aadharMasked: "XXXX-XXXX-5512",
+        registeredAt: "22 Sep 2026, 09:30 AM",
+        status: "Active (Verified by State Agri Office)"
+      },
+      {
+        id: "usr-farmer-santosh",
+        name: "Santosh Deshmukh",
+        username: "santosh_d",
+        phone: "+91 94220 18452",
+        state: "Maharashtra",
+        district: "Kolhapur",
+        crop: "Sugarcane & Soybean",
+        acreage: "8.0 Acres",
+        aadharMasked: "XXXX-XXXX-1845",
+        registeredAt: "21 Sep 2026, 03:15 PM",
+        status: "Active (Verified by State Agri Office)"
+      }
+    ];
+  });
+
   useEffect(() => {
-    localStorage.setItem('cs_is_logged_in', isLoggedIn ? 'true' : 'false');
-  }, [isLoggedIn]);
+    localStorage.setItem('cs_farmer_registrations_v2', JSON.stringify(registeredFarmersRegistry));
+  }, [registeredFarmersRegistry]);
 
   useEffect(() => {
     localStorage.setItem('cs_accounts_v6', JSON.stringify(accounts));
@@ -937,6 +972,23 @@ export const AppProvider = ({ children }) => {
     };
 
     setAccounts(prev => [newAccount, ...prev]);
+
+    // Dispatch new farmer registration to the State Agri Officer
+    const dispatchRecord = {
+      id: newUserId,
+      name: newAccount.name,
+      username: newAccount.username,
+      phone: newAccount.phone,
+      state: newAccount.state,
+      district: newAccount.district,
+      crop: newAccount.crop,
+      acreage: newAccount.acreage,
+      aadharMasked: newAccount.aadharMasked,
+      registeredAt: new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }) + ', ' + new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+      status: `Dispatched to ${newAccount.state} State Agri Office`
+    };
+    setRegisteredFarmersRegistry(prev => [dispatchRecord, ...prev]);
+
     handleAccountSwitch(newUserId);
     setLangState(userLang || 'en');
     setIsLoggedIn(true);
@@ -952,8 +1004,44 @@ export const AppProvider = ({ children }) => {
     const cleanInput = identifier.trim().toLowerCase().replace(/[\s-]/g, '');
     const cleanDigits = identifier.replace(/\D/g, '');
 
-    const matched = accounts.find(a => {
+    // Check if input matches any designated State Agri Officer
+    let stateOfficerAccount = null;
+    const matchedStateOfficer = Object.values(STATE_AGRI_OFFICERS).find(off => 
+      off.username.toLowerCase() === cleanInput ||
+      off.govtId.toLowerCase().replace(/[\s-]/g, '') === cleanInput ||
+      (off.username.includes('maharashtra') && cleanInput === 'dr_suhas')
+    );
+
+    if (matchedStateOfficer) {
+      // Find if already exists in accounts or add them
+      stateOfficerAccount = accounts.find(a => a.id === matchedStateOfficer.id || a.username === matchedStateOfficer.username);
+      if (!stateOfficerAccount) {
+        stateOfficerAccount = {
+          id: matchedStateOfficer.id,
+          role: 'officer',
+          name: matchedStateOfficer.name,
+          username: matchedStateOfficer.username,
+          altUsername: matchedStateOfficer.username.includes('maharashtra') ? 'dr_suhas' : undefined,
+          password: matchedStateOfficer.password || 'officer123',
+          govtId: matchedStateOfficer.govtId,
+          state: matchedStateOfficer.state,
+          district: matchedStateOfficer.district,
+          jurisdictionArea: matchedStateOfficer.jurisdictionArea,
+          department: matchedStateOfficer.department,
+          designation: matchedStateOfficer.designation,
+          phone: matchedStateOfficer.phone,
+          email: matchedStateOfficer.email,
+          avatar: matchedStateOfficer.avatar || '🧑‍🔬',
+          authToken: `tok_officer_${matchedStateOfficer.id}`,
+          lang: 'en'
+        };
+        setAccounts(prev => [...prev, stateOfficerAccount]);
+      }
+    }
+
+    const matched = stateOfficerAccount || accounts.find(a => {
       const u = (a.username || '').toLowerCase().trim();
+      const altU = (a.altUsername || '').toLowerCase().trim();
       const p = (a.phone || '').replace(/\D/g, '');
       const ad = (a.aadharNumber || '').replace(/\D/g, '');
       const e = (a.email || '').toLowerCase().trim();
@@ -962,6 +1050,7 @@ export const AppProvider = ({ children }) => {
       const id = (a.id || '').toLowerCase().trim();
 
       return u === cleanInput || 
+             altU === cleanInput ||
              (cleanDigits.length >= 10 && p.endsWith(cleanDigits.slice(-10))) ||
              (cleanDigits.length === 12 && ad === cleanDigits) ||
              e === cleanInput || 
@@ -1340,6 +1429,7 @@ export const AppProvider = ({ children }) => {
         setIsAccountSwitcherOpen,
         isLoginModalOpen,
         setIsLoginModalOpen,
+        registeredFarmersRegistry,
 
         // Navigation & Views
         activeTab,
