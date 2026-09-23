@@ -80,17 +80,6 @@ export const analyzeLeafWithGroq = async (base64Image, lang = 'en', options = {}
   const season = typeof options === 'object' ? (options.season || 'kharif') : 'kharif';
   const envContext = typeof options === 'object' ? options.environmental_context : null;
   const sampleOption = typeof options === 'object' ? options.sampleOption : null;
-  const visualVerification = typeof options === 'object' ? options.visualVerification : null;
-
-  // Immediate guard: If optical verification determined non-plant, reject immediately
-  if (visualVerification && visualVerification.isPlant === false) {
-    return {
-      isPlant: false,
-      isError: true,
-      detectedObject: visualVerification.detectedType || visualVerification.detectedObject || 'Non-Plant Target',
-      confidence: visualVerification.confidence || 93.0
-    };
-  }
 
   // Ensure image payload is valid compressed base64 JPEG
   const cleanImage = await ensureImageBase64(base64Image);
@@ -256,19 +245,23 @@ export const analyzeLeafWithGroq = async (base64Image, lang = 'en', options = {}
                   type: "text",
                   text: `You are an expert botanical pathologist. Analyze this image for crop: "${crop}".
 
-1. FIRST: Is this image a real plant, leaf, or crop foliage?
-   If it is a human (person, face, skin), furniture, indoor room, wall, animal, or non-plant object:
-   Return strictly JSON:
-   {"isPlant": false, "detectedObject": "Human / Person Detected" or "Indoor Environment / Non-Plant Object", "confidence": 95}
+1. FIRST - OBJECT VALIDITY & CONTEXT DETECTION:
+   - Carefully examine what is shown in the image.
+   - If the image depicts any human (person, face, selfie, body), a rock or stone, furniture, an indoor room, a wall, an animal, a vehicle, or any completely unrelated thing WITHOUT a crop or plant leaf:
+     Flag it as unrelated and return strictly JSON:
+     {"isPlant": false, "detectedObject": "<Specific name of what is detected, e.g. Human / Person, Rock / Stone, Indoor Room, Unrelated Inanimate Object>", "confidence": 96}
 
-2. SECOND: If it IS a crop or plant leaf:
-   - If the leaf is HEALTHY (normal green foliage, no active necrotic lesions, no blight, no fungal powder):
+   - CRITICAL EXCEPTION: If the image shows a human hand or fingers holding a crop, leaf, or plant, or a crop leaf photographed in a field/outdoors/against soil:
+     DO NOT flag it as unrelated! The user is holding a crop leaf specimen to show the camera. In this case, isPlant MUST be true. Proceed to analyze the crop leaf!
+
+2. SECOND - CROP HEALTH & PATHOLOGY ANALYSIS (if isPlant is true):
+   - If the leaf is HEALTHY (normal vibrant green canopy, healthy cellular turgidity, zero active necrotic lesions, zero blight, zero fungal powder):
      Return strictly JSON:
      {"isPlant": true, "isHealthy": true, "crop": "${crop}", "verdict": "Optimal Canopy Health (No Pathogen Detected)", "plainAdviceEn": "Leaf blade exhibits normal chlorophyll distribution and healthy cellular turgidity. No active disease or pathogen symptoms detected.", "confidence": 98, "medicineName": null, "price": 0, "severity": "Healthy (Normal Vegetative Growth)"}
 
-   - If it is DISEASED (visible lesions, spots, blight, chlorosis, fungal growth):
+   - If the leaf is DISEASED (visible lesions, spots, blight, chlorosis, fungal powder, or wilting):
      Return strictly JSON:
-     {"isPlant": true, "isHealthy": false, "crop": "${crop}", "verdict": "<Precise Disease Name and Pathogen>", "plainAdviceEn": "<Actionable diagnosis and treatment advice>", "medicineName": "<Recommended bio-chemical remedy>", "confidence": 94, "price": 320, "severity": "High Alert"}
+     {"isPlant": true, "isHealthy": false, "crop": "${crop}", "verdict": "<Precise Disease Name and Pathogen, e.g. Pearl Millet Blast (Pyricularia grisea)>", "plainAdviceEn": "<Actionable diagnosis and treatment advice>", "medicineName": "<Recommended bio-chemical remedy>", "confidence": 94, "price": 320, "severity": "High Alert"}
 `
                 },
                 {

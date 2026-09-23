@@ -53,10 +53,14 @@ class DiagnosticService:
         """
         vision_prompt = """You are a precision botanical vision analyst. Examine this image with scientific rigor.
 
-FIRST, determine image validity:
-1. is_plant: true if this image contains a real plant, crop, or leaf; false if it contains a human, person, indoor room, wall, animal, vehicle, or non-plant object.
-2. non_plant_reason: "Human / Person Detected" or "Indoor Environment / Non-Plant Object" if is_plant is false, otherwise null.
-3. is_healthy: true if the leaf is completely healthy with normal green chlorophyll and NO disease lesions, spots, or blight; false if lesions/spots/blight are present.
+FIRST, determine image validity & context:
+1. is_plant:
+   - If the image depicts any human (person, face, selfie, body), a rock or stone, furniture, an indoor room, a wall, an animal, a vehicle, or any completely unrelated thing WITHOUT a crop or plant leaf:
+     Flag as unrelated: is_plant: false.
+   - CRITICAL EXCEPTION: If you see a human hand or fingers holding a crop, leaf, or plant, or a crop leaf photographed in a field/outdoors/against soil:
+     DO NOT flag it as unrelated! The user is holding a crop specimen to show the camera. In this case, is_plant MUST be true. Proceed to analyze the crop leaf!
+2. non_plant_reason: Specific name of what is detected (e.g. "Human / Person Detected", "Rock / Stone", "Indoor Environment / Unrelated Object") if is_plant is false, otherwise null.
+3. is_healthy: true if the crop leaf is completely healthy with normal green chlorophyll and NO disease lesions, spots, or blight; false if lesions/spots/blight are present.
 
 IF is_plant is true, extract botanical phenotype:
 4. plant_parts: Primary affected plant parts (e.g. leaf_blade, leaf_sheath, panicle, collar, node, stem).

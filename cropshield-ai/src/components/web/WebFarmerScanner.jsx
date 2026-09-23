@@ -434,88 +434,6 @@ export const WebFarmerScanner = ({ onNavigate }) => {
     }
   };
 
-  // Precision Optical Foliage Guard
-  const inspectImageForPlantContent = (imageSource) => {
-    return new Promise((resolve) => {
-      if (typeof imageSource === 'string' && (imageSource.includes('/samples/') || imageSource.includes('unsplash.com'))) {
-        const isHealthySample = imageSource.includes('rice_healthy') || imageSource.includes('healthy');
-        return resolve({ isPlant: true, isHealthy: isHealthySample, detectedType: 'crop_leaf', confidence: isHealthySample ? 98.7 : 96.5 });
-      }
-
-      const img = new Image();
-      if (!imageSource.startsWith('data:')) {
-        img.crossOrigin = 'anonymous';
-      }
-      img.onload = () => {
-        try {
-          const canvas = document.createElement('canvas');
-          const ctx = canvas.getContext('2d');
-          canvas.width = 64;
-          canvas.height = 64;
-          ctx.drawImage(img, 0, 0, 64, 64);
-          const imageData = ctx.getImageData(0, 0, 64, 64);
-          const data = imageData.data;
-
-          let plantPixels = 0;
-          let greenPixels = 0;
-          let necroticPixels = 0;
-          let skinPixels = 0;
-          const totalPixels = 64 * 64;
-
-          for (let i = 0; i < data.length; i += 4) {
-            const r = data[i];
-            const g = data[i + 1];
-            const b = data[i + 2];
-
-            // 1. Vegetative / Chlorophyll Index: Excess Green
-            const isGreenish = (2 * g - r - b > 10 && g > 30) || (g > r * 1.05 && g > b * 1.05 && g > 30);
-
-            // 2. Plant leaf lesion / necrotic / chlorotic foliage
-            const isYellowChlorotic = (r > 60 && g > 60 && b < 70 && (r + g) > 2.0 * b);
-            const isBrownLesion = (r > 40 && r < 195 && g > 30 && g < 170 && b < 110 && r > b * 1.2);
-
-            if (isGreenish) {
-              greenPixels++;
-              plantPixels++;
-            } else if (isYellowChlorotic || isBrownLesion) {
-              necroticPixels++;
-              plantPixels++;
-            } else {
-              // 3. Human skin tone (evaluated ONLY on non-plant pixels to avoid misclassifying soil or straw)
-              const isSkin = (r > 60 && g > 40 && b > 25 && r > g && g > b && (r - g) > 15 && (r - b) > 25 && r > 1.15 * g);
-              if (isSkin) {
-                skinPixels++;
-              }
-            }
-          }
-
-          const plantRatio = plantPixels / totalPixels;
-          const skinRatio = skinPixels / totalPixels;
-          const greenRatio = greenPixels / totalPixels;
-          const necroticRatio = necroticPixels / totalPixels;
-
-          // If substantial foliar vegetation is present (green leaf or necrotic plant tissue), it is a plant!
-          // Soil, straw, or a farmer's hand holding the leaf does NOT invalidate genuine plant foliage.
-          const hasSignificantFoliage = (greenRatio >= 0.04 || plantRatio >= 0.06);
-
-          if (!hasSignificantFoliage) {
-            // No significant plant foliage in frame -> Reject as non-plant target
-            const detectedObject = skinRatio > 0.20 
-              ? (lang === 'ta' ? 'மனித முகம் / நபர் கண்டறியப்பட்டது' : lang === 'te' ? 'మానవ ముఖం / వ్యక్తి గుర్తించబడింది' : lang === 'kn' ? 'ಮಾನವ ಮುಖ / ವ್ಯಕ್ತಿ ಪತ್ತೆಯಾಗಿದೆ' : lang === 'mr' ? 'मानवी चेहरा / व्यक्ती आढळली' : 'Human / Person Detected')
-              : (lang === 'ta' ? 'பயிர் அல்லாத பொருள்' : lang === 'te' ? 'మొక్క కాని வస్తువు' : lang === 'kn' ? 'ಸಸ್ಯವಲ್ಲದ ವಸ್ತು' : lang === 'mr' ? 'झाड किंवा पान नाही' : 'Indoor Environment / Non-Plant Object');
-            resolve({ isPlant: false, isHealthy: false, detectedType: detectedObject, confidence: 94.5 });
-          } else {
-            // Leaf verified. Allow AI neural models (Qwen / Groq) to diagnose pathology.
-            resolve({ isPlant: true, isHealthy: false, detectedType: 'crop_leaf', confidence: 96.8, greenRatio, necroticRatio, plantRatio });
-          }
-        } catch (e) {
-          resolve({ isPlant: true, isHealthy: false, detectedType: 'crop_leaf', confidence: 95.0 });
-        }
-      };
-      img.onerror = () => resolve({ isPlant: true, isHealthy: false, detectedType: 'crop_leaf', confidence: 95.0 });
-      img.src = imageSource;
-    });
-  };
 
   const handleDragOver = (e) => {
     e.preventDefault();
@@ -600,28 +518,14 @@ export const WebFarmerScanner = ({ onNavigate }) => {
       console.warn("Image formatting note:", err);
     }
 
-    const verification = await inspectImageForPlantContent(targetImage);
-
-    if (!verification.isPlant) {
-      clearInterval(progressInterval);
-      setInferenceProgress(100);
-      setAnalyzing(false);
-      setNonPlantRejection({
-        detectedObject: verification.detectedType,
-        confidence: verification.confidence || 92.5
-      });
-      return;
-    }
-
-    // Call CropShield AI Agriculture Wiki + Qwen3.8-27B Pipeline
+    // Call CropShield AI Vision Model (Groq Qwen3.8-27B / Backend Pathometry)
     try {
       const predefinedOption = option || sampleLeafOptions.find(s => s.image === rawTarget);
       const targetCrop = selectedCrop || predefinedOption?.cropKey || (predefinedOption?.crop ? predefinedOption.crop.split(' ')[0] : 'Cotton');
 
       const apiResult = await analyzeLeafWithGroq(targetImage, lang, {
         crop: targetCrop,
-        sampleOption: predefinedOption,
-        visualVerification: verification
+        sampleOption: predefinedOption
       });
 
       clearInterval(progressInterval);
@@ -690,7 +594,7 @@ export const WebFarmerScanner = ({ onNavigate }) => {
       if (predefinedOption) {
         setScanResult(predefinedOption);
       } else {
-        const fallback = resolveWikiDiseaseDiagnosis(targetCrop, null, 'Wardha / Vidarbha', 'kharif', verification);
+        const fallback = resolveWikiDiseaseDiagnosis(targetCrop, null, 'Wardha / Vidarbha', 'kharif');
         setScanResult(fallback);
       }
     }
