@@ -467,26 +467,12 @@ export const WebFarmerScanner = ({ onNavigate }) => {
             const g = data[i + 1];
             const b = data[i + 2];
 
-            // 1. Precise human skin tone detection (tested in standard RGB/YCbCr skin spaces)
-            const isSkin = (
-              r > 55 && g > 30 && b > 15 &&
-              r > g && g >= b &&
-              (r - g) >= 10 && (r - b) >= 15 &&
-              r > 1.10 * g
-            );
+            // 1. Vegetative / Chlorophyll Index: Excess Green
+            const isGreenish = (2 * g - r - b > 10 && g > 30) || (g > r * 1.05 && g > b * 1.05 && g > 30);
 
-            if (isSkin) {
-              skinPixels++;
-              continue;
-            }
-
-            // 2. Vegetative / Chlorophyll Index: Excess Green (2*g - r - b)
-            const exg = 2 * g - r - b;
-            const isGreenish = (exg > 12 && g > 35) || (g > r * 1.12 && g > b * 1.12 && g > 35);
-
-            // 3. Plant leaf lesion / necrotic / chlorotic foliage
-            const isYellowChlorotic = (r > 65 && g > 65 && b < 60 && (r + g) > 2.2 * b);
-            const isBrownLesion = (r > 45 && r < 190 && g > 35 && g < 160 && b < 100 && r > b * 1.3 && Math.abs(r - g) < 45);
+            // 2. Plant leaf lesion / necrotic / chlorotic foliage
+            const isYellowChlorotic = (r > 60 && g > 60 && b < 70 && (r + g) > 2.0 * b);
+            const isBrownLesion = (r > 40 && r < 195 && g > 30 && g < 170 && b < 110 && r > b * 1.2);
 
             if (isGreenish) {
               greenPixels++;
@@ -494,6 +480,12 @@ export const WebFarmerScanner = ({ onNavigate }) => {
             } else if (isYellowChlorotic || isBrownLesion) {
               necroticPixels++;
               plantPixels++;
+            } else {
+              // 3. Human skin tone (evaluated ONLY on non-plant pixels to avoid misclassifying soil or straw)
+              const isSkin = (r > 60 && g > 40 && b > 25 && r > g && g > b && (r - g) > 15 && (r - b) > 25 && r > 1.15 * g);
+              if (isSkin) {
+                skinPixels++;
+              }
             }
           }
 
@@ -502,16 +494,19 @@ export const WebFarmerScanner = ({ onNavigate }) => {
           const greenRatio = greenPixels / totalPixels;
           const necroticRatio = necroticPixels / totalPixels;
 
-          // Reject human faces/people (skinRatio > 10%) or non-plant objects (plantRatio < 8%)
-          if (skinRatio > 0.10 || plantRatio < 0.08) {
-            const detectedObject = skinRatio > 0.10 
+          // If substantial foliar vegetation is present (green leaf or necrotic plant tissue), it is a plant!
+          // Soil, straw, or a farmer's hand holding the leaf does NOT invalidate genuine plant foliage.
+          const hasSignificantFoliage = (greenRatio >= 0.04 || plantRatio >= 0.06);
+
+          if (!hasSignificantFoliage) {
+            // No significant plant foliage in frame -> Reject as non-plant target
+            const detectedObject = skinRatio > 0.20 
               ? (lang === 'ta' ? 'மனித முகம் / நபர் கண்டறியப்பட்டது' : lang === 'te' ? 'మానవ ముఖం / వ్యక్తి గుర్తించబడింది' : lang === 'kn' ? 'ಮಾನವ ಮುಖ / ವ್ಯಕ್ತಿ ಪತ್ತೆಯಾಗಿದೆ' : lang === 'mr' ? 'मानवी चेहरा / व्यक्ती आढळली' : 'Human / Person Detected')
               : (lang === 'ta' ? 'பயிர் அல்லாத பொருள்' : lang === 'te' ? 'మొక్క కాని வస్తువు' : lang === 'kn' ? 'ಸಸ್ಯವಲ್ಲದ ವಸ್ತು' : lang === 'mr' ? 'झाड किंवा पान नाही' : 'Indoor Environment / Non-Plant Object');
             resolve({ isPlant: false, isHealthy: false, detectedType: detectedObject, confidence: 94.5 });
           } else {
-            // Leaf verified. Check if canopy is predominantly healthy (green ratio high and necrotic ratio very low)
-            const isHealthy = (greenRatio > 0.35 && necroticRatio < 0.04);
-            resolve({ isPlant: true, isHealthy, detectedType: 'crop_leaf', confidence: isHealthy ? 98.2 : 96.5, greenRatio, necroticRatio });
+            // Leaf verified. Allow AI neural models (Qwen / Groq) to diagnose pathology.
+            resolve({ isPlant: true, isHealthy: false, detectedType: 'crop_leaf', confidence: 96.8, greenRatio, necroticRatio, plantRatio });
           }
         } catch (e) {
           resolve({ isPlant: true, isHealthy: false, detectedType: 'crop_leaf', confidence: 95.0 });

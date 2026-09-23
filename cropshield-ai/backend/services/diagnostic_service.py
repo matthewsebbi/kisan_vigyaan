@@ -185,50 +185,53 @@ Provide your findings strictly in the following JSON format:
             total = len(pixels)
 
             for r, g, b in pixels:
-                # 1. Human skin detection (must check before plant heuristics)
-                if r > 55 and g > 30 and b > 15 and r > g and g >= b and (r - g) >= 10 and (r - b) >= 15 and r > 1.10 * g:
-                    skin_count += 1
-                # 2. Green healthy chlorophyll
-                elif (g > r * 1.05 and g > b * 1.05 and g > 35) or (2 * g - r - b > 15 and g > 40):
+                # 1. Green healthy chlorophyll
+                if (2 * g - r - b > 10 and g > 30) or (g > r * 1.05 and g > b * 1.05 and g > 30):
                     green_count += 1
-                # 3. Dark brown / necrotic tissue
-                elif r > 35 and r < 185 and g < r and b < g * 0.88 and (r - b) > 15:
-                    necrotic_count += 1
-                # 4. Chlorotic yellowing / halo
-                elif r > 95 and g > 90 and b < 80 and (r + g) > 2.1 * b:
+                # 2. Chlorotic yellowing / halo
+                elif r > 60 and g > 60 and b < 70 and (r + g) > 2.0 * b:
                     yellow_count += 1
-                # 5. Ash-gray / whitish necrotic center
+                # 3. Dark brown / necrotic tissue
+                elif r > 40 and r < 195 and g > 30 and g < 170 and b < 110 and r > b * 1.2:
+                    necrotic_count += 1
+                # 4. Ash-gray / whitish necrotic center
                 elif r > 145 and g > 145 and b > 145 and abs(r - g) < 25 and abs(g - b) < 25:
                     ash_count += 1
+                # 5. Human skin (evaluated ONLY on non-plant pixels to avoid misclassifying soil or straw)
+                elif r > 60 and g > 40 and b > 25 and r > g and g > b and (r - g) > 15 and (r - b) > 25 and r > 1.15 * g:
+                    skin_count += 1
 
-            skin_ratio = skin_count / total
             green_ratio = green_count / total
             necrotic_ratio = necrotic_count / total
             yellow_ratio = yellow_count / total
             ash_ratio = ash_count / total
+            skin_ratio = skin_count / total
+            plant_ratio = green_ratio + necrotic_ratio + yellow_ratio + ash_ratio
         except Exception as e:
             logger.warning(f"Local pixel analysis fallback default: {e}")
             skin_ratio, green_ratio, necrotic_ratio, yellow_ratio, ash_ratio = 0.0, 0.6, 0.08, 0.04, 0.01
+            plant_ratio = 0.73
 
-        # Non-plant rejection: Human skin prominent (> 10%)
-        if skin_ratio > 0.10:
-            return PhenotypeExtraction(
-                is_plant=False,
-                non_plant_reason="Human / Person Detected",
-                is_healthy=False,
-                lesion_presence=False,
-                raw_phenotype_text="Local optical guard: Human skin detected; target is not a plant leaf."
-            )
+        # Non-plant rejection ONLY if genuine foliar vegetation is absent
+        has_significant_foliage = green_ratio >= 0.04 or plant_ratio >= 0.06
 
-        # Non-plant rejection: Insufficient foliar vegetation (< 8%)
-        if (green_ratio + yellow_ratio) < 0.08:
-            return PhenotypeExtraction(
-                is_plant=False,
-                non_plant_reason="Indoor Environment / Non-Plant Object",
-                is_healthy=False,
-                lesion_presence=False,
-                raw_phenotype_text="Local optical guard: Insufficient vegetative chlorophyll; target is not a crop leaf."
-            )
+        if not has_significant_foliage:
+            if skin_ratio > 0.20:
+                return PhenotypeExtraction(
+                    is_plant=False,
+                    non_plant_reason="Human / Person Detected",
+                    is_healthy=False,
+                    lesion_presence=False,
+                    raw_phenotype_text="Local optical guard: Human skin detected; target is not a plant leaf."
+                )
+            else:
+                return PhenotypeExtraction(
+                    is_plant=False,
+                    non_plant_reason="Indoor Environment / Non-Plant Object",
+                    is_healthy=False,
+                    lesion_presence=False,
+                    raw_phenotype_text="Local optical guard: Insufficient vegetative chlorophyll; target is not a crop leaf."
+                )
 
         # Healthy plant detection
         has_lesions = necrotic_ratio > 0.04 or yellow_ratio > 0.06 or ash_ratio > 0.02
