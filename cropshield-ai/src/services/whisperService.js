@@ -49,14 +49,24 @@ export class WhisperAudioRecorder {
     this.isRecording = false;
     this.startTime = null;
     this.audioContext = null;
+    this.analyser = null;
+  }
+
+  getStream() {
+    return this.stream;
+  }
+
+  getAnalyser() {
+    return this.analyser;
   }
 
   /**
    * Start recording from the microphone.
    * @param {Function} [onSilence] - Callback triggered when silence is detected after speaking
+   * @param {Function} [onVolume] - Callback receiving normalized volume level 0.0 - 1.0 for visualizers
    * @returns {Promise<boolean>} true if recording started successfully
    */
-  async startRecording(onSilence) {
+  async startRecording(onSilence, onVolume) {
     try {
       this.audioChunks = [];
       this.stream = await navigator.mediaDevices.getUserMedia({
@@ -69,52 +79,59 @@ export class WhisperAudioRecorder {
         }
       });
 
-      // Voice Activity Detection (Silence Detection)
-      if (onSilence) {
-        try {
-          this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
-          const source = this.audioContext.createMediaStreamSource(this.stream);
-          const analyser = this.audioContext.createAnalyser();
-          analyser.minDecibels = -70; // Increased sensitivity for quiet speech
-          analyser.smoothingTimeConstant = 0.2;
-          source.connect(analyser);
+      // Always setup AudioContext and AnalyserNode so visualizers have real-time data
+      try {
+        this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        const source = this.audioContext.createMediaStreamSource(this.stream);
+        this.analyser = this.audioContext.createAnalyser();
+        this.analyser.fftSize = 256;
+        this.analyser.minDecibels = -75;
+        this.analyser.maxDecibels = -10;
+        this.analyser.smoothingTimeConstant = 0.25;
+        source.connect(this.analyser);
 
-          const dataArray = new Uint8Array(analyser.frequencyBinCount);
-          let silenceStart = null;
-          let hasSpoken = false;
+        const dataArray = new Uint8Array(this.analyser.frequencyBinCount);
+        let silenceStart = null;
+        let hasSpoken = false;
 
-          const checkSilence = () => {
-            if (!this.isRecording) return;
-            
-            analyser.getByteFrequencyData(dataArray);
-            let sum = 0;
-            for (let i = 0; i < dataArray.length; i++) sum += dataArray[i];
-            const avg = sum / dataArray.length;
+        const monitorAudio = () => {
+          if (!this.isRecording || !this.analyser) return;
+          
+          this.analyser.getByteFrequencyData(dataArray);
+          let sum = 0;
+          for (let i = 0; i < dataArray.length; i++) sum += dataArray[i];
+          const avg = sum / dataArray.length;
+          const normalizedVol = Math.min(1.0, avg / 128);
 
-            if (avg > 8) { // Lowered threshold so quiet speech is detected
+          if (onVolume) {
+            onVolume(normalizedVol);
+          }
+
+          if (onSilence) {
+            if (avg > 8) { // Speech detected
               hasSpoken = true;
               silenceStart = null;
             } else if (hasSpoken) { // Silence after speaking
               if (!silenceStart) silenceStart = Date.now();
-              else if (Date.now() - silenceStart > 2500) { // Increased to 2.5s to allow for thinking pauses
+              else if (Date.now() - silenceStart > 2200) { // 2.2s silence debounce
                 onSilence();
                 return;
               }
             } else { // Silence before speaking
               if (!silenceStart) silenceStart = Date.now();
-              else if (Date.now() - silenceStart > 10000) { // Increased to 10s timeout if no speech
+              else if (Date.now() - silenceStart > 10000) { // 10s timeout
                 onSilence();
                 return;
               }
             }
-            
-            requestAnimationFrame(checkSilence);
-          };
+          }
           
-          checkSilence();
-        } catch (e) {
-          console.warn('VAD setup failed, fallback to manual stop', e);
-        }
+          requestAnimationFrame(monitorAudio);
+        };
+        
+        monitorAudio();
+      } catch (e) {
+        console.warn('AudioContext/Analyser setup failed, fallback to basic recording', e);
       }
 
       // Prefer webm/opus, fallback to whatever is available
@@ -168,6 +185,7 @@ export class WhisperAudioRecorder {
           this.audioContext.close().catch(() => {});
           this.audioContext = null;
         }
+        this.analyser = null;
 
         if (this.stream) {
           this.stream.getTracks().forEach(track => track.stop());
@@ -195,6 +213,7 @@ export class WhisperAudioRecorder {
       this.audioContext.close().catch(() => {});
       this.audioContext = null;
     }
+    this.analyser = null;
 
     if (this.stream) {
       this.stream.getTracks().forEach(track => track.stop());

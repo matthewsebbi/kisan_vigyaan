@@ -593,14 +593,14 @@ export const WebFarmerHomeScreen = ({ onNavigate }) => {
           <div className="flex items-center gap-2">
             <h2 className="text-base sm:text-lg font-black text-slate-900 dark:text-white flex items-center gap-2">
               <Bot className="w-5 h-5 text-emerald-600 dark:text-emerald-400 animate-pulse" />
-              <span>{lang === 'mr' ? 'किसान एआय कृषी चॅटबॉट (थेट आवाज व टीटीएस)' : lang === 'ta' ? 'கிசான் AI விவசாய சாட்போட் (TTS)' : lang === 'hi' ? 'किसान एआई कृषि चैटबॉट (ऑडियो व टीटीएस)' : 'Kisan AI Agronomist Chatbot (Interactive TTS)'}</span>
+              <span>{lang === 'mr' ? 'किसान एआय लाईव्ह व्हॉईस असिस्टंट (व्हॉईस ऑर्ब)' : lang === 'ta' ? 'கிசான் AI நேரடி குரல் உதவியாளர்' : lang === 'hi' ? 'किसान एआई लाइव वॉइस असिस्टेंट (व्हॉइस ऑर्ब)' : 'Kisan AI Live Voice Assistant (Gemini Live / Siri Mode)'}</span>
             </h2>
             <span className="px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300 font-mono">
-              Live Core Assistant
+              Groq Whisper Live
             </span>
           </div>
           <span className="text-xs text-slate-500 dark:text-slate-400 font-medium hidden sm:inline">
-            Voice Typing • Audio Readout • Instant Agronomy Solutions
+            Hands-Free Voice Orb • Audio Visualizer • Instant Multilingual Agronomy
           </span>
         </div>
 

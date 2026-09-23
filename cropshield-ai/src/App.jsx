@@ -222,22 +222,23 @@ function MainAppShell() {
           </div>
         </main>
 
-        {/* Global Floating AI Chatbot Trigger Button (Bottom-Right) */}
+        {/* Global Floating AI Voice Bot Trigger Button (Bottom-Right) */}
         <div className="fixed bottom-20 lg:bottom-6 right-5 z-40">
           <button
             onClick={() => setIsChatbotOpen(prev => !prev)}
-            className="group relative flex items-center gap-2.5 px-4 py-3 bg-gradient-to-r from-emerald-800 to-teal-800 hover:from-emerald-700 hover:to-teal-700 text-white rounded-full shadow-2xl transition-all duration-200 hover:scale-105 active:scale-95 border border-emerald-400/40 cursor-pointer"
-            aria-label="Open Kisan AI Chatbot with TTS"
+            className="group relative flex items-center gap-2.5 px-4 py-3 bg-gradient-to-r from-emerald-800 via-teal-800 to-emerald-900 hover:from-emerald-700 hover:to-teal-700 text-white rounded-full shadow-2xl transition-all duration-200 hover:scale-105 active:scale-95 border border-emerald-400/40 cursor-pointer"
+            aria-label="Open Kisan AI Live Voice Assistant"
           >
             {/* Ambient Pulse Ring */}
-            <span className="absolute -inset-1 rounded-full bg-emerald-500/20 blur-xs animate-ping group-hover:opacity-100 opacity-60 pointer-events-none" />
+            <span className="absolute -inset-1 rounded-full bg-emerald-500/25 blur-xs animate-ping group-hover:opacity-100 opacity-60 pointer-events-none" />
             
             <div className="w-7 h-7 rounded-full bg-white/20 flex items-center justify-center shadow-xs shrink-0">
-              <Bot className="w-4 h-4 text-emerald-300 animate-pulse" />
+              <Mic className="w-4 h-4 text-emerald-300 animate-pulse" />
             </div>
             
-            <span className="text-xs font-bold tracking-tight pr-1">
-              <span>AI Chatbot (TTS)</span>
+            <span className="text-xs font-bold tracking-tight pr-1 flex items-center gap-1.5">
+              <span>Kisan AI Voice</span>
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping inline-block" />
             </span>
           </button>
         </div>
