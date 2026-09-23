@@ -45,7 +45,7 @@ import {
 } from '../../services/whisperService';
 
 export const ChotaKissanModal = ({ isOpen, onClose, onNavigate }) => {
-  const { lang, setLang, t, theme, toggleTheme, setIsCartModalOpen, currentUser } = useApp();
+  const { lang, setLang, t, theme, toggleTheme, setIsCartModalOpen, currentUser, setActiveTab } = useApp();
   const isDark = theme === 'dark';
 
   // Assistant State: 'idle' | 'recording' | 'transcribing' | 'listening' | 'processing' | 'analyzing_farm' | 'translating' | 'speaking'
@@ -324,11 +324,14 @@ export const ChotaKissanModal = ({ isOpen, onClose, onNavigate }) => {
         if (toggleTheme) toggleTheme();
       } else if (response.navigationTarget === 'OPEN_CART') {
         if (setIsCartModalOpen) setIsCartModalOpen(true);
-      } else if (onNavigate) {
-        setTimeout(() => {
-          onNavigate(response.navigationTarget);
-          if (onClose) onClose();
-        }, 1500);
+      } else {
+        const navFn = onNavigate || setActiveTab;
+        if (navFn) {
+          setTimeout(() => {
+            navFn(response.navigationTarget);
+            if (onClose) onClose();
+          }, 1200);
+        }
       }
     }
 
@@ -473,9 +476,10 @@ export const ChotaKissanModal = ({ isOpen, onClose, onNavigate }) => {
 
   // Handle Action Button Navigation
   const handleActionClick = (btn) => {
-    if (btn.target && onNavigate) {
-      onNavigate(btn.target);
-      onClose();
+    const navFn = onNavigate || setActiveTab;
+    if (btn.target && navFn) {
+      navFn(btn.target);
+      if (onClose) onClose();
     } else if (btn.query) {
       handleProcessFarmerQuery(btn.query);
     }

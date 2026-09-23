@@ -31,6 +31,10 @@ import {
   detectSpokenLanguage
 } from '../../services/chotaKissanEngine';
 import { 
+  detectNavigationIntent, 
+  getNavigationSpokenConfirmation 
+} from '../../services/voiceNavigationService';
+import { 
   generateGroqChatReply, 
   PRIMARY_GROQ_MODEL 
 } from '../../services/groqChatService';
@@ -236,6 +240,71 @@ export const KisanChatBot = ({
     };
 
     setMessages(prev => [...prev, newUserMsg]);
+
+    // ─── INTERCEPT VOICE PAGE NAVIGATION REQUESTS ───
+    const navMatch = detectNavigationIntent(cleanQuery, targetLang);
+    if (navMatch && navMatch.isNavigation) {
+      const targetTab = navMatch.targetTab;
+      const spokenText = navMatch.spokenText;
+      const navLabel = navMatch.label;
+
+      const botMsgId = 'bot-nav-' + Date.now();
+      const newBotMsg = {
+        id: botMsgId,
+        sender: 'bot',
+        text: spokenText,
+        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        actionButtons: [{ label: `Open ${navLabel}`, target: targetTab }],
+        source: 'CropShield Voice Navigator'
+      };
+
+      setMessages(prev => [...prev, newBotMsg]);
+      setLiveBotReply(spokenText);
+      setIsTyping(false);
+
+      // Playback confirmation via TTS with native regional accent
+      setVoiceState('speaking');
+      voiceStateRef.current = 'speaking';
+      setStatusPrompt(`Navigating to ${navLabel}...`);
+      setSpeakingMessageId(botMsgId);
+
+      speakText(spokenText, targetLang, {
+        rate: speechRate,
+        onStart: () => {
+          if (isMountedRef.current) {
+            setVoiceState('speaking');
+            voiceStateRef.current = 'speaking';
+          }
+        },
+        onEnd: () => {
+          if (!isMountedRef.current) return;
+          setSpeakingMessageId(null);
+          setVoiceState('idle');
+          voiceStateRef.current = 'idle';
+          setStatusPrompt('');
+        },
+        onError: () => {
+          if (isMountedRef.current) {
+            setSpeakingMessageId(null);
+            setVoiceState('idle');
+            voiceStateRef.current = 'idle';
+            setStatusPrompt('');
+          }
+        }
+      });
+
+      // Smoothly trigger navigation transition
+      const navFn = onNavigate || setActiveTab;
+      if (navFn) {
+        setTimeout(() => {
+          navFn(targetTab);
+          if (isWidget && onClose) {
+            onClose();
+          }
+        }, 1100);
+      }
+      return;
+    }
 
     try {
       // Dynamic agronomic reply powered by Groq LPU with domain guardrails
@@ -940,8 +1009,9 @@ export const KisanChatBot = ({
                                 <button
                                   key={bIdx}
                                   onClick={() => {
-                                    if (btn.target && onNavigate) {
-                                      onNavigate(btn.target);
+                                    const navFn = onNavigate || setActiveTab;
+                                    if (btn.target && navFn) {
+                                      navFn(btn.target);
                                       if (isWidget && onClose) onClose();
                                     } else if (btn.query) {
                                       handleExecuteVoiceQuery(btn.query);

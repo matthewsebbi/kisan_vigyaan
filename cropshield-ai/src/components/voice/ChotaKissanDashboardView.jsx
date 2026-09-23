@@ -327,7 +327,7 @@ export const ChotaKissanDashboardView = () => {
       } else if (setActiveTab) {
         setTimeout(() => {
           setActiveTab(response.navigationTarget);
-        }, 1500);
+        }, 1200);
       }
     }
 

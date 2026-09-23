@@ -8,6 +8,14 @@
  */
 
 import { DISEASE_ENVIRONMENTAL_PROFILES, evaluateDiseaseRisk } from './environmentalDiseaseEngine';
+import { 
+  detectNavigationIntent, 
+  getNavigationSpokenConfirmation, 
+  getRouteLabel,
+  NAVIGATION_ROUTES 
+} from './voiceNavigationService';
+
+export { detectNavigationIntent, getNavigationSpokenConfirmation, getRouteLabel, NAVIGATION_ROUTES };
 
 // ==========================================
 // 1. LANGUAGE DEFINITIONS & METADATA
@@ -452,29 +460,16 @@ export function classifyAgriculturalIntent(query = '', context = {}) {
     return { intent: 'gratitude', targetCrop, rawQuery: q };
   }
 
-  // --- 5. APP NAVIGATION INTENT ---
-  if (textMatchesAny(q, ['open', 'show', 'go to', 'navigate', 'திற', 'காட்டு', 'போ', 'उघड', 'दाखवा', 'खोलो', 'दिखाओ', 'ले चलो', 'తెరువు', 'చూపించు', 'ತೆರೆ', 'ತೋರಿಸು'])) {
-    if (textMatchesAny(q, ['scan', 'camera', 'photo', 'இலை', 'படம்', 'கண்', 'फोटो', 'स्कॅन', 'स्कैनर', 'ఫోటో', 'స్ಕ್ಯಾನ್'])) {
-      return { intent: 'app_navigation', target: 'scan', label: 'Leaf Scanner', targetCrop };
-    }
-    if (textMatchesAny(q, ['market', 'mandi', 'விலை', 'சந்தை', 'भाव', 'बाजार', 'मंडी', 'ధరలు', 'ಮಾರುಕಟ್ಟೆ'])) {
-      return { intent: 'app_navigation', target: 'market', label: 'Mandi Market', targetCrop };
-    }
-    if (textMatchesAny(q, ['alert', 'எச்சரிக்கை', 'இடர்', 'इशारे', 'सूचना', 'चेतावनी', 'హెచ్చరికలు', 'ಎಚ್ಚರಿಕೆ'])) {
-      return { intent: 'app_navigation', target: 'alerts', label: 'Field Alerts', targetCrop };
-    }
-    if (textMatchesAny(q, ['satellite', 'map', 'gis', 'isro', 'வரைபடம்', 'नकाशा', 'मानचित्र', 'పటం', 'ನಕ್ಷೆ'])) {
-      return { intent: 'app_navigation', target: 'satelliteMapping', label: 'Satellite GIS Map', targetCrop };
-    }
-    if (textMatchesAny(q, ['prediction', 'radar', 'suitability', 'முன்கணிப்பு', 'அபாயம்', 'अंदाज', 'पूर्वानुमान', 'ముందస్తు'])) {
-      return { intent: 'app_navigation', target: 'environmentalPrediction', label: 'Disease Prediction Engine', targetCrop };
-    }
-    if (textMatchesAny(q, ['scheme', 'subsidy', 'dbt', 'திட்டம்', 'மானியம்', 'காப்பீடு', 'योजना', 'अनुदान', 'विमा', 'పథకాలు', 'ಯೋಜನೆ'])) {
-      return { intent: 'app_navigation', target: 'govtSchemes', label: 'Govt Schemes', targetCrop };
-    }
-    if (textMatchesAny(q, ['home', 'dashboard', 'plots', 'பண்ணை', 'தோட்டம்', 'शेती', 'खेत', 'పొలం'])) {
-      return { intent: 'app_navigation', target: 'home', label: 'Farm Home', targetCrop };
-    }
+  // --- 5. APP NAVIGATION INTENT (All 18 CropShield AI Views) ---
+  const navMatch = detectNavigationIntent(q, 'en');
+  if (navMatch && navMatch.isNavigation) {
+    return {
+      intent: 'app_navigation',
+      target: navMatch.targetTab,
+      label: navMatch.label,
+      spokenText: navMatch.spokenText,
+      targetCrop
+    };
   }
 
   // --- 6. CROP HEALTH / LEAF SPOTS / BLIGHT / MEDICINE PRESCRIPTION ---
@@ -767,18 +762,12 @@ Here is how I assist your farm:
     // --- APP NAVIGATION ---
     case 'app_navigation': {
       navigationTarget = classifiedIntent.target;
-      const navMap = {
-        ta: `உங்களுக்காக ${classifiedIntent.label} பக்கத்தை உடனே திரையில் காட்டுகிறேன்.`,
-        hi: `मैं आपके लिए ${classifiedIntent.label} अभी स्क्रीन पर खोल रहा हूँ।`,
-        mr: `मी आपल्यासाठी ${classifiedIntent.label} लगेच स्क्रीनवर उघडत आहे.`,
-        en: `Opening the ${classifiedIntent.label} for you right away.`
-      };
-      responseText = navMap[lang] || navMap.en;
-      actionButtons.push({ label: `Open ${classifiedIntent.label}`, target: navigationTarget });
+      const label = getRouteLabel(navigationTarget, lang) || classifiedIntent.label;
+      responseText = getNavigationSpokenConfirmation(navigationTarget, lang);
+      actionButtons.push({ label: `Open ${label}`, target: navigationTarget });
       break;
     }
 
-    // --- CROP HEALTH & DISEASE DIAGNOSIS ---
     case 'crop_health': {
       if (crop === 'tomato') {
         const tomatoMap = {
