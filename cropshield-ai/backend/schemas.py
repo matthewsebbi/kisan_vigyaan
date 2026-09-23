@@ -88,6 +88,9 @@ class EnvironmentalContext(BaseModel):
 
 class PhenotypeExtraction(BaseModel):
     """Fine-grained botanical phenotype extracted from plant imagery."""
+    is_plant: bool = Field(True, description="Whether image is a verified plant/leaf specimen")
+    non_plant_reason: Optional[str] = Field(None, description="Reason if non-plant object/person detected")
+    is_healthy: bool = Field(False, description="Whether leaf is healthy with no disease symptoms")
     plant_parts: List[str] = Field(default_factory=list, description="Affected plant parts: leaf_blade, leaf_sheath, panicle, collar, stem, etc.")
     symptom_class: Optional[str] = Field(None, description="discrete_lesion, linear_streak, continuous_blight, diffuse_discoloration, 3d_structure")
     lesion_presence: bool = Field(True, description="Whether discrete lesions are visible")
@@ -152,6 +155,8 @@ class DiagnosisResponse(BaseModel):
     crop: str = Field(..., description="Crop diagnosed")
     diagnosis: str = Field(..., description="Top diagnosis candidate name, e.g. 'Blast'")
     confidence: float = Field(..., description="Confidence score between 0.0 and 1.0")
+    is_plant: bool = Field(default=True, description="Whether specimen is a verified plant/leaf")
+    is_healthy: bool = Field(default=False, description="Whether specimen is healthy with no pathology")
     decisive_features: List[str] = Field(default_factory=list, description="Primary morphological features supporting this verdict")
     environmental_support: List[str] = Field(default_factory=list, description="Environmental conditions aligning with disease profile")
     strongest_alternative: StrongestAlternative = Field(default_factory=StrongestAlternative)

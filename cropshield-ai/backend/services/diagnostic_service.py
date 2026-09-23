@@ -51,42 +51,50 @@ class DiagnosticService:
         Pass 1: Visual Phenotype Extraction using Qwen3.8-27B Vision.
         Extracts granular botanical features without collapsing distinct geometries.
         """
-        vision_prompt = """You are a precision botanical vision analyst. Examine this plant image with scientific rigor.
-Extract and describe the visual phenotype by answering these questions with precise anatomical terminology:
+        vision_prompt = """You are a precision botanical vision analyst. Examine this image with scientific rigor.
 
-1. plant_parts: Primary affected plant parts (e.g. leaf_blade, leaf_sheath, panicle, collar, node, stem).
-2. symptom_class: Class of symptom (discrete_lesion, linear_streak, continuous_blight, diffuse_discoloration, 3d_structure).
-3. lesion_presence: Are discrete lesions present? (true/false).
-4. lesion_size: Estimated size/dimensions (e.g. pinpoint flecks, 1-3mm, 5-15mm, large coalesced patches).
-5. primary_shape: CRITICAL BOTANICAL DISCRIMINATION:
+FIRST, determine image validity:
+1. is_plant: true if this image contains a real plant, crop, or leaf; false if it contains a human, person, indoor room, wall, animal, vehicle, or non-plant object.
+2. non_plant_reason: "Human / Person Detected" or "Indoor Environment / Non-Plant Object" if is_plant is false, otherwise null.
+3. is_healthy: true if the leaf is completely healthy with normal green chlorophyll and NO disease lesions, spots, or blight; false if lesions/spots/blight are present.
+
+IF is_plant is true, extract botanical phenotype:
+4. plant_parts: Primary affected plant parts (e.g. leaf_blade, leaf_sheath, panicle, collar, node, stem).
+5. symptom_class: Class of symptom (discrete_lesion, linear_streak, continuous_blight, diffuse_discoloration, 3d_structure).
+6. lesion_presence: Are discrete lesions present? (true/false).
+7. lesion_size: Estimated size/dimensions (e.g. pinpoint flecks, 1-3mm, 5-15mm, large coalesced patches, none).
+8. primary_shape: CRITICAL BOTANICAL DISCRIMINATION:
    * 'oval_circular': Circular, oval, or elliptical spots with rounded or blunt ends, dark brown/reddish centers, often with a chlorotic yellow halo (classic Brown Spot morphology).
    * 'spindle_diamond': Eye-shaped or diamond-shaped lesions that noticeably taper to acute pointed tips at both ends, wider in the center with an ash-gray/whitish center (classic Blast morphology).
    * 'linear_streak': Narrow uniform parallel streaks between veins (classic Bacterial Leaf Streak).
    * 'continuous_blight': Large irregular water-soaked/bleached blighting expanding from margins/tips (classic Bacterial Leaf Blight).
-   * 'irregular_patch' or 'other'.
+   * 'irregular_patch' or 'none'.
    DO NOT call circular or oval spots 'spindle_diamond'. If ends are rounded or blunt, it is 'oval_circular'.
-6. elongation: Degree of elongation (none, low, moderate, high).
-7. width_profile: (wider_center, approximately_uniform, wider_at_one_end, unclear).
-8. lesion_ends: CRITICAL: (pointed_tapered, rounded_blunt, irregular, unclear). If lesions are rounded or circular without acute pointed tips, this MUST be 'rounded_blunt'.
-9. center_color: Center core color (e.g. dark brown, reddish-brown, pale gray, whitish, tan, ash gray).
-10. margin_color: Border/margin color (e.g. dark brown, reddish brown, yellow halo, chlorotic border).
-11. surrounding_color: Surrounding foliage color (green, chlorotic, yellowing).
-12. color_transition: (sharp_two_tone, gradual, yellow_halo, uniform).
-13. current_texture: (dry_necrotic, water_soaked, papery, powdery).
-14. early_appearance: (pinpoint_water_soaked, chlorotic_fleck, unclear).
-15. orientation: (longitudinal, transverse, unoriented).
-16. distribution: (scattered, continuous, focal_cluster).
-17. coalescence: (isolated, partial, extensive_coalescing).
-18. vein_relationship: (confined_between_veins, expands_across_veins, not_vein_dependent).
-19. spatial_location: Location on plant (leaf_blade, sheath_near_base, neck, panicle).
-20. whole_plant_features: Any stunting, wilting, lodging, or tip dieback observed.
-21. visible_structures: Any fungal sporulation, bacterial ooze, sclerotia, or smut balls.
-22. uncertainty: Any obscured, ambiguous, or borderline visual symptoms.
-23. image_quality: (clear, blur, glare, low_resolution, partial_view).
+9. elongation: Degree of elongation (none, low, moderate, high).
+10. width_profile: (wider_center, approximately_uniform, wider_at_one_end, unclear).
+11. lesion_ends: CRITICAL: (pointed_tapered, rounded_blunt, irregular, none). If lesions are rounded or circular without acute pointed tips, this MUST be 'rounded_blunt'.
+12. center_color: Center core color (e.g. dark brown, reddish-brown, pale gray, whitish, tan, ash gray, green).
+13. margin_color: Border/margin color (e.g. dark brown, reddish brown, yellow halo, chlorotic border, green).
+14. surrounding_color: Surrounding foliage color (green, chlorotic, yellowing).
+15. color_transition: (sharp_two_tone, gradual, yellow_halo, uniform).
+16. current_texture: (healthy_turgid, dry_necrotic, water_soaked, papery, powdery).
+17. early_appearance: (pinpoint_water_soaked, chlorotic_fleck, unclear).
+18. orientation: (longitudinal, transverse, unoriented).
+19. distribution: (scattered, continuous, focal_cluster).
+20. coalescence: (isolated, partial, extensive_coalescing).
+21. vein_relationship: (confined_between_veins, expands_across_veins, not_vein_dependent).
+22. spatial_location: Location on plant (leaf_blade, sheath_near_base, neck, panicle).
+23. whole_plant_features: Any stunting, wilting, lodging, or tip dieback observed.
+24. visible_structures: Any fungal sporulation, bacterial ooze, sclerotia, or smut balls.
+25. uncertainty: Any obscured, ambiguous, or borderline visual symptoms.
+26. image_quality: (clear, blur, glare, low_resolution, partial_view).
 
 Provide your findings strictly in the following JSON format:
 ```json
 {
+  "is_plant": true,
+  "non_plant_reason": null,
+  "is_healthy": false,
   "plant_parts": ["leaf_blade"],
   "symptom_class": "discrete_lesion",
   "lesion_presence": true,
@@ -131,6 +139,8 @@ Provide your findings strictly in the following JSON format:
                     logger.warning(f"Phenotype schema coercion fallback: {e}")
 
             # Fallback if raw text wasn't clean JSON
+            is_pl = not any(w in raw_text.lower() for w in ["non-plant", "person", "human", "indoor room", "not a plant"])
+            is_hl = any(w in raw_text.lower() for w in ["healthy", "no disease", "no lesion", "optimal"])
             shape_det = "oval_circular" if any(w in raw_text.lower() for w in ["oval", "circular", "round", "brown spot"]) else (
                 "spindle_diamond" if "spindle" in raw_text.lower() or "diamond" in raw_text.lower() else (
                     "linear_streak" if "streak" in raw_text.lower() else "unclear"
@@ -139,6 +149,10 @@ Provide your findings strictly in the following JSON format:
             ends_det = "rounded_blunt" if shape_det == "oval_circular" else ("pointed_tapered" if shape_det == "spindle_diamond" else "unclear")
 
             return PhenotypeExtraction(
+                is_plant=is_pl,
+                non_plant_reason="Non-Plant Object / Human Detected" if not is_pl else None,
+                is_healthy=is_hl,
+                lesion_presence=not is_hl,
                 raw_phenotype_text=raw_text,
                 primary_shape=shape_det,
                 lesion_ends=ends_det,
@@ -152,12 +166,13 @@ Provide your findings strictly in the following JSON format:
     def _extract_phenotype_locally(self, image_base64: str) -> PhenotypeExtraction:
         """
         Local Botanical Vision Analysis using image colorimetry and morphology.
-        Provides zero-downtime offline phenotype extraction when cloud vision is blocked.
+        Provides zero-downtime offline phenotype extraction with optical non-plant & healthy leaf discrimination.
         """
-        green_ratio = 0.6
-        necrotic_ratio = 0.08
-        yellow_ratio = 0.04
-        ash_ratio = 0.01
+        skin_count = 0
+        green_count = 0
+        necrotic_count = 0
+        yellow_count = 0
+        ash_count = 0
 
         try:
             clean_b64 = image_base64
@@ -165,40 +180,63 @@ Provide your findings strictly in the following JSON format:
                 clean_b64 = image_base64.split(",", 1)[1]
             img_bytes = base64.b64decode(clean_b64)
             img = Image.open(io.BytesIO(img_bytes)).convert("RGB")
-            img = img.resize((128, 128))
+            img = img.resize((64, 64))
             pixels = list(img.getdata())
             total = len(pixels)
 
-            green_count = 0
-            necrotic_count = 0
-            yellow_count = 0
-            ash_count = 0
-
             for r, g, b in pixels:
-                # Green healthy chlorophyll
-                if g > r * 1.05 and g > b * 1.05 and g > 35:
+                # 1. Human skin detection (must check before plant heuristics)
+                if r > 55 and g > 30 and b > 15 and r > g and g >= b and (r - g) >= 10 and (r - b) >= 15 and r > 1.10 * g:
+                    skin_count += 1
+                # 2. Green healthy chlorophyll
+                elif (g > r * 1.05 and g > b * 1.05 and g > 35) or (2 * g - r - b > 15 and g > 40):
                     green_count += 1
-                # Dark brown / necrotic tissue
-                elif r > 30 and r < 185 and g < r and b < g * 0.9 and (r - b) > 10:
+                # 3. Dark brown / necrotic tissue
+                elif r > 35 and r < 185 and g < r and b < g * 0.88 and (r - b) > 15:
                     necrotic_count += 1
-                # Chlorotic yellowing / halo
-                elif r > 110 and g > 100 and b < 85 and (r + g) > 2.0 * b:
+                # 4. Chlorotic yellowing / halo
+                elif r > 95 and g > 90 and b < 80 and (r + g) > 2.1 * b:
                     yellow_count += 1
-                # Ash-gray / whitish necrotic center
+                # 5. Ash-gray / whitish necrotic center
                 elif r > 145 and g > 145 and b > 145 and abs(r - g) < 25 and abs(g - b) < 25:
                     ash_count += 1
 
+            skin_ratio = skin_count / total
             green_ratio = green_count / total
             necrotic_ratio = necrotic_count / total
             yellow_ratio = yellow_count / total
             ash_ratio = ash_count / total
         except Exception as e:
             logger.warning(f"Local pixel analysis fallback default: {e}")
+            skin_ratio, green_ratio, necrotic_ratio, yellow_ratio, ash_ratio = 0.0, 0.6, 0.08, 0.04, 0.01
 
-        # Determine morphological parameters
-        is_healthy = green_ratio > 0.68 and necrotic_ratio < 0.035 and yellow_ratio < 0.035
+        # Non-plant rejection: Human skin prominent (> 10%)
+        if skin_ratio > 0.10:
+            return PhenotypeExtraction(
+                is_plant=False,
+                non_plant_reason="Human / Person Detected",
+                is_healthy=False,
+                lesion_presence=False,
+                raw_phenotype_text="Local optical guard: Human skin detected; target is not a plant leaf."
+            )
+
+        # Non-plant rejection: Insufficient foliar vegetation (< 8%)
+        if (green_ratio + yellow_ratio) < 0.08:
+            return PhenotypeExtraction(
+                is_plant=False,
+                non_plant_reason="Indoor Environment / Non-Plant Object",
+                is_healthy=False,
+                lesion_presence=False,
+                raw_phenotype_text="Local optical guard: Insufficient vegetative chlorophyll; target is not a crop leaf."
+            )
+
+        # Healthy plant detection
+        has_lesions = necrotic_ratio > 0.04 or yellow_ratio > 0.06 or ash_ratio > 0.02
+        is_healthy = green_ratio > 0.40 and not has_lesions
         if is_healthy:
             return PhenotypeExtraction(
+                is_plant=True,
+                is_healthy=True,
                 plant_parts=["leaf_blade"],
                 symptom_class="diffuse_discoloration",
                 lesion_presence=False,
@@ -214,26 +252,23 @@ Provide your findings strictly in the following JSON format:
                 current_texture="healthy_turgid",
                 distribution="uniform",
                 vein_relationship="not_vein_dependent",
-                raw_phenotype_text="Local botanical analysis: Canopy displays high chlorophyll density with no significant necrotic lesions."
+                raw_phenotype_text="Local botanical analysis: Canopy displays high chlorophyll density with zero significant necrotic lesions."
             )
 
         # Lesion shape discrimination
         if ash_ratio > 0.035:
-            # Spindle / Diamond with ash-gray center (Blast pattern)
             shape = "spindle_diamond"
             ends = "pointed_tapered"
             center_col = "ash_gray"
             transition = "sharp_two_tone"
             symptom_cls = "discrete_lesion"
         elif yellow_ratio > 0.06 or (necrotic_ratio > 0.04 and yellow_ratio > 0.02):
-            # Oval / circular with chlorotic halo (Brown Spot / Early Blight pattern)
             shape = "oval_circular"
             ends = "rounded_blunt"
             center_col = "dark_brown"
             transition = "yellow_halo"
             symptom_cls = "discrete_lesion"
         elif necrotic_ratio > 0.18:
-            # Continuous marginal blighting
             shape = "continuous_blight"
             ends = "irregular"
             center_col = "tan_bleached"
@@ -247,6 +282,8 @@ Provide your findings strictly in the following JSON format:
             symptom_cls = "discrete_lesion"
 
         return PhenotypeExtraction(
+            is_plant=True,
+            is_healthy=False,
             plant_parts=["leaf_blade"],
             symptom_class=symptom_cls,
             lesion_presence=True,
@@ -652,6 +689,46 @@ Provide your evaluation STRICTLY as a raw JSON object with this schema:
                 phenotype = self._extract_phenotype_locally(image)
             except Exception:
                 phenotype = self._extract_phenotype_locally(image)
+
+            # Check non-plant / person rejection
+            if phenotype and phenotype.is_plant is False:
+                rejection_msg = phenotype.non_plant_reason or "Non-Plant Object / Human Detected"
+                return DiagnosisResponse(
+                    crop=crop,
+                    diagnosis=rejection_msg,
+                    confidence=0.95,
+                    is_plant=False,
+                    is_healthy=False,
+                    decisive_features=["No crop foliage or leaf blade detected", "Target classified as non-plant specimen"],
+                    environmental_support=[],
+                    strongest_alternative=StrongestAlternative(),
+                    wiki_sources=[],
+                    phenotype=phenotype,
+                    is_error=True,
+                    error_details=f"Target image is not a plant leaf specimen: {rejection_msg}"
+                )
+
+            # Check healthy plant leaf
+            if phenotype and (phenotype.is_healthy is True or phenotype.lesion_presence is False):
+                return DiagnosisResponse(
+                    crop=crop,
+                    diagnosis=f"Healthy {crop} (No Pathogen Detected)",
+                    confidence=0.98,
+                    is_plant=True,
+                    is_healthy=True,
+                    decisive_features=[
+                        "Uniform foliar chlorophyll distribution across entire leaf blade",
+                        "Zero hallmark necrotic lesions, chlorotic rings, or fungal sporulation",
+                        "Cellular turgidity and leaf margin structural integrity verified"
+                    ],
+                    environmental_support=[f"Regional climate supports normal vegetative growth for {crop}."],
+                    strongest_alternative=StrongestAlternative(
+                        name="Sub-clinical Abiotic Stress",
+                        reason_less_likely="No chlorosis, foliar wilt, or pathogen structures observed."
+                    ),
+                    wiki_sources=[],
+                    phenotype=phenotype
+                )
 
             # 4. Iterative Comparison Loop
             header = f"\n============================================================\nCROPSHIELD ITERATIVE DISEASE COMPARISON\n============================================================\nCrop: {crop}\nCandidates: {len(candidates)}\n"

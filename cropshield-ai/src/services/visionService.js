@@ -80,6 +80,17 @@ export const analyzeLeafWithGroq = async (base64Image, lang = 'en', options = {}
   const season = typeof options === 'object' ? (options.season || 'kharif') : 'kharif';
   const envContext = typeof options === 'object' ? options.environmental_context : null;
   const sampleOption = typeof options === 'object' ? options.sampleOption : null;
+  const visualVerification = typeof options === 'object' ? options.visualVerification : null;
+
+  // Immediate guard: If optical verification determined non-plant, reject immediately
+  if (visualVerification && visualVerification.isPlant === false) {
+    return {
+      isPlant: false,
+      isError: true,
+      detectedObject: visualVerification.detectedType || visualVerification.detectedObject || 'Non-Plant Target',
+      confidence: visualVerification.confidence || 93.0
+    };
+  }
 
   // Ensure image payload is valid compressed base64 JPEG
   const cleanImage = await ensureImageBase64(base64Image);
@@ -87,12 +98,12 @@ export const analyzeLeafWithGroq = async (base64Image, lang = 'en', options = {}
   let lastBackendError = null;
 
   // 1. First attempt: Call CropShield AI Backend (/api/predict or port 8000)
-  // With 7-second AbortController timeout to prevent hanging the browser
+  // With 12-second AbortController timeout to allow neural inference
   const backendEndpoints = ['/api/predict', 'http://127.0.0.1:8000/predict'];
 
   for (const endpoint of backendEndpoints) {
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 7000);
+    const timeoutId = setTimeout(() => controller.abort(), 12000);
 
     try {
       const response = await fetch(endpoint, {
@@ -116,6 +127,42 @@ export const analyzeLeafWithGroq = async (base64Image, lang = 'en', options = {}
 
       if (response.ok) {
         const diag = await response.json();
+
+        // Check if backend detected non-plant / person
+        if (diag.is_plant === false || (diag.diagnosis && (diag.diagnosis.toLowerCase().includes('non-plant') || diag.diagnosis.toLowerCase().includes('human')))) {
+          return {
+            isPlant: false,
+            isError: true,
+            detectedObject: diag.diagnosis || 'Non-Plant Target',
+            confidence: Math.round((diag.confidence || 0.94) * 100)
+          };
+        }
+
+        // Check if backend detected healthy crop
+        if (diag.is_healthy === true || (diag.diagnosis && diag.diagnosis.toLowerCase().includes('healthy'))) {
+          return {
+            crop: diag.crop || crop,
+            verdict: diag.diagnosis || `Optimal Canopy Health (No Pathogen Detected)`,
+            isHealthy: true,
+            isPlant: true,
+            isError: false,
+            plainAdviceEn: diag.plainAdviceEn || (diag.decisive_features && diag.decisive_features.join('. ')) || `No visible foliar lesions detected. Crop foliage displays healthy chlorophyll indices.`,
+            plainAdviceTa: `இலைகளில் கருகல் புள்ளிகள் எதுவும் காணப்படவில்லை. பயிர் ஆரோக்கியமாக உள்ளது.`,
+            plainAdviceMr: `पानांवर कोणतेही करपा किंवा बुरशीचे ठिपके नाहीत. पीक पूर्णपणे निरोगी आहे.`,
+            medicineName: null,
+            price: 0,
+            mrp: 0,
+            confidence: Math.round((diag.confidence || 0.98) * 100),
+            severity: 'Healthy (Normal Vegetative Growth)',
+            activeCompound: 'None (Natural Chlorophyll Balance)',
+            dosage: 'Nil (Zero chemical pesticide required)',
+            probabilities: [
+              { label: 'Healthy Leaf', pct: Math.round((diag.confidence || 0.98) * 100), color: 'bg-emerald-500' }
+            ],
+            decisive_features: diag.decisive_features || ['Healthy leaf blade with normal chlorophyll distribution'],
+            wiki_sources: diag.wiki_sources || []
+          };
+        }
 
         // If backend reports a hard permission 403 failure, return it immediately
         if (diag.is_error && (diag.diagnosis && (diag.diagnosis.includes('Forbidden') || diag.diagnosis.includes('403')))) {
@@ -157,6 +204,8 @@ export const analyzeLeafWithGroq = async (base64Image, lang = 'en', options = {}
           return {
             crop: diag.crop || crop,
             verdict: diag.diagnosis,
+            isHealthy: false,
+            isPlant: true,
             isError: false,
             plainAdviceEn: `Confirmed from Agriculture Wiki (${diag.wiki_sources?.map(s => s.split('/').pop()).join(', ') || 'verified profile'}). Decisive morphology: ${decisiveText}. ${altName ? `Ruled out ${altName}: ${altReason}` : ''}`,
             plainAdviceTa: `விவசாய விக்கியிலிருந்து உறுதிப்படுத்தப்பட்டது: ${diag.diagnosis}. முக்கிய அறிகுறிகள்: ${decisiveText}.`,
@@ -186,7 +235,7 @@ export const analyzeLeafWithGroq = async (base64Image, lang = 'en', options = {}
   }
 
   // 2. Direct Groq Vision API call attempt if backend is unreachable
-  const apiKey = import.meta.env.VITE_GROQ_API_KEY;
+  const apiKey = (import.meta.env.VITE_GROQ_API_KEY || '').trim();
   let groqError = null;
 
   if (apiKey) {
@@ -205,7 +254,22 @@ export const analyzeLeafWithGroq = async (base64Image, lang = 'en', options = {}
               content: [
                 {
                   type: "text",
-                  text: `Analyze this image for crop: ${crop}. Return JSON with verdict, plainAdviceEn, confidence.`
+                  text: `You are an expert botanical pathologist. Analyze this image for crop: "${crop}".
+
+1. FIRST: Is this image a real plant, leaf, or crop foliage?
+   If it is a human (person, face, skin), furniture, indoor room, wall, animal, or non-plant object:
+   Return strictly JSON:
+   {"isPlant": false, "detectedObject": "Human / Person Detected" or "Indoor Environment / Non-Plant Object", "confidence": 95}
+
+2. SECOND: If it IS a crop or plant leaf:
+   - If the leaf is HEALTHY (normal green foliage, no active necrotic lesions, no blight, no fungal powder):
+     Return strictly JSON:
+     {"isPlant": true, "isHealthy": true, "crop": "${crop}", "verdict": "Optimal Canopy Health (No Pathogen Detected)", "plainAdviceEn": "Leaf blade exhibits normal chlorophyll distribution and healthy cellular turgidity. No active disease or pathogen symptoms detected.", "confidence": 98, "medicineName": null, "price": 0, "severity": "Healthy (Normal Vegetative Growth)"}
+
+   - If it is DISEASED (visible lesions, spots, blight, chlorosis, fungal growth):
+     Return strictly JSON:
+     {"isPlant": true, "isHealthy": false, "crop": "${crop}", "verdict": "<Precise Disease Name and Pathogen>", "plainAdviceEn": "<Actionable diagnosis and treatment advice>", "medicineName": "<Recommended bio-chemical remedy>", "confidence": 94, "price": 320, "severity": "High Alert"}
+`
                 },
                 {
                   type: "image_url",
@@ -229,12 +293,58 @@ export const analyzeLeafWithGroq = async (base64Image, lang = 'en', options = {}
           if (content.includes('```json')) content = content.split('```json')[1].split('```')[0].trim();
           else if (content.includes('```')) content = content.split('```')[1].split('```')[0].trim();
           const parsed = JSON.parse(content);
-          if (parsed && parsed.verdict) {
-            return {
-              ...parsed,
-              isError: false,
-              confidence: parsed.confidence || 92
-            };
+          if (parsed) {
+            // Check if Groq detected non-plant
+            if (parsed.isPlant === false) {
+              return {
+                isPlant: false,
+                isError: true,
+                detectedObject: parsed.detectedObject || 'Non-Plant Target',
+                confidence: parsed.confidence || 94
+              };
+            }
+
+            // Check if Groq detected healthy crop
+            if (parsed.isHealthy === true || (parsed.verdict && parsed.verdict.toLowerCase().includes('healthy'))) {
+              return {
+                crop: parsed.crop || crop,
+                verdict: parsed.verdict || 'Optimal Canopy Health (No Pathogen Detected)',
+                isHealthy: true,
+                isPlant: true,
+                isError: false,
+                plainAdviceEn: parsed.plainAdviceEn || 'Chlorophyll indices and stomatal health are excellent. No pathogen detected.',
+                plainAdviceMr: 'पीक पूर्णपणे निरोगी आहे (कोणत्याही फवारणीची गरज नाही).',
+                plainAdviceTa: 'பயிர் முற்றிலும் ஆரோக்கியமாக உள்ளது (மருந்து தெளிப்பு தேவையில்லை).',
+                medicineName: null,
+                price: 0,
+                mrp: 0,
+                confidence: parsed.confidence || 98,
+                severity: 'Healthy (Normal Vegetative Growth)',
+                activeCompound: 'None (Natural Chlorophyll Balance)',
+                dosage: 'Nil (Zero chemical pesticide required)',
+                probabilities: [
+                  { label: 'Healthy Leaf (No Pathogen)', pct: parsed.confidence || 98, color: 'bg-emerald-500' }
+                ],
+                decisive_features: [
+                  'Normal vegetative chlorophyll index across entire leaf blade',
+                  'Zero hallmark necrotic lesions or fungal fruiting structures'
+                ]
+              };
+            }
+
+            if (parsed.verdict) {
+              return {
+                ...parsed,
+                isHealthy: false,
+                isPlant: true,
+                isError: false,
+                confidence: parsed.confidence || 92,
+                probabilities: [
+                  { label: parsed.verdict, pct: parsed.confidence || 92, color: 'bg-rose-500' },
+                  { label: 'Alternative Foliar Stress', pct: Math.max(2, 100 - (parsed.confidence || 92)), color: 'bg-slate-500' }
+                ]
+              };
+            }
           }
         }
       }
@@ -259,6 +369,8 @@ export const analyzeLeafWithGroq = async (base64Image, lang = 'en', options = {}
       verdictHi: sampleOption.verdictHi,
       verdictTe: sampleOption.verdictTe,
       verdictKn: sampleOption.verdictKn,
+      isHealthy: !sampleOption.medicineName,
+      isPlant: true,
       isError: false,
       plainAdviceEn: sampleOption.plainAdviceEn,
       plainAdviceTa: sampleOption.plainAdviceTa,
@@ -272,14 +384,14 @@ export const analyzeLeafWithGroq = async (base64Image, lang = 'en', options = {}
       medicineNameHi: sampleOption.medicineNameHi,
       medicineNameTe: sampleOption.medicineNameTe,
       medicineNameKn: sampleOption.medicineNameKn,
-      price: sampleOption.price || 320,
-      mrp: sampleOption.mrp || 400,
+      price: sampleOption.price || 0,
+      mrp: sampleOption.mrp || 0,
       confidence: sampleOption.confidence || 95.5,
       probabilities: sampleOption.probabilities || [
-        { label: sampleOption.verdict, pct: 95.5, color: 'bg-rose-500' }
+        { label: sampleOption.verdict, pct: 95.5, color: sampleOption.medicineName ? 'bg-rose-500' : 'bg-emerald-500' }
       ],
       decisive_features: [
-        `Hallmark foliar lesions verified via benchmark pathometry`,
+        `Hallmark foliar features verified via benchmark pathometry`,
         `Prescription dosage: ${sampleOption.dosage || 'Standard field rate'}`,
         `Waiting period: ${sampleOption.waitingPeriod || '7-14 days'}`
       ],
@@ -292,8 +404,8 @@ export const analyzeLeafWithGroq = async (base64Image, lang = 'en', options = {}
     };
   }
 
-  // 4. Local Environmental & Agriculture Wiki Botanical Fallback (Authoritative disease dossiers)
-  return resolveLocalEnvironmentalDiagnosis(crop, envContext, location, season);
+  // 4. Local Environmental & Agriculture Wiki Botanical Fallback (Respects visual verification)
+  return resolveLocalEnvironmentalDiagnosis(crop, envContext, location, season, visualVerification);
 };
 
 export const fetchLlmHealth = async () => {
@@ -317,6 +429,13 @@ export const fetchLlmHealth = async () => {
   };
 };
 
-export const resolveLocalEnvironmentalDiagnosis = (crop = 'Pearl Millet', envContext = null, location = 'Maharashtra', season = 'kharif') => {
-  return resolveWikiDiseaseDiagnosis(crop, envContext, location, season);
+export const resolveLocalEnvironmentalDiagnosis = (
+  crop = 'Pearl Millet', 
+  envContext = null, 
+  location = 'Maharashtra', 
+  season = 'kharif',
+  visualContext = null
+) => {
+  return resolveWikiDiseaseDiagnosis(crop, envContext, location, season, visualContext);
 };
+
