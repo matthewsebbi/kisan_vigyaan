@@ -14,10 +14,18 @@ export const isSpeaking = () => {
   return typeof window !== 'undefined' && 'speechSynthesis' in window && window.speechSynthesis.speaking;
 };
 
+let activeUtterance = null;
+let watchdogTimer = null;
+
 /**
  * Cancel and stop any active speech utterance
  */
 export const stopSpeech = () => {
+  if (watchdogTimer) {
+    clearTimeout(watchdogTimer);
+    watchdogTimer = null;
+  }
+  activeUtterance = null;
   if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
     window.speechSynthesis.cancel();
   }
@@ -37,7 +45,11 @@ export const speakText = (text, lang = 'en', options = {}) => {
   }
 
   // Cancel any ongoing speech before starting new one
-  window.speechSynthesis.cancel();
+  stopSpeech();
+
+  if (window.speechSynthesis.paused) {
+    window.speechSynthesis.resume();
+  }
 
   if (!text || typeof text !== 'string') {
     if (options.onEnd) options.onEnd();
@@ -153,18 +165,40 @@ export const speakText = (text, lang = 'en', options = {}) => {
     }
   }
 
+  // Keep global reference so browser garbage collection doesn't kill playback
+  activeUtterance = utterance;
+
+  const handleFinish = (e) => {
+    if (watchdogTimer) {
+      clearTimeout(watchdogTimer);
+      watchdogTimer = null;
+    }
+    activeUtterance = null;
+    if (options.onEnd) options.onEnd(e);
+  };
+
   // Event handlers
   if (options.onStart) {
     utterance.onstart = options.onStart;
   }
   utterance.onend = (e) => {
-    if (options.onEnd) options.onEnd(e);
+    handleFinish(e);
   };
   utterance.onerror = (e) => {
     console.warn('TTS utterance error:', e);
     if (options.onError) options.onError(e);
-    if (options.onEnd) options.onEnd(e);
+    handleFinish(e);
   };
+
+  // Safety watchdog timer: if browser TTS hangs or fails to fire onend, resolve after expected duration
+  const estimatedDurationMs = Math.max(6000, cleanText.length * 130);
+  watchdogTimer = setTimeout(() => {
+    if (activeUtterance) {
+      console.warn('SpeechSynthesis watchdog timed out, ensuring speech ends.');
+      stopSpeech();
+      handleFinish({ type: 'watchdog_timeout' });
+    }
+  }, estimatedDurationMs);
 
   window.speechSynthesis.speak(utterance);
 };

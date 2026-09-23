@@ -4,7 +4,7 @@
  * for real-time, dynamic multilingual farming intelligence and actionable advice.
  */
 
-import { generateChotaKissanResponse, classifyAgriculturalIntent, SUPPORTED_LANGUAGES } from './chotaKissanEngine';
+import { generateChotaKissanResponse, classifyAgriculturalIntent, SUPPORTED_LANGUAGES, detectSpokenLanguage } from './chotaKissanEngine';
 
 const GROQ_CHAT_URL = 'https://api.groq.com/openai/v1/chat/completions';
 export const PRIMARY_GROQ_MODEL = 'openai/gpt-oss-120b';
@@ -41,10 +41,19 @@ Our project is a comprehensive precision agriculture & crop protection system fo
 - REJECT OFF-TOPIC QUERIES: If the user asks anything outside of agriculture and this project (such as general programming, movies, gaming, celebrity gossip, unrelated history/politics), you MUST politely decline and steer them back to their farm:
   "I am Kisan AI, your agricultural assistant. I can only assist with your crops, soil sensors, diseases, weather, and farm advisories. Please ask me about your farm or crops!" (translated naturally into ${langMeta.nativeName}).
 
+### MANDATORY RESPONSE LANGUAGE DIRECTIVE (VERY CRITICAL):
+- YOU MUST GENERATE YOUR RESPONSE COMPLETELY IN ${langMeta.name} (${langMeta.nativeName}, script code: "${lang}").
+- If the language is Hindi ('hi'), you MUST reply in pure Hindi script (हिन्दी). Do not reply in English!
+- If the language is Marathi ('mr'), you MUST reply in pure Marathi script (मराठी). Do not reply in English!
+- If the language is Tamil ('ta'), reply completely in Tamil script (தமிழ்).
+- If the language is Telugu ('te'), reply completely in Telugu script (తెలుగు).
+- If the language is Kannada ('kn'), reply completely in Kannada script (ಕನ್ನಡ).
+- If the language is Gujarati ('gu'), reply completely in Gujarati script (ગુજરાતી).
+- UNDER NO CIRCUMSTANCES should you output English text if the target language is an Indian language (${langMeta.name}).
+
 ### CONVERSATIONAL VOICE DIRECTIVE (SIRI / GEMINI LIVE STYLE):
 - You are speaking aloud directly to the farmer over a live voice audio stream.
 - Keep responses CONCISE, WARM, and ACTIONABLE (${isVoiceMode ? '2 to 3 sentences maximum' : '2 to 4 clear paragraphs'}).
-- Speak naturally and fluently in ${langMeta.name} (${langMeta.nativeName}, ISO language code: "${lang}").
 - Do NOT output markdown tables, asterisks, bullet markers, or raw symbols (#, *, _, |) because your response is read aloud by Text-to-Speech (TTS). State chemical names and numbers clearly and simply.
 - Farm telemetry context available: ${JSON.stringify(farmContext)}.`;
 };
@@ -52,7 +61,7 @@ Our project is a comprehensive precision agriculture & crop protection system fo
 /**
  * Send query to Groq GPT-OSS / Llama 3.3 with automatic multi-model fallback & local fallback
  * @param {object} params - { query, lang, conversationHistory, farmContext, isVoiceMode }
- * @returns {Promise<{ text: string, source: string, actionButtons?: array }>}
+ * @returns {Promise<{ text: string, source: string, detectedLang: string, actionButtons?: array }>}
  */
 export async function generateGroqChatReply({
   query,
@@ -63,26 +72,36 @@ export async function generateGroqChatReply({
 }) {
   const apiKey = getGroqApiKey();
 
+  // Auto-detect Indian language from query text if lang is 'en' or mismatched
+  let effectiveLang = lang;
+  if (!lang || lang === 'en') {
+    const textDetected = detectSpokenLanguage(query);
+    if (textDetected && textDetected !== 'en') {
+      effectiveLang = textDetected;
+    }
+  }
+
   // If no API key is provided, fallback cleanly to rule-based engine
   if (!apiKey || apiKey.length < 10) {
     console.warn('Groq API Key not found, using rule-based agricultural fallback');
     const intent = classifyAgriculturalIntent(query);
     const fallback = generateChotaKissanResponse({
       userQuery: query,
-      detectedLang: lang,
+      detectedLang: effectiveLang,
       classifiedIntent: intent,
       farmContext
     });
     return {
       text: fallback.responseText,
       source: 'offline-engine',
+      detectedLang: effectiveLang,
       actionButtons: fallback.actionButtons
     };
   }
 
-  // Build message sequence
+  // Build message sequence using effective detected language
   const messages = [
-    { role: 'system', content: buildSystemPrompt(lang, farmContext, isVoiceMode) }
+    { role: 'system', content: buildSystemPrompt(effectiveLang, farmContext, isVoiceMode) }
   ];
 
   // Include recent conversation messages for conversational continuity
@@ -116,8 +135,8 @@ export async function generateGroqChatReply({
         body: JSON.stringify({
           model,
           messages,
-          temperature: 0.6,
-          max_tokens: 850
+          temperature: 0.5,
+          max_tokens: 650
         })
       });
 
@@ -134,6 +153,7 @@ export async function generateGroqChatReply({
         return {
           text: reply.trim(),
           source: model,
+          detectedLang: effectiveLang,
           usage: data.usage
         };
       }

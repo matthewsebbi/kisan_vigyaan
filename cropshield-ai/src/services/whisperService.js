@@ -6,6 +6,8 @@
  * if no API key is configured.
  */
 
+import { detectSpokenLanguage } from './chotaKissanEngine';
+
 // ─── ISO 639-1 → our internal lang codes ───
 const WHISPER_LANG_MAP = {
   en: 'en', english: 'en',
@@ -68,6 +70,9 @@ export class WhisperAudioRecorder {
    */
   async startRecording(onSilence, onVolume) {
     try {
+      // Clean up any stale state first
+      this.cancelRecording();
+
       this.audioChunks = [];
       this.stream = await navigator.mediaDevices.getUserMedia({
         audio: {
@@ -79,9 +84,34 @@ export class WhisperAudioRecorder {
         }
       });
 
+      // Prefer webm/opus, fallback to whatever is available
+      const mimeType = MediaRecorder.isTypeSupported('audio/webm;codecs=opus')
+        ? 'audio/webm;codecs=opus'
+        : MediaRecorder.isTypeSupported('audio/webm')
+          ? 'audio/webm'
+          : 'audio/mp4';
+
+      this.mediaRecorder = new MediaRecorder(this.stream, {
+        mimeType,
+        audioBitsPerSecond: 64000
+      });
+
+      this.mediaRecorder.ondataavailable = (event) => {
+        if (event.data && event.data.size > 0) {
+          this.audioChunks.push(event.data);
+        }
+      };
+
+      this.mediaRecorder.start(250); // Collect chunks every 250ms
+      this.isRecording = true;
+      this.startTime = Date.now();
+
       // Always setup AudioContext and AnalyserNode so visualizers have real-time data
       try {
         this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        if (this.audioContext.state === 'suspended') {
+          await this.audioContext.resume();
+        }
         const source = this.audioContext.createMediaStreamSource(this.stream);
         this.analyser = this.audioContext.createAnalyser();
         this.analyser.fftSize = 256;
@@ -108,18 +138,18 @@ export class WhisperAudioRecorder {
           }
 
           if (onSilence) {
-            if (avg > 8) { // Speech detected
+            if (avg > 7) { // Speech detected (sensitive threshold)
               hasSpoken = true;
               silenceStart = null;
             } else if (hasSpoken) { // Silence after speaking
               if (!silenceStart) silenceStart = Date.now();
-              else if (Date.now() - silenceStart > 2200) { // 2.2s silence debounce
+              else if (Date.now() - silenceStart > 2000) { // 2.0s silence debounce
                 onSilence();
                 return;
               }
             } else { // Silence before speaking
               if (!silenceStart) silenceStart = Date.now();
-              else if (Date.now() - silenceStart > 10000) { // 10s timeout
+              else if (Date.now() - silenceStart > 9000) { // 9s timeout if no speech
                 onSilence();
                 return;
               }
@@ -129,32 +159,12 @@ export class WhisperAudioRecorder {
           requestAnimationFrame(monitorAudio);
         };
         
+        // Start monitoring now that this.isRecording is true!
         monitorAudio();
       } catch (e) {
         console.warn('AudioContext/Analyser setup failed, fallback to basic recording', e);
       }
 
-      // Prefer webm/opus, fallback to whatever is available
-      const mimeType = MediaRecorder.isTypeSupported('audio/webm;codecs=opus')
-        ? 'audio/webm;codecs=opus'
-        : MediaRecorder.isTypeSupported('audio/webm')
-          ? 'audio/webm'
-          : 'audio/mp4';
-
-      this.mediaRecorder = new MediaRecorder(this.stream, {
-        mimeType,
-        audioBitsPerSecond: 64000
-      });
-
-      this.mediaRecorder.ondataavailable = (event) => {
-        if (event.data && event.data.size > 0) {
-          this.audioChunks.push(event.data);
-        }
-      };
-
-      this.mediaRecorder.start(250); // Collect chunks every 250ms
-      this.isRecording = true;
-      this.startTime = Date.now();
       return true;
     } catch (err) {
       console.error('Microphone access error:', err);
@@ -259,7 +269,8 @@ export async function transcribeWithWhisper(audioBlob, apiKey, forcedLang = null
   
   formData.append('response_format', 'verbose_json');
   
-  if (forcedLang) {
+  // Only force language if the user explicitly specified a non-English dialect
+  if (forcedLang && forcedLang !== 'auto' && forcedLang !== 'en') {
     formData.append('language', forcedLang);
   }
 
@@ -292,24 +303,17 @@ export async function transcribeWithWhisper(audioBlob, apiKey, forcedLang = null
     const rawLang = (data.language || '').toLowerCase();
     const mappedLang = WHISPER_LANG_MAP[rawLang] || rawLang;
     const isSupported = SUPPORTED_LANG_CODES.has(mappedLang);
-    const detectedLang = isSupported ? mappedLang : 'en';
-
-    // Calculate average confidence from segments
-    let confidence = 0.85; // Default when segments not available
-    if (data.segments && data.segments.length > 0) {
-      const avgLogprob = data.segments.reduce((sum, seg) => sum + (seg.avg_logprob || -0.3), 0) / data.segments.length;
-      // Convert log probability to 0-1 confidence scale
-      // avg_logprob typically ranges from -1.0 (low) to 0.0 (perfect)
-      confidence = Math.max(0, Math.min(1, 1 + avgLogprob));
-
-      // Also check no_speech_prob
-      const avgNoSpeech = data.segments.reduce((sum, seg) => sum + (seg.no_speech_prob || 0), 0) / data.segments.length;
-      if (avgNoSpeech > 0.7) {
-        confidence = Math.min(confidence, 0.2);
-      }
-    }
+    let detectedLang = isSupported ? mappedLang : 'en';
 
     const text = (data.text || '').trim();
+
+    // Secondary check: verify actual script of the transcribed text (Devanagari, Tamil, Telugu, etc.)
+    if (text) {
+      const textDetectedLang = detectSpokenLanguage(text);
+      if (textDetectedLang && textDetectedLang !== 'en') {
+        detectedLang = textDetectedLang;
+      }
+    }
 
     return {
       text,

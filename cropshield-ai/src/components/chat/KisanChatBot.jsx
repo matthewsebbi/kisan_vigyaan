@@ -27,7 +27,8 @@ import {
 } from 'lucide-react';
 import { speakText, stopSpeech, isSpeaking } from '../../utils/speechUtils';
 import { 
-  SUPPORTED_LANGUAGES 
+  SUPPORTED_LANGUAGES,
+  detectSpokenLanguage
 } from '../../services/chotaKissanEngine';
 import { 
   generateGroqChatReply, 
@@ -77,11 +78,24 @@ export const KisanChatBot = ({
   const inputRef = useRef(null);
   const recognitionRef = useRef(null);
   const isMountedRef = useRef(true);
+  const autoListenTimeoutRef = useRef(null);
+
+  // Synchronized refs to eliminate stale closure issues across async voice turns
+  const voiceStateRef = useRef(voiceState);
+  const handsFreeLoopRef = useRef(handsFreeLoop);
+  const viewModeRef = useRef(viewMode);
+  const activeVoiceLangRef = useRef(activeVoiceLang);
+
+  useEffect(() => { voiceStateRef.current = voiceState; }, [voiceState]);
+  useEffect(() => { handsFreeLoopRef.current = handsFreeLoop; }, [handsFreeLoop]);
+  useEffect(() => { viewModeRef.current = viewMode; }, [viewMode]);
+  useEffect(() => { activeVoiceLangRef.current = activeVoiceLang; }, [activeVoiceLang]);
 
   // Sync activeVoiceLang with global AppContext lang
   useEffect(() => {
     if (lang && SUPPORTED_LANGUAGES[lang]) {
       setActiveVoiceLang(lang);
+      activeVoiceLangRef.current = lang;
     }
   }, [lang]);
 
@@ -188,17 +202,32 @@ export const KisanChatBot = ({
   }, [activeVoiceLang]);
 
   // ─── EXECUTE AGRONOMIST QUERY (Groq LPU + Context) ───
-  const handleExecuteVoiceQuery = async (queryText) => {
+  const handleExecuteVoiceQuery = async (queryText, queryLang = null) => {
     if (!queryText || !queryText.trim()) {
       setVoiceState('idle');
+      voiceStateRef.current = 'idle';
       return;
     }
 
     const cleanQuery = queryText.trim();
     setLiveTranscript(cleanQuery);
     setVoiceState('thinking');
-    setStatusPrompt('Groq Whisper & LPU Agronomist reasoning...');
+    voiceStateRef.current = 'thinking';
     setIsTyping(true);
+
+    // Determine target response language (priority: queryLang -> Unicode detection -> activeVoiceLangRef -> 'en')
+    let targetLang = queryLang || activeVoiceLangRef.current;
+    const textDetectedLang = detectSpokenLanguage(cleanQuery);
+    if (textDetectedLang && textDetectedLang !== 'en') {
+      targetLang = textDetectedLang;
+    }
+
+    setActiveVoiceLang(targetLang);
+    activeVoiceLangRef.current = targetLang;
+    if (setLang) setLang(targetLang);
+
+    const langName = SUPPORTED_LANGUAGES[targetLang]?.nativeName || 'English';
+    setStatusPrompt(`Analyzing farm advice in ${langName}...`);
 
     const userMsgId = 'user-' + Date.now();
     const newUserMsg = {
@@ -211,10 +240,10 @@ export const KisanChatBot = ({
     setMessages(prev => [...prev, newUserMsg]);
 
     try {
-      // Dynamic agronomic reply powered by Groq GPT-OSS / Llama 3.3
+      // Dynamic agronomic reply powered by Groq LPU with domain guardrails
       const botResponse = await generateGroqChatReply({
         query: cleanQuery,
-        lang: activeVoiceLang,
+        lang: targetLang,
         conversationHistory: [...messages, newUserMsg],
         farmContext: {
           platform: 'CropShield AI (Kisan Vigyaan)',
@@ -232,6 +261,7 @@ export const KisanChatBot = ({
 
       if (!isMountedRef.current) return;
 
+      const finalResponseLang = botResponse.detectedLang || targetLang;
       const botMsgId = 'bot-' + Date.now();
       const newBotMsg = {
         id: botMsgId,
@@ -246,37 +276,42 @@ export const KisanChatBot = ({
       setLiveBotReply(botResponse.text);
       setIsTyping(false);
 
-      // Playback response via TTS
+      // Playback response via TTS with matching native regional language voice!
       setVoiceState('speaking');
+      voiceStateRef.current = 'speaking';
       setStatusPrompt('Kisan AI is speaking... (Tap orb to interrupt)');
       setSpeakingMessageId(botMsgId);
 
-      speakText(botResponse.text, activeVoiceLang, {
+      speakText(botResponse.text, finalResponseLang, {
         rate: speechRate,
         onStart: () => {
           if (isMountedRef.current) {
             setVoiceState('speaking');
+            voiceStateRef.current = 'speaking';
           }
         },
         onEnd: () => {
           if (!isMountedRef.current) return;
           setSpeakingMessageId(null);
           setVoiceState('idle');
+          voiceStateRef.current = 'idle';
           setStatusPrompt('');
 
-          // Hands-free turn-taking loop: automatically listen again if enabled
-          if (handsFreeLoop && viewMode === 'liveVoice') {
-            setTimeout(() => {
-              if (isMountedRef.current && voiceState !== 'speaking') {
+          // Multi-iteration hands-free turn-taking loop: automatically listen again
+          if (handsFreeLoopRef.current && viewModeRef.current === 'liveVoice') {
+            clearTimeout(autoListenTimeoutRef.current);
+            autoListenTimeoutRef.current = setTimeout(() => {
+              if (isMountedRef.current && voiceStateRef.current === 'idle') {
                 handleStartListening();
               }
-            }, 750);
+            }, 650);
           }
         },
         onError: () => {
           if (isMountedRef.current) {
             setSpeakingMessageId(null);
             setVoiceState('idle');
+            voiceStateRef.current = 'idle';
             setStatusPrompt('');
           }
         }
@@ -286,6 +321,7 @@ export const KisanChatBot = ({
       if (isMountedRef.current) {
         setIsTyping(false);
         setVoiceState('idle');
+        voiceStateRef.current = 'idle';
         setStatusPrompt('Error generating advisory. Please tap to try again.');
       }
     }
@@ -293,6 +329,11 @@ export const KisanChatBot = ({
 
   // ─── START VOICE LISTENING (Groq Whisper with Web Speech Fallback) ───
   const handleStartListening = async () => {
+    if (autoListenTimeoutRef.current) {
+      clearTimeout(autoListenTimeoutRef.current);
+      autoListenTimeoutRef.current = null;
+    }
+
     stopSpeech();
     setSpeakingMessageId(null);
 
@@ -302,6 +343,7 @@ export const KisanChatBot = ({
     if (apiKey && isWhisperAvailable() && navigator.mediaDevices?.getUserMedia) {
       try {
         setVoiceState('listening');
+        voiceStateRef.current = 'listening';
         setStatusPrompt('Listening to your voice... (Speak now)');
         setLiveTranscript('');
 
@@ -329,18 +371,21 @@ export const KisanChatBot = ({
       try {
         recognitionRef.current.start();
         setVoiceState('listening');
+        voiceStateRef.current = 'listening';
       } catch (e) {
         console.warn('SpeechRecognition start error:', e);
       }
     } else {
       alert("Microphone speech recognition is not supported on this browser. Please use Chrome, Edge, or Opera.");
       setVoiceState('idle');
+      voiceStateRef.current = 'idle';
     }
   };
 
   // ─── STOP WHISPER & TRANSCRIBE ───
   const handleStopWhisperAndProcess = async () => {
     setVoiceState('thinking');
+    voiceStateRef.current = 'thinking';
     setStatusPrompt('Transcribing with Groq Whisper Large-v3...');
 
     const { blob } = await whisperRecorder.stopRecording();
@@ -348,40 +393,58 @@ export const KisanChatBot = ({
 
     if (!blob || blob.size < 1000) {
       setVoiceState('idle');
-      setStatusPrompt('No audio detected. Tap orb to try again.');
+      voiceStateRef.current = 'idle';
+      setStatusPrompt('No audio detected. Tap orb to speak.');
       return;
     }
 
     try {
-      const transcription = await transcribeWithWhisper(blob, apiKey, activeVoiceLang);
+      // Do not force English — allow Whisper to detect the native language automatically
+      const forced = activeVoiceLangRef.current === 'en' ? null : activeVoiceLangRef.current;
+      const transcription = await transcribeWithWhisper(blob, apiKey, forced);
 
       if (transcription && transcription.text && transcription.text.trim()) {
         const spokenText = transcription.text.trim();
         setLiveTranscript(spokenText);
-        
-        // Auto-switch dialect if Whisper detected another supported language
-        if (transcription.detectedLang && SUPPORTED_LANGUAGES[transcription.detectedLang]) {
-          setActiveVoiceLang(transcription.detectedLang);
+
+        // Detect language from text script (Devanagari, Tamil, Telugu, etc.) or Whisper
+        let effectiveLanguage = transcription.detectedLang || activeVoiceLangRef.current;
+        const textScriptLang = detectSpokenLanguage(spokenText);
+        if (textScriptLang && textScriptLang !== 'en') {
+          effectiveLanguage = textScriptLang;
         }
 
-        await handleExecuteVoiceQuery(spokenText);
+        setActiveVoiceLang(effectiveLanguage);
+        activeVoiceLangRef.current = effectiveLanguage;
+        if (setLang) setLang(effectiveLanguage);
+
+        await handleExecuteVoiceQuery(spokenText, effectiveLanguage);
       } else {
         setVoiceState('idle');
+        voiceStateRef.current = 'idle';
         setStatusPrompt('Could not clearly understand speech. Please try again.');
       }
     } catch (e) {
       console.error('Whisper transcription error:', e);
       setVoiceState('idle');
+      voiceStateRef.current = 'idle';
       setStatusPrompt('Transcription failed. Tap to try again.');
     }
   };
 
   // ─── ORB CLICK INTERACTION (TAP TO TALK / INTERRUPT) ───
   const handleOrbClick = () => {
+    if (autoListenTimeoutRef.current) {
+      clearTimeout(autoListenTimeoutRef.current);
+      autoListenTimeoutRef.current = null;
+    }
+
     if (voiceState === 'speaking') {
       // Tap to interrupt: immediately cancel bot speech and listen to farmer
       stopSpeech();
       setSpeakingMessageId(null);
+      setVoiceState('idle');
+      voiceStateRef.current = 'idle';
       handleStartListening();
     } else if (voiceState === 'listening') {
       // Tap to finish speaking: trigger immediate transcription
@@ -397,6 +460,7 @@ export const KisanChatBot = ({
         whisperRecorder.cancelRecording();
       }
       setVoiceState('idle');
+      voiceStateRef.current = 'idle';
       setStatusPrompt('');
     } else {
       // Idle: start listening
@@ -447,12 +511,17 @@ export const KisanChatBot = ({
   };
 
   const handleResetChat = () => {
+    if (autoListenTimeoutRef.current) {
+      clearTimeout(autoListenTimeoutRef.current);
+      autoListenTimeoutRef.current = null;
+    }
     stopSpeech();
     if (whisperRecorder && whisperRecorder.isRecording) {
       whisperRecorder.cancelRecording();
     }
     setSpeakingMessageId(null);
     setVoiceState('idle');
+    voiceStateRef.current = 'idle';
     setLiveTranscript('');
     setLiveBotReply('');
     setStatusPrompt('');
