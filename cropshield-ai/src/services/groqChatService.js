@@ -121,8 +121,8 @@ export async function generateGroqChatReply({
     messages.push({ role: 'user', content: query });
   }
 
-  // Models to attempt in order: fast Llama 3.3 70B -> Llama 3.1 8B -> GPT-OSS models
-  const modelsToAttempt = ['llama-3.3-70b-versatile', 'llama-3.1-8b-instant', PRIMARY_GROQ_MODEL, FALLBACK_GROQ_MODEL];
+  // Models to attempt in order: fast Qwen 27B -> OpenAI GPT-OSS 120B -> OpenAI GPT-OSS 20B
+  const modelsToAttempt = ['qwen/qwen3.8-27b', PRIMARY_GROQ_MODEL, FALLBACK_GROQ_MODEL];
 
   for (const model of modelsToAttempt) {
     try {
@@ -136,7 +136,7 @@ export async function generateGroqChatReply({
           model,
           messages,
           temperature: 0.5,
-          max_tokens: 650
+          max_tokens: 800
         })
       });
 

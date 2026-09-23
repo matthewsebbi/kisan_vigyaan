@@ -122,6 +122,7 @@ export class WhisperAudioRecorder {
 
         const dataArray = new Uint8Array(this.analyser.frequencyBinCount);
         let silenceStart = null;
+        let speechFrameCount = 0;
         let hasSpoken = false;
 
         const monitorAudio = () => {
@@ -138,20 +139,40 @@ export class WhisperAudioRecorder {
           }
 
           if (onSilence) {
-            if (avg > 7) { // Speech detected (sensitive threshold)
-              hasSpoken = true;
-              silenceStart = null;
-            } else if (hasSpoken) { // Silence after speaking
-              if (!silenceStart) silenceStart = Date.now();
-              else if (Date.now() - silenceStart > 2000) { // 2.0s silence debounce
-                onSilence();
-                return;
+            const timeSinceStart = Date.now() - (this.startTime || Date.now());
+
+            // Ignore first 400ms after mic opening to let hardware AGC & bias settle
+            if (timeSinceStart > 400) {
+              if (avg > 8.0) {
+                speechFrameCount++;
+                if (speechFrameCount >= 3) {
+                  hasSpoken = true;
+                  silenceStart = null;
+                }
+              } else {
+                speechFrameCount = Math.max(0, speechFrameCount - 1);
               }
-            } else { // Silence before speaking
-              if (!silenceStart) silenceStart = Date.now();
-              else if (Date.now() - silenceStart > 9000) { // 9s timeout if no speech
-                onSilence();
-                return;
+
+              if (hasSpoken) {
+                // Once user has spoken, trigger auto-stop when silence (avg < 7.0) is held for 2.2s
+                // and at least 2.0s of audio was recorded
+                if (avg < 7.0) {
+                  if (!silenceStart) silenceStart = Date.now();
+                  else if (Date.now() - silenceStart > 2200 && timeSinceStart > 2000) {
+                    console.log(`[VAD] Silence detected after speech (${timeSinceStart}ms total). Stopping.`);
+                    onSilence();
+                    return;
+                  }
+                } else {
+                  silenceStart = null;
+                }
+              } else {
+                // If no speech detected at all, allow up to 10 seconds before auto-closing
+                if (timeSinceStart > 10000) {
+                  console.log('[VAD] No speech detected within 10s timeout.');
+                  onSilence();
+                  return;
+                }
               }
             }
           }
@@ -180,14 +201,17 @@ export class WhisperAudioRecorder {
   stopRecording() {
     return new Promise((resolve) => {
       if (!this.mediaRecorder || this.mediaRecorder.state === 'inactive') {
+        this.isRecording = false;
         resolve({ blob: null, duration: 0 });
         return;
       }
 
       this.mediaRecorder.onstop = () => {
         const duration = (Date.now() - (this.startTime || Date.now())) / 1000;
-        const mimeType = this.mediaRecorder.mimeType || 'audio/webm';
-        const blob = new Blob(this.audioChunks, { type: mimeType });
+        const rawMime = this.mediaRecorder?.mimeType || 'audio/webm';
+        // Clean mimeType so it doesn't pass ;codecs=opus to multipart upload
+        const cleanType = rawMime.split(';')[0];
+        const blob = new Blob(this.audioChunks, { type: cleanType });
         this.audioChunks = [];
         this.isRecording = false;
 
@@ -202,10 +226,19 @@ export class WhisperAudioRecorder {
           this.stream = null;
         }
 
+        this.mediaRecorder = null;
         resolve({ blob, duration });
       };
 
-      this.mediaRecorder.stop();
+      try {
+        if (this.mediaRecorder.state === 'recording') {
+          this.mediaRecorder.requestData();
+        }
+        this.mediaRecorder.stop();
+      } catch (e) {
+        this.isRecording = false;
+        resolve({ blob: null, duration: 0 });
+      }
     });
   }
 
@@ -264,8 +297,8 @@ export async function transcribeWithWhisper(audioBlob, apiKey, forcedLang = null
   // Use the full large-v3 model instead of turbo for better multilingual and accent accuracy
   formData.append('model', 'whisper-large-v3');
   
-  // Provide agricultural context to improve transcription of domain-specific words
-  formData.append('prompt', 'Agriculture, farming, crops, weather, diseases, seeds, fertilizer, pesticides, urea, NPK, mandi, yield, harvest, soil, monsoon.');
+  // Provide multilingual agricultural context to improve recognition across Indian languages
+  formData.append('prompt', 'कपास, पिके, रोग, औषध, खते, शेती, फसल, कीटनाशक, દવા, பயிர், పంట, ಬೆಳೆ, agriculture, farming, crops, disease, mandi, NPK, fertilizer, urea, soil.');
   
   formData.append('response_format', 'verbose_json');
   
@@ -315,10 +348,15 @@ export async function transcribeWithWhisper(audioBlob, apiKey, forcedLang = null
       }
     }
 
+    // Calculate confidence score from Whisper segments logprob if available
+    const segmentConfidence = data.segments?.[0]?.avg_logprob != null
+      ? Math.min(0.99, Math.max(0.60, Math.exp(data.segments[0].avg_logprob)))
+      : 0.95;
+
     return {
       text,
       detectedLang,
-      confidence: Math.round(confidence * 100) / 100,
+      confidence: Math.round(segmentConfidence * 100) / 100,
       duration: data.duration || 0,
       isSupported,
       rawLanguage: rawLang,
@@ -375,7 +413,7 @@ export async function translateWithLLM(text, targetLang, apiKey) {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        model: 'llama-3.3-70b-versatile',
+        model: 'qwen/qwen3.8-27b',
         messages: [
           {
             role: 'system',

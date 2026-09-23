@@ -79,6 +79,7 @@ export const KisanChatBot = ({
   const recognitionRef = useRef(null);
   const isMountedRef = useRef(true);
   const autoListenTimeoutRef = useRef(null);
+  const lastWebSpeechTranscriptRef = useRef('');
 
   // Synchronized refs to eliminate stale closure issues across async voice turns
   const voiceStateRef = useRef(voiceState);
@@ -175,25 +176,22 @@ export const KisanChatBot = ({
       recognition.lang = langCodes[activeVoiceLang] || 'en-IN';
 
       recognition.onstart = () => {
-        setVoiceState('listening');
-        setStatusPrompt('Listening to your voice... (Speak now)');
+        // Listening active
       };
       recognition.onend = () => {
-        if (voiceState === 'listening') {
-          setVoiceState('idle');
-          setStatusPrompt('');
-        }
+        // Recognition ended
       };
       recognition.onerror = (e) => {
-        console.warn('Speech recognition error:', e);
-        setVoiceState('idle');
-        setStatusPrompt('');
+        console.warn('Speech recognition warning:', e);
       };
       recognition.onresult = (event) => {
-        const transcript = event.results[0][0].transcript;
+        const transcript = event.results[0]?.[0]?.transcript;
         if (transcript) {
-          setLiveTranscript(transcript);
-          handleExecuteVoiceQuery(transcript);
+          lastWebSpeechTranscriptRef.current = transcript;
+          // If whisper recorder is not currently active, process directly
+          if (!whisperRecorder.isRecording && voiceStateRef.current === 'listening') {
+            handleStopWhisperAndProcess();
+          }
         }
       };
 
@@ -336,17 +334,27 @@ export const KisanChatBot = ({
 
     stopSpeech();
     setSpeakingMessageId(null);
+    lastWebSpeechTranscriptRef.current = '';
+
+    setVoiceState('listening');
+    voiceStateRef.current = 'listening';
+    setStatusPrompt('Listening to your voice... (Speak now)');
+    setLiveTranscript('');
+
+    // Start browser SpeechRecognition in parallel as instant backup
+    if (recognitionRef.current) {
+      try {
+        recognitionRef.current.start();
+      } catch (e) {
+        // may already be started
+      }
+    }
 
     const apiKey = getGroqApiKey();
 
     // Prefer high-accuracy Groq Whisper Large-v3 with MediaRecorder
     if (apiKey && isWhisperAvailable() && navigator.mediaDevices?.getUserMedia) {
       try {
-        setVoiceState('listening');
-        voiceStateRef.current = 'listening';
-        setStatusPrompt('Listening to your voice... (Speak now)');
-        setLiveTranscript('');
-
         const started = await whisperRecorder.startRecording(
           // On silence detected (VAD):
           async () => {
@@ -358,77 +366,90 @@ export const KisanChatBot = ({
         );
 
         if (!started) {
-          throw new Error('Could not access microphone');
+          if (!recognitionRef.current) {
+            setVoiceState('idle');
+            voiceStateRef.current = 'idle';
+            setStatusPrompt('Could not access microphone. Please check browser permissions.');
+          }
+          return;
         }
         return;
       } catch (err) {
         console.warn('Whisper recorder error, falling back to Web Speech API:', err);
+        if (!recognitionRef.current) {
+          setVoiceState('idle');
+          voiceStateRef.current = 'idle';
+          setStatusPrompt('Microphone permission required. Please allow microphone in browser.');
+        }
       }
-    }
-
-    // Fallback to Web Speech API
-    if (recognitionRef.current) {
-      try {
-        recognitionRef.current.start();
-        setVoiceState('listening');
-        voiceStateRef.current = 'listening';
-      } catch (e) {
-        console.warn('SpeechRecognition start error:', e);
-      }
-    } else {
-      alert("Microphone speech recognition is not supported on this browser. Please use Chrome, Edge, or Opera.");
-      setVoiceState('idle');
-      voiceStateRef.current = 'idle';
     }
   };
 
   // ─── STOP WHISPER & TRANSCRIBE ───
   const handleStopWhisperAndProcess = async () => {
-    setVoiceState('thinking');
-    voiceStateRef.current = 'thinking';
-    setStatusPrompt('Transcribing with Groq Whisper Large-v3...');
-
-    const { blob } = await whisperRecorder.stopRecording();
-    const apiKey = getGroqApiKey();
-
-    if (!blob || blob.size < 1000) {
-      setVoiceState('idle');
-      voiceStateRef.current = 'idle';
-      setStatusPrompt('No audio detected. Tap orb to speak.');
+    if (voiceStateRef.current === 'thinking' || voiceStateRef.current === 'speaking') {
       return;
     }
 
-    try {
-      // Do not force English — allow Whisper to detect the native language automatically
-      const forced = activeVoiceLangRef.current === 'en' ? null : activeVoiceLangRef.current;
-      const transcription = await transcribeWithWhisper(blob, apiKey, forced);
+    setVoiceState('thinking');
+    voiceStateRef.current = 'thinking';
+    setStatusPrompt('Transcribing your voice...');
 
-      if (transcription && transcription.text && transcription.text.trim()) {
-        const spokenText = transcription.text.trim();
-        setLiveTranscript(spokenText);
+    // Stop browser recognition if active
+    if (recognitionRef.current) {
+      try {
+        recognitionRef.current.stop();
+      } catch {}
+    }
 
-        // Detect language from text script (Devanagari, Tamil, Telugu, etc.) or Whisper
-        let effectiveLanguage = transcription.detectedLang || activeVoiceLangRef.current;
-        const textScriptLang = detectSpokenLanguage(spokenText);
-        if (textScriptLang && textScriptLang !== 'en') {
-          effectiveLanguage = textScriptLang;
+    const { blob, duration } = await whisperRecorder.stopRecording();
+    const apiKey = getGroqApiKey();
+    console.log(`[Voice] Stopped recording: ${blob?.size || 0} bytes, duration: ${duration?.toFixed(1) || 0}s`);
+
+    let spokenText = '';
+    let effectiveLanguage = activeVoiceLangRef.current;
+
+    // 1. Primary: Transcribe using Groq Whisper Large-v3
+    if (blob && blob.size >= 800 && apiKey) {
+      try {
+        const forced = activeVoiceLangRef.current === 'en' ? null : activeVoiceLangRef.current;
+        const transcription = await transcribeWithWhisper(blob, apiKey, forced);
+
+        if (transcription && transcription.text && transcription.text.trim()) {
+          spokenText = transcription.text.trim();
+          effectiveLanguage = transcription.detectedLang || activeVoiceLangRef.current;
+          console.log(`[Whisper] Transcribed: "${spokenText}" (lang: ${effectiveLanguage})`);
         }
-
-        setActiveVoiceLang(effectiveLanguage);
-        activeVoiceLangRef.current = effectiveLanguage;
-        if (setLang) setLang(effectiveLanguage);
-
-        await handleExecuteVoiceQuery(spokenText, effectiveLanguage);
-      } else {
-        setVoiceState('idle');
-        voiceStateRef.current = 'idle';
-        setStatusPrompt('Could not clearly understand speech. Please try again.');
+      } catch (e) {
+        console.warn('Groq Whisper transcription error:', e);
       }
-    } catch (e) {
-      console.error('Whisper transcription error:', e);
+    }
+
+    // 2. Dual Fallback: Check Web Speech API transcript if Whisper didn't catch speech
+    if (!spokenText && lastWebSpeechTranscriptRef.current && lastWebSpeechTranscriptRef.current.trim()) {
+      spokenText = lastWebSpeechTranscriptRef.current.trim();
+      console.log('[WebSpeech Fallback] Transcribed:', spokenText);
+    }
+    lastWebSpeechTranscriptRef.current = '';
+
+    if (spokenText) {
+      setLiveTranscript(spokenText);
+
+      // Verify language from text script (Devanagari, Tamil, Telugu, etc.)
+      const textScriptLang = detectSpokenLanguage(spokenText);
+      if (textScriptLang && textScriptLang !== 'en') {
+        effectiveLanguage = textScriptLang;
+      }
+
+      setActiveVoiceLang(effectiveLanguage);
+      activeVoiceLangRef.current = effectiveLanguage;
+      if (setLang) setLang(effectiveLanguage);
+
+      await handleExecuteVoiceQuery(spokenText, effectiveLanguage);
+    } else {
       setVoiceState('idle');
       voiceStateRef.current = 'idle';
-      setStatusPrompt('Transcription failed. Tap to try again.');
+      setStatusPrompt('Tap the Voice Orb and speak into your microphone.');
     }
   };
 
