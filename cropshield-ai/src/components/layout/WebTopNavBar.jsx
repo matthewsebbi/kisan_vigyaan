@@ -1,7 +1,7 @@
 import React from 'react';
 import { useApp } from '../../context/AppContext';
 import { 
-  Home, 
+  Cpu, 
   Camera, 
   Bell, 
   ShoppingBag, 
@@ -38,7 +38,7 @@ export const WebTopNavBar = ({ activeTab, onNavigate }) => {
 
   // 5 primary navigation sections for Farmer
   const navItems = [
-    { id: 'home', labelKey: 'navHome', icon: Home },
+    { id: 'esp32LiveData', labelKey: 'navZone', icon: Cpu },
     { id: 'scan', labelKey: 'navScan', icon: Camera }, // Zero 'AI' badge/text!
     { id: 'market', labelKey: 'navMarket', icon: ShoppingBag },
     { id: 'alerts', labelKey: 'navAlerts', icon: Bell, badge: '3' },
@@ -78,7 +78,7 @@ export const WebTopNavBar = ({ activeTab, onNavigate }) => {
           
           {/* 1. Left: Brand Logo & Title */}
           <div 
-            onClick={() => onNavigate('home')}
+            onClick={() => onNavigate('esp32LiveData')}
             className="flex items-center space-x-3 cursor-pointer group shrink-0"
           >
             <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-[#1B5E20] via-[#2E7D32] to-[#b45309] text-white flex items-center justify-center font-black shadow-md group-hover:scale-105 transition-transform border border-emerald-400/30">

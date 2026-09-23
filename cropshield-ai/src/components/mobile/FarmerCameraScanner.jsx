@@ -14,6 +14,7 @@ import {
   Sparkles,
   Zap
 } from 'lucide-react';
+import { PathologyLabTestWidget } from '../scanner/PathologyLabTestWidget';
 
 export const FarmerCameraScanner = ({ onNavigate }) => {
   const { lang, t, theme, addToCart } = useApp();
@@ -247,6 +248,19 @@ export const FarmerCameraScanner = ({ onNavigate }) => {
               </button>
             )}
           </div>
+
+          {/* Official Pathology Lab Test Requisition Widget (Shown when crop is flagged as diseased) */}
+          {Boolean(
+            scanResult.medicineName || 
+            (scanResult.verdictEn && !scanResult.verdictEn.toLowerCase().includes('healthy') && !scanResult.verdictEn.toLowerCase().includes('optimal'))
+          ) && (
+            <PathologyLabTestWidget 
+              cropName={scanResult.crop}
+              diseaseVerdict={lang === 'mr' ? scanResult.verdictMr : scanResult.verdictEn}
+              activeFormulation={scanResult.medicineName || scanResult.activeCompound}
+              confidence={scanResult.confidence}
+            />
+          )}
 
           {/* Progressive Disclosure: "Tell me more" Expandable Details */}
           <div className="border border-slate-200 rounded-[14px] bg-white overflow-hidden shadow-xs">

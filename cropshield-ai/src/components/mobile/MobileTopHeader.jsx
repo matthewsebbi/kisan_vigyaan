@@ -32,7 +32,7 @@ export const MobileTopHeader = ({ onNavigate }) => {
       <div className="flex items-center justify-between gap-2 max-w-lg mx-auto">
         {/* Brand & App Name */}
         <div 
-          onClick={() => onNavigate('home')}
+          onClick={() => onNavigate('esp32LiveData')}
           className="flex items-center space-x-2 cursor-pointer"
         >
           <div className="w-8 h-8 rounded-[8px] bg-[#1B5E20] text-white flex items-center justify-center font-bold shadow-xs">

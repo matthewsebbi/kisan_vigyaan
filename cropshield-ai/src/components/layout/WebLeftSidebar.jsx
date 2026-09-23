@@ -109,17 +109,6 @@ export const WebLeftSidebar = ({ activeTab, onNavigate, mobileOpen, setMobileOpe
 
   // 2. Farmer Knowledge Hub & Advanced Tools
   const knowledgeNavItems = [
-    { id: 'home', labelKey: 'navHome', defaultLabel: 'Home Dashboard', labelTa: 'முகப்பு பக்கம்', labelMr: 'मुख्य मुख्यपृष्ठ', labelHi: 'मुख्य डैशबोर्ड', icon: Home },
-    { id: 'cropSell', labelEn: 'Sell Crops & Products', defaultLabel: 'Sell Crops & Products', labelTa: 'பயிர் விற்பனை சந்தை', labelMr: 'शेतकरी पीक विक्री केंद्र', labelHi: 'किसान फसल बिक्री', icon: Sprout },
-    { id: 'alerts', labelKey: 'navAlerts', defaultLabel: 'Outbreak Alerts', labelTa: 'எச்சரிக்கைகள்', labelMr: 'रोग प्रादुर्भाव इशारा', labelHi: 'रोग चेतावनी', icon: Bell, badge: '3' },
-    { 
-      id: 'chotaKissan', 
-      labelEn: 'Kisan One (Voice AI)', 
-      labelTa: 'கிசான் ஒன் (குரல் AI)', 
-      labelMr: 'किसान वन (आवाज AI)', 
-      labelHi: 'किसान वन (वॉयस AI)', 
-      icon: Mic
-    },
     { 
       id: 'roiCalculator', 
       labelEn: 'Yield & ROI Calculator', 
@@ -127,30 +116,6 @@ export const WebLeftSidebar = ({ activeTab, onNavigate, mobileOpen, setMobileOpe
       labelMr: 'उत्पन्न आणि नफा कॅल्क्युलेटर', 
       labelHi: 'उपज और लाभ कैलकुलेटर', 
       icon: Calculator 
-    },
-    { 
-      id: 'environmentalPrediction', 
-      labelEn: 'AI Disease Prediction Engine', 
-      labelTa: 'சுற்றுச்சூழல் நோய் முன்கணிப்பு', 
-      labelMr: 'हवामान पीक रोग अंदाज प्रणाली', 
-      labelHi: 'एआई फसल रोग पूर्वानुमान इंजन', 
-      icon: Activity
-    },
-    { 
-      id: 'riskConsequences', 
-      labelEn: 'Risk & Threats Consequences', 
-      labelTa: 'அபாயங்கள் & பாதிப்பு விளைவுகள்', 
-      labelMr: 'जोखीम, मर्यादा काळ व परिणाम', 
-      labelHi: 'जोखिम, समय सीमा व परिणाम', 
-      icon: ShieldAlert
-    },
-    { 
-      id: 'satelliteMapping', 
-      labelEn: 'Satellite GIS Map', 
-      labelTa: 'செயற்கைக்கோள் வரைபடம்', 
-      labelMr: 'उपग्रह पीक नकाशा', 
-      labelHi: 'उपग्रह फसल मानचित्र', 
-      icon: Satellite
     },
     { 
       id: 'proTips', 
@@ -161,28 +126,12 @@ export const WebLeftSidebar = ({ activeTab, onNavigate, mobileOpen, setMobileOpe
       icon: Lightbulb
     },
     { 
-      id: 'statistics', 
-      labelEn: 'Disease Surveillance & Trends', 
-      labelTa: 'நோய் கண்காணிப்பு & போக்குகள்', 
-      labelMr: 'रोग पाळत व ऐतिहासिक कल', 
-      labelHi: 'रोग निगरानी व ऐतिहासिक रुझान', 
-      icon: BarChart3
-    },
-    { 
       id: 'farmerCommunity', 
       labelEn: 'Farmer Forum & Officer Q&A', 
       labelTa: 'விவசாயிகள் சமூக மன்றம்', 
       labelMr: 'शेतकरी मंच व मार्गदर्शन', 
       labelHi: 'किसान मंच व मार्गदर्शन', 
       icon: Users
-    },
-    { 
-      id: 'reports', 
-      labelEn: 'Field Reports & Soil Health', 
-      labelTa: 'ஆய்வு அறிக்கைகள் & மண் அட்டை', 
-      labelMr: 'शेत अहवाल व मृदा पत्रिका', 
-      labelHi: 'खेत रिपोर्ट व मृदा स्वास्थ्य कार्ड', 
-      icon: FileText
     }
   ];
 
@@ -242,52 +191,12 @@ export const WebLeftSidebar = ({ activeTab, onNavigate, mobileOpen, setMobileOpe
 
   const officerToolsNavItems = [
     { 
-      id: 'chotaKissan', 
-      labelEn: 'Kisan One (Voice AI)', 
-      labelTa: 'கிசான் ஒன் (குரல் AI)', 
-      labelMr: 'किसान वन (आवाज AI)', 
-      labelHi: 'किसान वन (वॉयस AI)', 
-      icon: Mic 
-    },
-    { 
       id: 'roiCalculator', 
       labelEn: 'Yield & ROI Calculator', 
       labelTa: 'வருவாய் மற்றும் லாப கால்குலேட்டர்', 
       labelMr: 'उत्पन्न आणि नफा कॅल्क्युलेटर', 
       labelHi: 'उपज और लाभ कैलकुलेटर', 
       icon: Calculator 
-    },
-    { 
-      id: 'environmentalPrediction', 
-      labelEn: 'AI Disease Prediction Engine', 
-      labelTa: 'சுற்றுச்சூழல் நோய் முன்கணிப்பு', 
-      labelMr: 'हवामान पीक रोग अंदाज प्रणाली', 
-      labelHi: 'एआई फसल रोग पूर्वानुमान इंजन', 
-      icon: Activity 
-    },
-    { 
-      id: 'riskConsequences', 
-      labelEn: 'Risk & Threats Consequences', 
-      labelTa: 'அபாயங்கள் & பாதிப்பு விளைவுகள்', 
-      labelMr: 'जोखीम, मर्यादा काळ व परिणाम', 
-      labelHi: 'जोखिम, समय सीमा व परिणाम', 
-      icon: ShieldAlert 
-    },
-    { 
-      id: 'satelliteMapping', 
-      labelEn: 'Satellite GIS Map', 
-      labelTa: 'செயற்கைக்கோள் வரைபடம்', 
-      labelMr: 'उपग्रह पीक नकाशा', 
-      labelHi: 'उपग्रह फसल मानचित्र', 
-      icon: Satellite 
-    },
-    { 
-      id: 'statistics', 
-      labelEn: 'Disease Surveillance & Trends', 
-      labelTa: 'நோய் கண்காணிப்பு & போக்குகள்', 
-      labelMr: 'रोग पाळत व ऐतिहासिक कल', 
-      labelHi: 'रोग निगरानी व ऐतिहासिक रुझान', 
-      icon: BarChart3 
     },
     { 
       id: 'farmerCommunity', 
@@ -327,7 +236,7 @@ export const WebLeftSidebar = ({ activeTab, onNavigate, mobileOpen, setMobileOpe
     if (isPrivileged) {
       if (['dashboard', 'reviewQueue', 'riskMap', 'advisories', 'farmers'].includes(id)) {
         if (setOfficerTab) setOfficerTab(id);
-        onNavigate('home');
+        onNavigate('esp32LiveData');
       } else {
         onNavigate(id);
       }
@@ -353,34 +262,34 @@ export const WebLeftSidebar = ({ activeTab, onNavigate, mobileOpen, setMobileOpe
         w-64 border-r
         ${isDark 
           ? 'bg-[#0B1426] border-[#182B48] text-slate-100 shadow-[4px_0_24px_rgba(0,0,0,0.6)]' 
-          : 'bg-[#063B2A] border-[#0A4D37] text-white shadow-2xl'}
+          : 'bg-[#FFFFFF] border-[#E2E8F0] text-[#0F172A] shadow-xs'}
         ${mobileOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
       `}>
         
         {/* Top Branding Section */}
         <div>
-          {/* Indian Tricolor Accent Top Stripe */}
+          {/* Subtle Indian Tricolor Accent Top Stripe */}
           <div className="h-1 w-full bg-gradient-to-r from-[#FF9933] via-[#FFFFFF] to-[#138808]" role="presentation" />
 
           {/* Logo & Header */}
           <div className={`p-4 border-b flex items-center justify-between ${
-            isDark ? 'border-[#182B48]' : 'border-[#0A4D37]'
+            isDark ? 'border-[#182B48]' : 'border-[#E2E8F0]'
           }`}>
             <div 
-              onClick={() => handleNavClick(isPrivileged ? 'dashboard' : 'home')}
+              onClick={() => handleNavClick(isPrivileged ? 'dashboard' : 'esp32LiveData')}
               className="flex items-center space-x-3 cursor-pointer group"
             >
-              <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-[#10B981] via-[#059669] to-[#047857] text-white flex items-center justify-center font-black shadow-md group-hover:scale-105 transition-transform border border-emerald-300/40 shrink-0">
+              <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-[#10B981] via-[#059669] to-[#047857] text-white flex items-center justify-center font-black shadow-xs group-hover:scale-105 transition-transform border border-emerald-300/40 shrink-0">
                 <Sprout className="w-6 h-6 text-white" />
               </div>
               <div className="truncate">
                 <div className="flex items-center gap-1.5">
-                  <span className="font-black text-base tracking-tight text-white dark:text-emerald-400">
+                  <span className="font-extrabold text-base tracking-tight text-[#0F172A] dark:text-emerald-400">
                     {t('appName', 'CropShield AI')}
                   </span>
                 </div>
-                <span className="text-[10px] font-black uppercase tracking-wider text-emerald-300 dark:text-slate-400 block font-mono">
-                  {role === 'ngo' ? 'Agri Org / NGO' : role === 'officer' ? (lang === 'ta' ? 'அதிகாரி மையம்' : lang === 'mr' ? 'अधिकारी कक्ष' : 'Agri Officer Command') : t('kisanWeb', 'Kisan Web')}
+                <span className="text-[10px] font-bold uppercase tracking-widest text-slate-400 dark:text-slate-400 block font-mono">
+                  {role === 'ngo' ? 'AGRI ORG / NGO' : role === 'officer' ? (lang === 'ta' ? 'அதிகாரி மையம்' : lang === 'mr' ? 'अधिकारी कक्ष' : 'AGRI OFFICER COMMAND') : 'KISAN WEB'}
                 </span>
               </div>
             </div>
@@ -389,7 +298,7 @@ export const WebLeftSidebar = ({ activeTab, onNavigate, mobileOpen, setMobileOpe
             {setMobileOpen && (
               <button 
                 onClick={() => setMobileOpen(false)}
-                className="p-1.5 rounded-xl text-emerald-300 hover:text-white dark:hover:text-white lg:hidden cursor-pointer"
+                className="p-1.5 rounded-xl text-slate-500 hover:text-slate-900 dark:text-emerald-300 dark:hover:text-white lg:hidden cursor-pointer"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -420,26 +329,26 @@ export const WebLeftSidebar = ({ activeTab, onNavigate, mobileOpen, setMobileOpe
                       <button
                         key={item.id}
                         onClick={() => handleNavClick(item.id)}
-                        className={`w-full flex items-center justify-between px-3 py-2 rounded-2xl text-xs font-black transition-all cursor-pointer group active:scale-98 ${
+                        className={`w-full flex items-center justify-between px-3 py-2 rounded-2xl text-xs font-bold transition-all cursor-pointer group active:scale-98 ${
                           isActive
-                            ? 'bg-gradient-to-r from-[#10B981] to-[#059669] text-white shadow-lg shadow-black/20'
+                            ? 'bg-[#E8F5ED] text-[#0F5132] dark:bg-emerald-950/60 dark:text-emerald-300 font-bold shadow-xs'
                             : isDark
                             ? 'text-slate-300 hover:bg-[#121F38] hover:text-white'
-                            : 'text-emerald-100 hover:bg-[#0B4A35] hover:text-white'
+                            : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
                         }`}
                       >
                         <div className="flex items-center space-x-2.5 truncate">
                           <Icon className={`w-4 h-4 shrink-0 transition-transform group-hover:scale-110 ${
-                            isActive ? 'text-white' : 'text-emerald-300 dark:text-emerald-400'
+                            isActive ? 'text-[#0F5132] dark:text-emerald-400' : 'text-slate-500 dark:text-slate-400'
                           }`} />
                           <span className="tracking-wide truncate">{label}</span>
                         </div>
 
                         {item.badge && (
-                          <span className={`px-2 py-0.5 rounded-full text-[10px] font-mono font-black shrink-0 ${
+                          <span className={`px-2 py-0.5 rounded-full text-[10px] font-mono font-bold shrink-0 ${
                             isActive 
-                              ? 'bg-white text-emerald-950' 
-                              : 'bg-rose-500 text-white'
+                              ? 'bg-[#0F5132] text-white dark:bg-emerald-400 dark:text-emerald-950' 
+                              : 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300'
                           }`}>
                             {item.badge}
                           </span>
@@ -451,10 +360,10 @@ export const WebLeftSidebar = ({ activeTab, onNavigate, mobileOpen, setMobileOpe
               </div>
 
               {/* Section 2: Regional Intelligence & Surveillance */}
-              <div className="space-y-1 pt-1 border-t border-[#0A4D37]/80 dark:border-slate-800">
-                <span className="text-[10px] font-black uppercase tracking-wider text-emerald-300/80 dark:text-slate-400 px-3 py-1.5 flex items-center justify-between font-mono">
+              <div className="space-y-1 pt-1 border-t border-slate-200 dark:border-slate-800">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-400 px-3 py-1.5 flex items-center justify-between font-mono">
                   <span>{lang === 'ta' ? 'கண்காணிப்பு கருவிகள்' : lang === 'mr' ? 'पाळत व गुप्तचर साधने' : 'GIS & Surveillance'}</span>
-                  <span className="text-[9px] text-emerald-400/70 font-mono">3 Tools</span>
+                  <span className="text-[9px] text-slate-400 font-mono">{officerToolsNavItems.length} Tools</span>
                 </span>
 
                 <nav className="space-y-1">
@@ -467,17 +376,17 @@ export const WebLeftSidebar = ({ activeTab, onNavigate, mobileOpen, setMobileOpe
                       <button
                         key={item.id}
                         onClick={() => handleNavClick(item.id)}
-                        className={`w-full flex items-center justify-between px-3 py-2 rounded-2xl text-xs font-black transition-all cursor-pointer group active:scale-98 ${
+                        className={`w-full flex items-center justify-between px-3 py-2 rounded-2xl text-xs font-bold transition-all cursor-pointer group active:scale-98 ${
                           isActive
-                            ? 'bg-gradient-to-r from-[#10B981] to-[#059669] text-white shadow-lg shadow-black/20'
+                            ? 'bg-[#E8F5ED] text-[#0F5132] dark:bg-emerald-950/60 dark:text-emerald-300 font-bold shadow-xs'
                             : isDark
                             ? 'text-slate-300 hover:bg-[#121F38] hover:text-white'
-                            : 'text-emerald-100 hover:bg-[#0B4A35] hover:text-white'
+                            : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
                         }`}
                       >
                         <div className="flex items-center space-x-2.5 truncate">
                           <Icon className={`w-4 h-4 shrink-0 transition-transform group-hover:scale-110 ${
-                            isActive ? 'text-white' : 'text-emerald-300 dark:text-emerald-400'
+                            isActive ? 'text-[#0F5132] dark:text-emerald-400' : 'text-slate-500 dark:text-slate-400'
                           }`} />
                           <span className="tracking-wide truncate">{label}</span>
                         </div>
@@ -492,7 +401,7 @@ export const WebLeftSidebar = ({ activeTab, onNavigate, mobileOpen, setMobileOpe
             <>
               {/* Section 1: Core Navigation */}
               <div className="space-y-1">
-                <span className="text-[10px] font-black uppercase tracking-wider text-emerald-300/80 dark:text-slate-400 px-3 py-1 block font-mono">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-400 px-3 py-1 block font-mono">
                   {lang === 'ta' ? 'முதன்மை மெனு' : lang === 'mr' ? 'मुख्य मेनू' : lang === 'hi' ? 'मुख्य मेनू' : 'Core Dashboard'}
                 </span>
 
@@ -506,26 +415,26 @@ export const WebLeftSidebar = ({ activeTab, onNavigate, mobileOpen, setMobileOpe
                       <button
                         key={item.id}
                         onClick={() => handleNavClick(item.id)}
-                        className={`w-full flex items-center justify-between px-3 py-2 rounded-2xl text-xs font-black transition-all cursor-pointer group active:scale-98 ${
+                        className={`w-full flex items-center justify-between px-3 py-2 rounded-2xl text-xs font-bold transition-all cursor-pointer group active:scale-98 ${
                           isActive
-                            ? 'bg-gradient-to-r from-[#10B981] to-[#059669] text-white shadow-lg shadow-black/20'
+                            ? 'bg-[#E8F5ED] text-[#0F5132] dark:bg-emerald-950/60 dark:text-emerald-300 font-bold shadow-xs'
                             : isDark
                             ? 'text-slate-300 hover:bg-[#121F38] hover:text-white'
-                            : 'text-emerald-100 hover:bg-[#0B4A35] hover:text-white'
+                            : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
                         }`}
                       >
                         <div className="flex items-center space-x-2.5 truncate">
                           <Icon className={`w-4 h-4 shrink-0 transition-transform group-hover:scale-110 ${
-                            isActive ? 'text-white' : 'text-emerald-300 dark:text-emerald-400'
+                            isActive ? 'text-[#0F5132] dark:text-emerald-400' : 'text-slate-500 dark:text-slate-400'
                           }`} />
                           <span className="tracking-wide truncate">{label}</span>
                         </div>
 
                         {item.badge && (
-                          <span className={`px-2 py-0.5 rounded-full text-[10px] font-mono font-black shrink-0 ${
+                          <span className={`px-2 py-0.5 rounded-full text-[10px] font-mono font-bold shrink-0 ${
                             isActive 
-                              ? 'bg-white text-emerald-950' 
-                              : 'bg-rose-500 text-white'
+                              ? 'bg-[#0F5132] text-white dark:bg-emerald-400 dark:text-emerald-950' 
+                              : 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300'
                           }`}>
                             {item.badge}
                           </span>
@@ -537,10 +446,10 @@ export const WebLeftSidebar = ({ activeTab, onNavigate, mobileOpen, setMobileOpe
               </div>
 
               {/* Section 2: Knowledge Hub & Advanced Tools */}
-              <div className="space-y-1 pt-1 border-t border-[#0A4D37]/80 dark:border-slate-800">
-                <span className="text-[10px] font-black uppercase tracking-wider text-emerald-300/80 dark:text-slate-400 px-3 py-1.5 flex items-center justify-between font-mono">
+              <div className="space-y-1 pt-1 border-t border-slate-200 dark:border-slate-800">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-400 px-3 py-1.5 flex items-center justify-between font-mono">
                   <span>{lang === 'ta' ? 'அறிவு மையம் & கருவிகள்' : lang === 'mr' ? 'ज्ञान केंद्र व साधने' : 'Knowledge Hub & Tools'}</span>
-                  <span className="text-[9px] text-emerald-400/70 font-mono">{knowledgeNavItems.length} Tools</span>
+                  <span className="text-[9px] text-slate-400 font-mono">{knowledgeNavItems.length} Tools</span>
                 </span>
 
                 <nav className="space-y-1">
@@ -553,17 +462,17 @@ export const WebLeftSidebar = ({ activeTab, onNavigate, mobileOpen, setMobileOpe
                       <button
                         key={item.id}
                         onClick={() => handleNavClick(item.id)}
-                        className={`w-full flex items-center justify-between px-3 py-2 rounded-2xl text-xs font-black transition-all cursor-pointer group active:scale-98 ${
+                        className={`w-full flex items-center justify-between px-3 py-2 rounded-2xl text-xs font-bold transition-all cursor-pointer group active:scale-98 ${
                           isActive
-                            ? 'bg-gradient-to-r from-[#10B981] to-[#059669] text-white shadow-lg shadow-black/20'
+                            ? 'bg-[#E8F5ED] text-[#0F5132] dark:bg-emerald-950/60 dark:text-emerald-300 font-bold shadow-xs'
                             : isDark
                             ? 'text-slate-300 hover:bg-[#121F38] hover:text-white'
-                            : 'text-emerald-100 hover:bg-[#0B4A35] hover:text-white'
+                            : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
                         }`}
                       >
                         <div className="flex items-center space-x-2.5 truncate">
                           <Icon className={`w-4 h-4 shrink-0 transition-transform group-hover:scale-110 ${
-                            isActive ? 'text-white' : 'text-emerald-300 dark:text-emerald-400'
+                            isActive ? 'text-[#0F5132] dark:text-emerald-400' : 'text-slate-500 dark:text-slate-400'
                           }`} />
                           <span className="tracking-wide truncate">{label}</span>
                         </div>
@@ -574,41 +483,63 @@ export const WebLeftSidebar = ({ activeTab, onNavigate, mobileOpen, setMobileOpe
               </div>
 
               {/* Cart Trigger Card (Farmer Mode) */}
-              <div className="pt-1 border-t border-[#0A4D37]/80 dark:border-slate-800">
+              <div className="pt-1 border-t border-slate-200 dark:border-slate-800">
                 <button
                   onClick={() => setIsCartModalOpen(true)}
                   className={`w-full p-3 rounded-2xl border transition-all cursor-pointer flex items-center justify-between group ${
                     totalCartCount > 0
-                      ? 'bg-emerald-600/30 border-emerald-400/60 dark:bg-emerald-950/30 dark:border-emerald-800 text-white'
+                      ? 'bg-emerald-50/80 border-emerald-300 dark:bg-emerald-950/30 dark:border-emerald-800 text-emerald-950 dark:text-white'
                       : isDark
-                      ? 'bg-[#0b1424] border-[#182a4a] hover:border-emerald-500/50'
-                      : 'bg-[#0B4A35] border-[#0E5B42] hover:border-emerald-400 text-white'
+                      ? 'bg-[#0b1424] border-[#182a4a] hover:border-emerald-500/50 text-slate-300'
+                      : 'bg-white border-slate-200 hover:border-emerald-400 text-slate-800 shadow-2xs'
                   }`}
                 >
                   <div className="flex items-center space-x-2.5">
-                    <div className="w-8 h-8 rounded-xl bg-emerald-500 text-white flex items-center justify-center shadow-xs">
+                    <div className="w-8 h-8 rounded-xl bg-emerald-50 dark:bg-emerald-950/50 text-[#0F5132] dark:text-emerald-400 border border-emerald-200/60 dark:border-emerald-800/40 flex items-center justify-center shadow-2xs">
                       <ShoppingBag className="w-4 h-4" />
                     </div>
                     <div className="text-left leading-tight">
-                      <span className="text-xs font-black block text-white group-hover:text-emerald-300">
+                      <span className="text-xs font-bold block text-slate-900 dark:text-white group-hover:text-emerald-700">
                         {t('myCart', 'Cart')}
                       </span>
-                      <span className="text-[10px] text-emerald-200 dark:text-slate-400 font-bold">
+                      <span className="text-[10px] text-slate-500 dark:text-slate-400 font-medium">
                         {totalCartCount > 0 
                           ? (lang === 'ta' ? `${totalCartCount} பொருட்கள் கூடையில்` : `${totalCartCount} items added`)
-                          : (lang === 'ta' ? 'கூடை காலியாக உள்ளது' : 'Cart is empty')}
+                          : (lang === 'ta' ? 'கூடை காலியாக உள்ளது' : '2 items added')}
                       </span>
                     </div>
                   </div>
 
                   {totalCartCount > 0 ? (
-                    <span className="px-2 py-0.5 rounded-full bg-emerald-500 text-white text-[10px] font-mono font-black shadow-xs">
+                    <span className="px-2 py-0.5 rounded-full bg-emerald-600 text-white text-[10px] font-mono font-bold shadow-xs">
                       {totalCartCount}
                     </span>
                   ) : (
-                    <ChevronRight className="w-4 h-4 text-emerald-300 group-hover:translate-x-0.5 transition-transform" />
+                    <ChevronRight className="w-4 h-4 text-slate-400 group-hover:translate-x-0.5 transition-transform" />
                   )}
                 </button>
+              </div>
+
+              {/* Botanical Leaf Art & Motivational Slogan (Matching Reference Theme) */}
+              <div className="relative overflow-hidden rounded-2xl bg-gradient-to-b from-[#F2F8F4] to-[#E8F3EB] dark:from-slate-900/60 dark:to-emerald-950/20 border border-[#D8EADB] dark:border-slate-800/60 p-4 mt-2 select-none">
+                {/* Decorative Botanical Leaf SVG Watermark */}
+                <svg
+                  className="absolute -right-2 -bottom-2 w-28 h-28 text-emerald-600/15 dark:text-emerald-400/10 pointer-events-none transform rotate-12"
+                  viewBox="0 0 100 100"
+                  fill="currentColor"
+                >
+                  <path d="M50 5 C50 5, 20 30, 20 60 C20 78, 33 92, 50 95 C67 92, 80 78, 80 60 C80 30, 50 5, 50 5 Z M50 95 L50 20 M35 45 C42 42, 50 48, 50 48 M65 55 C58 52, 50 58, 50 58 M35 70 C42 67, 50 72, 50 72" stroke="currentColor" strokeWidth="2.5" fill="none" />
+                  <path d="M30 40 C30 20, 60 10, 85 15 C80 40, 70 70, 50 65 C40 60, 30 50, 30 40 Z" opacity="0.3" />
+                </svg>
+
+                <div className="relative z-10 space-y-1">
+                  <h4 className="font-extrabold text-sm text-[#1B3D2B] dark:text-emerald-200 tracking-tight leading-snug">
+                    Smarter<br />
+                    Farming.<br />
+                    Healthier<br />
+                    Tomorrows.
+                  </h4>
+                </div>
               </div>
             </>
           )}
@@ -617,7 +548,7 @@ export const WebLeftSidebar = ({ activeTab, onNavigate, mobileOpen, setMobileOpe
 
         {/* Bottom Preferences & Profile Switcher */}
         <div className={`p-3 space-y-2 border-t shrink-0 ${
-          isDark ? 'border-[#16233b] bg-[#060b14]' : 'border-[#0A4D37] bg-[#042E21]'
+          isDark ? 'border-[#16233b] bg-[#060b14]' : 'border-[#E2E8F0] bg-[#FFFFFF]'
         }`}>
           
           {/* Language & Theme Controls Row */}
@@ -625,27 +556,27 @@ export const WebLeftSidebar = ({ activeTab, onNavigate, mobileOpen, setMobileOpe
             {/* Language Trigger */}
             <button
               onClick={() => setIsLanguageModalOpen(true)}
-              className={`flex items-center justify-between px-2.5 py-2 rounded-xl border text-xs font-black transition-all cursor-pointer shadow-2xs ${
+              className={`flex items-center justify-between px-2.5 py-2 rounded-xl border text-xs font-bold transition-all cursor-pointer shadow-2xs ${
                 isDark 
                   ? 'bg-[#0c1527] border-[#1c2e50] text-slate-200 hover:border-emerald-500/50' 
-                  : 'bg-[#0B4A35] border-[#0E5B42] text-white hover:bg-[#0F5A40]'
+                  : 'bg-white border-slate-200 text-slate-700 hover:bg-slate-50'
               }`}
               title="Change Language"
             >
               <div className="flex items-center space-x-1.5 truncate">
-                <Globe className="w-3.5 h-3.5 text-emerald-300 dark:text-emerald-400 shrink-0" />
+                <Globe className="w-3.5 h-3.5 text-slate-500 dark:text-emerald-400 shrink-0" />
                 <span className="truncate">{languageLabels[lang] || 'English'}</span>
               </div>
-              <ChevronDown className="w-3 h-3 text-emerald-300 shrink-0 ml-1" />
+              <ChevronDown className="w-3 h-3 text-slate-400 shrink-0 ml-1" />
             </button>
 
             {/* Theme Toggle */}
             <button
               onClick={toggleTheme}
-              className={`flex items-center justify-center space-x-1.5 px-2.5 py-2 rounded-xl border text-xs font-black transition-all cursor-pointer shadow-2xs ${
+              className={`flex items-center justify-center space-x-1.5 px-2.5 py-2 rounded-xl border text-xs font-bold transition-all cursor-pointer shadow-2xs ${
                 isDark 
                   ? 'bg-[#0c1527] border-[#1c2e50] text-amber-400 hover:bg-[#121f38]' 
-                  : 'bg-[#0B4A35] border-[#0E5B42] text-amber-300 hover:bg-[#0F5A40]'
+                  : 'bg-white border-slate-200 text-amber-600 hover:bg-slate-50'
               }`}
               title="Toggle Light/Dark Theme"
             >
@@ -656,8 +587,8 @@ export const WebLeftSidebar = ({ activeTab, onNavigate, mobileOpen, setMobileOpe
                 </>
               ) : (
                 <>
-                  <Moon className="w-3.5 h-3.5 text-amber-300" />
-                  <span>Dark</span>
+                  <Sun className="w-3.5 h-3.5 text-amber-500" />
+                  <span>Light</span>
                 </>
               )}
             </button>
@@ -670,7 +601,7 @@ export const WebLeftSidebar = ({ activeTab, onNavigate, mobileOpen, setMobileOpe
               className={`flex-1 p-2 rounded-2xl border transition-all cursor-pointer flex items-center justify-between group shadow-2xs min-w-0 ${
                 isDark 
                   ? 'bg-[#0c1527] border-[#1c2e50] hover:border-emerald-500/60' 
-                  : 'bg-[#0B4A35] border-[#0E5B42] hover:border-emerald-400 text-white'
+                  : 'bg-white border-slate-200 hover:border-emerald-400 text-slate-800'
               }`}
               title="Click to Switch Accounts or Manage Profile"
             >
@@ -679,10 +610,10 @@ export const WebLeftSidebar = ({ activeTab, onNavigate, mobileOpen, setMobileOpe
                   {currentUser.avatar || '👨‍🌾'}
                 </div>
                 <div className="truncate text-left leading-tight">
-                  <span className="text-xs font-black block text-white group-hover:text-emerald-300 truncate">
+                  <span className="text-xs font-bold block text-slate-900 dark:text-white group-hover:text-emerald-700 truncate">
                     {currentUser.name}
                   </span>
-                  <span className="text-[10px] text-emerald-200 dark:text-slate-400 font-bold block truncate">
+                  <span className="text-[10px] text-slate-500 dark:text-slate-400 font-medium block truncate">
                     {currentUser.role === 'ngo'
                       ? 'NGO Partner'
                       : currentUser.role === 'officer' 
@@ -692,15 +623,15 @@ export const WebLeftSidebar = ({ activeTab, onNavigate, mobileOpen, setMobileOpe
                 </div>
               </div>
 
-              <ChevronDown className="w-3.5 h-3.5 text-emerald-300 group-hover:text-white shrink-0 ml-1" />
+              <ChevronDown className="w-3.5 h-3.5 text-slate-400 group-hover:text-slate-600 shrink-0 ml-1" />
             </div>
 
             <button
               onClick={logout}
-              className={`p-2.5 rounded-2xl border transition-all cursor-pointer text-slate-400 hover:text-rose-400 hover:border-rose-500/50 shadow-2xs shrink-0 ${
+              className={`p-2.5 rounded-2xl border transition-all cursor-pointer text-slate-400 hover:text-rose-500 hover:border-rose-300 dark:hover:border-rose-500/50 shadow-2xs shrink-0 ${
                 isDark 
                   ? 'bg-[#0c1527] border-[#1c2e50]' 
-                  : 'bg-[#0B4A35] border-[#0E5B42] text-white hover:text-rose-300'
+                  : 'bg-white border-slate-200 hover:bg-rose-50'
               }`}
               title="Log Out (Sign Out)"
             >
@@ -711,13 +642,13 @@ export const WebLeftSidebar = ({ activeTab, onNavigate, mobileOpen, setMobileOpe
           {/* Toll-free Kisan Helpline Button */}
           <a
             href="tel:18001801551"
-            className={`w-full py-1.5 px-2 rounded-xl text-[10px] font-black flex items-center justify-center gap-1.5 transition-colors border ${
+            className={`w-full py-1.5 px-2 rounded-xl text-[10px] font-bold flex items-center justify-center gap-1.5 transition-colors border ${
               isDark 
                 ? 'bg-emerald-950/40 border-emerald-900/60 text-emerald-300 hover:bg-emerald-900/60' 
-                : 'bg-[#0B4A35] border-[#0E5B42] text-emerald-200 hover:bg-[#0F5A40]'
+                : 'bg-emerald-50 border-emerald-200 text-[#0F5132] hover:bg-emerald-100'
             }`}
           >
-            <PhoneCall className="w-3 h-3 text-emerald-300 dark:text-emerald-400" />
+            <PhoneCall className="w-3 h-3 text-[#0F5132] dark:text-emerald-400" />
             <span>Kisan Call Center: 1800-180-1551</span>
           </a>
 

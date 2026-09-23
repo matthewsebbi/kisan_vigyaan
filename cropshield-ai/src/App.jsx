@@ -11,7 +11,6 @@ import { LoginPage } from './components/auth/LoginPage';
 import { EmergencySMSToast } from './components/common/EmergencySMSToast';
 
 // Farmer Views
-import { WebFarmerHomeScreen } from './components/web/WebFarmerHomeScreen';
 import { WebFarmerScanner } from './components/web/WebFarmerScanner';
 import { WebFarmerAlerts } from './components/web/WebFarmerAlerts';
 import { WebFarmerMarket } from './components/web/WebFarmerMarket';
@@ -197,7 +196,7 @@ function MainAppShell() {
             ) : (
               /* Farmer Core Views & Sub-Views */
               <>
-                {activeTab === 'home' && <WebFarmerHomeScreen onNavigate={setActiveTab} />}
+                {(activeTab === 'esp32LiveData' || activeTab === 'home') && <LiveESP32TelemetryPanel />}
                 {activeTab === 'scan' && <WebFarmerScanner onNavigate={setActiveTab} />}
                 {activeTab === 'cropSell' && <FarmerCropSellPortal onNavigate={setActiveTab} />}
                 {activeTab === 'market' && <WebFarmerMarket onNavigate={setActiveTab} />}
@@ -206,7 +205,6 @@ function MainAppShell() {
 
                 {/* Reference Sub-Views from More Menu */}
                 {activeTab === 'chatbot' && <KisanChatBot isWidget={false} onNavigate={setActiveTab} />}
-                {activeTab === 'esp32LiveData' && <LiveESP32TelemetryPanel />}
                 {activeTab === 'chotaKissan' && <ChotaKissanDashboardView />}
                 {activeTab === 'environmentalPrediction' && <EnvironmentalPredictionDashboard />}
                 {activeTab === 'roiCalculator' && <YieldROICalculator />}

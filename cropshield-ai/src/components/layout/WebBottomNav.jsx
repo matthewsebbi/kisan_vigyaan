@@ -1,9 +1,9 @@
 import React from 'react';
 import { useApp } from '../../context/AppContext';
 import { 
-  Home, 
+  Cpu, 
   Camera, 
-  Bell, 
+  Bot, 
   ShoppingBag, 
   Layers 
 } from 'lucide-react';
@@ -14,14 +14,14 @@ export const WebBottomNav = ({ activeTab, onTabChange }) => {
   const cartCount = (cart || []).reduce((sum, item) => sum + (item.quantity || 1), 0);
 
   const tabs = [
-    { id: 'home', labelKey: 'navHome', icon: Home, badge: null },
-    { id: 'scan', labelKey: 'navScan', icon: Camera, isCenter: true }, // Zero 'AI' badge/text!
-    { id: 'alerts', labelKey: 'navAlerts', icon: Bell, badge: '3' },
+    { id: 'esp32LiveData', label: 'Zone Monitoring', labelKey: 'navZone', icon: Cpu, badge: null },
+    { id: 'scan', labelKey: 'navScan', icon: Camera, isCenter: true },
+    { id: 'chatbot', label: 'AI Chatbot', labelKey: 'navChatbot', icon: Bot, badge: 'TTS' },
     { id: 'market', labelKey: 'navMarket', icon: ShoppingBag, badge: cartCount > 0 ? `${cartCount}` : null },
     { id: 'more', labelKey: 'navMore', icon: Layers, badge: null }
   ];
 
-  const isMoreActive = activeTab === 'more' || ['proTips', 'govtSchemes', 'statistics', 'satelliteMapping', 'farmerCommunity', 'reports', 'deviceManagement'].includes(activeTab);
+  const isMoreActive = activeTab === 'more' || ['proTips', 'govtSchemes', 'farmerCommunity', 'roiCalculator'].includes(activeTab);
 
   return (
     <nav className={`lg:hidden fixed bottom-0 left-0 right-0 z-40 border-t transition-all duration-300 backdrop-blur-md shadow-2xl ${

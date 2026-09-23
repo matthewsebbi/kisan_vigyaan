@@ -97,7 +97,7 @@ export const CropScanner = () => {
       {/* Top Header matching mockup */}
       <div className="px-4 py-3.5 bg-[#165a3c] flex items-center justify-between shadow-md">
         <button 
-          onClick={() => setActiveTab('home')}
+          onClick={() => setActiveTab('esp32LiveData')}
           className="p-1.5 -ml-1 text-white hover:bg-emerald-800/60 rounded-lg transition-colors"
         >
           <ArrowLeft className="w-6 h-6" />

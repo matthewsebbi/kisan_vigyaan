@@ -36,6 +36,7 @@ import {
 import { analyzeLeafWithGroq, ensureImageBase64 } from '../../services/visionService.js';
 import { resolveWikiDiseaseDiagnosis, createHealthyCropVerdict } from '../../services/wikiDiseaseKnowledge.js';
 import { speakDiagnosisPrediction, stopSpeech, isSpeaking } from '../../utils/speechUtils';
+import { PathologyLabTestWidget } from '../scanner/PathologyLabTestWidget';
 
 // Real Botanical Leaf Photography Assets (100% locally hosted & infallible)
 const REAL_LEAF_SAMPLES = {
@@ -1334,6 +1335,20 @@ export const WebFarmerScanner = ({ onNavigate }) => {
                 )}
 
               </div>
+
+              {/* Official Pathology Lab Test Requisition Widget (Shown when crop is flagged as diseased) */}
+              {Boolean(
+                scanResult.medicineName || 
+                scanResult.isHealthy === false || 
+                (scanResult.verdict && !scanResult.verdict.toLowerCase().includes('optimal') && !scanResult.verdict.toLowerCase().includes('healthy'))
+              ) && (
+                <PathologyLabTestWidget 
+                  cropName={scanResult.crop || selectedCrop}
+                  diseaseVerdict={getSampleLocalized(scanResult, 'verdict') || scanResult.verdict}
+                  activeFormulation={scanResult.medicineName || scanResult.activeCompound}
+                  confidence={scanResult.confidence}
+                />
+              )}
 
               {/* Technical Accordion */}
               <div className={`border rounded-3xl overflow-hidden shadow-sm ${

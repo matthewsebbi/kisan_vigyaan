@@ -66,50 +66,56 @@ export const LiveESP32TelemetryPanel = () => {
       <SoilZone3DGlobe 
         selectedDistrictId={selectedDistrictId}
         onSelectDistrict={setSelectedDistrictId}
+        telemetry={{
+          temp: environmentTemperature,
+          rh: environmentHumidity,
+          soilMoisture: 38,
+          soilPH: 6.70
+        }}
       />
 
       {/* 3. LIVE HARDWARE SENSOR PANELS */}
       <div className="space-y-4">
         
         <div className="flex items-center justify-between px-1">
-          <h2 className="text-xs font-bold uppercase tracking-wider text-[#1D3D2C] dark:text-[#A7D8B4] font-mono flex items-center gap-2">
-            <Radio className="w-4 h-4 animate-pulse text-[#1D3D2C] dark:text-[#4ADE80]" />
+          <h2 className="text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-emerald-400 font-mono flex items-center gap-2">
+            <Radio className="w-4 h-4 animate-pulse text-[#006C48] dark:text-emerald-400" />
             <span>Live Hardware Sensor Telemetry</span>
           </h2>
-          <span className="text-[10px] text-[#7A7569] dark:text-[#8E8B81] font-mono">Updated: {telemetry.lastUpdated}</span>
+          <span className="text-[10px] text-slate-500 dark:text-slate-400 font-mono">Updated: {telemetry.lastUpdated}</span>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           {/* Panel 1: DHT22 Environment Data */}
-          <div className={`p-5 rounded-3xl border shadow-vintage transition-all hover:shadow-vintage-md ${
-            isDark ? 'bg-[#151D18] border-[#293A2E] text-[#F3F5F1]' : 'bg-[#FAF8F2] border-[#D8D1BE] text-[#1F2E22]'
+          <div className={`p-5 rounded-3xl border shadow-sm transition-all hover:shadow-md ${
+            isDark ? 'bg-slate-900 border-slate-800 text-slate-100' : 'bg-white border-slate-200 text-slate-800'
           }`}>
-            <div className="flex items-center justify-between border-b pb-3 border-[#E5DFCF] dark:border-[#293A2E]">
+            <div className="flex items-center justify-between border-b pb-3 border-slate-100 dark:border-slate-800">
               <div className="flex items-center space-x-2.5">
-                <div className="w-9 h-9 rounded-xl bg-[#E8F0F2] dark:bg-[#1B292D] text-[#1E4D56] dark:text-[#67E8F9] flex items-center justify-center font-black border border-[#CCDCE0] dark:border-[#2C4148]">
+                <div className="w-9 h-9 rounded-xl bg-cyan-50 dark:bg-cyan-950/50 text-cyan-700 dark:text-cyan-400 flex items-center justify-center font-black border border-cyan-100 dark:border-cyan-800/40">
                   <Thermometer className="w-5 h-5" />
                 </div>
                 <div>
-                  <h3 className="font-bold text-sm text-[#1F2E22] dark:text-[#F3F5F1]">Environment Climate (DHT22)</h3>
-                  <span className="text-[10px] text-[#7A7569] dark:text-[#8E8B81] font-mono">GPIO Pin 4</span>
+                  <h3 className="font-bold text-sm text-slate-900 dark:text-slate-100">Environment Climate (DHT22)</h3>
+                  <span className="text-[10px] text-slate-500 dark:text-slate-400 font-mono">GPIO Pin 4</span>
                 </div>
               </div>
-              <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-[#E8F0F2] text-[#1E4D56] dark:bg-[#1B292D] dark:text-[#67E8F9] font-mono border border-[#CCDCE0] dark:border-[#2C4148]">
+              <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-cyan-50 text-cyan-700 dark:bg-cyan-950/50 dark:text-cyan-400 font-mono border border-cyan-100 dark:border-cyan-800/40">
                 Live Stream
               </span>
             </div>
 
             <div className="grid grid-cols-2 gap-3 pt-3">
-              <div className="p-3.5 rounded-2xl bg-[#F4EFE6] dark:bg-[#1B241E] border border-[#E2DAC8] dark:border-[#2A392F]">
-                <span className="text-[10px] font-bold uppercase text-[#7A7569] dark:text-[#8E8B81] font-mono block">Environment Temp</span>
-                <span className="text-xl font-bold font-serif-vintage text-[#1D3D2C] dark:text-[#E8F0EA] mt-1 block">
+              <div className="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/80 dark:border-slate-700">
+                <span className="text-[10px] font-bold uppercase text-slate-500 dark:text-slate-400 font-mono block">Environment Temp</span>
+                <span className="text-xl font-bold font-mono text-slate-900 dark:text-white mt-1 block">
                   {environmentTemperature.toFixed(2)} °C
                 </span>
               </div>
 
-              <div className="p-3.5 rounded-2xl bg-[#F4EFE6] dark:bg-[#1B241E] border border-[#E2DAC8] dark:border-[#2A392F]">
-                <span className="text-[10px] font-bold uppercase text-[#7A7569] dark:text-[#8E8B81] font-mono block">Environment Humidity</span>
-                <span className="text-xl font-bold font-serif-vintage text-[#1E4D56] dark:text-[#67E8F9] mt-1 block">
+              <div className="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/80 dark:border-slate-700">
+                <span className="text-[10px] font-bold uppercase text-slate-500 dark:text-slate-400 font-mono block">Environment Humidity</span>
+                <span className="text-xl font-bold font-mono text-cyan-700 dark:text-cyan-400 mt-1 block">
                   {environmentHumidity.toFixed(2)} %
                 </span>
               </div>
@@ -117,49 +123,49 @@ export const LiveESP32TelemetryPanel = () => {
           </div>
 
           {/* Panel 2: DS18B20 & Soil Moisture Sensor Data */}
-          <div className={`p-5 rounded-3xl border shadow-vintage transition-all hover:shadow-vintage-md ${
-            isDark ? 'bg-[#151D18] border-[#293A2E] text-[#F3F5F1]' : 'bg-[#FAF8F2] border-[#D8D1BE] text-[#1F2E22]'
+          <div className={`p-5 rounded-3xl border shadow-sm transition-all hover:shadow-md ${
+            isDark ? 'bg-slate-900 border-slate-800 text-slate-100' : 'bg-white border-slate-200 text-slate-800'
           }`}>
-            <div className="flex items-center justify-between border-b pb-3 border-[#E5DFCF] dark:border-[#293A2E]">
+            <div className="flex items-center justify-between border-b pb-3 border-slate-100 dark:border-slate-800">
               <div className="flex items-center space-x-2.5">
-                <div className="w-9 h-9 rounded-xl bg-[#F7EFE1] dark:bg-[#2D2418] text-[#8A5A18] dark:text-[#FCD34D] flex items-center justify-center font-black border border-[#E8D9C0] dark:border-[#453724]">
+                <div className="w-9 h-9 rounded-xl bg-amber-50 dark:bg-amber-950/50 text-amber-700 dark:text-amber-400 flex items-center justify-center font-black border border-amber-100 dark:border-amber-800/40">
                   <Droplets className="w-5 h-5" />
                 </div>
                 <div>
-                  <h3 className="font-bold text-sm text-[#1F2E22] dark:text-[#F3F5F1]">Soil & Irrigation Data</h3>
-                  <span className="text-[10px] text-[#7A7569] dark:text-[#8E8B81] font-mono">DS18B20 (Pin 5) & Moisture (Pin 34)</span>
+                  <h3 className="font-bold text-sm text-slate-900 dark:text-slate-100">Soil & Irrigation Data</h3>
+                  <span className="text-[10px] text-slate-500 dark:text-slate-400 font-mono">DS18B20 (Pin 5) & Moisture (Pin 34)</span>
                 </div>
               </div>
-              <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold font-mono border bg-[#E8F0EA] text-[#1D3D2C] border-[#C6D8CA] dark:bg-[#1E2E23] dark:text-[#A7D8B4] dark:border-[#2E4836]">
+              <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold font-mono border bg-emerald-50 text-[#006C48] border-emerald-200 dark:bg-emerald-950/60 dark:text-emerald-400 dark:border-emerald-800/40">
                 NORMAL
               </span>
             </div>
 
             <div className="grid grid-cols-2 gap-3 pt-3">
-              <div className="p-3.5 rounded-2xl bg-[#F4EFE6] dark:bg-[#1B241E] border border-[#E2DAC8] dark:border-[#2A392F]">
-                <span className="text-[10px] font-bold uppercase text-[#7A7569] dark:text-[#8E8B81] font-mono block">Soil Temperature</span>
-                <span className="text-lg font-bold font-serif-vintage text-[#1F2E22] dark:text-[#F3F5F1] mt-1 block">
+              <div className="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/80 dark:border-slate-700">
+                <span className="text-[10px] font-bold uppercase text-slate-500 dark:text-slate-400 font-mono block">Soil Temperature</span>
+                <span className="text-lg font-bold font-mono text-slate-900 dark:text-white mt-1 block">
                   {soilTemperature.toFixed(2)} °C
                 </span>
               </div>
 
-              <div className="p-3.5 rounded-2xl bg-[#F4EFE6] dark:bg-[#1B241E] border border-[#E2DAC8] dark:border-[#2A392F]">
-                <span className="text-[10px] font-bold uppercase text-[#7A7569] dark:text-[#8E8B81] font-mono block">Soil Moisture %</span>
-                <span className="text-lg font-bold font-serif-vintage text-[#1D3D2C] dark:text-[#86EFAC] mt-1 block">
+              <div className="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/80 dark:border-slate-700">
+                <span className="text-[10px] font-bold uppercase text-slate-500 dark:text-slate-400 font-mono block">Soil Moisture %</span>
+                <span className="text-lg font-bold font-mono text-[#006C48] dark:text-emerald-400 mt-1 block">
                   38 %
                 </span>
               </div>
 
-              <div className="p-3.5 rounded-2xl bg-[#F4EFE6] dark:bg-[#1B241E] border border-[#E2DAC8] dark:border-[#2A392F]">
-                <span className="text-[10px] font-bold uppercase text-[#7A7569] dark:text-[#8E8B81] font-mono block">Moisture Raw ADC</span>
-                <span className="text-sm font-bold font-mono text-[#1F2E22] dark:text-[#F3F5F1] mt-1 block">
+              <div className="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/80 dark:border-slate-700">
+                <span className="text-[10px] font-bold uppercase text-slate-500 dark:text-slate-400 font-mono block">Moisture Raw ADC</span>
+                <span className="text-sm font-bold font-mono text-slate-800 dark:text-slate-200 mt-1 block">
                   2580
                 </span>
               </div>
 
-              <div className="p-3.5 rounded-2xl bg-[#F4EFE6] dark:bg-[#1B241E] border border-[#E2DAC8] dark:border-[#2A392F]">
-                <span className="text-[10px] font-bold uppercase text-[#7A7569] dark:text-[#8E8B81] font-mono block">Irrigation Required</span>
-                <span className="text-sm font-bold text-[#1D3D2C] dark:text-[#86EFAC] mt-1 block">
+              <div className="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/80 dark:border-slate-700">
+                <span className="text-[10px] font-bold uppercase text-slate-500 dark:text-slate-400 font-mono block">Irrigation Required</span>
+                <span className="text-sm font-bold text-[#006C48] dark:text-emerald-400 mt-1 block">
                   NO (Sufficient)
                 </span>
               </div>
@@ -167,42 +173,42 @@ export const LiveESP32TelemetryPanel = () => {
           </div>
 
           {/* Panel 3: pH Sensor Data (Stable 6.70 pH) */}
-          <div className={`p-5 rounded-3xl border shadow-vintage transition-all hover:shadow-vintage-md ${
-            isDark ? 'bg-[#151D18] border-[#293A2E] text-[#F3F5F1]' : 'bg-[#FAF8F2] border-[#D8D1BE] text-[#1F2E22]'
+          <div className={`p-5 rounded-3xl border shadow-sm transition-all hover:shadow-md ${
+            isDark ? 'bg-slate-900 border-slate-800 text-slate-100' : 'bg-white border-slate-200 text-slate-800'
           }`}>
-            <div className="flex items-center justify-between border-b pb-3 border-[#E5DFCF] dark:border-[#293A2E]">
+            <div className="flex items-center justify-between border-b pb-3 border-slate-100 dark:border-slate-800">
               <div className="flex items-center space-x-2.5">
-                <div className="w-9 h-9 rounded-xl bg-[#F0EBF5] dark:bg-[#271E2D] text-[#552A6E] dark:text-[#D8B4FE] flex items-center justify-center font-black border border-[#D9CEE2] dark:border-[#40304C]">
+                <div className="w-9 h-9 rounded-xl bg-purple-50 dark:bg-purple-950/50 text-purple-700 dark:text-purple-400 flex items-center justify-center font-black border border-purple-100 dark:border-purple-800/40">
                   <Gauge className="w-5 h-5" />
                 </div>
                 <div>
-                  <h3 className="font-bold text-sm text-[#1F2E22] dark:text-[#F3F5F1]">Soil pH Sensor</h3>
-                  <span className="text-[10px] text-[#7A7569] dark:text-[#8E8B81] font-mono">Analog Pin 35 (ADC_11db)</span>
+                  <h3 className="font-bold text-sm text-slate-900 dark:text-slate-100">Soil pH Sensor</h3>
+                  <span className="text-[10px] text-slate-500 dark:text-slate-400 font-mono">Analog Pin 35 (ADC_11db)</span>
                 </div>
               </div>
-              <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-[#E8F0EA] text-[#1D3D2C] dark:bg-[#1E2E23] dark:text-[#A7D8B4] font-mono border border-[#C6D8CA] dark:border-[#2E4836]">
+              <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 text-[#006C48] dark:bg-emerald-950/60 dark:text-emerald-400 font-mono border border-emerald-200 dark:border-emerald-800/40">
                 NORMAL (6.70)
               </span>
             </div>
 
             <div className="grid grid-cols-3 gap-2.5 pt-3">
-              <div className="p-3 rounded-2xl bg-[#F4EFE6] dark:bg-[#1B241E] border border-[#E2DAC8] dark:border-[#2A392F]">
-                <span className="text-[9px] font-bold uppercase text-[#7A7569] dark:text-[#8E8B81] font-mono block">pH Raw ADC</span>
-                <span className="text-sm font-bold font-mono text-[#1F2E22] dark:text-[#F3F5F1] mt-1 block">
+              <div className="p-3 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/80 dark:border-slate-700">
+                <span className="text-[9px] font-bold uppercase text-slate-500 dark:text-slate-400 font-mono block">pH Raw ADC</span>
+                <span className="text-sm font-bold font-mono text-slate-800 dark:text-slate-200 mt-1 block">
                   2568
                 </span>
               </div>
 
-              <div className="p-3 rounded-2xl bg-[#F4EFE6] dark:bg-[#1B241E] border border-[#E2DAC8] dark:border-[#2A392F]">
-                <span className="text-[9px] font-bold uppercase text-[#7A7569] dark:text-[#8E8B81] font-mono block">Voltage</span>
-                <span className="text-sm font-bold font-mono text-[#552A6E] dark:text-[#D8B4FE] mt-1 block">
+              <div className="p-3 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/80 dark:border-slate-700">
+                <span className="text-[9px] font-bold uppercase text-slate-500 dark:text-slate-400 font-mono block">Voltage</span>
+                <span className="text-sm font-bold font-mono text-purple-700 dark:text-purple-400 mt-1 block">
                   2.568 V
                 </span>
               </div>
 
-              <div className="p-3 rounded-2xl bg-[#F4EFE6] dark:bg-[#1B241E] border border-[#E2DAC8] dark:border-[#2A392F]">
-                <span className="text-[9px] font-bold uppercase text-[#7A7569] dark:text-[#8E8B81] font-mono block">Calculated pH</span>
-                <span className="text-sm font-bold font-serif-vintage text-[#1D3D2C] dark:text-[#86EFAC] mt-1 block">
+              <div className="p-3 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/80 dark:border-slate-700">
+                <span className="text-[9px] font-bold uppercase text-slate-500 dark:text-slate-400 font-mono block">Calculated pH</span>
+                <span className="text-sm font-bold font-mono text-[#006C48] dark:text-emerald-400 mt-1 block">
                   6.70
                 </span>
               </div>

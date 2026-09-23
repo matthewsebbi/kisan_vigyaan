@@ -426,23 +426,27 @@ export const AppProvider = ({ children }) => {
   const currentUser = accounts.find(a => a.id === activeUserId) || accounts[0] || INITIAL_ACCOUNTS[0];
   const role = currentUser.role;
 
-  // Active navigation tab for farmer: 'home' | 'scan' | 'market' | 'alerts' | 'more'
+  // Active navigation tab for farmer: 'esp32LiveData' | 'scan' | 'market' | 'alerts' | 'more'
   const [activeTab, setActiveTab] = useState(() => {
     try {
       const hash = window.location.hash.replace('#', '');
-      if (['scan', 'home', 'market', 'alerts', 'more'].includes(hash)) return hash;
+      if (hash === 'home') return 'esp32LiveData';
+      if (['esp32LiveData', 'scan', 'market', 'alerts', 'more'].includes(hash)) return hash;
       const params = new URLSearchParams(window.location.search);
       const tab = params.get('tab');
-      if (tab && ['scan', 'home', 'market', 'alerts', 'more'].includes(tab)) return tab;
+      if (tab === 'home') return 'esp32LiveData';
+      if (tab && ['esp32LiveData', 'scan', 'market', 'alerts', 'more'].includes(tab)) return tab;
     } catch {}
-    return 'home';
+    return 'esp32LiveData';
   });
 
   useEffect(() => {
     const handleHash = () => {
       try {
         const hash = window.location.hash.replace('#', '');
-        if (['scan', 'home', 'market', 'alerts', 'more'].includes(hash)) {
+        if (hash === 'home') {
+          setActiveTab('esp32LiveData');
+        } else if (['esp32LiveData', 'scan', 'market', 'alerts', 'more'].includes(hash)) {
           setActiveTab(hash);
         }
       } catch {}
@@ -887,7 +891,7 @@ export const AppProvider = ({ children }) => {
     if (target.role === 'officer') {
       setOfficerTab('dashboard');
     } else {
-      setActiveTab('home');
+      setActiveTab('esp32LiveData');
     }
 
     setIsAccountSwitcherOpen(false);

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useApp } from '../../context/AppContext';
 import { 
-  Home, 
+  Cpu, 
   Camera, 
   Bell, 
   ShoppingBag, 
@@ -14,7 +14,7 @@ export const MobileBottomNav = ({ activeTab, onTabChange }) => {
   const cartCount = (cart || []).reduce((sum, item) => sum + item.quantity, 0);
 
   const tabs = [
-    { id: 'home', labelEn: 'Home', labelMr: 'मुख्य', labelHi: 'होम', icon: Home, badge: null },
+    { id: 'esp32LiveData', labelEn: 'Zone', labelMr: 'झोन', labelHi: 'ज़ोन', icon: Cpu, badge: null },
     { id: 'scan', labelEn: 'Scan', labelMr: 'कॅमेरा स्कॅन', labelHi: 'स्कैन', icon: Camera, badge: 'AI', isCenter: true },
     { id: 'alerts', labelEn: 'Alerts', labelMr: 'इशारे', labelHi: 'अलर्ट', icon: Bell, badge: '3' },
     { id: 'market', labelEn: 'Market', labelMr: 'बाजार', labelHi: 'बाजार', icon: ShoppingBag, badge: cartCount > 0 ? `${cartCount}` : null },

@@ -35,7 +35,7 @@ export const TopNavigation = () => {
     <header className="bg-[#124930] text-white sticky top-0 z-50 shadow-md border-b border-emerald-800/60">
       <div className="max-w-7xl mx-auto px-3 sm:px-6 py-2.5 flex flex-wrap items-center justify-between gap-2">
         {/* Brand & App Name */}
-        <div className="flex items-center space-x-3 cursor-pointer" onClick={() => role === 'farmer' ? setActiveTab('home') : setOfficerTab('dashboard')}>
+        <div className="flex items-center space-x-3 cursor-pointer" onClick={() => role === 'farmer' ? setActiveTab('esp32LiveData') : setOfficerTab('dashboard')}>
           <div className="w-10 h-10 rounded-xl bg-emerald-500/20 border border-emerald-400/40 flex items-center justify-center text-emerald-400 shadow-inner">
             <Leaf className="w-6 h-6 text-emerald-300" />
           </div>

@@ -170,31 +170,31 @@ export const WeatherClimateGraphWidget = ({
 
   return (
     <div
-      className={`mt-4 rounded-3xl border shadow-vintage-md transition-all duration-300 overflow-hidden ${
-        isDark ? 'bg-[#151D18] border-[#293A2E] text-[#E8EAE6]' : 'bg-[#FAF8F2] border-[#D8D1BE] text-[#1F2E22]'
+      className={`mt-4 rounded-3xl border shadow-lg transition-all duration-300 overflow-hidden ${
+        isDark ? 'bg-slate-900 border-slate-800 text-slate-100' : 'bg-white border-slate-200 text-slate-800'
       }`}
     >
       {/* 1. WIDGET TOP HEADER */}
       <div
         className={`px-4 py-3.5 border-b flex flex-col sm:flex-row sm:items-center justify-between gap-3 ${
-          isDark ? 'bg-[#1B271F] border-[#293A2E]' : 'bg-[#F5F1E6] border-[#D8D1BE]'
+          isDark ? 'bg-slate-800/60 border-slate-800' : 'bg-slate-50 border-slate-100'
         }`}
       >
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-2xl bg-[#1D3D2C] text-[#E8F0EA] flex items-center justify-center shadow-md border border-[#2B543D] shrink-0">
+          <div className="w-10 h-10 rounded-2xl bg-[#006C48] text-white flex items-center justify-center shadow-md shrink-0">
             <CloudSun className="w-5 h-5 text-amber-300" />
           </div>
           <div>
             <div className="flex items-center gap-2 flex-wrap">
-              <h3 className="font-serif-vintage font-bold text-sm sm:text-base text-[#1D3D2C] dark:text-[#E8F0EA] flex items-center gap-1.5">
+              <h3 className="font-bold text-sm sm:text-base text-slate-900 dark:text-white flex items-center gap-1.5">
                 <span>Agro-Climatic Weather Station & Forecast</span>
               </h3>
-              <span className="px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-emerald-100 text-[#1D3D2C] dark:bg-emerald-950/70 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-700/50 font-mono">
+              <span className="px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-emerald-50 text-[#006C48] dark:bg-emerald-950/70 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-700/50 font-mono">
                 {dataSource}
               </span>
             </div>
-            <p className="text-[11px] text-[#635E52] dark:text-[#A8A497] font-medium flex items-center gap-1 mt-0.5">
-              <MapPin className="w-3 h-3 text-[#1D3D2C] dark:text-emerald-400" />
+            <p className="text-[11px] text-slate-500 dark:text-slate-400 font-medium flex items-center gap-1 mt-0.5">
+              <MapPin className="w-3 h-3 text-[#006C48] dark:text-emerald-400" />
               <span>{locationName}</span>
               <span className="font-mono text-[10px] opacity-80">({lat.toFixed(4)}°N, {lon.toFixed(4)}°E)</span>
             </p>
@@ -224,54 +224,54 @@ export const WeatherClimateGraphWidget = ({
       </div>
 
       {/* 2. REAL-TIME TELEMETRY METRIC STRIP */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 p-3.5 border-b border-[#E5DFCF] dark:border-[#243328]">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 p-3.5 border-b border-slate-100 dark:border-slate-800">
         {/* Temp */}
-        <div className="p-2.5 rounded-2xl bg-[#FAF8F2] dark:bg-[#1A251D] border border-[#DDD6C5] dark:border-[#2A3B2F] flex items-center gap-2.5 shadow-2xs">
+        <div className="p-2.5 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/80 dark:border-slate-700 flex items-center gap-2.5 shadow-2xs">
           <div className="w-8 h-8 rounded-xl bg-amber-500/15 text-amber-700 dark:text-amber-400 flex items-center justify-center shrink-0">
             <Thermometer className="w-4 h-4" />
           </div>
           <div>
-            <span className="text-[10px] uppercase font-bold text-[#635E52] dark:text-slate-400 block">Temperature</span>
-            <span className="text-sm sm:text-base font-extrabold text-[#1D3D2C] dark:text-white font-mono">
+            <span className="text-[10px] uppercase font-bold text-slate-500 dark:text-slate-400 block">Temperature</span>
+            <span className="text-sm sm:text-base font-extrabold text-slate-900 dark:text-white font-mono">
               {currentTemp}°C
             </span>
           </div>
         </div>
 
         {/* Humidity */}
-        <div className="p-2.5 rounded-2xl bg-[#FAF8F2] dark:bg-[#1A251D] border border-[#DDD6C5] dark:border-[#2A3B2F] flex items-center gap-2.5 shadow-2xs">
+        <div className="p-2.5 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/80 dark:border-slate-700 flex items-center gap-2.5 shadow-2xs">
           <div className="w-8 h-8 rounded-xl bg-cyan-500/15 text-cyan-700 dark:text-cyan-400 flex items-center justify-center shrink-0">
             <Droplets className="w-4 h-4" />
           </div>
           <div>
-            <span className="text-[10px] uppercase font-bold text-[#635E52] dark:text-slate-400 block">Rel. Humidity</span>
-            <span className="text-sm sm:text-base font-extrabold text-[#1D3D2C] dark:text-white font-mono">
+            <span className="text-[10px] uppercase font-bold text-slate-500 dark:text-slate-400 block">Rel. Humidity</span>
+            <span className="text-sm sm:text-base font-extrabold text-cyan-700 dark:text-cyan-400 font-mono">
               {currentRH}%
             </span>
           </div>
         </div>
 
         {/* Wind Speed */}
-        <div className="p-2.5 rounded-2xl bg-[#FAF8F2] dark:bg-[#1A251D] border border-[#DDD6C5] dark:border-[#2A3B2F] flex items-center gap-2.5 shadow-2xs">
+        <div className="p-2.5 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/80 dark:border-slate-700 flex items-center gap-2.5 shadow-2xs">
           <div className="w-8 h-8 rounded-xl bg-emerald-500/15 text-emerald-700 dark:text-emerald-400 flex items-center justify-center shrink-0">
             <Wind className="w-4 h-4" />
           </div>
           <div>
-            <span className="text-[10px] uppercase font-bold text-[#635E52] dark:text-slate-400 block">Wind Velocity</span>
-            <span className="text-sm sm:text-base font-extrabold text-[#1D3D2C] dark:text-white font-mono">
+            <span className="text-[10px] uppercase font-bold text-slate-500 dark:text-slate-400 block">Wind Velocity</span>
+            <span className="text-sm sm:text-base font-extrabold text-[#006C48] dark:text-emerald-400 font-mono">
               {currentWind} km/h
             </span>
           </div>
         </div>
 
         {/* Rain / Leaf Wetness */}
-        <div className="p-2.5 rounded-2xl bg-[#FAF8F2] dark:bg-[#1A251D] border border-[#DDD6C5] dark:border-[#2A3B2F] flex items-center gap-2.5 shadow-2xs">
+        <div className="p-2.5 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/80 dark:border-slate-700 flex items-center gap-2.5 shadow-2xs">
           <div className="w-8 h-8 rounded-xl bg-blue-500/15 text-blue-700 dark:text-blue-400 flex items-center justify-center shrink-0">
             <CloudRain className="w-4 h-4" />
           </div>
           <div>
-            <span className="text-[10px] uppercase font-bold text-[#635E52] dark:text-slate-400 block">Rainfall (24h)</span>
-            <span className="text-sm sm:text-base font-extrabold text-[#1D3D2C] dark:text-white font-mono">
+            <span className="text-[10px] uppercase font-bold text-slate-500 dark:text-slate-400 block">Rainfall (24h)</span>
+            <span className="text-sm sm:text-base font-extrabold text-blue-700 dark:text-blue-400 font-mono">
               {currentPrecip} mm
             </span>
           </div>
@@ -634,9 +634,9 @@ export const WeatherClimateGraphWidget = ({
                 </div>
 
                 {/* 2. Spray Drift Window Card */}
-                <div className="p-3.5 rounded-2xl bg-[#FAF8F2] dark:bg-[#1A251D] border border-[#DDD6C5] dark:border-[#2A3B2F]">
+                <div className="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/80 dark:border-slate-700">
                   <div className="flex items-center justify-between mb-2">
-                    <span className="font-bold text-xs flex items-center gap-1.5 text-[#1F2E22] dark:text-white">
+                    <span className="font-bold text-xs flex items-center gap-1.5 text-slate-800 dark:text-white">
                       <Wind className="w-4 h-4 text-cyan-600 dark:text-cyan-400" />
                       <span>Foliar Spray & Drift Window</span>
                     </span>

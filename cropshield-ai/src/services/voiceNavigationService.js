@@ -365,7 +365,7 @@ export const NAVIGATION_ROUTES = {
     ]
   },
   home: {
-    id: 'home',
+    id: 'esp32LiveData',
     labelEn: 'Farm Home Dashboard',
     labelHi: 'मुख्य फार्म डैशबोर्ड',
     labelMr: 'मुख्य शेतकरी डॅशबोर्ड',

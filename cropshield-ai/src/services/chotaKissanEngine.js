@@ -742,7 +742,7 @@ Here is how I assist your farm:
         en: `I am doing great, thank you! Ready to monitor and protect your crops 24/7. How are your farm plots doing today?`
       };
       responseText = wellMap[lang] || wellMap.en;
-      actionButtons.push({ label: 'Check Plot Status', target: 'home' });
+      actionButtons.push({ label: 'Check Plot Status', target: 'esp32LiveData' });
       break;
     }
 
@@ -812,7 +812,7 @@ Here is how I assist your farm:
         };
         responseText = riceMap[lang] || riceMap.en;
         actionButtons.push({ label: 'Scan Rice Leaf', target: 'scan' });
-        actionButtons.push({ label: 'Check Water Level', target: 'home' });
+        actionButtons.push({ label: 'Check Water Level', target: 'esp32LiveData' });
       } else if (crop === 'grapes') {
         const grapeMap = {
           ta: `திராட்சை பயிரில் இலைகளின் மேல் எண்ணெய் போன்ற மஞ்சள் புள்ளிகளும், அடியில் வெண் பூஞ்சையும் தோன்றினால் அது **அடிச்சாம்பல் (Downy Mildew)** நோயாகும்.
@@ -952,7 +952,7 @@ Here is how I assist your farm:
         en: `Soil moisture is optimal at **${soilVWC}% VWC** and rain is forecasted tomorrow. Do NOT irrigate today to prevent waterlogging and root rot.`
       };
       responseText = irrMap[lang] || irrMap.en;
-      actionButtons.push({ label: 'Inspect Farm Plots & Drip', target: 'home' });
+      actionButtons.push({ label: 'Inspect Farm Plots & Drip', target: 'esp32LiveData' });
       break;
     }
 
@@ -1033,7 +1033,7 @@ Here is how I assist your farm:
         en: `Farm Overview: You have 6 plots. Plot 2 (Bt Cotton) has 78% Bacterial Blight risk requiring scouting. Other plots are healthy. What would you like to check today?`
       };
       responseText = generalMap[lang] || generalMap.en;
-      actionButtons.push({ label: 'Inspect Farm Plots', target: 'home' });
+      actionButtons.push({ label: 'Inspect Farm Plots', target: 'esp32LiveData' });
       actionButtons.push({ label: 'Open Disease Prediction Radar', target: 'environmentalPrediction' });
       break;
     }
