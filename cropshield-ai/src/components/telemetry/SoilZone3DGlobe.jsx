@@ -163,7 +163,6 @@ const MAHARASHTRA_FARMLAND_PRESETS = [
 
 // Default Pre-loaded Benchmark Farmlands for immediate scanning
 export const DEFAULT_INITIAL_FARMLANDS = [];
-
 // Helper to reliably find Land 3 across saved farmlands
 export const findLand3 = (lands) => {
   if (!Array.isArray(lands) || lands.length === 0) return null;
@@ -597,6 +596,7 @@ export const SoilZone3DGlobe = ({ onSelectDistrict, selectedDistrictId = 'sangli
   const [showHeatmapOverlay, setShowHeatmapOverlay] = useState(true);
   const [showUnhealthyMarkers, setShowUnhealthyMarkers] = useState(true);
   const [isClimateOpen, setIsClimateOpen] = useState(false);
+
   const [newLandName, setNewLandName] = useState('');
   const [statusNotification, setStatusNotification] = useState(null);
 

@@ -1,4 +1,4 @@
-// CropShield AI - Complete 10-Language Agricultural Translation Dictionary
+// KISAN VIGYAAN - Complete 10-Language Agricultural Translation Dictionary
 export const translations = {
   "en": {
     "catAll": "All Schemes",
@@ -100,7 +100,7 @@ export const translations = {
     "step2Spray": "Spray prescribed formulation in early morning (6-9 AM).",
     "step2SprayDesc": "Spray Streptocycline (0.5g/L) + Copper Oxychloride (2.5g/L).",
     "step3Recheck": "AI Re-check in 3 Days",
-    "step3RecheckDesc": "Take another photo with the CropShield scanner to verify disease containment.",
+    "step3RecheckDesc": "Take another photo with the KISAN VIGYAAN scanner to verify disease containment.",
     "orderMedicineOnline": "Order Medicine Online",
     "aiScannerTitle": "AI Leaf Pathometry & Neural Scanner",
     "aiScannerSubtitle": "Instant 224x224x3 Tensor leaf segmentation, multi-class pathology & dosage prescription",

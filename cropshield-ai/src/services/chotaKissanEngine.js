@@ -1,5 +1,5 @@
 /**
- * CropShield AI - "CHOTA KISSAN" Multilingual AI Voice Assistant Engine (v3.0)
+ * KISAN VIGYAAN - "CHOTA KISSAN" Multilingual AI Voice Assistant Engine (v3.0)
  * 
  * Production-quality agricultural voice assistant supporting 10 Indian languages,
  * robust Unicode & conversational intent classification (greetings, identity, casual queries,

@@ -1,4 +1,4 @@
-// CropShield AI - Mock Data & Knowledge Base
+// KISAN VIGYAAN - Mock Data & Knowledge Base
 
 // Real Botanical Leaf Photography Assets
 export const sampleLeafImages = {

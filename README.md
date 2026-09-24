@@ -5,14 +5,9 @@
 
 ## 🚀 Key Highlights & System Architecture
 
-### 1. 🔍 Smart AI Leaf Disease Scanner (`crop_health_ml/`)
-- **Deep Learning Vision Pipeline**: Custom CNN & Transfer Learning (MobileNetV2 / ResNet50) trained on Indian crop diseases (Rice, Wheat, Cotton, Tomato, Soybean, Gram, Chilli, Maize).
-- **Disease Categories**: Fungal infections (Blight, Rust, Powdery Mildew), Bacterial leaf spot, Sucking pests & Viral Leaf Curl vectors, Nutrient deficiencies (Zinc, Nitrogen, Iron).
-- **Python ML Inference Server (`api_server.py`)**: High-performance FastAPI/Flask inference endpoint on `http://localhost:8000/api/predict`.
-
 ---
 
-### 2. 🛒 Unified Farmer Marketplace (`cropshield-ai/`)
+### 1. 🛒 Unified Farmer Marketplace (`cropshield-ai/`)
 - **Commercial & Government DBT Subsidized Fertilizers**: Neem-coated Urea @ ₹266.50, DAP, NPK, Potash, and DBT Subsidy Voucher Token generator.
 - **Certified Hybrid Seeds & Protection**: High-yielding varieties and genuine crop protection inputs.
 - **Direct Farmer Mandi Board**: List harvests with moisture % and grade; live buyer bids and statutory MSP benchmark index.
@@ -21,7 +16,7 @@
 
 ---
 
-### 3. 💡 Pro Agronomy Tips & Field Advisory
+### 2. 💡 Pro Agronomy Tips & Field Advisory
 - **Seasonal Crop Calendar**: In-depth guidance for Kharif, Rabi, and Zaid seasons with soil suitability, expected yields, and optimal temperatures.
 - **Chemical Compositions Matrix**: Active ingredients (Chlorantraniliprole 18.5% SC, Mancozeb 75% WP, Pendimethalin 38.7% CS, Quizalofop-ethyl 5% EC), exact dosage per L / 15L pump / acre, target pests, and beneficial predator safety ratings (Honeybees, Ladybirds, Lacewings).
 - **Nearby Verified Vendors Directory (with KM Specifications)**: Distance tags, address, license details, phone contact, and GPS route navigation.

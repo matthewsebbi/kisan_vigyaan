@@ -23,9 +23,7 @@ from backend.schemas import (
 
 logger = logging.getLogger("sentinel-service")
 
-# Copernicus DataSpace Sentinel Hub API Credentials (configured via environment variables)
-DEFAULT_CLIENT_ID = os.getenv("SH_CLIENT_ID", "")
-DEFAULT_CLIENT_SECRET = os.getenv("SH_CLIENT_SECRET", "")
+
 
 TOKEN_URL = (
     "https://identity.dataspace.copernicus.eu/"
@@ -73,8 +71,8 @@ class SentinelService:
     """Handles Sentinel-2 multispectral vegetation stress analysis for custom farmland polygons."""
 
     def __init__(self):
-        self.client_id = os.getenv("SH_CLIENT_ID") or os.getenv("client_id") or DEFAULT_CLIENT_ID
-        self.client_secret = os.getenv("SH_CLIENT_SECRET") or os.getenv("client_secret") or DEFAULT_CLIENT_SECRET
+        self.client_id = os.getenv("SH_CLIENT_ID", "")
+        self.client_secret = os.getenv("SH_CLIENT_SECRET", "")
 
     def _get_access_token(self) -> str:
         """Fetch OAuth Bearer token from Copernicus CDSE."""

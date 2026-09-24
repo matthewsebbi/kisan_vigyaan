@@ -1,4 +1,4 @@
-// CropShield AI - Comprehensive Agronomy, Crop Protection, and Soil Health Knowledge Base
+// KISAN VIGYAAN - Comprehensive Agronomy, Crop Protection, and Soil Health Knowledge Base
 
 export const seasonalCropsData = {
   kharif: {

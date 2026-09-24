@@ -1,5 +1,5 @@
 /**
- * CropShield AI - Local Agriculture Wiki Disease Knowledge Engine
+ * KISAN VIGYAAN - Local Agriculture Wiki Disease Knowledge Engine
  * 
  * Comprehensive botanical pathology profiles compiled directly from
  * local Agriculture Wiki dossiers for all indexed crop species.

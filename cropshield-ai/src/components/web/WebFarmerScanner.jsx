@@ -519,7 +519,20 @@ export const WebFarmerScanner = ({ onNavigate }) => {
       console.warn("Image formatting note:", err);
     }
 
-    // Call CropShield AI Vision Model (Groq Qwen3.8-27B / Backend Pathometry)
+    const verification = await inspectImageForPlantContent(targetImage);
+
+    if (!verification.isPlant) {
+      clearInterval(progressInterval);
+      setInferenceProgress(100);
+      setAnalyzing(false);
+      setNonPlantRejection({
+        detectedObject: verification.detectedType,
+        confidence: verification.confidence || 92.5
+      });
+      return;
+    }
+
+    // Call KISAN VIGYAAN Vision Model (Groq Qwen3.8-27B / Backend Pathometry)
     try {
       const predefinedOption = option || sampleLeafOptions.find(s => s.image === rawTarget);
       const targetCrop = selectedCrop || predefinedOption?.cropKey || (predefinedOption?.crop ? predefinedOption.crop.split(' ')[0] : 'Cotton');

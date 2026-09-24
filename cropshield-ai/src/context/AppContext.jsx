@@ -368,33 +368,27 @@ export const AppProvider = ({ children }) => {
   const [accounts, setAccounts] = useState(() => {
     try {
       const saved = localStorage.getItem('cs_accounts_v6');
-      const list = saved ? JSON.parse(saved) : INITIAL_ACCOUNTS;
-      const filtered = list.filter(a => 
-        a.name?.trim().toLowerCase() !== 'ram' && 
-        a.username?.trim().toLowerCase() !== 'ram' && 
-        !a.phone?.includes('11223') && 
-        a.email !== 'ram@kisan.in'
-      );
-      return filtered.length > 0 ? filtered : INITIAL_ACCOUNTS;
-    } catch (e) {
-      return INITIAL_ACCOUNTS;
-    }
+      let parsed = saved ? JSON.parse(saved) : INITIAL_ACCOUNTS;
+      if (Array.isArray(parsed)) {
+        parsed = parsed.filter(a => {
+          const n = (a.name || '').trim().toLowerCase();
+          const u = (a.username || '').trim().toLowerCase();
+          const p = (a.phone || '').replace(/\s+/g, '');
+          const e = (a.email || '').toLowerCase();
+          return n !== 'ram' && u !== 'ram' && !p.includes('11223') && !e.includes('ram@kisan');
+        });
+        if (parsed.length > 0) return parsed;
+      }
+    } catch (e) {}
+    return INITIAL_ACCOUNTS;
   });
 
   const [activeUserId, setActiveUserId] = useState(() => {
-    try {
-      const saved = localStorage.getItem('cs_active_user_id');
-      const savedAccs = localStorage.getItem('cs_accounts_v6');
-      if (saved) {
-        const parsed = savedAccs ? JSON.parse(savedAccs) : [];
-        const found = parsed.find(a => a.id === saved);
-        if (found && (found.name?.trim().toLowerCase() === 'ram' || found.username?.trim().toLowerCase() === 'ram' || found.phone?.includes('11223') || found.email === 'ram@kisan.in')) {
-          return 'usr-farmer-ramesh';
-        }
-        return saved;
-      }
-    } catch (e) {}
-    return 'usr-farmer-ramesh';
+    const cur = localStorage.getItem('cs_active_user_id') || 'usr-farmer-ramesh';
+    if (cur === 'usr-farmer-ram' || (cur.toLowerCase().includes('ram') && !cur.includes('ramesh'))) {
+      return 'usr-farmer-ramesh';
+    }
+    return cur;
   });
 
   const [isLoggedIn, setIsLoggedIn] = useState(() => {
