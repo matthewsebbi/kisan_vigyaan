@@ -87,7 +87,7 @@ export const WebTopNavBar = ({ activeTab, onNavigate }) => {
             <div>
               <div className="flex items-center gap-2">
                 <span className="font-extrabold text-lg tracking-tight text-[#1B5E20] dark:text-emerald-400">
-                  {t('appName', 'CropShield AI')}
+                  {t('appName', 'KISAN VIGYAAN')}
                 </span>
                 <span className="hidden sm:inline-block px-2.5 py-0.5 text-[10px] font-black uppercase tracking-wider bg-emerald-100 text-emerald-900 dark:bg-emerald-500/15 dark:text-emerald-300 rounded-full border border-emerald-300 dark:border-emerald-500/30 font-mono">
                   {role === 'officer' ? (lang === 'ta' ? 'வேளாண் அதிகாரி மையம்' : lang === 'mr' ? 'कृषी अधिकारी कक्ष' : 'Agri Officer Hub') : t('kisanWeb', 'Kisan Web')}

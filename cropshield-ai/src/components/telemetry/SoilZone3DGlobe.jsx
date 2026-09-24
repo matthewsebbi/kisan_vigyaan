@@ -157,46 +157,7 @@ const MAHARASHTRA_FARMLAND_PRESETS = [
 ];
 
 // Default Pre-loaded Benchmark Farmlands for immediate scanning
-export const DEFAULT_INITIAL_FARMLANDS = [
-  {
-    id: 'land-sangli-main',
-    name: 'Sangli Grape & Turmeric Farm',
-    crop: 'Grapes, Turmeric & Sugarcane',
-    districtId: 'sangli',
-    districtName: 'Sangli',
-    centroid: [16.8524, 74.5815],
-    cornerPoints: [
-      { lat: 16.8532, lng: 74.5805 },
-      { lat: 16.8536, lng: 74.5828 },
-      { lat: 16.8515, lng: 74.5832 },
-      { lat: 16.8511, lng: 74.5809 }
-    ],
-    area: { sqm: 17200, acres: 4.25, gunthas: 42.5 },
-    color: '#10b981',
-    fillColor: '#059669',
-    analysisResult: null,
-    createdAt: 'Benchmark Field'
-  },
-  {
-    id: 'land-baramati-cane',
-    name: 'Baramati Sugarcane Plot',
-    crop: 'Sugarcane & Fodder',
-    districtId: 'pune',
-    districtName: 'Pune',
-    centroid: [18.1518, 74.5772],
-    cornerPoints: [
-      { lat: 18.1528, lng: 74.5760 },
-      { lat: 18.1532, lng: 74.5785 },
-      { lat: 18.1508, lng: 74.5789 },
-      { lat: 18.1504, lng: 74.5764 }
-    ],
-    area: { sqm: 23500, acres: 5.81, gunthas: 58.1 },
-    color: '#06b6d4',
-    fillColor: '#0891b2',
-    analysisResult: null,
-    createdAt: 'Benchmark Field'
-  }
-];
+export const DEFAULT_INITIAL_FARMLANDS = [];
 
 // Calculate Farmland area using Shoelace formula on geodesic metric plane
 function calculatePolygonArea(rawPoints) {
@@ -568,12 +529,15 @@ export const SoilZone3DGlobe = ({ onSelectDistrict, selectedDistrictId = 'sangli
       const saved = localStorage.getItem('cropshield_saved_farmlands');
       if (saved) {
         const parsed = JSON.parse(saved);
-        if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+        if (Array.isArray(parsed)) {
+          const filtered = parsed.filter(l => !['land-sangli-main', 'land-sangli-miraj', 'land-tasgaon-vineyard', 'land-baramati-cane'].includes(l.id));
+          return filtered;
+        }
       }
     } catch (e) {
       console.warn('Could not parse saved farmlands from localStorage', e);
     }
-    return DEFAULT_INITIAL_FARMLANDS;
+    return [];
   });
 
   const [activeLandId, setActiveLandId] = useState(() => {
@@ -581,12 +545,13 @@ export const SoilZone3DGlobe = ({ onSelectDistrict, selectedDistrictId = 'sangli
       const saved = localStorage.getItem('cropshield_saved_farmlands');
       if (saved) {
         const parsed = JSON.parse(saved);
-        if (Array.isArray(parsed) && parsed.length > 0) return parsed[0].id;
+        if (Array.isArray(parsed)) {
+          const filtered = parsed.filter(l => !['land-sangli-main', 'land-sangli-miraj', 'land-tasgaon-vineyard', 'land-baramati-cane'].includes(l.id));
+          if (filtered.length > 0) return filtered[0].id;
+        }
       }
-    } catch (e) {
-      // ignore
-    }
-    return DEFAULT_INITIAL_FARMLANDS[0]?.id || 'land-sangli-main';
+    } catch (e) {}
+    return null;
   });
   const [newLandName, setNewLandName] = useState('');
   const [statusNotification, setStatusNotification] = useState(null);

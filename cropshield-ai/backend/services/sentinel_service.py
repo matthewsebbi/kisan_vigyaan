@@ -24,8 +24,8 @@ from backend.schemas import (
 logger = logging.getLogger("sentinel-service")
 
 # Copernicus DataSpace Sentinel Hub API Credentials
-DEFAULT_CLIENT_ID = "sh-08f2882a-23f3-44d3-a559-55dc74a469a7"
-DEFAULT_CLIENT_SECRET = "ltOPhj4ABy7FTR5LYBi366RDOodUyOqH"
+DEFAULT_CLIENT_ID = os.getenv("SENTINEL_CLIENT_ID", os.getenv("client_id", ""))
+DEFAULT_CLIENT_SECRET = os.getenv("SENTINEL_CLIENT_SECRET", os.getenv("client_secret", ""))
 
 TOKEN_URL = (
     "https://identity.dataspace.copernicus.eu/"

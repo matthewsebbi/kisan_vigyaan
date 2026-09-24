@@ -124,7 +124,7 @@ export const LoginPage = () => {
             <Landmark className="w-7 h-7" />
           </div>
           <h2 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white">
-            CropShield AI • Unified Access Portal
+            KISAN VIGYAAN • Unified Access Portal
           </h2>
           <p className="text-xs text-slate-600 dark:text-slate-400 font-medium">
             Authorized portal for Government Officials, Agricultural Organisations & NGOs, and Farmers

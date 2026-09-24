@@ -524,7 +524,7 @@ export const StatisticsTrends = () => {
                   />
                   <Line type="monotone" dataKey="year2024" stroke="#F43F5E" strokeWidth={2.5} strokeDasharray="5 5" name="2024 (Uncontrolled Baseline)" />
                   <Line type="monotone" dataKey="year2025" stroke="#F59E0B" strokeWidth={2.5} name="2025 (Partial Monitoring)" />
-                  <Line type="monotone" dataKey="year2026" stroke="#047857" strokeWidth={4} dot={{ r: 4 }} name="2026 (CropShield AI Autonomous)" />
+                  <Line type="monotone" dataKey="year2026" stroke="#047857" strokeWidth={4} dot={{ r: 4 }} name="2026 (KISAN VIGYAAN Autonomous)" />
                 </LineChart>
               </ResponsiveContainer>
             </div>

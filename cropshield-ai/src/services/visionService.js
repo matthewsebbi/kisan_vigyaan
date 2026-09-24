@@ -86,7 +86,7 @@ export const analyzeLeafWithGroq = async (base64Image, lang = 'en', options = {}
 
   let lastBackendError = null;
 
-  // 1. First attempt: Call CropShield AI Backend (/api/predict or port 8000)
+  // 1. First attempt: Call KISAN VIGYAAN Backend (/api/predict or port 8000)
   // With 7-second AbortController timeout to prevent hanging the browser
   const backendEndpoints = ['/api/predict', 'http://127.0.0.1:8000/predict'];
 

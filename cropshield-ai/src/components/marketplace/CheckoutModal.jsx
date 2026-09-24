@@ -157,7 +157,7 @@ export const CheckoutModal = ({ isOpen, onClose, directItem = null }) => {
       '<!DOCTYPE html>' +
       '<html>' +
       '<head>' +
-        '<title>CropShield AI - Tax Invoice & Payment Receipt (' + order.orderId + ')</title>' +
+        '<title>KISAN VIGYAAN - Tax Invoice & Payment Receipt (' + order.orderId + ')</title>' +
         '<style>' +
           'body { font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; padding: 40px; color: #1e293b; background: #fff; line-height: 1.5; }' +
           '.header { display: flex; justify-content: space-between; border-bottom: 2px solid #0284c7; padding-bottom: 20px; margin-bottom: 25px; }' +
@@ -178,7 +178,7 @@ export const CheckoutModal = ({ isOpen, onClose, directItem = null }) => {
       '<body>' +
         '<div class="header">' +
           '<div>' +
-            '<div class="brand">🌾 CropShield AI Agri-Marketplace</div>' +
+            '<div class="brand">🌾 KISAN VIGYAAN Agri-Marketplace</div>' +
             '<div style="font-size: 12px; color: #64748b;">Government of India & State Agriculture Department Authorized Supply Portal</div>' +
             '<div style="font-size: 12px; color: #64748b;">GSTIN: 27AABCC8942K1Z8 • KVK District Fulfillment Hub</div>' +
           '</div>' +

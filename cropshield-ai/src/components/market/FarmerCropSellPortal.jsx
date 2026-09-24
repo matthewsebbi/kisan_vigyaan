@@ -158,7 +158,7 @@ export const FarmerCropSellPortal = ({ onNavigate }) => {
     if (!offerForm.buyerName || !offerForm.buyerPhone) return;
 
     const phone = (offerModalItem.phone || '').replace(/[^0-9]/g, '');
-    const text = `Hi ${offerModalItem.sellerName}, I want to buy your ${offerModalItem.name} (${offerModalItem.quantity}) listed on CropShield AI.\n\nMy Offer:\n• Offered Price: ₹${offerForm.offeredPrice} ${offerModalItem.priceUnit}\n• Quantity: ${offerForm.requestedQty}\n• Buyer: ${offerForm.buyerName} (${offerForm.buyerPhone})\n• Note: ${offerForm.note}`;
+    const text = `Hi ${offerModalItem.sellerName}, I want to buy your ${offerModalItem.name} (${offerModalItem.quantity}) listed on KISAN VIGYAAN.\n\nMy Offer:\n• Offered Price: ₹${offerForm.offeredPrice} ${offerModalItem.priceUnit}\n• Quantity: ${offerForm.requestedQty}\n• Buyer: ${offerForm.buyerName} (${offerForm.buyerPhone})\n• Note: ${offerForm.note}`;
 
     window.open(`https://wa.me/${phone}?text=${encodeURIComponent(text)}`, '_blank');
     setOfferModalItem(null);

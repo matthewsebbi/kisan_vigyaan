@@ -69,7 +69,7 @@ export const WebTopHeader = ({ activeTab, onNavigate, onOpenMobileMenu }) => {
 
           <div className="flex items-center gap-2">
             <span className="font-bold text-base tracking-tight text-[#012D1D] dark:text-emerald-400">
-              CropShield AI
+              KISAN VIGYAAN
             </span>
             <span className="hidden sm:inline-flex px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-emerald-50 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">
               v2.4 Pro

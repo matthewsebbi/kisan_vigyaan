@@ -533,7 +533,7 @@ export const WebFarmerScanner = ({ onNavigate }) => {
       return;
     }
 
-    // Call CropShield AI Agriculture Wiki + Qwen3.8-27B Pipeline
+    // Call KISAN VIGYAAN Agriculture Wiki + Qwen3.8-27B Pipeline
     try {
       const predefinedOption = option || sampleLeafOptions.find(s => s.image === rawTarget);
       const targetCrop = selectedCrop || predefinedOption?.cropKey || (predefinedOption?.crop ? predefinedOption.crop.split(' ')[0] : 'Cotton');

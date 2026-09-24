@@ -1,4 +1,4 @@
-// CropShield AI - Mock Data & Knowledge Base
+// KISAN VIGYAAN - Mock Data & Knowledge Base
 
 // Real Botanical Leaf Photography Assets
 export const sampleLeafImages = {
@@ -518,7 +518,7 @@ export const seedCommunityPosts = [
     timeAgo: "2 hours ago",
     crop: "Tomato (Flowering stage)",
     title: "Noticed concentric brown spots on lower leaves after 2 days of rain",
-    content: "My 2.5 acre tomato crop is at flowering stage. Due to high humidity (65%) and cloudy weather in Sangli yesterday, brown spots with yellow halos appeared on lower leaves. CropShield AI diagnosed Early Blight (91%). Need advice on whether organic Neem spray alone is sufficient or if chemical backup is required.",
+    content: "My 2.5 acre tomato crop is at flowering stage. Due to high humidity (65%) and cloudy weather in Sangli yesterday, brown spots with yellow halos appeared on lower leaves. KISAN VIGYAAN diagnosed Early Blight (91%). Need advice on whether organic Neem spray alone is sufficient or if chemical backup is required.",
     image: "https://images.unsplash.com/photo-1592417817098-8f3d69104a49?w=900&auto=format&fit=crop&q=85",
     likes: 18,
     commentsCount: 3,

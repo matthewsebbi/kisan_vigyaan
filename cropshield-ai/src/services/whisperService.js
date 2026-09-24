@@ -1,5 +1,5 @@
 /**
- * CropShield AI — Whisper Transcription & Audio Recording Service
+ * KISAN VIGYAAN — Whisper Transcription & Audio Recording Service
  * 
  * Records microphone audio via MediaRecorder API, sends to Groq Whisper API
  * for transcription + automatic language detection. Falls back to Web Speech API

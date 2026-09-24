@@ -1,5 +1,5 @@
 /**
- * CropShield AI - Environmental Crop Disease Prediction Engine
+ * KISAN VIGYAAN - Environmental Crop Disease Prediction Engine
  * 
  * Scalable, scientifically grounded multi-factor disease suitability model.
  * Evaluates crop, variety, growth stage, real-time microclimate sensors,

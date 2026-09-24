@@ -352,12 +352,28 @@ const INITIAL_ACCOUNTS = [
 export const AppProvider = ({ children }) => {
   // 1. Accounts Registry & Session Management
   const [accounts, setAccounts] = useState(() => {
-    const saved = localStorage.getItem('cs_accounts_v6');
-    return saved ? JSON.parse(saved) : INITIAL_ACCOUNTS;
+    try {
+      const saved = localStorage.getItem('cs_accounts_v6');
+      let parsed = saved ? JSON.parse(saved) : INITIAL_ACCOUNTS;
+      if (Array.isArray(parsed)) {
+        parsed = parsed.filter(a => {
+          const n = (a.name || '').trim().toLowerCase();
+          const p = (a.phone || '').replace(/\s+/g, '');
+          const e = (a.email || '').toLowerCase();
+          return n !== 'ram' && !p.includes('11223') && !e.includes('ram@kisan');
+        });
+        if (parsed.length > 0) return parsed;
+      }
+    } catch (e) {}
+    return INITIAL_ACCOUNTS;
   });
 
   const [activeUserId, setActiveUserId] = useState(() => {
-    return localStorage.getItem('cs_active_user_id') || 'usr-farmer-ramesh';
+    const cur = localStorage.getItem('cs_active_user_id') || 'usr-farmer-ramesh';
+    if (cur === 'usr-farmer-ram' || (cur.toLowerCase().includes('ram') && !cur.includes('ramesh'))) {
+      return 'usr-farmer-ramesh';
+    }
+    return cur;
   });
 
   useEffect(() => {

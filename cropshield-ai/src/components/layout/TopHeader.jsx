@@ -43,7 +43,7 @@ export const TopHeader = ({ activeView, onOpenSidebar, onNavigate }) => {
       case 'govtSchemes': return t('govtSchemes') || 'Direct Benefit Transfer & Government Welfare';
       case 'deviceManagement': return t('deviceManagement') || 'IoT Smart Trap Telemetry & Sensor Fleet';
       case 'reports': return t('reports') || 'Historical Field Reports & Digital Dossier';
-      default: return 'CropShield AI Surveillance';
+      default: return 'KISAN VIGYAAN Surveillance';
     }
   };
 

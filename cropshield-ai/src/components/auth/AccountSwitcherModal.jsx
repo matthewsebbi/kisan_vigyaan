@@ -124,8 +124,17 @@ export const AccountSwitcherModal = () => {
               </div>
             </div>
 
-            <div className="w-7 h-7 rounded-full bg-emerald-600 text-white flex items-center justify-center shadow-xs shrink-0">
-              <Check className="w-4 h-4 stroke-[3]" />
+            <div className="flex items-center gap-1.5 shrink-0">
+              <div className="w-7 h-7 rounded-full bg-emerald-600 text-white flex items-center justify-center shadow-xs">
+                <Check className="w-4 h-4 stroke-[3]" />
+              </div>
+              <button
+                onClick={() => removeAccount(currentUser.id)}
+                className="p-1.5 text-slate-400 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/40 rounded-xl transition-colors cursor-pointer"
+                title="Remove Account"
+              >
+                <Trash2 className="w-4 h-4" />
+              </button>
             </div>
           </div>
         </div>

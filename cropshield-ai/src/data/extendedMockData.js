@@ -882,7 +882,7 @@ export const visionSampleCatalog = [
     detectedObject: "Human Face / Person",
     confidence: 97,
     image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=800&auto=format&fit=crop&q=80",
-    warningMessage: "⚠️ Non-Plant Image Detected: The system detected a human portrait. CropShield AI requires a photograph of a crop leaf or farm plant to diagnose diseases.",
+    warningMessage: "⚠️ Non-Plant Image Detected: The system detected a human portrait. KISAN VIGYAAN requires a photograph of a crop leaf or farm plant to diagnose diseases.",
     guidance: "Aim the camera at your crop leaves or fruit and take a clear picture."
   }
 ];

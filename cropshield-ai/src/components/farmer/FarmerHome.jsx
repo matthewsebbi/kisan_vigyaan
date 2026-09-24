@@ -52,7 +52,7 @@ export const FarmerHome = () => {
             <Menu className="w-6 h-6" />
           </button>
           <div>
-            <h1 className="text-base font-bold text-gray-900 leading-tight">CropShield AI</h1>
+            <h1 className="text-base font-bold text-gray-900 leading-tight">KISAN VIGYAAN</h1>
             <p className="text-[11px] text-gray-500 font-medium">{t('tagline')}</p>
           </div>
         </div>

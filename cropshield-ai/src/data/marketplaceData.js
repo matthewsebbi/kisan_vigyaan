@@ -1,4 +1,4 @@
-// CropShield AI - Comprehensive Agri Marketplace, Drone Services & Live Mandi Rates Repository
+// KISAN VIGYAAN - Comprehensive Agri Marketplace, Drone Services & Live Mandi Rates Repository
 
 // ═══════════════════════════════════════════════════════════════════
 // 1. 22+ CROP PROTECTION MEDICINES (INSECTICIDES, FUNGICIDES, BIO)

@@ -248,7 +248,7 @@ STATUS:
 Your agricultural inputs are dispatched and sealed by KVK Sangli.
 For delivery updates, track via SMS or call 1800-180-1551.
 
-CropShield AI Agronomy Platform • Ministry of Agriculture
+KISAN VIGYAAN Agronomy Platform • Ministry of Agriculture
 ============================================================
 `;
 
