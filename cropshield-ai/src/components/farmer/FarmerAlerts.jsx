@@ -23,7 +23,7 @@ export const FarmerAlerts = () => {
       message: "Continuous 65% humidity & recent 14mm rainfall in Sangli cluster created prime conditions for Alternaria solani spore germination. Inspect your tomato fields within 24 hours.",
       time: "2 hours ago",
       type: "high",
-      source: "Sangli Agri Dept & CropShield AI"
+      source: "Sangli Agri Dept & KISAN VIGYAAN"
     },
     {
       id: "al-2",

@@ -162,65 +162,7 @@ const MAHARASHTRA_FARMLAND_PRESETS = [
 ];
 
 // Default Pre-loaded Benchmark Farmlands for immediate scanning
-export const DEFAULT_INITIAL_FARMLANDS = [
-  {
-    id: 'land-1',
-    name: 'Land 1',
-    crop: 'Pearl Millet / Bajra',
-    districtId: 'sangli',
-    districtName: 'Sangli',
-    centroid: [16.8524, 74.5815],
-    cornerPoints: [
-      { lat: 16.8532, lng: 74.5805 },
-      { lat: 16.8536, lng: 74.5828 },
-      { lat: 16.8515, lng: 74.5832 },
-      { lat: 16.8511, lng: 74.5809 }
-    ],
-    area: { sqm: 20477, acres: 5.06, gunthas: 50.6 },
-    color: '#10b981',
-    fillColor: '#059669',
-    analysisResult: null,
-    createdAt: 'Benchmark Field'
-  },
-  {
-    id: 'land-2',
-    name: 'Land 2',
-    crop: 'Sugarcane & Fodder',
-    districtId: 'pune',
-    districtName: 'Pune',
-    centroid: [18.1518, 74.5772],
-    cornerPoints: [
-      { lat: 18.1528, lng: 74.5760 },
-      { lat: 18.1532, lng: 74.5785 },
-      { lat: 18.1508, lng: 74.5789 },
-      { lat: 18.1504, lng: 74.5764 }
-    ],
-    area: { sqm: 23500, acres: 5.81, gunthas: 58.1 },
-    color: '#06b6d4',
-    fillColor: '#0891b2',
-    analysisResult: null,
-    createdAt: 'Benchmark Field'
-  },
-  {
-    id: 'land-3',
-    name: 'Land 3',
-    crop: 'Grapes & Turmeric',
-    districtId: 'sangli',
-    districtName: 'Sangli',
-    centroid: [16.8622, 74.6040],
-    cornerPoints: [
-      { lat: 16.8628, lng: 74.6034 },
-      { lat: 16.8628, lng: 74.6046 },
-      { lat: 16.8616, lng: 74.6046 },
-      { lat: 16.8616, lng: 74.6034 }
-    ],
-    area: { sqm: 17061, acres: 4.21, gunthas: 42.1 },
-    color: '#f59e0b',
-    fillColor: '#d97706',
-    analysisResult: null,
-    createdAt: 'Benchmark Field'
-  }
-];
+export const DEFAULT_INITIAL_FARMLANDS = [];
 
 // Helper to reliably find Land 3 across saved farmlands
 export const findLand3 = (lands) => {
@@ -229,8 +171,7 @@ export const findLand3 = (lands) => {
   if (byName) return byName;
   const byId = lands.find(l => l.id && (l.id === 'land-3' || l.id.endsWith('-3')));
   if (byId) return byId;
-  if (lands.length >= 3) return lands[2];
-  return lands[0];
+  return lands[0] || null;
 };
 
 // Calculate Farmland area using Shoelace formula on geodesic metric plane
@@ -582,31 +523,26 @@ export const SoilZone3DGlobe = ({ onSelectDistrict, selectedDistrictId = 'sangli
   // Satellite Imagery Provider
   const [satelliteSource, setSatelliteSource] = useState('google-sat');
 
-  // Multi-Land Saved Lands State (Persisted in localStorage with benchmark defaults)
+  // Multi-Land Saved Lands State (Persisted in localStorage without default benchmark lands)
   const [savedLands, setSavedLands] = useState(() => {
     try {
       const saved = localStorage.getItem('cropshield_saved_farmlands');
       if (saved) {
         const parsed = JSON.parse(saved);
-        if (Array.isArray(parsed) && parsed.length > 0) {
-          const hasLand3 = parsed.some(l => 
-            (l.name && /land\s*3/i.test(l.name)) || 
-            (l.id && (l.id === 'land-3' || l.id.endsWith('-3')))
+        if (Array.isArray(parsed)) {
+          // Filter out default benchmark / preset farmlands
+          const customOnly = parsed.filter(l => 
+            l.createdAt !== 'Benchmark Field' && 
+            !['land-1', 'land-2', 'land-3'].includes(l.id) &&
+            !/^land\s*[123]$/i.test(l.name || '')
           );
-          if (!hasLand3 && DEFAULT_INITIAL_FARMLANDS[2]) {
-            const merged = [...parsed, DEFAULT_INITIAL_FARMLANDS[2]];
-            try {
-              localStorage.setItem('cropshield_saved_farmlands', JSON.stringify(merged));
-            } catch {}
-            return merged;
-          }
-          return parsed;
+          return customOnly;
         }
       }
     } catch (e) {
       console.warn('Could not parse saved farmlands from localStorage', e);
     }
-    return DEFAULT_INITIAL_FARMLANDS;
+    return [];
   });
 
   const [activeLandId, setActiveLandId] = useState(() => {
@@ -614,40 +550,41 @@ export const SoilZone3DGlobe = ({ onSelectDistrict, selectedDistrictId = 'sangli
       const saved = localStorage.getItem('cropshield_saved_farmlands');
       if (saved) {
         const parsed = JSON.parse(saved);
-        if (Array.isArray(parsed) && parsed.length > 0) {
-          const land3 = findLand3(parsed);
-          if (land3) return land3.id;
+        if (Array.isArray(parsed)) {
+          const customOnly = parsed.filter(l => 
+            l.createdAt !== 'Benchmark Field' && 
+            !['land-1', 'land-2', 'land-3'].includes(l.id) &&
+            !/^land\s*[123]$/i.test(l.name || '')
+          );
+          if (customOnly.length > 0) return customOnly[0].id;
         }
       }
-    } catch (e) {
-      // ignore
-    }
-    const defaultLand3 = findLand3(DEFAULT_INITIAL_FARMLANDS);
-    return defaultLand3?.id || DEFAULT_INITIAL_FARMLANDS[2]?.id || 'land-3';
+    } catch (e) {}
+    return null;
   });
 
-  // Map Navigation State (Focused on Land 3 by default)
+  // Map Navigation State (Centering on first custom land or Sangli)
   const [mapCenter, setMapCenter] = useState(() => {
     try {
       const saved = localStorage.getItem('cropshield_saved_farmlands');
       if (saved) {
         const parsed = JSON.parse(saved);
-        if (Array.isArray(parsed) && parsed.length > 0) {
-          const land3 = findLand3(parsed);
-          if (land3) {
-            const centroid = land3.centroid || getPolygonCentroid(land3.cornerPoints);
+        if (Array.isArray(parsed)) {
+          const customOnly = parsed.filter(l => 
+            l.createdAt !== 'Benchmark Field' && 
+            !['land-1', 'land-2', 'land-3'].includes(l.id) &&
+            !/^land\s*[123]$/i.test(l.name || '')
+          );
+          if (customOnly.length > 0) {
+            const centroid = customOnly[0].centroid || getPolygonCentroid(customOnly[0].cornerPoints);
             if (centroid && centroid[0]) return centroid;
           }
         }
       }
-    } catch (e) {
-      // ignore
-    }
-    const defaultLand3 = findLand3(DEFAULT_INITIAL_FARMLANDS);
-    if (defaultLand3?.centroid) return defaultLand3.centroid;
-    return [16.8622, 74.6040];
+    } catch (e) {}
+    return [16.8524, 74.5815];
   });
-  const [mapZoom, setMapZoom] = useState(18);
+  const [mapZoom, setMapZoom] = useState(15);
   const [showBorders, setShowBorders] = useState(true);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [selectedPresetId, setSelectedPresetId] = useState(null);
@@ -663,24 +600,48 @@ export const SoilZone3DGlobe = ({ onSelectDistrict, selectedDistrictId = 'sangli
   const [newLandName, setNewLandName] = useState('');
   const [statusNotification, setStatusNotification] = useState(null);
 
-  // Focus on Land 3 by default on initial mount
+  // Initial mount: clear benchmark lands from localStorage and set active custom land if any
   useEffect(() => {
-    const targetLand = savedLands.find(l => l.id === activeLandId) || findLand3(savedLands);
-    if (targetLand) {
-      if (targetLand.id !== activeLandId) {
-        setActiveLandId(targetLand.id);
-      }
-      const centroid = targetLand.centroid || getPolygonCentroid(targetLand.cornerPoints);
-      if (centroid && centroid[0]) {
-        setMapCenter(centroid);
-        setMapZoom(18);
-      }
-      if (targetLand.analysisResult) {
-        setAnalysisResult(targetLand.analysisResult);
-        if (targetLand.analysisResult.unhealthy_spots?.length > 0) {
-          setSelectedSpot(targetLand.analysisResult.unhealthy_spots[0]);
+    try {
+      const saved = localStorage.getItem('cropshield_saved_farmlands');
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed)) {
+          const customOnly = parsed.filter(l => 
+            l.createdAt !== 'Benchmark Field' && 
+            !['land-1', 'land-2', 'land-3'].includes(l.id) &&
+            !/^land\s*[123]$/i.test(l.name || '')
+          );
+          if (customOnly.length !== parsed.length) {
+            localStorage.setItem('cropshield_saved_farmlands', JSON.stringify(customOnly));
+            setSavedLands(customOnly);
+          }
         }
       }
+    } catch (e) {}
+
+    if (savedLands && savedLands.length > 0) {
+      const targetLand = savedLands.find(l => l.id === activeLandId) || savedLands[0];
+      if (targetLand) {
+        if (targetLand.id !== activeLandId) {
+          setActiveLandId(targetLand.id);
+        }
+        const centroid = targetLand.centroid || getPolygonCentroid(targetLand.cornerPoints);
+        if (centroid && centroid[0]) {
+          setMapCenter(centroid);
+          setMapZoom(18);
+        }
+        if (targetLand.analysisResult) {
+          setAnalysisResult(targetLand.analysisResult);
+          if (targetLand.analysisResult.unhealthy_spots?.length > 0) {
+            setSelectedSpot(targetLand.analysisResult.unhealthy_spots[0]);
+          }
+        }
+      }
+    } else {
+      setActiveLandId(null);
+      setAnalysisResult(null);
+      setSelectedSpot(null);
     }
   }, []);
 
@@ -1250,23 +1211,25 @@ export const SoilZone3DGlobe = ({ onSelectDistrict, selectedDistrictId = 'sangli
         </div>
       </div>
 
-      {/* Status Notification Toast Banner (Soft Mint as in Reference) */}
-      <div className={`relative z-20 px-4 py-2.5 border-b flex items-center justify-between gap-3 text-xs font-semibold shadow-2xs ${
-        statusNotification && statusNotification.type !== 'success'
-          ? 'bg-amber-50 text-amber-900 border-amber-200 dark:bg-amber-950/40 dark:text-amber-300 dark:border-amber-800'
-          : 'bg-[#E8F5ED] text-[#0F5132] border-[#C2E7D0] dark:bg-emerald-950/40 dark:text-emerald-300 dark:border-emerald-800'
-      }`}>
-        <div className="flex items-center gap-2">
-          <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
-          <span>{statusNotification ? statusNotification.message : 'Flagged region removed.'}</span>
+      {/* Status Notification Toast Banner */}
+      {statusNotification && (
+        <div className={`relative z-20 px-4 py-2.5 border-b flex items-center justify-between gap-3 text-xs font-semibold shadow-2xs ${
+          statusNotification.type !== 'success'
+            ? 'bg-amber-50 text-amber-900 border-amber-200 dark:bg-amber-950/40 dark:text-amber-300 dark:border-amber-800'
+            : 'bg-[#E8F5ED] text-[#0F5132] border-[#C2E7D0] dark:bg-emerald-950/40 dark:text-emerald-300 dark:border-emerald-800'
+        }`}>
+          <div className="flex items-center gap-2">
+            <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
+            <span>{statusNotification.message}</span>
+          </div>
+          <button
+            onClick={() => setStatusNotification(null)}
+            className="text-emerald-800/60 hover:text-emerald-900 dark:text-emerald-400 p-1 cursor-pointer font-bold"
+          >
+            ✕
+          </button>
         </div>
-        <button
-          onClick={() => setStatusNotification(null)}
-          className="text-emerald-800/60 hover:text-emerald-900 dark:text-emerald-400 p-1 cursor-pointer font-bold"
-        >
-          ✕
-        </button>
-      </div>
+      )}
 
       {/* 2. DEDICATED FARM CORNER PINNING TOOLBAR (Active when marking corners or when corners exist) */}
       {(isMarkingCorners || cornerPoints.length > 0) && (

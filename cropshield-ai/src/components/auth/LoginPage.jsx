@@ -311,7 +311,7 @@ export const LoginPage = ({ isModal = false }) => {
               <div>
                 <div className="flex items-center gap-2">
                   <h1 className="text-xl sm:text-2xl font-black tracking-wide text-white">
-                    CropShield AI
+                    KISAN VIGYAAN
                   </h1>
                   <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider font-mono border ${
                     portalType === 'officer'

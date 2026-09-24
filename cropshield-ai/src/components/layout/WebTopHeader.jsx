@@ -92,7 +92,7 @@ export const WebTopHeader = ({ activeTab, onNavigate, onOpenMobileMenu }) => {
 
           <div className="lg:hidden flex items-center gap-2">
             <span className="font-bold text-base tracking-tight text-[#0F172A] dark:text-emerald-400">
-              CropShield AI
+              KISAN VIGYAAN
             </span>
           </div>
         </div>

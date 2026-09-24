@@ -18,10 +18,10 @@ export const MobileTopHeader = ({ onNavigate }) => {
 
   const handleVoiceHelp = () => {
     const welcomeMsg = lang === 'mr' 
-      ? 'क्रॉपशील्ड एआय शेतकरी पोर्टलवर आपले स्वागत आहे. तुमच्या ६ पैकी २ शेतांवर आज तातडीने लक्ष देण्याची गरज आहे.'
+      ? 'किसान विज्ञान (KISAN VIGYAAN) शेतकरी पोर्टलवर आपले स्वागत आहे. तुमच्या ६ पैकी २ शेतांवर आज तातडीने लक्ष देण्याची गरज आहे.'
       : lang === 'hi'
-      ? 'क्रॉपशील्ड एआई में आपका स्वागत है। आपके 6 में से 2 खेतों में आज ध्यान देने की जरूरत है।'
-      : 'Welcome to CropShield AI. 2 of your 6 plots need attention today.';
+      ? 'किसान विज्ञान (KISAN VIGYAAN) में आपका स्वागत है। आपके 6 में से 2 खेतों में आज ध्यान देने की जरूरत है।'
+      : 'Welcome to KISAN VIGYAAN. 2 of your 6 plots need attention today.';
     speakText(welcomeMsg, lang);
   };
 
@@ -40,7 +40,7 @@ export const MobileTopHeader = ({ onNavigate }) => {
           </div>
           <div>
             <h1 className="font-extrabold text-[15px] tracking-tight leading-none text-[#1B5E20] flex items-center gap-1">
-              CropShield AI
+              KISAN VIGYAAN
             </h1>
             <p className="text-[10px] text-slate-500 font-medium">
               {lang === 'mr' ? 'शेतकरी मित्र' : lang === 'hi' ? 'किसान साथी' : 'Farmer Portal'}

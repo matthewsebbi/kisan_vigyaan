@@ -313,7 +313,7 @@ export const KisanChatBot = ({
         lang: targetLang,
         conversationHistory: [...messages, newUserMsg],
         farmContext: {
-          platform: 'CropShield AI (Kisan Vigyaan)',
+          platform: 'KISAN VIGYAAN',
           crop: 'cotton',
           telemetry: {
             temp: 29.4,

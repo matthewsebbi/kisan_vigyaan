@@ -718,7 +718,7 @@ Feel free to ask me anything about your crops!`
 २. 📊 **रोग पूर्वसूचना**: हवामानानुसार करपा व इतर रोगांचा धोका आधीच सांगणे.
 ३. 💧 **सिंचन व खत व्यवस्थापन**: माती आरोग्य पत्रिकेनुसार योग्य डोस देणे.
 ४. 🌾 **थेट बाजारभाव**: जिल्ह्यातील कृषी उत्पन्न बाजार समितीचे ताजे भाव देणे.`,
-        en: `I am **Kissan One** — CropShield AI's smart agricultural voice assistant.
+        en: `I am **Kissan One** — KISAN VIGYAAN's smart agricultural voice assistant.
 
 Here is how I assist your farm:
 1. 🌿 **Leaf Scanner Doctor**: Diagnose crop diseases from camera photos with verified dosages.

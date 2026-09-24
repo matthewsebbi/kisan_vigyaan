@@ -204,7 +204,7 @@ export const CartCheckoutModal = () => {
     
     const invoiceContent = `
 ============================================================
-              CROPSHIELD AI - TAX INVOICE & RECEIPT
+              KISAN VIGYAAN - TAX INVOICE & RECEIPT
          Govt. Approved Agronomy & KVK Hub Partner
 ============================================================
 
@@ -248,7 +248,7 @@ STATUS:
 Your agricultural inputs are dispatched and sealed by KVK Sangli.
 For delivery updates, track via SMS or call 1800-180-1551.
 
-CropShield AI Agronomy Platform • Ministry of Agriculture
+KISAN VIGYAAN Agronomy Platform • Ministry of Agriculture
 ============================================================
 `;
 
@@ -256,7 +256,7 @@ CropShield AI Agronomy Platform • Ministry of Agriculture
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
-    link.download = `Invoice_${confirmedOrder.orderId}_CropShield.txt`;
+    link.download = `Invoice_${confirmedOrder.orderId}_KisanVigyaan.txt`;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);

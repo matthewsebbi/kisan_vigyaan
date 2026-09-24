@@ -484,7 +484,7 @@ export const OfficerDashboard = () => {
                   <h3 className="font-black text-base text-slate-900 dark:text-white">
                     Earlier Disease Detection Trend (Days Lag)
                   </h3>
-                  <p className="text-xs text-slate-500 dark:text-slate-400">CropShield AI detection vs manual physical field scouting</p>
+                  <p className="text-xs text-slate-500 dark:text-slate-400">KISAN VIGYAAN detection vs manual physical field scouting</p>
                 </div>
                 <span className="text-xs font-mono font-bold text-emerald-600">-68% Lag</span>
               </div>
@@ -498,7 +498,7 @@ export const OfficerDashboard = () => {
                     <Tooltip contentStyle={{ backgroundColor: isDark ? '#0f172a' : '#ffffff', borderRadius: '12px', border: '1px solid #cbd5e1' }} />
                     <Legend />
                     <Line type="monotone" dataKey="manualDays" name="Manual Scouting (Days)" stroke="#ef4444" strokeWidth={2.5} dot={{ r: 4 }} />
-                    <Line type="monotone" dataKey="cropshieldDays" name="CropShield AI (Days)" stroke="#10b981" strokeWidth={3} dot={{ r: 5 }} />
+                    <Line type="monotone" dataKey="cropshieldDays" name="KISAN VIGYAAN (Days)" stroke="#10b981" strokeWidth={3} dot={{ r: 5 }} />
                   </LineChart>
                 </ResponsiveContainer>
               </div>

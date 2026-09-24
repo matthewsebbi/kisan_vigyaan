@@ -74,7 +74,7 @@ export const DarkSidebar = ({ activeView, setActiveView, isOpen, setIsOpen }) =>
                   <h1 className={`font-bold text-[14px] tracking-tight flex items-center gap-1 ${
                     isDark ? 'text-slate-100' : 'text-slate-900'
                   }`}>
-                    {t('appName') || 'CropShield AI'}
+                    {t('appName') || 'KISAN VIGYAAN'}
                   </h1>
                   <p className={`text-[10px] font-medium tracking-wide ${
                     isDark ? 'text-slate-400' : 'text-slate-500'

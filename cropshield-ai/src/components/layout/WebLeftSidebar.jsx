@@ -285,7 +285,7 @@ export const WebLeftSidebar = ({ activeTab, onNavigate, mobileOpen, setMobileOpe
               <div className="truncate">
                 <div className="flex items-center gap-1.5">
                   <span className="font-extrabold text-base tracking-tight text-[#0F172A] dark:text-emerald-400">
-                    {t('appName', 'CropShield AI')}
+                    {t('appName', 'KISAN VIGYAAN')}
                   </span>
                 </div>
                 <span className="text-[10px] font-bold uppercase tracking-widest text-slate-400 dark:text-slate-400 block font-mono">

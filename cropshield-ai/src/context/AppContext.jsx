@@ -366,12 +366,35 @@ const INITIAL_ACCOUNTS = [
 export const AppProvider = ({ children }) => {
   // 1. Accounts Registry & Session Management
   const [accounts, setAccounts] = useState(() => {
-    const saved = localStorage.getItem('cs_accounts_v6');
-    return saved ? JSON.parse(saved) : INITIAL_ACCOUNTS;
+    try {
+      const saved = localStorage.getItem('cs_accounts_v6');
+      const list = saved ? JSON.parse(saved) : INITIAL_ACCOUNTS;
+      const filtered = list.filter(a => 
+        a.name?.trim().toLowerCase() !== 'ram' && 
+        a.username?.trim().toLowerCase() !== 'ram' && 
+        !a.phone?.includes('11223') && 
+        a.email !== 'ram@kisan.in'
+      );
+      return filtered.length > 0 ? filtered : INITIAL_ACCOUNTS;
+    } catch (e) {
+      return INITIAL_ACCOUNTS;
+    }
   });
 
   const [activeUserId, setActiveUserId] = useState(() => {
-    return localStorage.getItem('cs_active_user_id') || 'usr-farmer-ramesh';
+    try {
+      const saved = localStorage.getItem('cs_active_user_id');
+      const savedAccs = localStorage.getItem('cs_accounts_v6');
+      if (saved) {
+        const parsed = savedAccs ? JSON.parse(savedAccs) : [];
+        const found = parsed.find(a => a.id === saved);
+        if (found && (found.name?.trim().toLowerCase() === 'ram' || found.username?.trim().toLowerCase() === 'ram' || found.phone?.includes('11223') || found.email === 'ram@kisan.in')) {
+          return 'usr-farmer-ramesh';
+        }
+        return saved;
+      }
+    } catch (e) {}
+    return 'usr-farmer-ramesh';
   });
 
   const [isLoggedIn, setIsLoggedIn] = useState(() => {
@@ -380,8 +403,7 @@ export const AppProvider = ({ children }) => {
 
   // 1b. State-Wise Farmer Registrations Registry (Dispatched to State Agri Officers)
   const [registeredFarmersRegistry, setRegisteredFarmersRegistry] = useState(() => {
-    const saved = localStorage.getItem('cs_farmer_registrations_v2');
-    return saved ? JSON.parse(saved) : [
+    const initialReg = [
       {
         id: "usr-farmer-ramesh",
         name: "Ramesh Patil",
@@ -409,7 +431,45 @@ export const AppProvider = ({ children }) => {
         status: "Active (Verified by State Agri Office)"
       }
     ];
+    try {
+      const saved = localStorage.getItem('cs_farmer_registrations_v2');
+      if (!saved) return initialReg;
+      const parsed = JSON.parse(saved);
+      return parsed.filter(a => 
+        a.name?.trim().toLowerCase() !== 'ram' && 
+        a.username?.trim().toLowerCase() !== 'ram' && 
+        !a.phone?.includes('11223')
+      );
+    } catch (e) {
+      return initialReg;
+    }
   });
+
+  // Purge ram immediately from localStorage on startup
+  useEffect(() => {
+    try {
+      const savedAccs = localStorage.getItem('cs_accounts_v6');
+      if (savedAccs) {
+        const parsed = JSON.parse(savedAccs);
+        const filtered = parsed.filter(a => 
+          a.name?.trim().toLowerCase() !== 'ram' && 
+          a.username?.trim().toLowerCase() !== 'ram' && 
+          !a.phone?.includes('11223') && 
+          a.email !== 'ram@kisan.in'
+        );
+        if (filtered.length !== parsed.length) {
+          localStorage.setItem('cs_accounts_v6', JSON.stringify(filtered));
+          setAccounts(filtered);
+        }
+      }
+      const activeId = localStorage.getItem('cs_active_user_id');
+      const currentActive = accounts.find(a => a.id === activeId);
+      if (currentActive && (currentActive.name?.trim().toLowerCase() === 'ram' || currentActive.username?.trim().toLowerCase() === 'ram' || currentActive.phone?.includes('11223'))) {
+        setActiveUserId('usr-farmer-ramesh');
+        localStorage.setItem('cs_active_user_id', 'usr-farmer-ramesh');
+      }
+    } catch (e) {}
+  }, []);
 
   useEffect(() => {
     localStorage.setItem('cs_farmer_registrations_v2', JSON.stringify(registeredFarmersRegistry));

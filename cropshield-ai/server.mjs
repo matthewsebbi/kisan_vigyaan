@@ -81,5 +81,5 @@ const server = http.createServer((req, res) => {
 });
 
 server.listen(PORT, '0.0.0.0', () => {
-  console.log(`CropShield AI is running at http://localhost:${PORT}/`);
+  console.log(`KISAN VIGYAAN is running at http://localhost:${PORT}/`);
 });
