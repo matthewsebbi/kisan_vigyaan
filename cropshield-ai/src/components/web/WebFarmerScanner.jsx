@@ -468,7 +468,7 @@ export const WebFarmerScanner = ({ onNavigate }) => {
       const reader = new FileReader();
       reader.onload = async (uploadEvent) => {
         const resultData = uploadEvent.target.result;
-        const compressed = await compressImageForVision(resultData);
+        const compressed = await ensureImageBase64(resultData);
         setSelectedImagePreview(compressed);
         handleTriggerScan(null, compressed);
       };
@@ -514,28 +514,16 @@ export const WebFarmerScanner = ({ onNavigate }) => {
     let targetImage = rawTarget;
     try {
       targetImage = await ensureImageBase64(rawTarget);
-      targetImage = await compressImageForVision(targetImage);
     } catch (err) {
       console.warn("Image formatting note:", err);
     }
 
-    const verification = await inspectImageForPlantContent(targetImage);
 
-    if (!verification.isPlant) {
-      clearInterval(progressInterval);
-      setInferenceProgress(100);
-      setAnalyzing(false);
-      setNonPlantRejection({
-        detectedObject: verification.detectedType,
-        confidence: verification.confidence || 92.5
-      });
-      return;
-    }
+    const predefinedOption = option || sampleLeafOptions.find(s => s.image === rawTarget);
+    const targetCrop = selectedCrop || predefinedOption?.cropKey || (predefinedOption?.crop ? predefinedOption.crop.split(' ')[0] : 'Cotton');
 
     // Call KISAN VIGYAAN Vision Model (Groq Qwen3.8-27B / Backend Pathometry)
     try {
-      const predefinedOption = option || sampleLeafOptions.find(s => s.image === rawTarget);
-      const targetCrop = selectedCrop || predefinedOption?.cropKey || (predefinedOption?.crop ? predefinedOption.crop.split(' ')[0] : 'Cotton');
 
       const apiResult = await analyzeLeafWithGroq(targetImage, lang, {
         crop: targetCrop,

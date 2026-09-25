@@ -398,7 +398,7 @@ export const analyzeLeafWithGroq = async (base64Image, lang = 'en', options = {}
   }
 
   // 4. Local Environmental & Agriculture Wiki Botanical Fallback (Respects visual verification)
-  return resolveLocalEnvironmentalDiagnosis(crop, envContext, location, season, visualVerification);
+  return resolveLocalEnvironmentalDiagnosis(crop, envContext, location, season, null);
 };
 
 export const fetchLlmHealth = async () => {
