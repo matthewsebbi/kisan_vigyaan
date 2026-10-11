@@ -1,0 +1,22 @@
+{
+  "experiment": {
+    "sample_id": "rust2.jpe",
+    "model": "gemini-3.7-flash (medium)",
+    "question_block": "v4"
+  },
+  "ground_truth": "rust",
+  "differential": {
+    "top_candidate": "rust",
+    "runner_up": "leaf_spots",
+    "score_margin": 0.65
+  },
+  "candidate_comparison": {
+    "rust": {
+      "compatibility_score": 0.95,
+      "observation_notes": "Discrete erumpent uredinia with powdery orange-brown spore masses breaking through the epidermis."
+    },
+    "leaf_spots": {
+      "compatibility_score": 0.3
+    }
+  }
+}

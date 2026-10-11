@@ -1,0 +1,22 @@
+{
+  "experiment": {
+    "sample_id": "smut2.jpe",
+    "model": "gemini-3.7-flash (medium)",
+    "question_block": "v4"
+  },
+  "ground_truth": "smut",
+  "differential": {
+    "top_candidate": "smut",
+    "runner_up": "ergot",
+    "score_margin": 0.8
+  },
+  "candidate_comparison": {
+    "smut": {
+      "compatibility_score": 0.98,
+      "observation_notes": "Plump dark green and blackish sori replacing normal grains with powdery spore contents."
+    },
+    "ergot": {
+      "compatibility_score": 0.18
+    }
+  }
+}

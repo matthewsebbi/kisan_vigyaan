@@ -1,0 +1,22 @@
+{
+  "experiment": {
+    "sample_id": "PMU_001.jpg",
+    "model": "gemini-3.7-flash (medium)",
+    "question_block": "v4"
+  },
+  "ground_truth": "blast",
+  "differential": {
+    "top_candidate": "blast",
+    "runner_up": "leaf_spots",
+    "score_margin": 0.55
+  },
+  "candidate_comparison": {
+    "blast": {
+      "compatibility_score": 0.95,
+      "observation_notes": "Classic fusiform/spindle-shaped eye lesion on leaf blade with pale grey necrotic center, dark brown defined margin, and chlorotic halo."
+    },
+    "leaf_spots": {
+      "compatibility_score": 0.4
+    }
+  }
+}

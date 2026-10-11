@@ -1,0 +1,22 @@
+{
+  "experiment": {
+    "sample_id": "PMU_010.jpg",
+    "model": "gemini-3.7-flash (medium)",
+    "question_block": "v4"
+  },
+  "ground_truth": "rust",
+  "differential": {
+    "top_candidate": "rust",
+    "runner_up": "leaf_spots",
+    "score_margin": 0.73
+  },
+  "candidate_comparison": {
+    "rust": {
+      "compatibility_score": 0.98,
+      "observation_notes": "Foliar surface densely covered in minute, raised, erumpent, cinnamon-brown to reddish-orange powdery pustules (uredinia)."
+    },
+    "leaf_spots": {
+      "compatibility_score": 0.25
+    }
+  }
+}

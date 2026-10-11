@@ -1,0 +1,22 @@
+{
+  "experiment": {
+    "sample_id": "ergot3.jpe",
+    "model": "gemini-3.7-flash (medium)",
+    "question_block": "v4"
+  },
+  "ground_truth": "ergot",
+  "differential": {
+    "top_candidate": "ergot",
+    "runner_up": "smut",
+    "score_margin": 0.65
+  },
+  "candidate_comparison": {
+    "ergot": {
+      "compatibility_score": 0.85,
+      "observation_notes": "Mature dark sclerotial structures replacing normal caryopses across the spike."
+    },
+    "smut": {
+      "compatibility_score": 0.2
+    }
+  }
+}

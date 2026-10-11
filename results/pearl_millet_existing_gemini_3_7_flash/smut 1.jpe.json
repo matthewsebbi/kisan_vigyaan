@@ -1,0 +1,22 @@
+{
+  "experiment": {
+    "sample_id": "smut 1.jpe",
+    "model": "gemini-3.7-flash (medium)",
+    "question_block": "v4"
+  },
+  "ground_truth": "smut",
+  "differential": {
+    "top_candidate": "smut",
+    "runner_up": "ergot",
+    "score_margin": 0.6
+  },
+  "candidate_comparison": {
+    "smut": {
+      "compatibility_score": 0.9,
+      "observation_notes": "Enlarged sori protruding past normal grain positions on the spike."
+    },
+    "ergot": {
+      "compatibility_score": 0.3
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "experiment": {
+    "sample_id": "PMU_002.jpg",
+    "model": "gemini-3.7-flash (medium)",
+    "question_block": "v4"
+  },
+  "ground_truth": "blast",
+  "differential": {
+    "top_candidate": "leaf_spots",
+    "runner_up": "blast",
+    "score_margin": -0.3
+  },
+  "candidate_comparison": {
+    "leaf_spots": {
+      "compatibility_score": 0.85,
+      "observation_notes": "Early solitary lesion on blade has rounded/oval blunt ends rather than tapered spindle tips, leading vision feature extractor toward generic leaf spot over blast."
+    },
+    "blast": {
+      "compatibility_score": 0.55
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "experiment": {
+    "sample_id": "blast.jpg",
+    "model": "gemini-3.7-flash (medium)",
+    "question_block": "v4"
+  },
+  "ground_truth": "blast",
+  "differential": {
+    "top_candidate": "blast",
+    "runner_up": "leaf_spots",
+    "score_margin": 0.35
+  },
+  "candidate_comparison": {
+    "blast": {
+      "compatibility_score": 0.9,
+      "observation_notes": "Small developing diamond-shaped lesions with grayish necrotic centers, brown borders, and prominent spindle margin forming along the leaf edge."
+    },
+    "leaf_spots": {
+      "compatibility_score": 0.55
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "experiment": {
+    "sample_id": "PMU_011.jpg",
+    "model": "gemini-3.7-flash (medium)",
+    "question_block": "v4"
+  },
+  "ground_truth": "rust",
+  "differential": {
+    "top_candidate": "rust",
+    "runner_up": "leaf_spots",
+    "score_margin": 0.78
+  },
+  "candidate_comparison": {
+    "rust": {
+      "compatibility_score": 0.98,
+      "observation_notes": "Prominent, powdery, raised reddish-orange pustules erupting through the epidermal surface of the leaf blade with associated chlorosis."
+    },
+    "leaf_spots": {
+      "compatibility_score": 0.2
+    }
+  }
+}

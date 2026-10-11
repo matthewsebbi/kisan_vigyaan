@@ -1,0 +1,22 @@
+{
+  "experiment": {
+    "sample_id": "leaf spot.webp",
+    "model": "gemini-3.7-flash (medium)",
+    "question_block": "v4"
+  },
+  "ground_truth": "leaf_spots",
+  "differential": {
+    "top_candidate": "leaf_spots",
+    "runner_up": "blast",
+    "score_margin": 0.4
+  },
+  "candidate_comparison": {
+    "leaf_spots": {
+      "compatibility_score": 0.95,
+      "observation_notes": "Numerous circular to oval necrotic lesions with dark concentric rings and broad chlorotic halos."
+    },
+    "blast": {
+      "compatibility_score": 0.55
+    }
+  }
+}

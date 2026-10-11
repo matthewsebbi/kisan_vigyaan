@@ -1,0 +1,22 @@
+{
+  "experiment": {
+    "sample_id": "PMU_003.jpg",
+    "model": "gemini-3.7-flash (medium)",
+    "question_block": "v4"
+  },
+  "ground_truth": "downy_mildew_green_ear",
+  "differential": {
+    "top_candidate": "downy_mildew_green_ear",
+    "runner_up": "ergot",
+    "score_margin": 0.93
+  },
+  "candidate_comparison": {
+    "downy_mildew_green_ear": {
+      "compatibility_score": 0.98,
+      "observation_notes": "Lower half of earhead transformed into characteristic leafy phyllody ('green ear' malformation) with complete suppression of normal grain formation."
+    },
+    "ergot": {
+      "compatibility_score": 0.05
+    }
+  }
+}

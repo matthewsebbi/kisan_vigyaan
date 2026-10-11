@@ -1,0 +1,22 @@
+{
+  "experiment": {
+    "sample_id": "smut3.jpe",
+    "model": "gemini-3.7-flash (medium)",
+    "question_block": "v4"
+  },
+  "ground_truth": "smut",
+  "differential": {
+    "top_candidate": "smut",
+    "runner_up": "ergot",
+    "score_margin": 0.65
+  },
+  "candidate_comparison": {
+    "smut": {
+      "compatibility_score": 0.9,
+      "observation_notes": "Darkened, hypertrophied florets on the panicle head with protruding glumes."
+    },
+    "ergot": {
+      "compatibility_score": 0.25
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "experiment": {
+    "sample_id": "PMU_008.jpg",
+    "model": "gemini-3.7-flash (medium)",
+    "question_block": "v4"
+  },
+  "ground_truth": "smut",
+  "differential": {
+    "top_candidate": "smut",
+    "runner_up": "ergot",
+    "score_margin": 0.7
+  },
+  "candidate_comparison": {
+    "smut": {
+      "compatibility_score": 0.95,
+      "observation_notes": "Scattered florets replaced by significantly enlarged, plump, bright green sori extending well beyond the perimeter of healthy grains."
+    },
+    "ergot": {
+      "compatibility_score": 0.25
+    }
+  }
+}

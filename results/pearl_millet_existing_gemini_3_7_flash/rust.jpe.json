@@ -1,0 +1,22 @@
+{
+  "experiment": {
+    "sample_id": "rust.jpe",
+    "model": "gemini-3.7-flash (medium)",
+    "question_block": "v4"
+  },
+  "ground_truth": "rust",
+  "differential": {
+    "top_candidate": "rust",
+    "runner_up": "leaf_spots",
+    "score_margin": 0.6
+  },
+  "candidate_comparison": {
+    "rust": {
+      "compatibility_score": 0.95,
+      "observation_notes": "Clusters of raised cinnamon-brown powdery pustules erupting across the adaxial leaf blade."
+    },
+    "leaf_spots": {
+      "compatibility_score": 0.35
+    }
+  }
+}

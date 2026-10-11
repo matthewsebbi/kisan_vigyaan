@@ -1,0 +1,22 @@
+{
+  "experiment": {
+    "sample_id": "leaf_spot.jpg",
+    "model": "gemini-3.7-flash (medium)",
+    "question_block": "v4"
+  },
+  "ground_truth": "leaf_spots",
+  "differential": {
+    "top_candidate": "blast",
+    "runner_up": "leaf_spots",
+    "score_margin": -0.15
+  },
+  "candidate_comparison": {
+    "blast": {
+      "compatibility_score": 0.85,
+      "observation_notes": "The sample displays well-developed fusiform/spindle-shaped lesions with tan papery centers, which strong blast hallmarks favor over generic leaf spots."
+    },
+    "leaf_spots": {
+      "compatibility_score": 0.7
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "experiment": {
+    "sample_id": "PMU_012.jpg",
+    "model": "gemini-3.7-flash (medium)",
+    "question_block": "v4"
+  },
+  "ground_truth": "leaf_spots",
+  "differential": {
+    "top_candidate": "leaf_spots",
+    "runner_up": "blast",
+    "score_margin": 0.47
+  },
+  "candidate_comparison": {
+    "leaf_spots": {
+      "compatibility_score": 0.92,
+      "observation_notes": "Multiple irregular to oblong brown necrotic patches without raised pustules and lacking classic narrow spindle tips, surrounded by diffuse chlorotic bands."
+    },
+    "blast": {
+      "compatibility_score": 0.45
+    }
+  }
+}
