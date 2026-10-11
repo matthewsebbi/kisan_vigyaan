@@ -1,183 +1,260 @@
-# Pearl Millet Ergot
+# Pearl Millet Ergot (Claviceps fusiformis)
 
-## Diagnostic Phenotype
+This bank is a representation-aligned update of the supplied Pearl Millet
+Contrastive Phenotype v2 files.
 
-### Primary Affected Plant Parts
+## Shared observation vocabulary
 
+The comparator should map the observed phenotype into these dimensions where
+the corresponding evidence is available:
+
+### Structure
+- leaf_blade
+- leaf_sheath
+- stem
+- panicle
+- spikelet
+- floret
+- grain
+- whole_plant
+
+### Geometry
+- axis_ratio_long_to_short
+- elongation
+- width_profile
+- end_shape
+- symmetry
+- boundary_character
+- discrete_vs_continuous
+
+### Surface
+- elevation
+- physical_relief
+- powder
+- granular_material
+- attached_surface_material
+- texture
+
+### Internal lesion structure
+- center
+- margin
+- center_margin_contrast
+- halo
+- internal_texture
+
+### Reproductive relationship
+- occupies_normal_grain_position
+- relative_size
+- relative_width
+- relative_length
+- rounded_expansion
+- elongated_projection
+- projection_from_individual_floret
+- membrane
+- membrane_state
+- exposed_spore_mass
+- exudate
+
+### Spatial pattern
+- distribution
+- orientation
+- coalescence
+- plant_position
+- repeated_structure_pattern
+
+### Development
+- apparent_stage
+- progression
+- multiple_visible_stages
+
+## Evidence states
+
+For observations supplied by the visual model:
+- PRESENT — directly visible with sufficient confidence.
+- ABSENT — the relevant region is visible at adequate resolution and the
+  feature is reasonably not present.
+- UNCERTAIN — the region is visible but the feature cannot be resolved reliably.
+- NOT_VISIBLE — the relevant region cannot actually be inspected.
+
+Never treat NOT_VISIBLE as ABSENT.
+
+## Comparison principle
+
+The bank should compare morphology first, then supporting color/pattern context.
+Color alone is weak evidence unless tied to a specific structural phenotype.
+
+Measurement-like observations such as axis ratio, relative size, physical relief,
+and floret-to-abnormal-structure relationship should be preferred over relying
+only on categorical words such as "spindle", "oval", "pustule", "ball", or
+"green ear".
+
+## Stage-awareness
+
+Features that are developmental or stage-dependent must not be treated as
+required at every stage. Absence of a later-stage feature cannot by itself
+exclude an earlier-stage presentation.
+
+## Residual-category protection
+
+"Leaf Spots" is a symptom-level category and is not an automatic fallback.
+When decisive morphology is unresolved, uncertainty should be preserved.
+
+
+# Pearl Millet Ergot — Contrastive Phenotype v3
+
+## Diagnostic phenotype
+
+### Primary affected plant parts
 - panicle
 - spikelet
 - floret
 - whole_plant
 
-### Symptom Class
-
+### Symptom classes
 - floral_infection
 - panicle_disease
 - honeydew_exudation
 - grain_replacement
 
-### Lesion / Symptom Geometry
+### Core spatial relationship
 
-- Primary shape: `none_no_distinct_leaf_lesion`
-- Elongation: `not_applicable`
-- Width profile: `not_applicable`
-- Ends: `not_applicable`
-- Discrete or continuous: `discrete_floret_associated`
+The primary abnormality is discrete and floret-associated.
 
-### Size
+Preferred observations:
+- abnormality associated with an individual floret/spikelet;
+- structure may occupy or replace the normal grain/floret position;
+- later abnormality may project outward from an infected floret;
+- multiple infected florets can occur within one panicle.
 
-- Symptoms are associated primarily with individual infected florets on the panicle.
-- Infected florets may fail to develop normal grain.
-- In later stages, elongated fungal structures/sclerotia may project from infected florets and can be substantially larger than normal grain.
+### Developmental stages
 
-### Color
+#### Early / honeydew stage
+- visible exudate/droplets;
+- clear to pinkish or brownish appearance;
+- sticky/viscous/sugary texture.
 
-- Center / primary color: `honeydew_clear_to_pinkish_or_brownish`
-- Margin: `not_applicable`
-- Surrounding tissue: green to normal panicle tissue
-- Color transition: `variable_or_not_applicable`
-- Current/overall colors: clear, pinkish, brownish, dark_brown_to_black_in_mature_sclerotia
+#### Later stage
+- honeydew may no longer be visible;
+- elongated hard/firm sclerotial structure can project from an infected floret;
+- mature structure can be dark brown to black.
 
-### Texture
+Therefore:
+absence of honeydew is NOT strong contradiction when the image plausibly
+represents a later stage.
 
-- Current texture: sticky, viscous_or_sugary_during_honeydew_stage; hard_or_firm_in_mature_sclerotial_stage
-- Early appearance: `sticky_honeydew_exudation`
+## Floret-level geometry
 
-### Pattern and Distribution
+High-value primitive observations:
+- elongated vs rounded;
+- long-axis / short-axis relationship;
+- relative size to a normal adjacent grain;
+- relative width and length;
+- projection beyond normal floret position;
+- attachment to an individual floret;
+- solid/hard-looking structure versus loose spore mass.
 
-- Orientation: `panicle_associated`
-- Distribution: `discrete_florets_or_spikelets`
-- Coalescence: `localized_or_multiple_infected_florets`
-- Vein relationship: `not_applicable`
+A dark elongated structure projecting from an individual floret is substantially
+more informative than dark panicle color alone.
 
-### Spatial Location
+## Hallmarks
 
-- Primary location: `panicle_spikelet_floret`
-- Initial visible symptom: `infected_floret_exuding_honeydew`
-- Later symptom: `sclerotium_replacing_or_projecting_from_floret`
+Identity-defining when visible:
+- sticky/viscous floret-associated honeydew;
+- elongated projecting late-stage structure associated with an infected floret.
 
-### Whole-Plant / Field-Level Features
+Strong support:
+- floret-associated exudate;
+- viscous/sticky texture;
+- elongated hard/firm structure;
+- repeated similar projections on affected florets.
 
-- reduced_seed_set
-- infected_florets_fail_to_produce_normal_grain
-- chaffiness_of_panicle
-- multiple_infected_florets_per_panicle
-- yield_reduction_in_severe_cases
-- field_level_occurrence_may_be_patchy
+Weak/non-specific:
+- dark panicle appearance;
+- grain failure;
+- reduced seed set;
+- chaffiness.
 
-## Hallmark Features
+## Contrastive evidence against Smut
 
-- honeydew_like_droplets
-- thick_sticky_or_viscous_exudate
-- pinkish_to_brownish_honeydew
-- infected_florets_fail_to_produce_normal_grain
-- elongated_sclerotial_structure_from_infected_floret
-- dark_brown_to_black_mature_sclerotia
-- symptom_centered_on_panicle_and_florets
-- grain_set_reduction
+Strong support for Ergot:
+- elongated projection;
+- elongated rather than ball-like expansion;
+- sticky/viscous exudate;
+- floret-associated structure.
 
-## Negative / Exclusion Features
+Strong contradiction:
+- clearly enlarged rounded/ball-like spore structure;
+- membrane-covered smut structure;
+- ruptured ball with exposed loose dark spores.
 
-These features should reduce confidence in this diagnosis when they are clearly present.
+## Contrastive evidence against Downy Mildew / Green Ear
 
-- diffuse_leaf_yellowing_as_primary_symptom
-- spindle_diamond_leaf_lesions
-- circular_brown_leaf_spots
-- green_ear_panicle_transformation
-- discrete_large_smut_balls_enclosing_florets
-- sheath_lesions_as_primary_symptom
+A diffuse or green-looking panicle is not sufficient for Downy Mildew.
+Require widespread architectural transformation for strong Downy support.
 
-## Differential Diagnosis
+An isolated floret-associated elongated projection, especially when normal
+florets remain recognizable elsewhere, should not be converted into a
+leafy-panicle transformation.
 
-### Similar Problems
-
-- Pearl Millet Downy Mildew / Green Ear
-- Pearl Millet Smut
-- Grain Mold
-- Blast
-- Other panicle or grain diseases
-
-### Diagnostic Discriminators
-
-- Identify the affected plant part before interpreting symptom color.
-- Give high diagnostic weight to honeydew exudation from individual florets.
-- Distinguish sticky or viscous honeydew from dry fungal spore masses or smut balls.
-- Distinguish infected florets and projecting sclerotia from a panicle that is transformed into a green-ear structure.
-- Distinguish discrete floret-associated symptoms from diffuse leaf discoloration.
-- Evaluate the developmental stage of the symptom: honeydew is characteristic of an earlier visible stage, while sclerotia develop later.
-- Treat absence of visible honeydew as uncertain evidence when the disease may have progressed to the sclerotial stage.
-- Treat uncertainty in floret or panicle identification as uncertainty rather than as a fact.
-
-## Environmental Conditions
-
-### Temperature
-
-- Not specified in supplied reference.
-
-### Humidity
-
-- Not specified in supplied reference.
-
-### Rainfall / Moisture
-
-- Moist conditions during flowering can support disease development; exact values should be verified before being used as diagnostic evidence.
-
-### Soil
-
-- Not specified in supplied reference.
-
-> **Source status:** The supplied Rice Tungro phenotype was used as the structural reference. Disease-specific Pearl Millet Ergot features were checked against ICAR material, which describes ergot/sugary disease as a pearl millet disease with honeydew-like, thick/sticky/viscous, pinkish-to-brownish droplets, infected florets that fail to produce grain, and later sclerotial survival. citeturn0search16
-
-## Crop Stage
-
-- Most diagnostically important around flowering and panicle/floret development.
-- Exact crop-stage thresholds not specified in the supplied reference.
-
-## Reference Images
-
-- Not specified in supplied reference.
-
-## Sources
-
-- ICAR–Indian Institute of Millets Research / Indian Farming: disease management for millet production. The source describes Pearl Millet Ergot (sugary disease), honeydew exudation, infected florets, grain failure, and sclerotial survival. citeturn0search16
-
-## Machine-Comparison Notes
+## Evidence weighting
 
 ```yaml
-plant_parts:
-  - panicle
-  - spikelet
-  - floret
-  - whole_plant
+identity_defining:
+  - floret_associated_sticky_honeydew_when_present
+  - elongated_projecting_hard_structure_from_infected_floret
 
-lesion_present: false_or_not_primary
+strong_support:
+  - viscous_exudate
+  - floret_association
+  - elongated_geometry
+  - relative_grain_displacement_or_replacement
+  - hard_or_firm_late_structure
 
-primary_shape: none_no_distinct_leaf_lesion
-width_profile: not_applicable
-ends: not_applicable
+weak_or_non_specific:
+  - dark_color
+  - reduced_seed_set
+  - chaffiness
+  - grain_failure
 
-color_transition: variable_or_not_applicable
-early_appearance: sticky_honeydew_exudation
-
-pattern_distribution: discrete_florets_or_spikelets
-vein_relationship: not_applicable
-
-primary_location: panicle_spikelet_floret
-
-symptom_stage:
-  early:
-    honeydew: present
-    honeydew_texture: sticky_viscous
-    honeydew_color: clear_to_pinkish_or_brownish
-  late:
-    sclerotium: present
-    sclerotium_texture: hard_firm
-    sclerotium_color: dark_brown_to_black
-
-whole_plant_context:
-  reduced_seed_set: possible
-  chaffy_panicle: possible
-  yield_reduction: possible
-  green_ear: absent
-  diffuse_leaf_chlorosis: not_primary
+contradiction:
+  - enlarged_ball_like_spore_structure
+  - membrane_covered_or_ruptured_smutted_structure
+  - clear_widespread_leafy_green_panicle_transformation
+  - diffuse_leaf_chlorosis_as_primary_visual_pattern
 ```
+
+## Visibility and stage rules
+
+- Absence of honeydew does not exclude later-stage Ergot.
+- If the structure shape is unresolved, retain Ergot vs Smut uncertainty.
+- Do not infer an elongated sclerotial structure from dark color alone.
+- Do not infer green-ear transformation from panicle color/density alone.
+- Prefer individual-floret attachment and relative geometry over overall panicle
+  appearance.
+
+## Machine-comparison notes
+
+```yaml
+primary_location: panicle_spikelet_floret
+stage_aware: true
+preferred_measurements:
+  - relative_size_to_normal_grain
+  - relative_length
+  - relative_width
+  - axis_ratio_long_to_short
+  - projection
+  - floret_attachment
+  - membrane_state
+  - exudate
+early_identity:
+  - sticky_honeydew
+late_identity:
+  - elongated_projecting_hard_structure
+anti_features:
+  - enlarged_ball_like_spore_structure
+  - membrane_covered_smut_structure
+  - widespread_leafy_green_panicle_transformation
+uncertainty_features:
+  - late_stage_without_honeydew
+  - structure_shape_not_visible
+  - floret_attachment_not_visible

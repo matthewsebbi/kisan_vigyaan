@@ -1,0 +1,180 @@
+{
+  "experiment": {
+    "sample_id": "ergot_1.jpe",
+    "model": "qwen+gpt-oss-120b",
+    "question_block": "v3"
+  },
+  "candidate_comparison": {
+    "blast": {
+      "supported_features": [
+        "reddish_brown_color"
+      ],
+      "contradictory_features": [
+        "primary_location_is_panicle_not_leaf",
+        "no_spindle_or_diamond_lesions",
+        "no_gray_necrotic_center",
+        "structure_is_granular_mass_not_flat_lesion"
+      ],
+      "unknown_features": [],
+      "compatibility_score": 0.05
+    },
+    "downy_mildew_green_ear": {
+      "supported_features": [
+        "reduced_or_absent_normal_grain_formation"
+      ],
+      "contradictory_features": [
+        "no_green_ear_transformation",
+        "no_leafy_or_malformed_structure",
+        "no_chlorotic_leaf_symptoms_visible",
+        "structure_is_dark_granular_not_green"
+      ],
+      "unknown_features": [],
+      "compatibility_score": 0.1
+    },
+    "ergot": {
+      "supported_features": [
+        "dark_color",
+        "reduced_seed_set",
+        "panicle_location",
+        "hard_elongated_late_structure_morphology_match"
+      ],
+      "contradictory_features": [
+        "no_visible_honeydew",
+        "no_sticky_exudate"
+      ],
+      "unknown_features": [
+        "membrane_integrity",
+        "individual_sclerotia_size",
+        "elongated_projecting_shape_clarity"
+      ],
+      "compatibility_score": 0.85
+    },
+    "smut": {
+      "supported_features": [
+        "dark_color",
+        "panicle_location",
+        "sterile_florets_implied"
+      ],
+      "contradictory_features": [
+        "no_enlarged_ball_like_structure",
+        "no_membrane_covered_or_ruptured_spore_ball",
+        "texture_is_granular_sclerotia_not_powdery_spore_mass",
+        "shape_is_elongated_cylindrical_not_discrete_balls"
+      ],
+      "unknown_features": [
+        "spore_mass_exposure"
+      ],
+      "compatibility_score": 0.3
+    },
+    "rust": {
+      "supported_features": [
+        "reddish_brown_color"
+      ],
+      "contradictory_features": [
+        "no_raised_powdery_pustules",
+        "primary_location_is_panicle_not_leaf",
+        "no_visible_spore_mass_on_leaf_surface",
+        "structure_is_granular_mass_not_pustules"
+      ],
+      "unknown_features": [],
+      "compatibility_score": 0.05
+    },
+    "leaf_spots": {
+      "supported_features": [
+        "brown_color"
+      ],
+      "contradictory_features": [
+        "primary_location_is_panicle_not_leaf",
+        "no_discrete_flat_necrotic_spots",
+        "structure_is_granular_mass_not_flat_lesions"
+      ],
+      "unknown_features": [],
+      "compatibility_score": 0.05
+    }
+  },
+  "differential": {
+    "top_candidate": "ergot",
+    "runner_up": "smut",
+    "score_margin": 0.55
+  },
+  "diagnostic_bottleneck": "Distinguishing between Ergot (sclerotia) and Smut (spore balls) based on surface texture and structure shape. The observed 'dense dark granules' and 'elongated cylindrical' form strongly favor Ergot sclerotia over Smut's typical 'enlarged ball-like' or 'powdery' structures. However, the absence of visible honeydew (early Ergot sign) and the uncertainty about individual sclerotia size/shape require careful visual confirmation to rule out a dense smut infection that appears granular due to spore aggregation.",
+  "requires_second_stage_visual_comparison": true,
+  "final_decision": {
+    "diagnosis": "ergot",
+    "abstain": false,
+    "reason": "The phenotype shows a dark, granular, elongated mass replacing the grain head, which is characteristic of Ergot sclerotia. Key features supporting Ergot include the dark brown/black color, the granular/hard texture (sclerotia), and the location on the panicle. Smut is the main differential, but Smut typically presents as enlarged, often membrane-covered or powdery spore balls, whereas the observed structure is described as a dense mass of hard, dark granules maintaining the panicle's elongated shape, which aligns better with Ergot. The absence of honeydew is noted but does not rule out late-stage Ergot. The score margin is sufficient to proceed with Ergot as the primary diagnosis, pending second-stage visual verification to confirm sclerotia morphology vs. smut balls."
+  },
+  "ground_truth": "ergot",
+  "sample_observation": {
+    "plant_part": {
+      "structure": "panicle",
+      "visibility": "sufficient",
+      "notes": "The image displays the inflorescence (panicle) of the pearl millet plant. The structure is elongated and cylindrical."
+    },
+    "symptom_class": {
+      "type": "structural_replacement",
+      "description": "The normal grain-bearing structure appears to be replaced by a dense mass of dark, granular material. The panicle is not transformed into a leafy structure (green ear) but rather a dark, spore-like mass."
+    },
+    "geometry": {
+      "shape": "elongated",
+      "form": "cylindrical",
+      "notes": "The overall shape of the panicle is maintained, but the surface texture is heavily modified."
+    },
+    "surface": {
+      "texture": "granular",
+      "features": [
+        "dense dark granules",
+        "no visible powdery coating",
+        "no visible honeydew"
+      ]
+    },
+    "texture": {
+      "description": "The surface appears rough and composed of many small, dark, hard-looking units (sclerotia) rather than smooth grains."
+    },
+    "color": {
+      "dominant": "dark brown to black",
+      "secondary": "reddish-brown",
+      "notes": "The dark coloration is distinct from the typical tan/brown of healthy mature grains."
+    },
+    "distribution": {
+      "pattern": "diffuse",
+      "coverage": "The abnormality covers the entire visible length of the panicle."
+    },
+    "spatial_location": {
+      "location": "reproductive_head",
+      "notes": "The abnormality is located at the top of the stem, replacing the grain head."
+    },
+    "reproductive_structure": {
+      "status": "abnormal",
+      "details": "Individual grains are not clearly distinguishable; they appear to be replaced by the dark structures."
+    },
+    "developmental_stage": {
+      "stage": "maturity",
+      "notes": "The plant appears to be at the grain-filling or maturity stage."
+    }
+  },
+  "evidence": {
+    "present": [
+      "panicle",
+      "dark granular mass",
+      "elongated structure",
+      "reproductive tissue"
+    ],
+    "absent": [
+      "leaf_blade",
+      "leaf_sheath",
+      "green_ear_transformation",
+      "powdery_material",
+      "honeydew"
+    ],
+    "uncertain": [
+      "membrane_integrity",
+      "individual_sclerotia_size"
+    ],
+    "not_visible": [
+      "stem_base",
+      "leaves",
+      "spore_mass_exposure"
+    ]
+  }
+}

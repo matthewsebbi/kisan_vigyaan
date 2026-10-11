@@ -1,0 +1,98 @@
+{
+  "experiment": {
+    "sample_id": "PMU_007.jpg",
+    "model": "qwen+gpt-oss-120b",
+    "question_block": "v3"
+  },
+  "candidate_comparison": {
+    "blast": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.0
+    },
+    "downy_mildew_green_ear": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.7
+    },
+    "ergot": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.1
+    }
+  },
+  "ground_truth": "ergot",
+  "sample_observation": {
+    "plant_part": {
+      "primary": "panicle",
+      "secondary": "leaf_blade",
+      "status": "reproductive"
+    },
+    "symptom_class": {
+      "type": "structural_replacement",
+      "description": "The normal grain-bearing panicle structure is replaced by a dense mass of reddish-brown, leafy, or frond-like tissue. The structure appears distorted and proliferative rather than necrotic or lesion-based."
+    },
+    "geometry": {
+      "shape": "cylindrical/elongated",
+      "form": "dense, chaotic proliferation of small leaf-like structures",
+      "distinct_lesions": false,
+      "notes": "The entire panicle head is affected, forming a solid, textured column."
+    },
+    "surface": {
+      "texture": "rough, leafy, frond-like",
+      "features": "No pustules, powdery mildew, or smooth necrotic patches visible. The surface is composed of many small, overlapping, reddish-brown structures."
+    },
+    "texture": {
+      "consistency": "dry, brittle appearance",
+      "details": "The tissue looks desiccated and papery, typical of a transformed reproductive structure."
+    },
+    "color": {
+      "dominant": "reddish-brown, rust-colored",
+      "secondary": "green (in background leaves and some untransformed panicles)",
+      "notes": "The affected panicle is distinctly discolored compared to the green healthy panicles in the background."
+    },
+    "distribution": {
+      "pattern": "generalized",
+      "extent": "The entire visible panicle head is transformed. No healthy grain development is visible on the main subject."
+    },
+    "spatial_location": {
+      "location": "reproductive head (panicle)",
+      "notes": "Surrounding leaves appear green and healthy in the visible portions."
+    },
+    "reproductive_structure": {
+      "status": "malformed/replaced",
+      "details": "Normal grains are absent. The structure resembles a 'green ear' or leafy transformation, though the color is reddish-brown rather than green."
+    },
+    "developmental_stage": {
+      "stage": "reproductive (heading/maturity)"
+    }
+  },
+  "evidence": {
+    "present": [
+      "Panicle transformation into leafy/vegetative-like tissue",
+      "Reddish-brown discoloration of the panicle",
+      "Absence of normal grain development on the affected head",
+      "Dense, frond-like surface texture"
+    ],
+    "absent": [
+      "Discrete leaf lesions (on visible leaves)",
+      "Pustules",
+      "Powdery material",
+      "Elongated sclerotia (ergot)",
+      "Rounded smut balls"
+    ],
+    "uncertain": [
+      "Specific species of pathogen (visuals suggest Downy Mildew 'Green Ear' but color is atypical)",
+      "Whether the reddish color is due to senescence or specific pathogen pigmentation"
+    ],
+    "not_visible": [
+      "Roots",
+      "Stem base",
+      "Internal tissue structure"
+    ]
+  },
+  "evidence_quality": {}
+}

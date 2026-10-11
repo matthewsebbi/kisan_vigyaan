@@ -1,0 +1,96 @@
+{
+  "experiment": {
+    "sample_id": "PMU_009.jpg",
+    "model": "gemini-3.8-flash",
+    "question_block": "v4"
+  },
+  "candidate_comparison": {
+    "blast": {
+      "supported_features": [],
+      "contradictory_features": [
+        "PRIMARY_STRUCTURE is earhead/panicle florets",
+        "grains transformed into green and black sori",
+        "absence of foliar necrotic spots"
+      ],
+      "unknown_features": [],
+      "compatibility_score": 0.0
+    },
+    "downy_mildew_green_ear": {
+      "supported_features": [
+        "PRIMARY_STRUCTURE is earhead"
+      ],
+      "contradictory_features": [
+        "absence of phyllody / leafy floral bracts",
+        "ovaries transformed into green and dark sooty sori rather than leafy malformations"
+      ],
+      "unknown_features": [],
+      "compatibility_score": 0.0
+    },
+    "ergot": {
+      "supported_features": [
+        "PRIMARY_STRUCTURE is earhead/florets"
+      ],
+      "contradictory_features": [
+        "enlarged rounded green-to-black sori with powdery teliospore masses rather than sticky liquid honeydew or rigid horn-like sclerotia",
+        "entire head showing smutted sori beside a clean healthy control head"
+      ],
+      "unknown_features": [],
+      "compatibility_score": 0.15
+    },
+    "smut": {
+      "supported_features": [
+        "PRIMARY_STRUCTURE is earhead/florets",
+        "ovaries_replaced_by_enlarged_globose_sori",
+        "transition_from_green_immature_sori_to_dark_brown_black_mature_sori",
+        "ruptured_membrane_revealing_black_sooty_teliospore_masses",
+        "dense_soral_transformation_across_earhead",
+        "direct_side_by_side_contrast_with_healthy_grain_panicle",
+        "classic phenotype of pearl millet smut (Moesziomyces bullatus)"
+      ],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.98
+    },
+    "rust": {
+      "supported_features": [],
+      "contradictory_features": [
+        "panicle grain smut transformation rather than foliar pustules"
+      ],
+      "unknown_features": [],
+      "compatibility_score": 0.0
+    },
+    "leaf_spots": {
+      "supported_features": [],
+      "contradictory_features": [
+        "inflorescence smut infection rather than foliar necrotic spots"
+      ],
+      "unknown_features": [],
+      "compatibility_score": 0.0
+    }
+  },
+  "differential": {
+    "top_candidate": "smut",
+    "runner_up": "ergot",
+    "score_margin": 0.83
+  },
+  "ground_truth": "smut",
+  "sample_observation": {
+    "primary_structure": "panicle_florets",
+    "sori": "green_to_black_sooty_sori_comparison"
+  },
+  "evidence": {
+    "present": [
+      "green to black enlarged sori",
+      "sooty black spore masses replacing grains",
+      "healthy vs diseased comparison heads"
+    ],
+    "absent": [
+      "honeydew droplets",
+      "phyllody",
+      "foliar lesions"
+    ]
+  },
+  "evidence_quality": {
+    "clarity": "very_high"
+  }
+}

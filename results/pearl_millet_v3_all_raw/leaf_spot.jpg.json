@@ -1,0 +1,185 @@
+{
+  "experiment": {
+    "sample_id": "leaf_spot.jpg",
+    "model": "qwen+gpt-oss-120b",
+    "question_block": "v3"
+  },
+  "candidate_comparison": {
+    "blast": {
+      "supported_features": [
+        "oval_to_fusiform_shape",
+        "tan_necrotic_center",
+        "dark_brown_margin",
+        "chlorotic_halo",
+        "flat_surface",
+        "dry_papery_texture"
+      ],
+      "contradictory_features": [],
+      "unknown_features": [
+        "lesion_progression",
+        "spindle_diamond_developed_lesion"
+      ],
+      "compatibility_score": 0.85
+    },
+    "downy_mildew_green_ear": {
+      "supported_features": [
+        "chlorotic_halo"
+      ],
+      "contradictory_features": [
+        "discrete_lesions",
+        "tan_necrotic_center",
+        "dark_brown_margin",
+        "flat_surface",
+        "dry_papery_texture"
+      ],
+      "unknown_features": [
+        "green_ear",
+        "malformed_panicle"
+      ],
+      "compatibility_score": 0.1
+    },
+    "ergot": {
+      "supported_features": [],
+      "contradictory_features": [
+        "leaf_blade_location",
+        "discrete_lesions",
+        "tan_necrotic_center"
+      ],
+      "unknown_features": [
+        "honeydew",
+        "sclerotium"
+      ],
+      "compatibility_score": 0.0
+    },
+    "smut": {
+      "supported_features": [],
+      "contradictory_features": [
+        "leaf_blade_location",
+        "discrete_lesions",
+        "tan_necrotic_center"
+      ],
+      "unknown_features": [
+        "spore_ball",
+        "membrane"
+      ],
+      "compatibility_score": 0.0
+    },
+    "rust": {
+      "supported_features": [
+        "brown_color"
+      ],
+      "contradictory_features": [
+        "flat_surface",
+        "no_pustular",
+        "no_powdery",
+        "no_spore_mass",
+        "dry_papery_texture"
+      ],
+      "unknown_features": [],
+      "compatibility_score": 0.1
+    },
+    "leaf_spots": {
+      "supported_features": [
+        "discrete_lesions",
+        "tan_necrotic_center",
+        "dark_brown_margin",
+        "chlorotic_halo",
+        "flat_surface",
+        "dry_papery_texture",
+        "scattered_pattern"
+      ],
+      "contradictory_features": [],
+      "unknown_features": [
+        "specific_pathogen_identity"
+      ],
+      "compatibility_score": 0.95
+    }
+  },
+  "differential": {
+    "top_candidate": "leaf_spots",
+    "runner_up": "blast",
+    "score_margin": 0.1
+  },
+  "ground_truth": "leaf_spots",
+  "sample_observation": {
+    "plant_part": {
+      "structure": "leaf_blade",
+      "status": "visible"
+    },
+    "symptom_class": {
+      "type": "discrete_lesions",
+      "status": "visible"
+    },
+    "geometry": {
+      "shape": "oval_to_fusiform",
+      "elongation": "yes",
+      "ends": "rounded_to_blunt",
+      "center_vs_ends": "wider_center",
+      "coalescence": "no",
+      "progression": "uncertain"
+    },
+    "surface": {
+      "raised": "no",
+      "pustular": "no",
+      "powdery": "no",
+      "spore_mass": "no",
+      "flat": "yes",
+      "dry_papery": "yes"
+    },
+    "texture": {
+      "lesion_center": "necrotic/tan",
+      "lesion_margin": "brown/dark",
+      "halo": "chlorotic/yellowish"
+    },
+    "color": {
+      "dominant": "green",
+      "lesion_center": "tan/light_brown",
+      "lesion_margin": "dark_brown",
+      "surrounding_tissue": "green_with_chlorotic_halo"
+    },
+    "distribution": {
+      "pattern": "scattered",
+      "concentration": "mid-leaf",
+      "vein_relation": "crosses_veins",
+      "directional": "no"
+    },
+    "spatial_location": {
+      "primary_abnormality": "leaf_blade",
+      "vegetative_reproductive": "vegetative"
+    },
+    "reproductive_structure": {
+      "status": "not_visible"
+    },
+    "developmental_stage": {
+      "status": "uncertain"
+    }
+  },
+  "evidence": {
+    "present": [
+      "discrete_lesions",
+      "oval_fusiform_shape",
+      "tan_necrotic_center",
+      "dark_brown_margin",
+      "chlorotic_halo",
+      "flat_surface",
+      "dry_papery_texture"
+    ],
+    "absent": [
+      "raised_pustules",
+      "powdery_material",
+      "spore_mass",
+      "honeydew",
+      "elongated_sclerotia",
+      "green_ear_transformation"
+    ],
+    "uncertain": [
+      "lesion_progression",
+      "vein_confinement"
+    ],
+    "not_visible": [
+      "panicle",
+      "stem",
+      "whole_plant"
+    ]
+  }
+}

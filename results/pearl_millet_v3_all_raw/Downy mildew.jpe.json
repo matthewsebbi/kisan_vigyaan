@@ -1,0 +1,171 @@
+{
+  "experiment": {
+    "sample_id": "Downy mildew.jpe",
+    "model": "qwen+gpt-oss-120b",
+    "question_block": "v3"
+  },
+  "candidate_comparison": {
+    "blast": {
+      "supported_features": [],
+      "contradictory_features": [
+        "green_ear_transformation",
+        "spindle_shaped_necrotic_lesions"
+      ],
+      "unknown_features": [
+        "lesion_geometry",
+        "surface_elevation"
+      ],
+      "compatibility_score": 0.05
+    },
+    "downy_mildew_green_ear": {
+      "supported_features": [
+        "green_ear",
+        "panicle_transformed_into_leafy_structure",
+        "absent_normal_grain",
+        "elongated_cylindrical_dense_cluster_of_leaflets",
+        "dominant_green_color"
+      ],
+      "contradictory_features": [],
+      "unknown_features": [
+        "leaf_chlorosis",
+        "systemic_infection",
+        "downy_growth_visible",
+        "stunting",
+        "reduced_tillering"
+      ],
+      "compatibility_score": 0.92
+    },
+    "ergot": {
+      "supported_features": [],
+      "contradictory_features": [
+        "green_ear_transformation",
+        "elongated_dark_sclerotia"
+      ],
+      "unknown_features": [
+        "honeydew_exudation",
+        "elongated_sclerotium"
+      ],
+      "compatibility_score": 0.04
+    },
+    "smut": {
+      "supported_features": [],
+      "contradictory_features": [
+        "green_ear_transformation",
+        "rounded_black_spore_balls"
+      ],
+      "unknown_features": [
+        "spore_ball",
+        "membrane_covered_structure"
+      ],
+      "compatibility_score": 0.03
+    },
+    "rust": {
+      "supported_features": [],
+      "contradictory_features": [
+        "green_ear_transformation",
+        "raised_pustules"
+      ],
+      "unknown_features": [
+        "powdery_pustules",
+        "spore_mass"
+      ],
+      "compatibility_score": 0.02
+    },
+    "leaf_spots": {
+      "supported_features": [],
+      "contradictory_features": [
+        "green_ear_transformation"
+      ],
+      "unknown_features": [
+        "discrete_leaf_lesions",
+        "chlorotic_spots"
+      ],
+      "compatibility_score": 0.01
+    }
+  },
+  "differential": {
+    "top_candidate": "downy_mildew_green_ear",
+    "runner_up": "blast",
+    "score_margin": 0.87
+  },
+  "diagnostic_bottleneck": "panicle morphology showing leafy green ear with loss of grain",
+  "requires_second_stage_visual_comparison": false,
+  "final_decision": {
+    "diagnosis": "downy_mildew_green_ear",
+    "abstain": false,
+    "reason": "Panicle is fully transformed into a leafy, green structure and normal grain is absent, matching the hallmark green\u2011ear phenotype of Downy Mildew; all other diseases are contradicted by the presence of a green ear."
+  },
+  "ground_truth": "downy_mildew_green_ear",
+  "sample_observation": {
+    "plant_part": {
+      "primary": "panicle",
+      "secondary": "leaf_blade",
+      "status": "visible"
+    },
+    "symptom_class": {
+      "type": "structural_replacement",
+      "description": "Transformation of the panicle into leafy, vegetative tissue (green ear).",
+      "status": "visible"
+    },
+    "geometry": {
+      "shape": "elongated_cylindrical",
+      "structure": "dense_cluster_of_leaflets",
+      "status": "visible"
+    },
+    "surface": {
+      "texture": "leafy",
+      "features": "numerous small, narrow, green leaf-like structures replacing normal florets",
+      "status": "visible"
+    },
+    "texture": {
+      "description": "foliage-like, not grain-like",
+      "status": "visible"
+    },
+    "color": {
+      "dominant": "green",
+      "secondary": "light_green",
+      "status": "visible"
+    },
+    "distribution": {
+      "pattern": "localized_to_panicle",
+      "extent": "entire_panicle_affected",
+      "status": "visible"
+    },
+    "spatial_location": {
+      "location": "terminal",
+      "status": "visible"
+    },
+    "reproductive_structure": {
+      "status": "visible",
+      "description": "Normal grain development is absent; replaced by vegetative tissue."
+    },
+    "developmental_stage": {
+      "stage": "reproductive",
+      "status": "visible"
+    }
+  },
+  "evidence": {
+    "present": [
+      "Panicle transformed into leafy/vegetative structure",
+      "Green ear morphology",
+      "Absence of normal grains in the affected panicle",
+      "Multiple small leaflets emerging from the panicle axis"
+    ],
+    "absent": [
+      "Normal grain development",
+      "Elongated dark sclerotia (ergot)",
+      "Rounded black spore balls (smut)",
+      "Raised pustules (rust)",
+      "Spindle-shaped necrotic lesions (blast)"
+    ],
+    "uncertain": [],
+    "not_visible": [
+      "Internal tissue structure",
+      "Spore presence (requires microscopy or rupture)"
+    ]
+  },
+  "evidence_quality": {
+    "overall": "high",
+    "limiting_features": []
+  }
+}

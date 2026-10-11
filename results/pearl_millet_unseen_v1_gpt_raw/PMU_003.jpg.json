@@ -1,0 +1,110 @@
+{
+  "experiment": {
+    "sample_id": "PMU_003.jpg",
+    "model": "qwen+gpt-oss-120b",
+    "question_block": "v3"
+  },
+  "candidate_comparison": {
+    "blast": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.1
+    },
+    "downy_mildew_green_ear": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.9
+    },
+    "ergot": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.2
+    },
+    "smut": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.1
+    },
+    "rust": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.3
+    }
+  },
+  "ground_truth": "downy_mildew_green_ear",
+  "sample_observation": {
+    "plant_part": {
+      "primary": "panicle",
+      "secondary": "leaf_blade",
+      "status": "visible"
+    },
+    "symptom_class": {
+      "type": "structural_replacement",
+      "description": "Transformation of the lower panicle into leafy, green, vegetative tissue (green ear).",
+      "status": "visible"
+    },
+    "geometry": {
+      "shape": "elongated, cylindrical",
+      "orientation": "vertical",
+      "status": "visible"
+    },
+    "surface": {
+      "texture": "leafy, spiky, vegetative",
+      "features": "replaced florets",
+      "status": "visible"
+    },
+    "texture": {
+      "description": "Firm, green, leaf-like structures replacing grain heads.",
+      "status": "visible"
+    },
+    "color": {
+      "dominant": "green",
+      "secondary": "light_green",
+      "status": "visible"
+    },
+    "distribution": {
+      "pattern": "localized_to_panicle",
+      "extent": "lower_half_of_panicle",
+      "status": "visible"
+    },
+    "spatial_location": {
+      "position": "reproductive_head",
+      "status": "visible"
+    },
+    "reproductive_structure": {
+      "status": "visible",
+      "description": "Grains replaced by leafy tissue."
+    },
+    "developmental_stage": {
+      "stage": "reproductive",
+      "status": "visible"
+    }
+  },
+  "evidence": {
+    "present": [
+      "green_ear_transformation",
+      "leafy_panicle",
+      "vegetative_tissue_on_reproductive_head"
+    ],
+    "absent": [
+      "normal_grain_development_on_affected_panicle",
+      "raised_pustules",
+      "powdery_material",
+      "spindle_lesions",
+      "honeydew",
+      "elongated_sclerotia",
+      "rounded_smut_balls"
+    ],
+    "uncertain": [],
+    "not_visible": [
+      "spore_mass",
+      "internal_tissue"
+    ]
+  },
+  "evidence_quality": {}
+}

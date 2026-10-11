@@ -1,0 +1,89 @@
+{
+  "experiment": {
+    "sample_id": "PMU_002.jpg",
+    "model": "gemini-3.1-flash-lite",
+    "question_block": "v4"
+  },
+  "candidate_comparison": {
+    "blast": {
+      "supported_features": [
+        "discrete_lesion",
+        "elliptical_lesion_shape",
+        "central_widening"
+      ],
+      "contradictory_features": [],
+      "unknown_features": [
+        "gray_or_grayish_developed_center",
+        "tapered_or_pointed_ends",
+        "coalescing_necrosis"
+      ],
+      "compatibility_score": 0.65
+    },
+    "downy_mildew_green_ear": {
+      "supported_features": [
+        "chlorosis"
+      ],
+      "contradictory_features": [
+        "discrete_lesion"
+      ],
+      "unknown_features": [
+        "systemic_pattern",
+        "green_ear_transformation"
+      ],
+      "compatibility_score": 0.2
+    },
+    "ergot": {
+      "supported_features": [],
+      "contradictory_features": [
+        "discrete_lesion",
+        "exudate_absent"
+      ],
+      "unknown_features": [
+        "floret_associated_sticky_honeydew"
+      ],
+      "compatibility_score": 0.05
+    },
+    "smut": {
+      "supported_features": [],
+      "contradictory_features": [
+        "discrete_lesion",
+        "membrane_absent"
+      ],
+      "unknown_features": [
+        "enlarged_ball_like_structure"
+      ],
+      "compatibility_score": 0.05
+    },
+    "rust": {
+      "supported_features": [
+        "discrete_lesion"
+      ],
+      "contradictory_features": [
+        "surface_elevation_flat"
+      ],
+      "unknown_features": [
+        "pustule_presence"
+      ],
+      "compatibility_score": 0.3
+    },
+    "leaf_spots": {
+      "supported_features": [
+        "discrete_lesion",
+        "elliptical_lesion_shape",
+        "dark_brown_lesion_center",
+        "yellow_chlorotic_halo"
+      ],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.85
+    }
+  },
+  "differential": {
+    "top_candidate": "leaf_spots",
+    "runner_up": "blast",
+    "score_margin": 0.2
+  },
+  "ground_truth": "blast",
+  "sample_observation": {},
+  "evidence": {}
+}

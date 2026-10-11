@@ -1,151 +1,253 @@
 # Pearl Millet Leaf Spots
 
-## Diagnostic Phenotype
+This bank is a representation-aligned update of the supplied Pearl Millet
+Contrastive Phenotype v2 files.
 
-### Primary Affected Plant Parts
+## Shared observation vocabulary
+
+The comparator should map the observed phenotype into these dimensions where
+the corresponding evidence is available:
+
+### Structure
+- leaf_blade
+- leaf_sheath
+- stem
+- panicle
+- spikelet
+- floret
+- grain
+- whole_plant
+
+### Geometry
+- axis_ratio_long_to_short
+- elongation
+- width_profile
+- end_shape
+- symmetry
+- boundary_character
+- discrete_vs_continuous
+
+### Surface
+- elevation
+- physical_relief
+- powder
+- granular_material
+- attached_surface_material
+- texture
+
+### Internal lesion structure
+- center
+- margin
+- center_margin_contrast
+- halo
+- internal_texture
+
+### Reproductive relationship
+- occupies_normal_grain_position
+- relative_size
+- relative_width
+- relative_length
+- rounded_expansion
+- elongated_projection
+- projection_from_individual_floret
+- membrane
+- membrane_state
+- exposed_spore_mass
+- exudate
+
+### Spatial pattern
+- distribution
+- orientation
+- coalescence
+- plant_position
+- repeated_structure_pattern
+
+### Development
+- apparent_stage
+- progression
+- multiple_visible_stages
+
+## Evidence states
+
+For observations supplied by the visual model:
+- PRESENT — directly visible with sufficient confidence.
+- ABSENT — the relevant region is visible at adequate resolution and the
+  feature is reasonably not present.
+- UNCERTAIN — the region is visible but the feature cannot be resolved reliably.
+- NOT_VISIBLE — the relevant region cannot actually be inspected.
+
+Never treat NOT_VISIBLE as ABSENT.
+
+## Comparison principle
+
+The bank should compare morphology first, then supporting color/pattern context.
+Color alone is weak evidence unless tied to a specific structural phenotype.
+
+Measurement-like observations such as axis ratio, relative size, physical relief,
+and floret-to-abnormal-structure relationship should be preferred over relying
+only on categorical words such as "spindle", "oval", "pustule", "ball", or
+"green ear".
+
+## Stage-awareness
+
+Features that are developmental or stage-dependent must not be treated as
+required at every stage. Absence of a later-stage feature cannot by itself
+exclude an earlier-stage presentation.
+
+## Residual-category protection
+
+"Leaf Spots" is a symptom-level category and is not an automatic fallback.
+When decisive morphology is unresolved, uncertainty should be preserved.
+
+
+# Pearl Millet Leaf Spots — Contrastive Phenotype v3
+
+## Diagnostic phenotype
+
+Leaf Spots remains a symptom-level category because multiple pearl millet
+leaf-spot diseases occur and lesion morphology can vary substantially.
+
+### Primary affected plant parts
 - leaf_blade
 - leaf_sheath
 - stem
 - whole_plant
 
-### Symptom Class
+### Symptom classes
 - discrete_leaf_lesion
 - foliar_spot
 - necrotic_spot
 
-### Lesion / Symptom Geometry
-- Primary shape: `oval_circular`
-- Elongation: `low_to_moderate`
-- Width profile: `uniform_or_wider_at_center`
-- Ends: `blunt_rounded`
-- Discrete or continuous: `discrete_scattered_to_coalescing`
+### Morphology
+Common but variable phenotype:
+- discrete lesions;
+- often oval/circular;
+- low-to-moderate elongation;
+- blunt/rounded ends;
+- width may be relatively uniform or wider at the center;
+- other permitted forms include oblong, rectangular, fusiform, irregular;
+- discrete scattered to coalescing lesions.
 
-### Size
-- Lesions vary considerably among pearl millet leaf-spot diseases.
-- Spots may remain small and discrete or enlarge into oval, oblong, rectangular, fusiform, or irregular lesions.
-- Multiple lesions may coalesce and produce larger blighted areas.
+Because this is a residual symptom-level category, variation itself is expected.
 
 ### Color
-- Center / primary color: `pale_tan_to_gray_to_white_or_brown`
-- Margin: `dark_brown_to_brown`
-- Surrounding tissue: green, sometimes yellow
-- Color transition: `sharp_to_gradual`
-- Current/overall colors: brown, dark_brown, tan, gray, white, straw, yellow_brown
+- center/primary: pale tan to gray to white or brown;
+- margin: dark brown to brown;
+- surrounding tissue: green and sometimes yellow;
+- transition can be sharp or gradual.
 
 ### Texture
-- Current texture: dry, papery, necrotic
-- Early appearance: `pinpoint_brown_or_water_soaked_depending_on_causal_disease`
+- dry/papery/necrotic when developed;
+- early symptoms can be pinpoint brown or water-soaked depending on causal disease.
 
-### Pattern and Distribution
-- Orientation: `variable`
-- Distribution: `discrete_scattered`
-- Coalescence: `may_coalesce`
-- Vein relationship: `crosses_or_ignores_veins`
+## Critical anti-fallback rule
 
-### Spatial Location
-- Primary location: `leaf_blade`
-- Other locations: `leaf_sheath_and_stem`
-- Some leaf spots are more frequent near leaf margins.
+Leaf Spots MUST NOT be defined as:
 
-### Whole-Plant / Field-Level Features
-- multiple_leaf_lesions
-- progressive_leaf_necrosis
-- reduced_green_leaf_area
-- premature_leaf_drying_in_severe_cases
-- blight_like_appearance_when_lesions_coalesce
+```text
+not Blast + not Rust = Leaf Spots
+```
 
-## Hallmark Features
-- multiple_discrete_leaf_spots
-- brown_to_dark_brown_lesions
-- pale_tan_gray_or_white_centers_in_some_types
-- dark_brown_margins_in_some_types
-- lesions_may_be_oval_oblong_rectangular_fusiform_or_irregular
-- lesions_can_expand_and_coalesce
-- symptom_pattern_depends_on_causal_leaf_spot_pathogen
+It is compatible when the observed morphology is genuinely spot-like and no
+stronger characteristic morphology is present.
 
-## Negative / Exclusion Features
-- diffuse_yellow_orange_discoloration_without_discrete_lesions
-- raised_powdery_reddish_brown_pustules
-- characteristic_spindle_diamond_gray_centered_blast_lesions
-- honeydew_exudation_from_florets
-- enlarged_smut_spore_balls
-- green_ear_panicle_transformation
+When surface morphology or lesion geometry is unresolved, preserve uncertainty.
 
-## Differential Diagnosis
+## Contrastive evidence against Blast
 
-### Similar Problems
-- Pearl Millet Blast
-- Pearl Millet Rust
-- Downy Mildew
-- Leaf Blight
-- Sheath or Banded Blight
+Strong support for Leaf Spots:
+- discrete flat spot-like lesion;
+- morphology remains relatively non-specialized;
+- variable geometry;
+- no convincing progression toward a characteristic elongated Blast form;
+- dry/papery necrosis;
+- center/margin pattern compatible with a generic foliar spot.
 
-### Diagnostic Discriminators
-- Treat `leaf spots` as a symptom group rather than assuming one pathogen.
-- Identify lesion geometry before using color as the primary discriminator.
-- Compare center and margin colors separately.
-- Distinguish flat necrotic spots from raised rust pustules.
-- Distinguish numerous small spots from larger spindle/diamond blast lesions.
-- Determine whether lesions are oval, oblong, rectangular, fusiform, zonate, or irregular.
-- Examine whether lesions are concentrated on leaf margins, leaf surfaces, or sheaths.
-- Treat uncertainty in causal pathogen identification as uncertainty; image appearance alone may not distinguish all pearl millet leaf-spot species.
+Strong contradiction:
+- clear developed spindle/diamond-style elongation with characteristic center/
+  margin progression.
 
-## Environmental Conditions
+Weak/non-specific:
+- circular/oval shape;
+- brown color;
+- multiple lesions.
 
-### Temperature
-- Not specified as a universal threshold because different pearl millet leaf-spot pathogens have different requirements.
+## Contrastive evidence against Rust
 
-### Humidity
-- Humid or wet conditions can favor several leaf-spot diseases.
+Strong support:
+- flat surface;
+- dry/papery necrotic texture;
+- discrete spot structure;
+- pale/tan/gray/white center in some types;
+- no visible pustular surface.
 
-### Rainfall / Moisture
-- Wet weather can promote lesion expansion and disease development for several leaf-spot pathogens.
+Strong contradiction:
+- clearly raised localized pustule;
+- powdery/pustular surface;
+- obvious spore mass.
 
-### Soil
-- Not specified in supplied reference.
-
-> **Source status:** Pearl millet has multiple recognized leaf-spot diseases, including Bipolaris, Cercospora, Curvularia, Dactuliophora, Myrothecium, Phyllachora, Phyllosticta, Pyricularia, and zonate leaf spot. Their lesion morphology differs substantially, so this entry deliberately represents `Leaf spots` as a symptom-level category rather than assigning one morphology to every case. citeturn1search0turn1search12
-
-## Crop Stage
-- Variable by causal pathogen.
-- Some leaf spots become more apparent after substantial vegetative growth or during grain filling.
-
-## Reference Images
-
-![Pearl Millet Leaf Spot symptoms](https://www.mindenpictures.com/stock-photo-helminthosporium-leaf-spot-bipolaris-sp-symptoms-on-pearl-millet-naturephotography-image80106564.html)
-
-**Image source:** Minden Pictures, Helminthosporium/Bipolaris leaf spot on pearl millet. citeturn1image2
-
-![Pearl Millet Cercospora leaf spot reference](https://www.millets.res.in/books/DISEASES_OF_MILLETS.pdf)
-
-**Additional reference:** ICAR/Indian Institute of Millets Research, *Diseases of Millets*, including Cercospora leaf-spot imagery. citeturn1search12
-
-## Sources
-- USDA ARS — Pearl Millet Diseases: fungal leaf-spot diseases and symptom descriptions. citeturn1search0
-- ICAR/Indian Institute of Millets Research — *Diseases of Millets*. citeturn1search12
-- TNAU Agritech Portal — Pearl Millet/Cumbu Curvularia Leaf Spot. citeturn1search4
-- APS Plant Disease — Curvularia spicifera causing leaf spot disease of pearl millet in India. citeturn1search3
-
-## Machine-Comparison Notes
+## Evidence weighting
 
 ```yaml
-plant_parts:
-  - leaf_blade
-  - leaf_sheath
-  - stem
-  - whole_plant
-lesion_present: true
-primary_shape: oval_circular
-width_profile: uniform_or_wider_at_center
-ends: blunt_rounded
-color_transition: sharp_to_gradual
-early_appearance: pinpoint_brown_or_water_soaked_depending_on_pathogen
-pattern_distribution: discrete_scattered_to_coalescing
-vein_relationship: crosses_or_ignores_veins
-primary_location: leaf_blade
-lesion_features:
-  center_color: pale_tan_to_gray_to_white_or_brown
-  margin_color: dark_brown_to_brown
-  texture: dry_necrotic
-  morphology: variable_by_causal_pathogen
+identity_defining:
+  - discrete_flat_spot_like_phenotype_when_morphology_is_resolved
+  - lack_of_stronger_characteristic_blast_or_rust_morphology
+
+strong_support:
+  - dry_papery_necrosis
+  - variable_spot_geometry
+  - pale_center_with_darker_margin_when_present
+  - flat_surface
+  - spot_like_morphology_remaining_spot_like
+
+weak_or_non_specific:
+  - circular_or_oval_geometry
+  - brown_color
+  - multiple_spots
+
+contradiction:
+  - clearly_raised_powdery_pustule
+  - strong_developed_blast_like_geometry
+  - floret_honeydew
+  - smut_ball
+  - green_ear
 ```
+
+## Visibility and uncertainty rules
+
+- Do not use color alone as positive evidence.
+- Do not infer flatness when surface relief is unresolved.
+- Do not infer absence of pustules when the relevant surface is too small or
+  low-resolution to inspect.
+- Do not force Leaf Spots merely because Blast-specific morphology is uncertain.
+- Preserve UNCERTAIN when the three-way differential of Leaf Spots, Blast, and
+  Rust cannot be separated visually.
+
+## Machine-comparison notes
+
+```yaml
+primary_location: leaf_blade
+core_morphology: discrete_flat_dry_necrotic_spot
+preferred_measurements:
+  - axis_ratio_long_to_short
+  - width_profile
+  - end_shape
+  - surface_elevation
+  - center_margin_relationship
+  - lesion_progression
+  - coalescence
+high_value:
+  - spot_like_geometry
+  - flat_surface_when_visible
+  - dry_necrosis
+  - variable_morphology
+anti_features:
+  - raised_powdery_pustule
+  - strong_blast_progression
+  - honeydew
+  - smut_ball
+  - green_ear
+uncertainty_features:
+  - surface_not_resolvable
+  - lesion_geometry_not_resolvable
+  - center_margin_not_resolvable

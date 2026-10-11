@@ -1,0 +1,35 @@
+{
+  "sample": {
+    "image": "blast(2).jpg",
+    "plant": "pearl_millet",
+    "observed": {
+      "plant_part": {"value": "leaf_blade", "state": "present"},
+      "lesion_present": {"value": true, "state": "present"},
+      "symptom_class": {"value": "necrotic_lesion", "state": "present"},
+      "shape": {"value": "small_oval_to_rounded", "state": "present"},
+      "color": {"value": "reddish_brown", "state": "present"},
+      "texture": {"value": "dry_or_necrotic", "state": "uncertain"},
+      "distribution": {"value": "numerous_scattered", "state": "present"},
+      "raised_powdery_pustule": {"value": false, "state": "not_visible"},
+      "gray_center": {"value": false, "state": "not_visible"},
+      "green_ear": {"value": false, "state": "present"},
+      "honeydew": {"value": false, "state": "not_visible"},
+      "smut_ball": {"value": false, "state": "present"}
+    }
+  },
+  "candidate_bank": [
+    "Blast",
+    "Downy Mildew / Green Ear",
+    "Ergot",
+    "Smut",
+    "Rust",
+    "Leaf Spots"
+  ],
+  "decision": {
+    "top_candidate": "Blast",
+    "compatibility_score": 0.88,
+    "main_competitor": "Leaf Spots",
+    "main_competitor_score": 0.52,
+    "reason": "Necrotic scattered leaf lesions are compatible with Blast; no clear pustular surface is visible; lesion geometry is early-stage compatible rather than definitively mature."
+  }
+}

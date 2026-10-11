@@ -1,0 +1,120 @@
+{
+  "candidate_comparison": {
+    "blast": {
+      "supported_features": [],
+      "contradictory_features": [
+        "Elongated dark structures replacing grains",
+        "Smooth surface texture",
+        "Dark purple/black coloration",
+        "Structural replacement of the panicle"
+      ],
+      "unknown_features": [],
+      "compatibility_score": 0.1
+    },
+    "downy_mildew_green_ear": {
+      "supported_features": [],
+      "contradictory_features": [
+        "Elongated dark structures replacing grains",
+        "Smooth surface texture",
+        "Dark purple/black coloration",
+        "Structural replacement of the panicle"
+      ],
+      "unknown_features": [],
+      "compatibility_score": 0.05
+    },
+    "ergot": {
+      "supported_features": [
+        "Elongated dark structures replacing grains"
+      ],
+      "contradictory_features": [
+        "Powdery material",
+        "Loose spore masses",
+        "Raised pustules"
+      ],
+      "unknown_features": [
+        "Internal consistency of the structures (solid vs fluid-filled)",
+        "Membrane rupture status"
+      ],
+      "compatibility_score": 0.4
+    },
+    "smut": {
+      "supported_features": [
+        "Elongated dark structures replacing grains",
+        "Smooth surface texture",
+        "Dark purple/black coloration",
+        "Structural replacement of the panicle"
+      ],
+      "contradictory_features": [
+        "Powdery material",
+        "Loose spore masses",
+        "Raised pustules"
+      ],
+      "unknown_features": [
+        "Membrane rupture status"
+      ],
+      "compatibility_score": 0.8
+    },
+    "rust": {
+      "supported_features": [],
+      "contradictory_features": [
+        "Elongated dark structures replacing grains",
+        "Smooth surface texture",
+        "Dark purple/black coloration",
+        "Structural replacement of the panicle"
+      ],
+      "unknown_features": [],
+      "compatibility_score": 0.05
+    },
+    "leaf_spots": {
+      "supported_features": [],
+      "contradictory_features": [
+        "Elongated dark structures replacing grains",
+        "Smooth surface texture",
+        "Dark purple/black coloration",
+        "Structural replacement of the panicle"
+      ],
+      "unknown_features": [],
+      "compatibility_score": 0.1
+    }
+  },
+  "differential": {
+    "top_candidate": "smut",
+    "runner_up": "ergot",
+    "score_margin": 0.4
+  },
+  "diagnostic_bottleneck": "Uncertainty about membrane rupture status and whether the structure is a solid spore ball (smut) or a later-stage ergot sclerotium; lack of honeydew or powdery spore mass makes differentiation challenging.",
+  "requires_second_stage_visual_comparison": true,
+  "final_decision": {
+    "diagnosis": "smut",
+    "abstain": false,
+    "reason": "The observation shows elongated, dark, smooth structures replacing grains with no powdery material, loose spore masses, or raised pustules, matching the identity-defining features of smut. Other phenotypes lack these key features or present contradictory evidence. The main uncertainty lies in confirming membrane rupture, which can be resolved with a second-stage visual comparison."
+  },
+  "ground_truth": "smut",
+  "sample_observation": {},
+  "evidence": {
+    "present": [
+      "Elongated dark structures replacing grains",
+      "Smooth surface texture",
+      "Dark purple/black coloration",
+      "Structural replacement of the panicle"
+    ],
+    "absent": [
+      "Powdery material",
+      "Loose spore masses",
+      "Green-ear transformation (leafy tissue)",
+      "Raised pustules"
+    ],
+    "uncertain": [
+      "Internal consistency of the structures (solid vs. fluid-filled)"
+    ],
+    "not_visible": [
+      "Microscopic spore details",
+      "Membrane rupture status (though surface looks intact)"
+    ]
+  },
+  "experiment": {
+    "sample_id": "smut2.jpe",
+    "model": "qwen+gpt-oss-20b",
+    "question_block": "v3"
+  }
+}

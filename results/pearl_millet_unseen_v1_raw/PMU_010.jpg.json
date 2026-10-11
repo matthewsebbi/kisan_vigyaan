@@ -1,0 +1,138 @@
+{
+  "experiment": {
+    "sample_id": "PMU_010.jpg",
+    "model": "qwen+qwen-27b",
+    "question_block": "v3"
+  },
+  "candidate_comparison": {
+    "blast": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.1
+    },
+    "downy_mildew_green_ear": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.05
+    },
+    "ergot": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.0
+    },
+    "smut": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.0
+    },
+    "rust": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.95
+    },
+    "leaf_spots": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.2
+    }
+  },
+  "differential": {
+    "top_candidate": "rust",
+    "runner_up": "leaf_spots",
+    "score_margin": 0.75
+  },
+  "diagnostic_bottleneck": "",
+  "requires_second_stage_visual_comparison": false,
+  "final_decision": {
+    "diagnosis": "rust",
+    "abstain": false,
+    "reason": "Observed features (raised pustules, powdery surface, rust-brown spore masses, circular geometry) strongly align with Rust hallmarks and directly contradict the anti-features of Blast, Downy Mildew, Ergot, Smut, and Leaf Spots."
+  },
+  "ground_truth": "rust",
+  "sample_observation": {
+    "plant_part": {
+      "structure": "leaf_blade",
+      "visibility": "sufficient",
+      "status": "locally damaged"
+    },
+    "symptom_class": {
+      "type": "discrete",
+      "lesion_present": true,
+      "fungal_structure": "pustules",
+      "primary_change": "surface structure"
+    },
+    "geometry": {
+      "shape": "circular",
+      "elongated": false,
+      "ends": "rounded",
+      "coalescing": true,
+      "progressive": true
+    },
+    "surface": {
+      "raised": true,
+      "raised_type": "pustular",
+      "powdery": true,
+      "spore_mass": true,
+      "flat": false,
+      "dry_necrotic": false
+    },
+    "texture": {
+      "description": "granular, powdery, raised"
+    },
+    "color": {
+      "dominant": "rust-brown, orange-brown",
+      "lesion_center": "rust-brown",
+      "lesion_margin": "indeterminate",
+      "surrounding_tissue": "green, yellowish-green (chlorotic)"
+    },
+    "distribution": {
+      "pattern": "scattered",
+      "concentration": "mid-leaf",
+      "vein_relation": "crosses veins",
+      "directional": false
+    },
+    "spatial_location": {
+      "primary_abnormality": "leaf surface",
+      "abnormality_type": "vegetative"
+    },
+    "reproductive_structure": {
+      "transformed": false,
+      "malformed": false,
+      "grains_replaced": false
+    },
+    "developmental_stage": {
+      "stage": "vegetative"
+    }
+  },
+  "evidence": {
+    "present": [
+      "raised pustules",
+      "powdery material",
+      "rust-brown spore masses",
+      "discrete lesions",
+      "chlorotic halo"
+    ],
+    "absent": [
+      "spindle/diamond lesions",
+      "green-ear transformation",
+      "elongated sclerotial structures",
+      "honeydew"
+    ],
+    "uncertain": [
+      "membrane status",
+      "specific spore type"
+    ],
+    "not_visible": [
+      "panicle",
+      "stem base",
+      "leaf underside"
+    ]
+  },
+  "evidence_quality": {}
+}

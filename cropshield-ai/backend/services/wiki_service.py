@@ -174,6 +174,8 @@ class WikiService:
         # Files named exactly after the crop (e.g. rice.md in Rice/, Wheat.md in Wheat/) are Obsidian crop indexes
         if stem == crop_name.strip().lower():
             return False
+        if any(ignored in stem for ignored in ["question_block", "phenotype_bank", "protocol", "schema"]):
+            return False
         return True
 
     def list_problems(self, crop: str) -> List[str]:

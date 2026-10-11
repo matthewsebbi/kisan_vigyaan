@@ -1,0 +1,14 @@
+image,supplied_label,v2_prediction,decision_status,top_score,runner_up,runner_up_score,key_discriminator,key_conflict
+blast(2).jpg,Blast,Blast,decided,0.88,Leaf Spots,0.52,flat necrotic reddish-brown leaf lesions with blast-compatible progression,no clear pustular surface
+Downy mildew(2).jpe,Downy Mildew / Green Ear,Downy Mildew / Green Ear,decided,0.98,Ergot,0.06,malformed leafy green-ear panicle,none material
+ergot(2).jpe,Ergot,Ergot,decided_low_confidence,0.61,Smut,0.43,panicle-associated dark projecting structures compatible with late-stage ergot,shape/stage not fully resolvable
+ergot_1(1).jpe,Ergot,Ergot,decided_low_confidence,0.47,Smut,0.28,pinkish panicle coloration with floret-associated appearance,no clear honeydew or definitive sclerotial projection visible
+ergot2.jpe,Ergot,Ergot,decided,0.98,Smut,0.18,visible sticky amber/brown honeydew-like exudation,none material
+ergot3.jpe,Ergot,Smut,conflict_flag,0.73,Ergot,0.31,large dark rounded spore-structure appearance dominates,honeydew/elongated sclerotium not visible
+leaf spot(2).webp,Leaf Spots,Leaf Spots,decided,0.96,Blast,0.27,flat discrete oval/circular necrotic spots with dark margins,no pustular surface
+leaf_spot.jpg,Leaf Spots,Leaf Spots,decided,0.93,Blast,0.30,flat pale-centered spots with darker margins,no spindle/diamond progression visible
+rust(2).jpe,Rust,Abstain: Rust vs Leaf Spots,abstain,0.55,Leaf Spots,0.50,reddish-orange foliar lesions are visible,raised powdery pustule morphology is not sufficiently clear
+rust2.jpe,Rust,Rust,decided,0.81,Leaf Spots,0.39,multiple reddish-brown lesions compatible with pustular rust morphology,surface detail still limited
+smut 1(1).jpe,Smut,Smut,decided,0.96,Ergot,0.12,large discrete rounded panicle structures consistent with smut balls,no honeydew
+smut(1).jpe,Smut,Smut,decided,0.97,Ergot,0.18,localized rounded green/brown spore-ball structures,no sticky exudate
+smut2.jpe,Smut,Smut,decided_low_confidence,0.72,Ergot,0.24,partially smutted/dark panicle with discrete altered florets,structure is distant and not fully resolved

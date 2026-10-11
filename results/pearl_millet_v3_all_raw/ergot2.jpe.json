@@ -1,0 +1,157 @@
+{
+  "experiment": {
+    "sample_id": "ergot2.jpe",
+    "model": "qwen+gpt-oss-120b",
+    "question_block": "v3"
+  },
+  "candidate_comparison": {
+    "blast": {
+      "supported_features": [],
+      "contradictory_features": [
+        "honeydew",
+        "primary_location_is_panicle_not_leaf",
+        "no_necrotic_lesions"
+      ],
+      "unknown_features": [],
+      "compatibility_score": 0.05
+    },
+    "downy_mildew_green_ear": {
+      "supported_features": [],
+      "contradictory_features": [
+        "honeydew",
+        "no_green_ear_transformation",
+        "panicle_structure_intact"
+      ],
+      "unknown_features": [],
+      "compatibility_score": 0.05
+    },
+    "ergot": {
+      "supported_features": [
+        "sticky_honeydew_when_present",
+        "floret_associated_exudate",
+        "viscous_texture",
+        "primary_location_panicle_spikelet_floret"
+      ],
+      "contradictory_features": [],
+      "unknown_features": [
+        "elongated_projecting_sclerotium_in_late_stage"
+      ],
+      "compatibility_score": 0.95
+    },
+    "smut": {
+      "supported_features": [
+        "primary_location_panicle_spikelet_floret"
+      ],
+      "contradictory_features": [
+        "sticky_honeydew",
+        "viscous_exudate",
+        "no_enlarged_ball_like_structure"
+      ],
+      "unknown_features": [],
+      "compatibility_score": 0.1
+    },
+    "rust": {
+      "supported_features": [],
+      "contradictory_features": [
+        "honeydew",
+        "no_raised_powdery_pustules",
+        "primary_location_is_panicle_not_leaf"
+      ],
+      "unknown_features": [],
+      "compatibility_score": 0.05
+    },
+    "leaf_spots": {
+      "supported_features": [],
+      "contradictory_features": [
+        "honeydew",
+        "no_discrete_leaf_spots",
+        "primary_location_is_panicle_not_leaf"
+      ],
+      "unknown_features": [],
+      "compatibility_score": 0.05
+    }
+  },
+  "differential": {
+    "top_candidate": "ergot",
+    "runner_up": "smut",
+    "score_margin": 0.85
+  },
+  "diagnostic_bottleneck": "None. The presence of amber/yellow-brown viscous exudate (honeydew) on the panicle is a strong identity-defining feature for Ergot in its early stage, and explicitly contradicts Smut, Blast, Rust, Leaf Spots, and Downy Mildew.",
+  "requires_second_stage_visual_comparison": false,
+  "final_decision": {
+    "diagnosis": "Ergot",
+    "abstain": false,
+    "reason": "The observed phenotype features amber/yellow-brown sticky exudate (honeydew) oozing from florets on the panicle. This matches the 'identity_defining' feature 'sticky_honeydew_when_present' for Ergot. It explicitly contradicts the 'contradiction' features for Smut (viscous_exudate), Blast (honeydew), Downy Mildew (honeydew), Rust (honeydew), and Leaf Spots (honeydew). The location (panicle/floret) and texture (viscous/sticky) strongly support Ergot."
+  },
+  "ground_truth": "ergot",
+  "sample_observation": {
+    "plant_part": {
+      "primary_structure": "panicle",
+      "secondary_structure": "floret",
+      "status": "reproductive"
+    },
+    "symptom_class": {
+      "type": "exudation",
+      "description": "Viscous, amber-colored fluid oozing from the florets and forming droplets.",
+      "status": "PRESENT"
+    },
+    "geometry": {
+      "lesion_shape": "N/A (not a leaf lesion)",
+      "structure_shape": "Panicle retains cylindrical form; individual florets appear slightly swollen or distorted by exudate.",
+      "status": "PRESENT"
+    },
+    "surface": {
+      "texture": "Wet, glossy, sticky",
+      "features": "Droplets of fluid visible on the surface of the panicle and hanging from the base.",
+      "status": "PRESENT"
+    },
+    "texture": {
+      "description": "The surface of the panicle is coated in a thick, viscous substance.",
+      "status": "PRESENT"
+    },
+    "color": {
+      "dominant": "Amber/Yellow-brown (exudate), Pale beige/white (florets)",
+      "exudate_color": "Amber/Yellow-brown",
+      "status": "PRESENT"
+    },
+    "distribution": {
+      "pattern": "Diffuse across the visible panicle head",
+      "status": "PRESENT"
+    },
+    "spatial_location": {
+      "location": "Reproductive head (panicle)",
+      "status": "PRESENT"
+    },
+    "reproductive_structure": {
+      "transformation": "No transformation to leafy tissue observed.",
+      "grain_status": "Grains/florets appear present but covered in exudate.",
+      "status": "PRESENT"
+    },
+    "developmental_stage": {
+      "stage": "Maturity/Grain filling",
+      "status": "PRESENT"
+    }
+  },
+  "evidence": {
+    "present": [
+      "Amber/yellow-brown sticky exudate",
+      "Droplets of fluid on panicle surface",
+      "Florets covered in viscous material",
+      "Panicle structure visible"
+    ],
+    "absent": [
+      "Green-ear transformation (panicle is not leafy)",
+      "Elongated dark sclerotia (no black elongated structures)",
+      "Rounded black spore balls (no distinct black masses)",
+      "Powdery mildew (no white powder)"
+    ],
+    "uncertain": [
+      "Internal grain condition (obscured by exudate)",
+      "Specific pathogen identity (requires lab confirmation)"
+    ],
+    "not_visible": [
+      "Leaf blade symptoms (leaves are out of focus/background)",
+      "Stem base"
+    ]
+  }
+}

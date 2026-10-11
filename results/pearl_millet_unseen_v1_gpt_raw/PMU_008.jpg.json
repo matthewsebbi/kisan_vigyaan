@@ -1,0 +1,128 @@
+{
+  "experiment": {
+    "sample_id": "PMU_008.jpg",
+    "model": "qwen+gpt-oss-120b",
+    "question_block": "v3"
+  },
+  "candidate_comparison": {
+    "blast": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.0
+    },
+    "downy_mildew_green_ear": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.0
+    },
+    "ergot": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.3
+    },
+    "smut": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.9
+    },
+    "rust": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.0
+    },
+    "leaf_spots": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.0
+    }
+  },
+  "differential": {
+    "top_candidate": "smut",
+    "runner_up": "ergot",
+    "score_margin": 0.6
+  },
+  "diagnostic_bottleneck": "Uncertainty about internal contents of the green spherical structures (spore mass vs. plant tissue)",
+  "requires_second_stage_visual_comparison": false,
+  "final_decision": {
+    "diagnosis": "smut",
+    "abstain": false,
+    "reason": "Observed green, rounded, bulbous structures on panicle match smut's enlarged spore ball and rounded expansion; anti\u2011features for other diseases are absent."
+  },
+  "ground_truth": "smut",
+  "sample_observation": {
+    "plant_part": {
+      "structure": "panicle",
+      "specifics": "Reproductive head (spike) showing individual florets and developing grains.",
+      "status": "visible"
+    },
+    "symptom_class": {
+      "type": "structural_deformation",
+      "description": "Florets appear swollen, rounded, and distorted. The normal grain shape is replaced by a bulbous, spherical structure.",
+      "status": "visible"
+    },
+    "geometry": {
+      "shape": "spherical/ovoid",
+      "arrangement": "Dense cluster on a central axis",
+      "status": "visible"
+    },
+    "surface": {
+      "texture": "Smooth to slightly waxy on the green structures; surrounding chaff appears dry and fibrous.",
+      "features": "No visible powdery mildew, no obvious raised pustules, no visible black sclerotia (ergot).",
+      "status": "visible"
+    },
+    "texture": {
+      "observation": "The abnormal structures appear firm and turgid (green), contrasting with the dry, brown chaff.",
+      "status": "visible"
+    },
+    "color": {
+      "dominant": "Green (abnormal structures), Brown/Tan (chaff/stem)",
+      "abnormality_color": "Vivid green, distinct from the surrounding dry tissue.",
+      "status": "visible"
+    },
+    "distribution": {
+      "pattern": "Dense and uniform along the visible length of the panicle.",
+      "status": "visible"
+    },
+    "spatial_location": {
+      "location": "Reproductive head (panicle)",
+      "status": "visible"
+    },
+    "reproductive_structure": {
+      "status": "abnormal",
+      "details": "Grains/florets are transformed into rounded, green, bulbous bodies. They occupy the position of the grain but are significantly enlarged and spherical compared to normal pearl millet grains."
+    },
+    "developmental_stage": {
+      "stage": "Reproductive (Grain fill/development)",
+      "status": "visible"
+    }
+  },
+  "evidence": {
+    "present": [
+      "Panicle structure",
+      "Green, rounded/swollen florets",
+      "Brown, dry chaff surrounding the green structures",
+      "Spherical geometry of the abnormal units"
+    ],
+    "absent": [
+      "Visible black sclerotia (Ergot)",
+      "Visible powdery white coating (Powdery Mildew)",
+      "Visible orange/brown pustules (Rust)",
+      "Leafy/vegetative transformation of the entire panicle (Green Ear)"
+    ],
+    "uncertain": [
+      "Internal contents of the green structures (spore mass vs. tissue)",
+      "Whether the green structures are rupturing or intact"
+    ],
+    "not_visible": [
+      "Leaves (to check for systemic symptoms)",
+      "Base of the plant"
+    ]
+  },
+  "evidence_quality": {}
+}

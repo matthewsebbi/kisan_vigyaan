@@ -1,0 +1,129 @@
+{
+  "experiment": {
+    "sample_id": "PMU_005.jpg",
+    "model": "qwen+qwen-27b",
+    "question_block": "v4"
+  },
+  "candidate_comparison": {
+    "blast": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.1
+    },
+    "downy_mildew_green_ear": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.05
+    },
+    "ergot": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.95
+    },
+    "smut": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.15
+    },
+    "rust": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.05
+    },
+    "leaf_spots": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.05
+    }
+  },
+  "differential": {
+    "top_candidate": "ergot",
+    "runner_up": "smut",
+    "score_margin": 0.8
+  },
+  "diagnostic_bottleneck": "None; presence of sticky amber exudate and floret swelling strongly supports Ergot, while explicitly contradicting Smut (which requires dry spore balls) and Blast (which requires foliar lesions).",
+  "requires_second_stage_visual_comparison": false,
+  "final_decision": {
+    "diagnosis": "ergot",
+    "abstain": false,
+    "reason": "The observed phenotype features sticky, viscous amber exudate on swollen, distorted florets. This matches the identity-defining hallmarks of Ergot (floret-associated sticky honeydew). It directly contradicts Smut (which presents with dry, ball-like spore masses and explicitly lists sticky honeydew as a contradiction) and Blast (which is characterized by foliar lesions, not panicle exudates). Downy Mildew is ruled out by the absence of green-ear transformation. Therefore, Ergot is the definitive diagnosis."
+  },
+  "ground_truth": "ergot",
+  "sample_observation": {
+    "plant_part": {
+      "primary": "panicle",
+      "secondary": "florets",
+      "tertiary": "grains"
+    },
+    "symptom_class": {
+      "primary": "sticky_exudate",
+      "secondary": "tissue_discoloration",
+      "tertiary": "floret_deformation"
+    },
+    "geometry": {
+      "panicle_shape": "cylindrical",
+      "floret_shape": "ovoid",
+      "exudate_shape": "dripping, viscous strands"
+    },
+    "surface": {
+      "panicle_surface": "glossy, wet",
+      "floret_surface": "glossy, coated"
+    },
+    "texture": {
+      "panicle_texture": "smooth, sticky",
+      "floret_texture": "smooth, swollen"
+    },
+    "color": {
+      "panicle_color": "pale grey-white",
+      "exudate_color": "amber, yellowish-brown",
+      "floret_color": "pale grey, brownish"
+    },
+    "distribution": {
+      "pattern": "widespread",
+      "coverage": "entire visible panicle"
+    },
+    "spatial_location": {
+      "primary_location": "panicle head",
+      "secondary_location": "florets"
+    },
+    "reproductive_structure": {
+      "status": "affected",
+      "details": "florets appear swollen and distorted"
+    },
+    "developmental_stage": {
+      "stage": "reproductive",
+      "details": "grain filling stage"
+    }
+  },
+  "evidence": {
+    "present": [
+      "sticky_exudate",
+      "glossy_surface",
+      "amber_color_exudate",
+      "floret_swelling",
+      "floret_distortion",
+      "widespread_distribution"
+    ],
+    "absent": [
+      "powdery_surface",
+      "raised_pustules",
+      "necrotic_lesions",
+      "chlorosis"
+    ],
+    "uncertain": [
+      "membrane_integrity",
+      "spore_presence"
+    ],
+    "not_visible": [
+      "leaf_surface",
+      "stem_base"
+    ]
+  },
+  "evidence_quality": {}
+}

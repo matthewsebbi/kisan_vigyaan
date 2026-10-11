@@ -1,0 +1,108 @@
+{
+  "model": "gemini-3.1-flash-lite",
+  "total_images": 12,
+  "correct": 10,
+  "incorrect": 2,
+  "accuracy": 0.8333333333333334,
+  "mean_margin": 0.5666666666666667,
+  "confusion_matrix": {
+    "blast": {
+      "blast": 1,
+      "downy_mildew_green_ear": 0,
+      "ergot": 0,
+      "smut": 0,
+      "rust": 0,
+      "leaf_spots": 1
+    },
+    "downy_mildew_green_ear": {
+      "blast": 0,
+      "downy_mildew_green_ear": 2,
+      "ergot": 0,
+      "smut": 0,
+      "rust": 0,
+      "leaf_spots": 0
+    },
+    "ergot": {
+      "blast": 0,
+      "downy_mildew_green_ear": 0,
+      "ergot": 2,
+      "smut": 1,
+      "rust": 0,
+      "leaf_spots": 0
+    },
+    "smut": {
+      "blast": 0,
+      "downy_mildew_green_ear": 0,
+      "ergot": 0,
+      "smut": 2,
+      "rust": 0,
+      "leaf_spots": 0
+    },
+    "rust": {
+      "blast": 0,
+      "downy_mildew_green_ear": 0,
+      "ergot": 0,
+      "smut": 0,
+      "rust": 2,
+      "leaf_spots": 0
+    },
+    "leaf_spots": {
+      "blast": 0,
+      "downy_mildew_green_ear": 0,
+      "ergot": 0,
+      "smut": 0,
+      "rust": 0,
+      "leaf_spots": 1
+    }
+  },
+  "per_disease_metrics": {
+    "blast": {
+      "precision": 1.0,
+      "recall": 0.5,
+      "f1": 0.6666666666666666,
+      "TP": 1,
+      "FP": 0,
+      "FN": 1
+    },
+    "downy_mildew_green_ear": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "TP": 2,
+      "FP": 0,
+      "FN": 0
+    },
+    "ergot": {
+      "precision": 1.0,
+      "recall": 0.6666666666666666,
+      "f1": 0.8,
+      "TP": 2,
+      "FP": 0,
+      "FN": 1
+    },
+    "smut": {
+      "precision": 0.6666666666666666,
+      "recall": 1.0,
+      "f1": 0.8,
+      "TP": 2,
+      "FP": 1,
+      "FN": 0
+    },
+    "rust": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "TP": 2,
+      "FP": 0,
+      "FN": 0
+    },
+    "leaf_spots": {
+      "precision": 0.5,
+      "recall": 1.0,
+      "f1": 0.6666666666666666,
+      "TP": 1,
+      "FP": 1,
+      "FN": 0
+    }
+  }
+}

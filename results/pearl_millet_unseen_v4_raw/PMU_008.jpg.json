@@ -1,0 +1,141 @@
+{
+  "experiment": {
+    "sample_id": "PMU_008.jpg",
+    "model": "qwen+qwen-27b",
+    "question_block": "v4"
+  },
+  "candidate_comparison": {
+    "blast": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.1
+    },
+    "downy_mildew_green_ear": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.05
+    },
+    "ergot": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.15
+    },
+    "smut": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.1
+    },
+    "rust": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.05
+    },
+    "leaf_spots": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.2
+    }
+  },
+  "differential": {
+    "top_candidate": "leaf_spots",
+    "runner_up": "ergot",
+    "score_margin": 0.05
+  },
+  "diagnostic_bottleneck": "Observed symptoms are discrete necrotic lesions on mature grains (panicle), which does not strongly match the identity-defining features of any specific pathogen in the candidate list (Blast is foliar, Green Ear is structural transformation, Ergot requires honeydew/projections, Smut requires spore balls). The presentation is most consistent with general grain spot/necrosis or a non-listed grain disease, but among candidates, 'leaf_spots' is a generic catch-all for discrete lesions, though location is atypical. However, the lack of specific identity-defining features for the top candidates makes the diagnosis uncertain.",
+  "requires_second_stage_visual_comparison": true,
+  "final_decision": {
+    "diagnosis": "ABSTAIN",
+    "abstain": true,
+    "reason": "The observed phenotype (discrete circular necrotic lesions on mature grains) lacks the identity-defining features required to confidently assign it to Blast (foliar), Green Ear (structural), Ergot (honeydew/projection), or Smut (spore ball). While 'Leaf Spots' is a generic term, the location on grains rather than leaves makes it a weak fit. The evidence is insufficient to distinguish between a specific grain pathogen not listed or a generic spot, leading to abstention."
+  },
+  "ground_truth": "smut",
+  "sample_observation": {
+    "plant_part": {
+      "primary": "panicle",
+      "secondary": "grains",
+      "tertiary": "glumes"
+    },
+    "symptom_class": {
+      "primary": "discrete_lesion",
+      "secondary": "necrotic_tissue",
+      "tertiary": "tissue_replacement"
+    },
+    "geometry": {
+      "shape": "circular",
+      "elongation": "none",
+      "boundary": "distinct",
+      "symmetry": "radial"
+    },
+    "surface": {
+      "elevation": "flat",
+      "relief": "none",
+      "texture": "smooth",
+      "integrity": "intact"
+    },
+    "texture": {
+      "surface": "smooth",
+      "internal": "homogeneous",
+      "material": "solid"
+    },
+    "color": {
+      "primary": "dark_brown",
+      "secondary": "green",
+      "tertiary": "tan",
+      "contrast": "high"
+    },
+    "distribution": {
+      "pattern": "scattered",
+      "density": "moderate",
+      "extent": "widespread",
+      "localization": "individual_grains"
+    },
+    "spatial_location": {
+      "primary": "grain_surface",
+      "secondary": "panicle_axis",
+      "orientation": "random"
+    },
+    "reproductive_structure": {
+      "type": "grain",
+      "status": "affected",
+      "deformation": "none",
+      "displacement": "none"
+    },
+    "developmental_stage": {
+      "stage": "mature",
+      "progression": "static",
+      "severity": "moderate"
+    }
+  },
+  "evidence": {
+    "present": [
+      "discrete_lesions",
+      "dark_brown_color",
+      "circular_shape",
+      "grain_surface_location",
+      "necrotic_appearance"
+    ],
+    "absent": [
+      "raised_structures",
+      "powdery_material",
+      "sticky_exudate",
+      "leafy_transformation",
+      "elongated_projecting_structures"
+    ],
+    "uncertain": [
+      "internal_texture",
+      "membrane_integrity"
+    ],
+    "not_visible": [
+      "leaf_tissue",
+      "stem_tissue",
+      "root_tissue"
+    ]
+  },
+  "evidence_quality": {}
+}

@@ -4,6 +4,7 @@ import re
 import json
 import logging
 import io
+import time
 import base64
 from typing import List, Optional, Dict, Any, Tuple
 from PIL import Image
@@ -46,12 +47,52 @@ class DiagnosticService:
         self.environment_service = environment_service or EnvironmentService()
         self.qwen_client = qwen_client or QwenClient()
 
-    def extract_phenotype(self, image_base64: str) -> PhenotypeExtraction:
+    def extract_phenotype(self, image_base64: str, crop: str = "Unknown") -> PhenotypeExtraction:
         """
         Pass 1: Visual Phenotype Extraction using Qwen3.8-27B Vision.
         Extracts granular botanical features without collapsing distinct geometries.
         """
-        vision_prompt = """You are a precision botanical vision analyst. Examine this image with scientific rigor.
+        custom_qb_path = PROJECT_ROOT / f"wiki/agriculture/{crop.title()}/{crop.title().replace(' ', '_')}_V4_High_Precision_Question_Block.md"
+        if custom_qb_path.exists():
+            with open(custom_qb_path, "r", encoding="utf-8") as f:
+                base_prompt = f.read()
+            vision_prompt = base_prompt + """\n\nCRITICAL CONTEXT RULES:
+1. is_plant: Set to false ONLY if the image is entirely a human, furniture, or unrelated object without a plant. If a plant/crop is visible (even held by a hand), set to true.
+2. is_healthy: Set to true ONLY if the plant is completely normal with no disease, lesions, abnormal structures (like ergot/smut), or chlorosis. Set to false if ANY disease symptom is present (lesion, exudate, spore mass, etc).
+
+Provide your findings strictly in the following JSON format mapping your observations to these fields:
+```json
+{
+  "is_plant": true,
+  "non_plant_reason": null,
+  "is_healthy": false,
+  "plant_parts": ["leaf_blade"],
+  "symptom_class": "discrete_lesion",
+  "lesion_presence": true,
+  "lesion_size": "2-5 mm",
+  "primary_shape": "oval_circular",
+  "elongation": "low",
+  "width_profile": "approximately_uniform",
+  "lesion_ends": "rounded_blunt",
+  "center_color": "dark_brown",
+  "margin_color": "reddish_brown with yellow halo",
+  "surrounding_color": "green",
+  "color_transition": "gradual",
+  "current_texture": "dry_necrotic",
+  "early_appearance": "unclear",
+  "orientation": "longitudinal",
+  "distribution": "scattered",
+  "coalescence": "partial",
+  "vein_relationship": "not_vein_dependent",
+  "spatial_location": "leaf_blade",
+  "whole_plant_features": [],
+  "visible_structures": [],
+  "uncertainty": [],
+  "image_quality": "clear"
+}
+```"""
+        else:
+            vision_prompt = """You are a precision botanical vision analyst. Examine this image with scientific rigor.
 
 FIRST, determine image validity & context:
 1. is_plant:
@@ -315,22 +356,28 @@ Provide your findings strictly in the following JSON format:
         Only sends fields relevant to clinical diagnosis to minimize latency and token usage.
         """
         sections = candidate.sections
+        # Make section keys case-insensitive for easier matching
+        lower_sections = {k.lower(): v for k, v in sections.items()}
         parts = []
 
-        if "Diagnostic Phenotype" in sections:
-            parts.append(f"Phenotype Morphology:\n{sections['Diagnostic Phenotype'][:800]}")
-        elif "Identification" in sections:
-            parts.append(f"Identification:\n{sections['Identification'][:800]}")
+        if "diagnostic phenotype" in lower_sections:
+            parts.append(f"Phenotype Morphology:\n{lower_sections['diagnostic phenotype'][:800]}")
+        elif "identification" in lower_sections:
+            parts.append(f"Identification:\n{lower_sections['identification'][:800]}")
 
-        if "Hallmark Features" in sections:
-            parts.append(f"Hallmark Features:\n{sections['Hallmark Features'][:600]}")
-        elif "Distinguishing Features" in sections:
-            parts.append(f"Distinguishing Features:\n{sections['Distinguishing Features'][:600]}")
+        if "hallmark features" in lower_sections:
+            parts.append(f"Hallmark Features:\n{lower_sections['hallmark features'][:600]}")
+        elif "contrastive evidence" in lower_sections:
+            parts.append(f"Contrastive Evidence:\n{lower_sections['contrastive evidence'][:600]}")
+        elif "distinguishing features" in lower_sections:
+            parts.append(f"Distinguishing Features:\n{lower_sections['distinguishing features'][:600]}")
 
-        if "Negative / Exclusion Features" in sections:
-            parts.append(f"Exclusion Criteria:\n{sections['Negative / Exclusion Features'][:500]}")
-        elif "Differential Diagnosis" in sections:
-            parts.append(f"Differential Notes:\n{sections['Differential Diagnosis'][:500]}")
+        if "evidence weighting" in lower_sections:
+            parts.append(f"Evidence Weighting:\n{lower_sections['evidence weighting'][:500]}")
+        elif "negative / exclusion features" in lower_sections:
+            parts.append(f"Exclusion Criteria:\n{lower_sections['negative / exclusion features'][:500]}")
+        elif "differential diagnosis" in lower_sections:
+            parts.append(f"Differential Notes:\n{lower_sections['differential diagnosis'][:500]}")
 
         if not parts:
             parts.append(candidate.body[:1000])
@@ -445,7 +492,7 @@ Provide your evaluation STRICTLY as a raw JSON object with this schema:
                         prompt=prompt,
                         reference_image_b64=ref_img_b64,
                         temperature=0.1,
-                        max_tokens=650,
+                        max_tokens=1500,
                     )
                     if isinstance(res, str):
                         raw_cmp = res
@@ -459,7 +506,7 @@ Provide your evaluation STRICTLY as a raw JSON object with this schema:
                     image_base64=image,
                     prompt=prompt,
                     temperature=0.1,
-                    max_tokens=650,
+                    max_tokens=1500,
                 )
                 if isinstance(res, str):
                     raw_cmp = res
@@ -687,7 +734,7 @@ Provide your evaluation STRICTLY as a raw JSON object with this schema:
         try:
             # 3. Botanical phenotype extraction (supporting context for pass 1 & pass 2)
             try:
-                phenotype = self.extract_phenotype(image)
+                phenotype = self.extract_phenotype(image, crop)
             except QwenAPIError as qe:
                 err_str = str(qe)
                 if "403" in err_str or "401" in err_str or "Cloudflare" in err_str:
@@ -716,7 +763,7 @@ Provide your evaluation STRICTLY as a raw JSON object with this schema:
                 )
 
             # Check healthy plant leaf
-            if phenotype and (phenotype.is_healthy is True or phenotype.lesion_presence is False):
+            if phenotype and phenotype.is_healthy is True:
                 return DiagnosisResponse(
                     crop=crop,
                     diagnosis=f"Healthy {crop} (No Pathogen Detected)",
@@ -782,6 +829,9 @@ Provide your evaluation STRICTLY as a raw JSON object with this schema:
                             crop=crop
                         )
                 candidate_results.append(res)
+                # Polite pacing to maintain compliant rate limits on free-tier APIs
+                if not fallback_to_local_for_remaining and idx < len(candidates):
+                    time.sleep(1.0)
 
             # 5. Programmatic Ranking (overall_score DESC)
             candidate_results.sort(key=lambda c: c.overall_score, reverse=True)

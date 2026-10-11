@@ -1,0 +1,128 @@
+{
+  "experiment": {
+    "sample_id": "PMU_008.jpg",
+    "model": "qwen+qwen-27b",
+    "question_block": "v3"
+  },
+  "candidate_comparison": {
+    "blast": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.05
+    },
+    "downy_mildew_green_ear": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.15
+    },
+    "ergot": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.1
+    },
+    "smut": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.95
+    },
+    "rust": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.05
+    },
+    "leaf_spots": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.05
+    }
+  },
+  "differential": {
+    "top_candidate": "smut",
+    "runner_up": "downy_mildew_green_ear",
+    "score_margin": 0.8
+  },
+  "diagnostic_bottleneck": "Distinguishing between Smut (enlarged spore balls) and Green Ear (malformed panicle) based on the 'green' and 'swollen' description, but the specific 'spherical/ovoid' geometry and 'dense cluster' strongly favor Smut over the diffuse chlorosis/malformation of Green Ear.",
+  "requires_second_stage_visual_comparison": false,
+  "final_decision": {
+    "diagnosis": "smut",
+    "abstain": false,
+    "reason": "The observed phenotype of 'spherical/ovoid', 'swollen', 'rounded' structures on the panicle, described as 'bulbous, spherical structure' replacing normal grains, aligns perfectly with the core morphology of Smut (enlarged_spore_ball). The absence of black sclerotia rules out Ergot. The specific geometry (spherical units) contradicts the diffuse nature of Green Ear. Leaf-based diseases (Blast, Rust, Leaf Spots) are ruled out by the primary location on the panicle."
+  },
+  "ground_truth": "smut",
+  "sample_observation": {
+    "plant_part": {
+      "structure": "panicle",
+      "specifics": "Reproductive head (spike) showing individual florets and developing grains.",
+      "status": "visible"
+    },
+    "symptom_class": {
+      "type": "structural_deformation",
+      "description": "Florets appear swollen, rounded, and distorted. The normal grain shape is replaced by a bulbous, spherical structure.",
+      "status": "visible"
+    },
+    "geometry": {
+      "shape": "spherical/ovoid",
+      "arrangement": "Dense cluster on a central axis",
+      "status": "visible"
+    },
+    "surface": {
+      "texture": "Smooth to slightly waxy on the green structures; surrounding chaff appears dry and fibrous.",
+      "features": "No visible powdery mildew, no obvious raised pustules, no visible black sclerotia (ergot).",
+      "status": "visible"
+    },
+    "texture": {
+      "observation": "The abnormal structures appear firm and turgid (green), contrasting with the dry, brown chaff.",
+      "status": "visible"
+    },
+    "color": {
+      "dominant": "Green (abnormal structures), Brown/Tan (chaff/stem)",
+      "abnormality_color": "Vivid green, distinct from the surrounding dry tissue.",
+      "status": "visible"
+    },
+    "distribution": {
+      "pattern": "Dense and uniform along the visible length of the panicle.",
+      "status": "visible"
+    },
+    "spatial_location": {
+      "location": "Reproductive head (panicle)",
+      "status": "visible"
+    },
+    "reproductive_structure": {
+      "status": "abnormal",
+      "details": "Grains/florets are transformed into rounded, green, bulbous bodies. They occupy the position of the grain but are significantly enlarged and spherical compared to normal pearl millet grains."
+    },
+    "developmental_stage": {
+      "stage": "Reproductive (Grain fill/development)",
+      "status": "visible"
+    }
+  },
+  "evidence": {
+    "present": [
+      "Panicle structure",
+      "Green, rounded/swollen florets",
+      "Brown, dry chaff surrounding the green structures",
+      "Spherical geometry of the abnormal units"
+    ],
+    "absent": [
+      "Visible black sclerotia (Ergot)",
+      "Visible powdery white coating (Powdery Mildew)",
+      "Visible orange/brown pustules (Rust)",
+      "Leafy/vegetative transformation of the entire panicle (Green Ear)"
+    ],
+    "uncertain": [
+      "Internal contents of the green structures (spore mass vs. tissue)",
+      "Whether the green structures are rupturing or intact"
+    ],
+    "not_visible": [
+      "Leaves (to check for systemic symptoms)",
+      "Base of the plant"
+    ]
+  },
+  "evidence_quality": {}
+}

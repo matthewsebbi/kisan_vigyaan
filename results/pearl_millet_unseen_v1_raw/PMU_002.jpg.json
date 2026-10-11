@@ -1,0 +1,135 @@
+{
+  "experiment": {
+    "sample_id": "PMU_002.jpg",
+    "model": "qwen+qwen-27b",
+    "question_block": "v3"
+  },
+  "candidate_comparison": {
+    "blast": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.45
+    },
+    "downy_mildew_green_ear": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.1
+    },
+    "ergot": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.05
+    },
+    "smut": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.05
+    },
+    "rust": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.2
+    },
+    "leaf_spots": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.85
+    }
+  },
+  "differential": {
+    "top_candidate": "leaf_spots",
+    "runner_up": "blast",
+    "score_margin": 0.4
+  },
+  "diagnostic_bottleneck": "Lesion geometry is irregular rather than the classic spindle/diamond shape of blast, and surface texture is uncertain (granular vs flat), but the discrete, isolated nature with dark center and yellow margin strongly favors general leaf spots over specific blast progression or rust pustules.",
+  "requires_second_stage_visual_comparison": false,
+  "final_decision": {
+    "diagnosis": "leaf_spots",
+    "abstain": false,
+    "reason": "The observed phenotype shows discrete, isolated lesions on the leaf blade with a dark brown/black center and yellowish-brown margin. This morphology aligns best with the 'Leaf Spots' candidate, which characterizes discrete necrotic spots. It contradicts Rust (no clear raised powdery pustules), Downy Mildew (no green ear/diffuse chlorosis), Ergot/Smut (wrong location/structure). While Blast is a possibility, the lack of distinct spindle/diamond shape and the 'irregular' geometry make Leaf Spots the stronger candidate."
+  },
+  "ground_truth": "blast",
+  "sample_observation": {
+    "plant_part": {
+      "structure": "leaf_blade",
+      "status": "visible"
+    },
+    "symptom_class": {
+      "type": "discrete_lesion",
+      "status": "visible"
+    },
+    "geometry": {
+      "shape": "irregular",
+      "elongation": "no",
+      "ends": "indeterminate",
+      "center_wider": "uncertain",
+      "coalescence": "no"
+    },
+    "surface": {
+      "raised": "uncertain",
+      "pustular": "uncertain",
+      "powdery": "absent",
+      "flat": "uncertain",
+      "dry_papery": "uncertain"
+    },
+    "texture": {
+      "status": "visible",
+      "description": "Lesion surface appears somewhat granular or textured, but resolution limits definitive classification."
+    },
+    "color": {
+      "dominant": "green",
+      "lesion_center": "dark_brown_to_black",
+      "lesion_margin": "yellowish_brown",
+      "surrounding_tissue": "green",
+      "lighting_artifacts": "none_significant"
+    },
+    "distribution": {
+      "pattern": "isolated",
+      "concentration": "mid-leaf",
+      "vein_relation": "crosses_veins",
+      "directional": "no"
+    },
+    "spatial_location": {
+      "primary_site": "leaf_blade",
+      "vegetative_reproductive": "vegetative"
+    },
+    "reproductive_structure": {
+      "status": "not_visible"
+    },
+    "developmental_stage": {
+      "status": "uncertain"
+    }
+  },
+  "evidence": {
+    "present": [
+      "discrete_lesion",
+      "dark_brown_center",
+      "yellowish_margin",
+      "isolated_distribution"
+    ],
+    "absent": [
+      "powdery_material",
+      "green_ear_transformation",
+      "elongated_sclerotia",
+      "honeydew"
+    ],
+    "uncertain": [
+      "raised_pustule",
+      "spindle_shape",
+      "dry_papery_texture",
+      "spore_mass"
+    ],
+    "not_visible": [
+      "panicle",
+      "stem",
+      "whole_plant"
+    ]
+  },
+  "evidence_quality": {}
+}

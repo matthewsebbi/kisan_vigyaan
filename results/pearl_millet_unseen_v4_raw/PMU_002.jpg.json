@@ -1,0 +1,130 @@
+{
+  "experiment": {
+    "sample_id": "PMU_002.jpg",
+    "model": "qwen+qwen-27b",
+    "question_block": "v4"
+  },
+  "candidate_comparison": {
+    "blast": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.2
+    },
+    "downy_mildew_green_ear": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.1
+    },
+    "ergot": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.0
+    },
+    "smut": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.0
+    },
+    "rust": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.1
+    },
+    "leaf_spots": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.9
+    }
+  },
+  "differential": {
+    "top_candidate": "leaf_spots",
+    "runner_up": "blast",
+    "score_margin": 0.7
+  },
+  "diagnostic_bottleneck": "Lack of specific pathogen identification features (e.g., spore type, specific lesion geometry like elongation for Blast) makes it difficult to distinguish between general leaf spot pathogens and early-stage specific diseases like Blast, but the morphology strongly favors a non-Blast leaf spot.",
+  "requires_second_stage_visual_comparison": false,
+  "final_decision": {
+    "diagnosis": "leaf_spots",
+    "abstain": false,
+    "reason": "The observed phenotype (discrete oval lesion, dark brown center, chlorotic halo, flat surface, no reproductive structures) aligns best with the general category of Leaf Spots. It lacks the specific identity-defining features of Blast (elongation, gray center), Downy Mildew (green ear), Ergot (honeydew), Smut (spore balls), and Rust (powdery pustules)."
+  },
+  "ground_truth": "blast",
+  "sample_observation": {
+    "plant_part": {
+      "primary": "leaf_blade",
+      "secondary": "leaf_margin"
+    },
+    "symptom_class": {
+      "primary": "discrete_lesion",
+      "secondary": "chlorotic_halo"
+    },
+    "geometry": {
+      "shape": "oval",
+      "elongation": "low",
+      "axis_ratio": "1.3-1.5",
+      "boundary": "diffuse"
+    },
+    "surface": {
+      "elevation": "flat",
+      "relief": "none",
+      "texture": "smooth"
+    },
+    "texture": {
+      "surface_condition": "dry",
+      "material": "none"
+    },
+    "color": {
+      "lesion_center": "dark_brown",
+      "lesion_margin": "tan",
+      "halo": "pale_yellow",
+      "surrounding_tissue": "green"
+    },
+    "distribution": {
+      "pattern": "localized",
+      "count": "single_dominant",
+      "secondary_features": "scattered_small_dark_specks"
+    },
+    "spatial_location": {
+      "position": "mid-leaf",
+      "vein_relationship": "interveinal"
+    },
+    "reproductive_structure": {
+      "visible": false
+    },
+    "developmental_stage": {
+      "stage": "mature_lesion",
+      "progression": "static"
+    }
+  },
+  "evidence": {
+    "present": [
+      "discrete_lesion",
+      "dark_brown_center",
+      "chlorotic_halo",
+      "leaf_blade",
+      "parallel_venation"
+    ],
+    "absent": [
+      "raised_structure",
+      "powdery_surface_material",
+      "sticky_exudate",
+      "reproductive_structure",
+      "coalescence"
+    ],
+    "uncertain": [
+      "surface_elevation",
+      "lesion_boundary_sharpness"
+    ],
+    "not_visible": [
+      "leaf_underside",
+      "whole_plant_context"
+    ]
+  },
+  "evidence_quality": {}
+}

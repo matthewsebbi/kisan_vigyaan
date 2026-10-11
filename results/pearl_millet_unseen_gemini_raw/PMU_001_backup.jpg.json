@@ -1,0 +1,106 @@
+{
+  "experiment": {
+    "sample_id": "PMU_001.jpg",
+    "model": "gemini-3.8-flash",
+    "question_block": "v4"
+  },
+  "candidate_comparison": {
+    "blast": {
+      "supported_features": [
+        "discrete_lesion",
+        "elliptical_spindle_like",
+        "widened_at_center_tapering_toward_ends",
+        "tapering_to_bluntly_pointed",
+        "pale_grey_to_tan center",
+        "dark_brown_to_blackish margin",
+        "CENTER_MARGIN_CONTRAST",
+        "dry_papery_necrosis",
+        "chlorotic halo"
+      ],
+      "contradictory_features": [],
+      "unknown_features": [
+        "progressive enlargement/coalescence across multiple leaves"
+      ],
+      "compatibility_score": 0.95
+    },
+    "downy_mildew_green_ear": {
+      "supported_features": [
+        "chlorosis"
+      ],
+      "contradictory_features": [
+        "discrete_lesion with sharp dark margin",
+        "spindle-shaped necrotic lesion center",
+        "absence of systemic chlorotic striping"
+      ],
+      "unknown_features": [
+        "panicle architecture",
+        "downy sporulation"
+      ],
+      "compatibility_score": 0.1
+    },
+    "ergot": {
+      "supported_features": [],
+      "contradictory_features": [
+        "PRIMARY_STRUCTURE is leaf",
+        "discrete foliar lesion instead of floret infection",
+        "absence of honeydew exudate"
+      ],
+      "unknown_features": [
+        "panicle and floret structures"
+      ],
+      "compatibility_score": 0.0
+    },
+    "smut": {
+      "supported_features": [],
+      "contradictory_features": [
+        "PRIMARY_STRUCTURE is leaf",
+        "foliar necrotic lesion instead of floral grain transformation",
+        "absence of membrane-covered or ruptured spore balls"
+      ],
+      "unknown_features": [
+        "panicle and grain development"
+      ],
+      "compatibility_score": 0.0
+    },
+    "rust": {
+      "supported_features": [
+        "PRIMARY_STRUCTURE is leaf",
+        "discrete foliar lesion",
+        "chlorotic halo"
+      ],
+      "contradictory_features": [
+        "flat_to_slightly_sunken relief (absence of raised pustules)",
+        "absence of powdery urediniospore mass",
+        "spindle shape with pale gray center and dark margin"
+      ],
+      "unknown_features": [
+        "sporulation type on abaxial surface"
+      ],
+      "compatibility_score": 0.2
+    },
+    "leaf_spots": {
+      "supported_features": [
+        "PRIMARY_STRUCTURE is leaf",
+        "discrete foliar lesion",
+        "chlorotic halo",
+        "dry papery necrosis"
+      ],
+      "contradictory_features": [
+        "highly classic blast spindle geometry with diagnostic pale gray center and dark contrasting margin"
+      ],
+      "unknown_features": [
+        "conidiophore morphology"
+      ],
+      "compatibility_score": 0.45
+    }
+  },
+  "differential": {
+    "top_candidate": "blast",
+    "runner_up": "leaf_spots",
+    "score_margin": 0.5
+  },
+  "ground_truth": "blast",
+  "sample_observation": {},
+  "evidence": {},
+  "evidence_quality": {}
+}

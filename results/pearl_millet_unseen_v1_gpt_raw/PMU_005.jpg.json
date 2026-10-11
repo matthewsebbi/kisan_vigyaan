@@ -1,0 +1,128 @@
+{
+  "experiment": {
+    "sample_id": "PMU_005.jpg",
+    "model": "qwen+gpt-oss-120b",
+    "question_block": "v3"
+  },
+  "candidate_comparison": {
+    "blast": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.0
+    },
+    "downy_mildew_green_ear": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.0
+    },
+    "ergot": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.0
+    },
+    "smut": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.0
+    },
+    "rust": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.0
+    },
+    "leaf_spots": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.0
+    }
+  },
+  "differential": {
+    "top_candidate": "",
+    "runner_up": "",
+    "score_margin": 0.0
+  },
+  "diagnostic_bottleneck": "Observed amber viscous exudate on panicle does not correspond to hallmark features of any candidate phenotype; key high\u2011value features (e.g., honeydew, sclerotia, rust pustules, leaf lesions) are absent.",
+  "requires_second_stage_visual_comparison": false,
+  "final_decision": {
+    "diagnosis": "",
+    "abstain": true,
+    "reason": "Insufficient evidence to assign any of the six candidate phenotypes."
+  },
+  "ground_truth": "ergot",
+  "sample_observation": {
+    "plant_part": {
+      "primary_structure": "panicle",
+      "secondary_structure": "floret",
+      "status": "reproductive"
+    },
+    "symptom_class": {
+      "type": "exudation",
+      "description": "Viscous, amber-colored fluid oozing from the florets and forming droplets.",
+      "status": "PRESENT"
+    },
+    "geometry": {
+      "shape": "panicle is cylindrical; individual florets are grain-shaped",
+      "deformation": "Florets appear intact but are coated and connected by exudate.",
+      "status": "PRESENT"
+    },
+    "surface": {
+      "texture": "wet, glossy, sticky",
+      "features": "Droplets of fluid visible hanging from the panicle.",
+      "status": "PRESENT"
+    },
+    "texture": {
+      "description": "The surface of the panicle is slick and reflective due to the exudate.",
+      "status": "PRESENT"
+    },
+    "color": {
+      "dominant": "Amber/Yellow-brown (exudate), Pale beige/white (florets)",
+      "exudate_color": "Translucent amber to dark brown",
+      "status": "PRESENT"
+    },
+    "distribution": {
+      "pattern": "Diffuse across the visible panicle surface",
+      "status": "PRESENT"
+    },
+    "spatial_location": {
+      "location": "Reproductive head (panicle)",
+      "status": "PRESENT"
+    },
+    "reproductive_structure": {
+      "status": "Affected",
+      "details": "Florets are present but obscured by exudate. No obvious replacement by sclerotia or smut balls visible in this view."
+    },
+    "developmental_stage": {
+      "stage": "Maturity/Grain filling",
+      "status": "PRESENT"
+    }
+  },
+  "evidence": {
+    "present": [
+      "Panicle structure",
+      "Amber/brown sticky exudate",
+      "Droplets of fluid",
+      "Florets (grains) visible beneath exudate"
+    ],
+    "absent": [
+      "Green-ear transformation (panicle is not leafy)",
+      "Elongated dark sclerotia (ergot)",
+      "Black powdery spore masses (smut)",
+      "Raised pustules (rust)"
+    ],
+    "uncertain": [
+      "Internal condition of grains (obscured by exudate)",
+      "Specific pathogen identity (requires lab confirmation)"
+    ],
+    "not_visible": [
+      "Leaf blades (out of focus/background)",
+      "Stem base"
+    ]
+  },
+  "evidence_quality": {}
+}

@@ -1,0 +1,94 @@
+{
+  "experiment": {
+    "sample_id": "PMU_001.jpg",
+    "model": "gemini-3.1-flash-lite",
+    "question_block": "v4"
+  },
+  "candidate_comparison": {
+    "blast": {
+      "supported_features": [
+        "discrete_lesion",
+        "elliptical_lesion_geometry",
+        "central_widening",
+        "tapered_lesion_end_shape",
+        "tan_center",
+        "dark_brown_margin",
+        "chlorotic_halo"
+      ],
+      "contradictory_features": [],
+      "unknown_features": [
+        "gray_or_grayish_developed_center"
+      ],
+      "compatibility_score": 0.85
+    },
+    "downy_mildew_green_ear": {
+      "supported_features": [
+        "chlorosis"
+      ],
+      "contradictory_features": [
+        "discrete_lesion",
+        "localized_distribution"
+      ],
+      "unknown_features": [
+        "panicle_architecture",
+        "systemic_pattern"
+      ],
+      "compatibility_score": 0.1
+    },
+    "ergot": {
+      "supported_features": [],
+      "contradictory_features": [
+        "discrete_lesion",
+        "dry_necrotic_texture",
+        "absence_of_exudate"
+      ],
+      "unknown_features": [
+        "floret_associated_sticky_honeydew"
+      ],
+      "compatibility_score": 0.05
+    },
+    "smut": {
+      "supported_features": [],
+      "contradictory_features": [
+        "discrete_lesion",
+        "dry_necrotic_texture",
+        "absence_of_membrane"
+      ],
+      "unknown_features": [
+        "enlarged_ball_like_structure"
+      ],
+      "compatibility_score": 0.05
+    },
+    "rust": {
+      "supported_features": [
+        "discrete_lesion"
+      ],
+      "contradictory_features": [
+        "flat_surface_elevation",
+        "absence_of_pustules"
+      ],
+      "unknown_features": [],
+      "compatibility_score": 0.2
+    },
+    "leaf_spots": {
+      "supported_features": [
+        "discrete_lesion",
+        "elliptical_lesion_geometry",
+        "tan_center",
+        "dark_brown_margin",
+        "chlorotic_halo"
+      ],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.75
+    }
+  },
+  "differential": {
+    "top_candidate": "blast",
+    "runner_up": "leaf_spots",
+    "score_margin": 0.1
+  },
+  "ground_truth": "blast",
+  "sample_observation": {},
+  "evidence": {}
+}

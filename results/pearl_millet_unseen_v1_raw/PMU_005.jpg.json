@@ -1,0 +1,128 @@
+{
+  "experiment": {
+    "sample_id": "PMU_005.jpg",
+    "model": "qwen+qwen-27b",
+    "question_block": "v3"
+  },
+  "candidate_comparison": {
+    "blast": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.05
+    },
+    "downy_mildew_green_ear": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.1
+    },
+    "ergot": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.95
+    },
+    "smut": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.1
+    },
+    "rust": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.05
+    },
+    "leaf_spots": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.05
+    }
+  },
+  "differential": {
+    "top_candidate": "ergot",
+    "runner_up": "downy_mildew_green_ear",
+    "score_margin": 0.85
+  },
+  "diagnostic_bottleneck": "None; early-stage honeydew exudate on panicle is a distinct hallmark of Ergot, clearly differentiating it from other candidates which lack this specific symptom or location.",
+  "requires_second_stage_visual_comparison": false,
+  "final_decision": {
+    "diagnosis": "Ergot",
+    "abstain": false,
+    "reason": "The presence of viscous, amber-colored honeydew exudate on the panicle florets is a classic early-stage symptom of Ergot (Claviceps purpurea). Other candidates like Smut, Rust, Blast, and Leaf Spots are contradicted by the absence of spore masses, pustules, or necrotic lesions, and the specific location/symptom type. Downy Mildew is unlikely due to the absence of green ear transformation."
+  },
+  "ground_truth": "ergot",
+  "sample_observation": {
+    "plant_part": {
+      "primary_structure": "panicle",
+      "secondary_structure": "floret",
+      "status": "reproductive"
+    },
+    "symptom_class": {
+      "type": "exudation",
+      "description": "Viscous, amber-colored fluid oozing from the florets and forming droplets.",
+      "status": "PRESENT"
+    },
+    "geometry": {
+      "shape": "panicle is cylindrical; individual florets are grain-shaped",
+      "deformation": "Florets appear intact but are coated and connected by exudate.",
+      "status": "PRESENT"
+    },
+    "surface": {
+      "texture": "wet, glossy, sticky",
+      "features": "Droplets of fluid visible hanging from the panicle.",
+      "status": "PRESENT"
+    },
+    "texture": {
+      "description": "The surface of the panicle is slick and reflective due to the exudate.",
+      "status": "PRESENT"
+    },
+    "color": {
+      "dominant": "Amber/Yellow-brown (exudate), Pale beige/white (florets)",
+      "exudate_color": "Translucent amber to dark brown",
+      "status": "PRESENT"
+    },
+    "distribution": {
+      "pattern": "Diffuse across the visible panicle surface",
+      "status": "PRESENT"
+    },
+    "spatial_location": {
+      "location": "Reproductive head (panicle)",
+      "status": "PRESENT"
+    },
+    "reproductive_structure": {
+      "status": "Affected",
+      "details": "Florets are present but obscured by exudate. No obvious replacement by sclerotia or smut balls visible in this view."
+    },
+    "developmental_stage": {
+      "stage": "Maturity/Grain filling",
+      "status": "PRESENT"
+    }
+  },
+  "evidence": {
+    "present": [
+      "Panicle structure",
+      "Amber/brown sticky exudate",
+      "Droplets of fluid",
+      "Florets (grains) visible beneath exudate"
+    ],
+    "absent": [
+      "Green-ear transformation (panicle is not leafy)",
+      "Elongated dark sclerotia (ergot)",
+      "Black powdery spore masses (smut)",
+      "Raised pustules (rust)"
+    ],
+    "uncertain": [
+      "Internal condition of grains (obscured by exudate)",
+      "Specific pathogen identity (requires lab confirmation)"
+    ],
+    "not_visible": [
+      "Leaf blades (out of focus/background)",
+      "Stem base"
+    ]
+  },
+  "evidence_quality": {}
+}

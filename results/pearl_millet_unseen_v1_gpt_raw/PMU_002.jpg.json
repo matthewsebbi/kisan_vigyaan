@@ -1,0 +1,128 @@
+{
+  "experiment": {
+    "sample_id": "PMU_002.jpg",
+    "model": "qwen+gpt-oss-120b",
+    "question_block": "v3"
+  },
+  "candidate_comparison": {
+    "blast": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.4
+    },
+    "downy_mildew_green_ear": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.0
+    },
+    "ergot": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.0
+    },
+    "smut": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.0
+    },
+    "rust": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.1
+    },
+    "leaf_spots": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.8
+    }
+  },
+  "differential": {
+    "top_candidate": "leaf_spots",
+    "runner_up": "blast",
+    "score_margin": 0.4
+  },
+  "ground_truth": "blast",
+  "sample_observation": {
+    "plant_part": {
+      "structure": "leaf_blade",
+      "status": "visible"
+    },
+    "symptom_class": {
+      "type": "discrete_lesion",
+      "status": "visible"
+    },
+    "geometry": {
+      "shape": "irregular",
+      "elongation": "no",
+      "ends": "indeterminate",
+      "center_wider": "uncertain",
+      "coalescence": "no"
+    },
+    "surface": {
+      "raised": "uncertain",
+      "pustular": "uncertain",
+      "powdery": "absent",
+      "flat": "uncertain",
+      "dry_papery": "uncertain"
+    },
+    "texture": {
+      "status": "visible",
+      "description": "Lesion surface appears somewhat granular or textured, but resolution limits definitive classification."
+    },
+    "color": {
+      "dominant": "green",
+      "lesion_center": "dark_brown_to_black",
+      "lesion_margin": "yellowish_brown",
+      "surrounding_tissue": "green",
+      "lighting_artifacts": "none_significant"
+    },
+    "distribution": {
+      "pattern": "isolated",
+      "concentration": "mid-leaf",
+      "vein_relation": "crosses_veins",
+      "directional": "no"
+    },
+    "spatial_location": {
+      "primary_site": "leaf_blade",
+      "vegetative_reproductive": "vegetative"
+    },
+    "reproductive_structure": {
+      "status": "not_visible"
+    },
+    "developmental_stage": {
+      "status": "uncertain"
+    }
+  },
+  "evidence": {
+    "present": [
+      "discrete_lesion",
+      "dark_brown_center",
+      "yellowish_margin",
+      "isolated_distribution"
+    ],
+    "absent": [
+      "powdery_material",
+      "green_ear_transformation",
+      "elongated_sclerotia",
+      "honeydew"
+    ],
+    "uncertain": [
+      "raised_pustule",
+      "spindle_shape",
+      "dry_papery_texture",
+      "spore_mass"
+    ],
+    "not_visible": [
+      "panicle",
+      "stem",
+      "whole_plant"
+    ]
+  },
+  "evidence_quality": {}
+}

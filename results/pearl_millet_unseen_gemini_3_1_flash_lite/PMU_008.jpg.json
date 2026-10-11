@@ -1,0 +1,80 @@
+{
+  "experiment": {
+    "sample_id": "PMU_008.jpg",
+    "model": "gemini-3.1-flash-lite",
+    "question_block": "v4"
+  },
+  "candidate_comparison": {
+    "blast": {
+      "supported_features": [],
+      "contradictory_features": [
+        "rounded_enlarged_structure",
+        "panicle_architecture_distorted"
+      ],
+      "unknown_features": [],
+      "compatibility_score": 0.0
+    },
+    "downy_mildew_green_ear": {
+      "supported_features": [
+        "panicle_architecture_distorted"
+      ],
+      "contradictory_features": [
+        "rounded_enlarged_structure",
+        "intact_membranes"
+      ],
+      "unknown_features": [],
+      "compatibility_score": 0.2
+    },
+    "ergot": {
+      "supported_features": [
+        "floret_grain_relationship"
+      ],
+      "contradictory_features": [
+        "exudate_absent",
+        "rounded_enlarged_structure"
+      ],
+      "unknown_features": [],
+      "compatibility_score": 0.1
+    },
+    "smut": {
+      "supported_features": [
+        "rounded_enlarged_structure",
+        "membrane_present",
+        "membrane_state_intact",
+        "floret_grain_relationship",
+        "localized_floret_expansion"
+      ],
+      "contradictory_features": [],
+      "unknown_features": [
+        "internal_content_of_enlarged_structures"
+      ],
+      "compatibility_score": 0.95
+    },
+    "rust": {
+      "supported_features": [],
+      "contradictory_features": [
+        "rounded_enlarged_structure",
+        "intact_membranes"
+      ],
+      "unknown_features": [],
+      "compatibility_score": 0.0
+    },
+    "leaf_spots": {
+      "supported_features": [],
+      "contradictory_features": [
+        "rounded_enlarged_structure",
+        "panicle_architecture_distorted"
+      ],
+      "unknown_features": [],
+      "compatibility_score": 0.0
+    }
+  },
+  "differential": {
+    "top_candidate": "smut",
+    "runner_up": "downy_mildew_green_ear",
+    "score_margin": 0.75
+  },
+  "ground_truth": "smut",
+  "sample_observation": {},
+  "evidence": {}
+}

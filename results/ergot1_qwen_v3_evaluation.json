@@ -1,0 +1,34 @@
+{
+  "evaluation_metrics": {
+    "is_correct": true,
+    "top_candidate": "ergot",
+    "runner_up": "smut",
+    "score_margin": 2.0,
+    "ergot_compatibility_score": 1.0,
+    "smut_compatibility_score": -1.0,
+    "requires_second_stage_comparison": false,
+    "abstained": false
+  },
+  "phenotype_analysis": {
+    "decisive_observations": [
+      "Elongated dark structures projecting from florets",
+      "Structures occupying the position of normal grains",
+      "Dark grey/black coloration of abnormal structures",
+      "Pale cream coloration of normal grains",
+      "Smooth surface on abnormal structures"
+    ],
+    "uncertain_observations": [
+      "Internal structure of the dark bodies (sclerotium vs. other)",
+      "Whether the dark bodies are fully replacing the grain or emerging from it"
+    ],
+    "failed_v3_questions": [
+      "Determining internal structure (sclerotium) vs outwardly projecting structure was uncertain.",
+      "Questions assuming leaf visibility failed due to 'not_visible'"
+    ],
+    "useful_v3_questions": [
+      "Questions on distinct location of abnormality (occupying grain position) were very useful",
+      "Questions on powdery material / sticky exudate helped rule out other candidates"
+    ],
+    "error_classification": "none"
+  }
+}

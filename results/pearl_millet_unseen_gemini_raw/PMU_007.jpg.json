@@ -1,0 +1,95 @@
+{
+  "experiment": {
+    "sample_id": "PMU_007.jpg",
+    "model": "gemini-3.8-flash",
+    "question_block": "v4"
+  },
+  "candidate_comparison": {
+    "blast": {
+      "supported_features": [],
+      "contradictory_features": [
+        "PRIMARY_STRUCTURE is earhead/panicle florets",
+        "earhead coated in glistening viscous sugary exudate",
+        "absence of foliar necrotic spots"
+      ],
+      "unknown_features": [],
+      "compatibility_score": 0.0
+    },
+    "downy_mildew_green_ear": {
+      "supported_features": [
+        "PRIMARY_STRUCTURE is earhead"
+      ],
+      "contradictory_features": [
+        "absence of green leafy phyllody transformation",
+        "earhead covered in sticky amber/brownish sugary honeydew slime"
+      ],
+      "unknown_features": [],
+      "compatibility_score": 0.0
+    },
+    "ergot": {
+      "supported_features": [
+        "PRIMARY_STRUCTURE is earhead/panicle florets",
+        "copious_viscous_sugary_exudation (honeydew stage / sugary disease)",
+        "glistening_amber_to_reddish_brown_liquid coating florets",
+        "florets smothered in sticky conidial slime",
+        "classic honey-dew symptom of Claviceps fusiformis"
+      ],
+      "contradictory_features": [],
+      "unknown_features": [
+        "advanced dry sclerotia (currently in peak exudation/honeydew phase)"
+      ],
+      "compatibility_score": 0.98
+    },
+    "smut": {
+      "supported_features": [
+        "PRIMARY_STRUCTURE is earhead"
+      ],
+      "contradictory_features": [
+        "liquid sugary exudation covering earhead instead of dry swollen sori or black powdery teliospores"
+      ],
+      "unknown_features": [],
+      "compatibility_score": 0.05
+    },
+    "rust": {
+      "supported_features": [],
+      "contradictory_features": [
+        "floral honeydew infection rather than foliar rust pustules"
+      ],
+      "unknown_features": [],
+      "compatibility_score": 0.0
+    },
+    "leaf_spots": {
+      "supported_features": [],
+      "contradictory_features": [
+        "earhead honeydew infection rather than foliar necrotic spots"
+      ],
+      "unknown_features": [],
+      "compatibility_score": 0.0
+    }
+  },
+  "differential": {
+    "top_candidate": "ergot",
+    "runner_up": "smut",
+    "score_margin": 0.93
+  },
+  "ground_truth": "ergot",
+  "sample_observation": {
+    "primary_structure": "panicle_earhead",
+    "exudate": "glistening_sugary_honeydew"
+  },
+  "evidence": {
+    "present": [
+      "copious glistening honeydew exudation",
+      "amber/brownish sticky coating on spikelets",
+      "sugary disease symptom"
+    ],
+    "absent": [
+      "phyllody",
+      "smut sori",
+      "foliar lesions"
+    ]
+  },
+  "evidence_quality": {
+    "clarity": "very_high"
+  }
+}

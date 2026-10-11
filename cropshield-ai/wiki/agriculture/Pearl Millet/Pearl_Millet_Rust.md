@@ -1,142 +1,245 @@
-# Pearl Millet Rust
+# Pearl Millet Rust (Puccinia substriata)
 
-## Diagnostic Phenotype
+This bank is a representation-aligned update of the supplied Pearl Millet
+Contrastive Phenotype v2 files.
 
-### Primary Affected Plant Parts
+## Shared observation vocabulary
+
+The comparator should map the observed phenotype into these dimensions where
+the corresponding evidence is available:
+
+### Structure
+- leaf_blade
+- leaf_sheath
+- stem
+- panicle
+- spikelet
+- floret
+- grain
+- whole_plant
+
+### Geometry
+- axis_ratio_long_to_short
+- elongation
+- width_profile
+- end_shape
+- symmetry
+- boundary_character
+- discrete_vs_continuous
+
+### Surface
+- elevation
+- physical_relief
+- powder
+- granular_material
+- attached_surface_material
+- texture
+
+### Internal lesion structure
+- center
+- margin
+- center_margin_contrast
+- halo
+- internal_texture
+
+### Reproductive relationship
+- occupies_normal_grain_position
+- relative_size
+- relative_width
+- relative_length
+- rounded_expansion
+- elongated_projection
+- projection_from_individual_floret
+- membrane
+- membrane_state
+- exposed_spore_mass
+- exudate
+
+### Spatial pattern
+- distribution
+- orientation
+- coalescence
+- plant_position
+- repeated_structure_pattern
+
+### Development
+- apparent_stage
+- progression
+- multiple_visible_stages
+
+## Evidence states
+
+For observations supplied by the visual model:
+- PRESENT — directly visible with sufficient confidence.
+- ABSENT — the relevant region is visible at adequate resolution and the
+  feature is reasonably not present.
+- UNCERTAIN — the region is visible but the feature cannot be resolved reliably.
+- NOT_VISIBLE — the relevant region cannot actually be inspected.
+
+Never treat NOT_VISIBLE as ABSENT.
+
+## Comparison principle
+
+The bank should compare morphology first, then supporting color/pattern context.
+Color alone is weak evidence unless tied to a specific structural phenotype.
+
+Measurement-like observations such as axis ratio, relative size, physical relief,
+and floret-to-abnormal-structure relationship should be preferred over relying
+only on categorical words such as "spindle", "oval", "pustule", "ball", or
+"green ear".
+
+## Stage-awareness
+
+Features that are developmental or stage-dependent must not be treated as
+required at every stage. Absence of a later-stage feature cannot by itself
+exclude an earlier-stage presentation.
+
+## Residual-category protection
+
+"Leaf Spots" is a symptom-level category and is not an automatic fallback.
+When decisive morphology is unresolved, uncertainty should be preserved.
+
+
+# Pearl Millet Rust — Contrastive Phenotype v3
+
+## Diagnostic phenotype
+
+### Primary affected plant parts
 - leaf_blade
 - leaf_sheath
 - stem
 - whole_plant
 
-### Symptom Class
+### Symptom classes
 - rust_pustule
 - localized_necrosis
 - late_season_foliar_disease
 
-### Lesion / Symptom Geometry
-- Primary shape: `oval_circular`
-- Elongation: `low_to_moderate`
-- Width profile: `uniform_or_slightly_expanded`
-- Ends: `blunt_rounded`
-- Discrete or continuous: `discrete_scattered_to_coalescing`
+### Core morphology
 
-### Size
-- Small reddish-brown to reddish-orange pustules occur mainly on foliage.
-- Pustules can become larger and more numerous on susceptible plants.
+The primary identity feature is physical surface structure:
+- clearly raised;
+- localized pustular relief;
+- powdery or granular/spore-containing appearance.
+
+Preferred primitive observations:
+- physical elevation relative to adjacent leaf surface;
+- localized mound/pustule structure;
+- powdery or granular material;
+- visible loose spore mass when resolution permits.
+
+Do not identify Rust from reddish-orange/brown color alone.
 
 ### Color
-- Center / primary color: `reddish_brown_to_reddish_orange`
-- Margin: `yellowish_or_not_distinct`
-- Surrounding tissue: green
-- Color transition: `sharp_or_gradual`
-- Current/overall colors: yellow, reddish_brown, reddish_orange, dark_brown, black_at_telia_stage
+- reddish-brown to reddish-orange;
+- later dark-brown to black telial structures may occur;
+- surrounding tissue green.
 
-### Texture
-- Current texture: raised, powdery, pustular
-- Early appearance: `yellow_to_white_spot`
-- Later texture: `powdery_uredospore_pustule`
+### Early/later appearance
+- early symptoms can be yellow to white spots;
+- later uredospore pustules are raised and powdery;
+- disease can become more prominent on lower leaves and later expand.
 
-### Pattern and Distribution
-- Orientation: `not_applicable`
-- Distribution: `discrete_scattered`
-- Coalescence: `may_increase_with_severity`
-- Vein relationship: `crosses_or_ignores_veins`
+### Pattern
+- discrete scattered lesions/pustules;
+- can increase with severity;
+- may cross or ignore veins;
+- lower leaves can be an early location.
 
-### Spatial Location
-- Primary location: `leaf_blade`
-- Other locations: `leaf_sheath_and_stem`
-- Common early location: `lower_leaves`
+## Contrastive evidence against Blast
 
-### Whole-Plant / Field-Level Features
-- lower_leaf_infection
-- upper_leaf_infection_as_disease_progresses
-- leaf_wilting
-- leaf_necrosis
-- severe_rust_can_impair_panicle_emergence
-- usually_more_prominent_later_in_crop_cycle
+Strong support for Rust:
+- clearly raised surface;
+- localized physical relief;
+- powdery/pustular appearance;
+- visible spore mass when resolvable;
+- discrete pustules rather than a flat necrotic lesion.
 
-## Hallmark Features
-- reddish_brown_to_reddish_orange_pustules
-- raised_powdery_uredinia
-- pustules_on_leaf_surfaces
-- initial_symptoms_often_on_lower_leaves
-- later_dark_brown_or_black_telia_may_form
-- severe_infection_can_progress_to_leaf_necrosis
+Strong contradiction:
+- clearly flat dry necrotic lesion;
+- developed gray center with contrasting darker margin;
+- strong spindle/diamond-type lesion progression.
 
-## Negative / Exclusion Features
-- spindle_diamond_gray_centered_lesions
-- discrete_honeydew_droplets
-- enlarged_smut_spore_balls
-- green_ear_panicle_transformation
-- diffuse_leaf_yellowing_without_pustules
+Weak/non-specific:
+- reddish-brown/reddish-orange color;
+- multiple lesions.
 
-## Differential Diagnosis
+## Contrastive evidence against Leaf Spots
 
-### Similar Problems
-- Pearl Millet Blast
-- Pearl Millet Leaf Spots
-- Downy Mildew
-- Ergot
-- Smut
+Strong support:
+- raised lesion;
+- powdery surface;
+- pustular structure;
+- visible spore material.
 
-### Diagnostic Discriminators
-- Look for raised, powdery rust pustules before interpreting reddish-brown color alone.
-- Distinguish pustules from flat necrotic lesions of blast or leaf-spot diseases.
-- Examine both leaf surfaces when possible.
-- Give additional weight to pustules on lower leaves and their progression upward.
-- Distinguish reddish-brown uredinia from black or dark mature telia.
-- Treat absence of visible pustules in a low-resolution image as uncertain evidence.
+Strong contradiction:
+- flat dry papery necrosis;
+- pale/tan/gray/white spot center without visible pustulation;
+- variable spot morphology without relief.
 
-## Environmental Conditions
-
-### Temperature
-- Cool nights and warm days can favor rust; exact thresholds should be treated as contextual evidence.
-
-### Humidity
-- Leaf-surface moisture and dew can favor infection.
-
-### Rainfall / Moisture
-- Moisture and dew on leaves support disease development.
-
-### Soil
-- Not specified in supplied reference.
-
-> **Source status:** ICAR-AICRP describes reddish-brown powdery uredospore pustules, usually first on lower leaves, followed by darker teliospores. USDA also describes reddish-brown to reddish-orange uredinia and later black telia. citeturn1search1turn1search0
-
-## Crop Stage
-- Often becomes more evident during the later part of the crop-growing season.
-- Early infection can become more damaging when disease develops before flowering.
-
-## Reference Images
-
-![Pearl Millet Rust symptoms](https://plantix.net/en/library/plant-diseases/100089/millet-rust/)
-
-**Image source:** Plantix, Millet Rust. citeturn0image2
-
-## Sources
-- ICAR-AICRP on Pearl Millet — Rust (*Puccinia substriata*). citeturn1search1
-- USDA ARS — Pearl Millet Diseases: fungal diseases and rust. citeturn1search0
-- Plantix — Millet Rust imagery and description. citeturn0image2
-
-## Machine-Comparison Notes
+## Evidence weighting
 
 ```yaml
-plant_parts:
-  - leaf_blade
-  - leaf_sheath
-  - stem
-  - whole_plant
-lesion_present: true
-primary_shape: oval_circular
-width_profile: uniform_or_slightly_expanded
-ends: blunt_rounded
-color_transition: sharp_or_gradual
-early_appearance: yellow_to_white_spot
-pattern_distribution: discrete_scattered
-vein_relationship: crosses_or_ignores_veins
-primary_location: leaf_blade
-pustule_features:
-  color: reddish_brown_to_reddish_orange
-  texture: raised_powdery
-  later_structure: dark_brown_to_black_telia
+identity_defining:
+  - clearly_raised_localized_pustule
+  - physical_surface_relief_supporting_pustular_structure
+
+strong_support:
+  - powdery_or_granular_surface
+  - visible_spore_mass
+  - repeated_discrete_pustules
+  - lower_leaf_to_upper_leaf_progression_when_visible
+
+weak_or_non_specific:
+  - reddish_brown_color
+  - reddish_orange_color
+  - multiple_lesions
+
+contradiction:
+  - clearly_flat_dry_necrotic_lesion
+  - strong_spindle_diamond_blast_progression
+  - gray_necrotic_center_with_dark_margin
+  - honeydew
+  - smut_ball
+  - green_ear
 ```
+
+## Critical uncertainty rule
+
+If the relevant surface is too low-resolution to distinguish physical relief:
+- elevation = UNCERTAIN or NOT_VISIBLE;
+- powder = UNCERTAIN or NOT_VISIBLE;
+- do not convert color into a pustule;
+- do not treat absence of visible pustules as strong contradiction.
+
+This directly prevents a low-resolution Rust image from being translated into
+a false flat-lesion phenotype.
+
+## Machine-comparison notes
+
+```yaml
+primary_location: leaf_blade
+primary_symptom: rust_pustule
+core_morphology: raised_powdery_pustule
+preferred_measurements:
+  - physical_relief
+  - elevation
+  - powder
+  - granular_material
+  - exposed_spore_mass
+  - lesion_distribution
+high_value:
+  - raised_pustule
+  - powdery_surface
+  - physical_relief
+  - spore_mass
+anti_features:
+  - flat_necrotic_lesion
+  - spindle_diamond_geometry
+  - gray_center_dark_margin
+  - honeydew
+  - smut_ball
+uncertainty_features:
+  - elevation_not_visible
+  - powderiness_not_visible
+  - surface_too_small_to_inspect

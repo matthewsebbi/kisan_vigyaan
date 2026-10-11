@@ -127,7 +127,7 @@ class QwenClient:
                     url,
                     headers=headers,
                     json=payload,
-                    timeout=90
+                    timeout=150
                 )
             except requests.RequestException as e:
                 if attempt == retries:
@@ -179,7 +179,7 @@ class QwenClient:
                     GROQ_API_URL,
                     headers=headers,
                     json=payload,
-                    timeout=90
+                    timeout=150
                 )
             except requests.RequestException as e:
                 if attempt == retries:
@@ -235,8 +235,8 @@ class QwenClient:
             return self.call_alibaba(payload, retries=retries)
         return self.call_groq(payload, retries=retries)
 
-    def call_gemini(self, contents: List[Dict[str, Any]], temperature: float = 0.1, max_tokens: int = 600) -> str:
-        """Call Google Gemini Flash REST API."""
+    def call_gemini(self, contents: List[Dict[str, Any]], temperature: float = 0.1, max_tokens: int = 1500, retries: int = 4) -> str:
+        """Call Google Gemini REST API with retry handling and zero thinking budget for fast, deterministic JSON."""
         if not self.gemini_api_key:
             raise QwenAPIError("Gemini API key not configured.")
 
@@ -245,23 +245,65 @@ class QwenClient:
             "contents": contents,
             "generationConfig": {
                 "temperature": temperature,
-                "maxOutputTokens": max_tokens,
+                "maxOutputTokens": max(max_tokens, 1500),
+                "thinkingConfig": {
+                    "thinkingBudget": 0
+                }
             }
         }
 
-        try:
-            resp = requests.post(url, json=payload, timeout=45)
-            if not resp.ok:
-                raise QwenAPIError(f"Gemini API error ({resp.status_code}): {resp.text}")
-            data = resp.json()
-            candidates = data.get("candidates", [])
-            if candidates and "content" in candidates[0]:
-                parts = candidates[0]["content"].get("parts", [])
-                if parts and "text" in parts[0]:
-                    return parts[0]["text"]
-            return ""
-        except Exception as e:
-            raise QwenAPIError(f"Gemini request failed: {e}") from e
+        for attempt in range(1, retries + 1):
+            try:
+                resp = requests.post(url, json=payload, timeout=150)
+                if resp.status_code == 429:
+                    wait_seconds = 6
+                    try:
+                        err_data = resp.json()
+                        details = err_data.get("error", {}).get("details", [])
+                        for d in details:
+                            if "@type" in d and "RetryInfo" in d["@type"]:
+                                delay_str = d.get("retryDelay", "5s").rstrip("s")
+                                wait_seconds = int(float(delay_str)) + 2
+                    except Exception:
+                        pass
+
+                    if wait_seconds > 30:
+                        logger.warning(
+                            f"Gemini rate limit cooldown of {wait_seconds}s exceeds interactive threshold. Fast local fallback engaged."
+                        )
+                        raise QwenAPIError(f"Gemini quota exceeded (cooldown {wait_seconds}s).")
+
+                    if attempt < retries:
+                        logger.warning(
+                            f"Gemini 429 rate limit reached (attempt {attempt}/{retries}). Waiting {wait_seconds}s before retry..."
+                        )
+                        time.sleep(wait_seconds)
+                        continue
+                    else:
+                        raise QwenAPIError(f"Gemini API rate limit (429) exceeded after {retries} retries.")
+
+                if not resp.ok:
+                    raise QwenAPIError(f"Gemini API error ({resp.status_code}): {resp.text}")
+
+                data = resp.json()
+                candidates = data.get("candidates", [])
+                if candidates and "content" in candidates[0]:
+                    parts = candidates[0]["content"].get("parts", [])
+                    if parts and "text" in parts[0]:
+                        return parts[0]["text"]
+                raise QwenAPIError(f"Gemini API returned unexpected JSON: {data}")
+            except requests.RequestException as e:
+                if attempt < retries:
+                    logger.warning(f"Gemini request network error: {e}. Retrying in 2s...")
+                    time.sleep(2)
+                    continue
+                raise QwenAPIError(f"Gemini request failed: {e}") from e
+            except Exception as e:
+                if isinstance(e, QwenAPIError):
+                    raise
+                raise QwenAPIError(f"Gemini request failed: {e}") from e
+
+        raise QwenAPIError("Gemini API call exceeded maximum retries.")
 
     def call_vision(
         self,

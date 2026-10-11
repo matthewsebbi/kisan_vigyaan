@@ -1,0 +1,96 @@
+{
+  "experiment": {
+    "sample_id": "PMU_005.jpg",
+    "model": "gemini-3.8-flash",
+    "question_block": "v4"
+  },
+  "candidate_comparison": {
+    "blast": {
+      "supported_features": [],
+      "contradictory_features": [
+        "PRIMARY_STRUCTURE is earhead/panicle florets",
+        "droplets of liquid exudate present",
+        "absence of foliar spindle necrotic lesions"
+      ],
+      "unknown_features": [],
+      "compatibility_score": 0.0
+    },
+    "downy_mildew_green_ear": {
+      "supported_features": [
+        "PRIMARY_STRUCTURE is panicle"
+      ],
+      "contradictory_features": [
+        "absence of phyllody or leafy bract transformation",
+        "presence of amber liquid exudate droplets on florets"
+      ],
+      "unknown_features": [],
+      "compatibility_score": 0.0
+    },
+    "ergot": {
+      "supported_features": [
+        "PRIMARY_STRUCTURE is panicle/florets",
+        "exudation_of_amber_viscous_liquid_droplets (honeydew)",
+        "droplets oozing from individual infected ovaries/spikelets",
+        "honey-colored glistening droplets dripping down the earhead",
+        "early honeydew stage of Claviceps"
+      ],
+      "contradictory_features": [],
+      "unknown_features": [
+        "dark sclerotial bodies (hardened horn-like sclerotia develop later)"
+      ],
+      "compatibility_score": 0.96
+    },
+    "smut": {
+      "supported_features": [
+        "PRIMARY_STRUCTURE is panicle/florets"
+      ],
+      "contradictory_features": [
+        "liquid honeydew exudation instead of dry enlarged greenish-brown or black sori",
+        "absence of black sooty teliospores"
+      ],
+      "unknown_features": [],
+      "compatibility_score": 0.05
+    },
+    "rust": {
+      "supported_features": [],
+      "contradictory_features": [
+        "infection in floral panicle with honey exudate rather than foliar rust pustules"
+      ],
+      "unknown_features": [],
+      "compatibility_score": 0.0
+    },
+    "leaf_spots": {
+      "supported_features": [],
+      "contradictory_features": [
+        "inflorescence infection with exudate rather than foliar necrotic spots"
+      ],
+      "unknown_features": [],
+      "compatibility_score": 0.0
+    }
+  },
+  "differential": {
+    "top_candidate": "ergot",
+    "runner_up": "smut",
+    "score_margin": 0.91
+  },
+  "ground_truth": "ergot",
+  "sample_observation": {
+    "primary_structure": "panicle_florets",
+    "exudate": "amber_honeydew_droplets"
+  },
+  "evidence": {
+    "present": [
+      "amber honeydew droplets",
+      "floret infection",
+      "viscous liquid dripping from spikelets"
+    ],
+    "absent": [
+      "phyllody",
+      "sooty spore balls",
+      "foliar lesions"
+    ]
+  },
+  "evidence_quality": {
+    "clarity": "very_high"
+  }
+}

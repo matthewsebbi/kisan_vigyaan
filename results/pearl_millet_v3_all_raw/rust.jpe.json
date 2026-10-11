@@ -1,0 +1,180 @@
+{
+  "experiment": {
+    "sample_id": "rust.jpe",
+    "model": "qwen+gpt-oss-120b",
+    "question_block": "v3"
+  },
+  "candidate_comparison": {
+    "blast": {
+      "supported_features": [
+        "spindle_or_diamond_developed_lesion",
+        "necrotic_lesion",
+        "dry_papery_necrosis",
+        "yellowish_or_chlorotic_halo_may_surround_lesions",
+        "multiple_lesions_may_occur_on_same_leaf"
+      ],
+      "contradictory_features": [],
+      "unknown_features": [
+        "grayish_necrotic_center_in_developed_lesion",
+        "surface_elevation_not_visible"
+      ],
+      "compatibility_score": 0.85
+    },
+    "downy_mildew_green_ear": {
+      "supported_features": [
+        "chlorotic_yellow_to_yellow_green_leaf_symptoms"
+      ],
+      "contradictory_features": [
+        "spindle_diamond_lesions_as_primary_feature",
+        "discrete_circular_leaf_spots",
+        "green_ear_or_malformed_panicle_when_visible"
+      ],
+      "unknown_features": [],
+      "compatibility_score": 0.1
+    },
+    "ergot": {
+      "supported_features": [],
+      "contradictory_features": [
+        "diffuse_leaf_symptoms_as_primary_feature",
+        "panicle_spikelet_floret_location_mismatch"
+      ],
+      "unknown_features": [
+        "sticky_honeydew_when_present",
+        "elongated_projecting_sclerotium_in_late_stage"
+      ],
+      "compatibility_score": 0.05
+    },
+    "smut": {
+      "supported_features": [],
+      "contradictory_features": [
+        "enlarged_ball_like_structure",
+        "panicle_spikelet_floret_location_mismatch"
+      ],
+      "unknown_features": [
+        "membrane_covered_or_ruptured_spore_ball"
+      ],
+      "compatibility_score": 0.05
+    },
+    "rust": {
+      "supported_features": [
+        "reddish_brown_color"
+      ],
+      "contradictory_features": [
+        "clearly_raised_pustule",
+        "powdery_pustular_surface",
+        "flat_dry_necrotic_lesion",
+        "spindle_diamond_lesion"
+      ],
+      "unknown_features": [
+        "elevation_not_visible",
+        "powderiness_not_visible"
+      ],
+      "compatibility_score": 0.2
+    },
+    "leaf_spots": {
+      "supported_features": [
+        "multiple_discrete_leaf_spots",
+        "brown_to_dark_brown_lesions",
+        "dry_papery_necrosis",
+        "no_visible_pustule"
+      ],
+      "contradictory_features": [
+        "spindle_diamond_blast_progression"
+      ],
+      "unknown_features": [
+        "pale_tan_gray_or_white_centers_in_some_types"
+      ],
+      "compatibility_score": 0.6
+    }
+  },
+  "differential": {
+    "top_candidate": "Blast",
+    "runner_up": "Leaf Spots",
+    "score_margin": 0.25
+  },
+  "diagnostic_bottleneck": "The primary differentiator between Blast and general Leaf Spots is the specific lesion geometry (spindle/diamond vs. variable/round) and the presence of a distinct chlorotic halo. The observed 'oval_to_spindle' shape and 'chlorotic_yellow' margin strongly favor Blast, but the center color is described as 'tan_to_brown' rather than the classic 'gray' of mature blast, and surface elevation is uncertain. However, the geometric specificity (spindle) is a strong identity-defining feature for Blast that is explicitly listed as a contradiction for Leaf Spots.",
+  "requires_second_stage_visual_comparison": false,
+  "final_decision": {
+    "diagnosis": "Blast",
+    "abstain": false,
+    "reason": "The observed phenotype exhibits discrete, elongated (spindle-shaped) lesions with necrotic centers and chlorotic halos, which aligns strongly with the identity-defining features of Pearl Millet Blast (spindle/diamond shape, necrotic center, chlorotic halo). While 'Leaf Spots' is a differential, the specific spindle geometry and halo pattern are more characteristic of Blast. Rust is unlikely due to the lack of visible raised powdery pustules. Downy Mildew, Ergot, and Smut are excluded due to the absence of their primary structural symptoms (green ear, sclerotia, spore balls)."
+  },
+  "ground_truth": "rust",
+  "sample_observation": {
+    "plant_part": {
+      "structure": "leaf_blade",
+      "status": "visible",
+      "notes": "Single leaf blade held in hand, showing mid-section and tip."
+    },
+    "symptom_class": {
+      "type": "discrete_lesions",
+      "status": "visible",
+      "notes": "Multiple distinct spots scattered across the leaf surface."
+    },
+    "geometry": {
+      "shape": "oval_to_spindle",
+      "elongation": "yes",
+      "orientation": "longitudinal",
+      "notes": "Lesions are elongated along the leaf veins. Some are small and oval, others are longer and spindle-shaped."
+    },
+    "surface": {
+      "texture": "flat_to_slightly_raised",
+      "pustules": "uncertain",
+      "powdery": "absent",
+      "notes": "Lesions appear mostly flat or slightly raised. No obvious powdery mildew or heavy spore masses visible at this resolution."
+    },
+    "texture": {
+      "necrosis": "present",
+      "dryness": "present",
+      "notes": "Lesion centers appear dry and necrotic (tan/brown)."
+    },
+    "color": {
+      "lesion_center": "tan_to_brown",
+      "lesion_margin": "chlorotic_yellow",
+      "surrounding_tissue": "green",
+      "notes": "Distinct yellow halo surrounding the tan/brown necrotic centers."
+    },
+    "distribution": {
+      "pattern": "scattered",
+      "density": "moderate",
+      "notes": "Lesions are scattered across the visible leaf area, not forming a continuous band."
+    },
+    "spatial_location": {
+      "position": "mid_leaf_to_tip",
+      "vein_relation": "along_veins",
+      "notes": "Lesions are distributed along the length of the leaf, often aligned with the parallel venation."
+    },
+    "reproductive_structure": {
+      "status": "not_visible",
+      "notes": "Only vegetative tissue (leaf) is shown."
+    },
+    "developmental_stage": {
+      "status": "vegetative",
+      "notes": "Leaf tissue is green and active, not senesced."
+    }
+  },
+  "evidence": {
+    "present": [
+      "Discrete foliar lesions",
+      "Elongated/spindle shape",
+      "Tan/brown necrotic centers",
+      "Chlorotic (yellow) margins/halos",
+      "Longitudinal orientation"
+    ],
+    "absent": [
+      "Powdery white coating",
+      "Green-ear transformation",
+      "Elongated sclerotia (ergot)",
+      "Rounded smut balls"
+    ],
+    "uncertain": [
+      "Pustule elevation (too low resolution to confirm if raised or flat)",
+      "Specific spore type"
+    ],
+    "not_visible": [
+      "Panicle",
+      "Stem base",
+      "Roots"
+    ]
+  }
+}

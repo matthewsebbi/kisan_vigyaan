@@ -1,0 +1,134 @@
+{
+  "experiment": {
+    "sample_id": "PMU_009.jpg",
+    "model": "qwen+qwen-27b",
+    "question_block": "v3"
+  },
+  "candidate_comparison": {
+    "blast": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.05
+    },
+    "downy_mildew_green_ear": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.15
+    },
+    "ergot": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.25
+    },
+    "smut": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.95
+    },
+    "rust": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.05
+    },
+    "leaf_spots": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.05
+    }
+  },
+  "differential": {
+    "top_candidate": "Smut",
+    "runner_up": "Ergot",
+    "score_margin": 0.7
+  },
+  "diagnostic_bottleneck": "Distinguishing between Smut (globular spore balls) and Ergot (elongated sclerotia) based on shape and surface texture; observed structures are globular and dark, strongly favoring Smut, but internal spore visibility is limited.",
+  "requires_second_stage_visual_comparison": false,
+  "final_decision": {
+    "diagnosis": "Smut",
+    "abstain": false,
+    "reason": "The observed phenotype features dark, swollen, globular structures replacing grains on the panicle. This morphology aligns strongly with Smut (specifically Head Smut or similar smut diseases in pearl millet), which produces enlarged spore balls. It contradicts Ergot (typically elongated sclerotia), Blast/Rust/Leaf Spots (foliar symptoms), and Downy Mildew Green Ear (typically green, malformed ears rather than dark globular bodies). The globular shape and dark color are key discriminators for Smut."
+  },
+  "ground_truth": "smut",
+  "sample_observation": {
+    "plant_part": {
+      "structure": "panicle",
+      "status": "PRESENT",
+      "notes": "The primary structure visible is the pearl millet panicle (seed head). Multiple panicles are shown, some held in hand, some in field context."
+    },
+    "symptom_class": {
+      "type": "structural_replacement",
+      "status": "PRESENT",
+      "notes": "The normal grain structure is replaced by dark, swollen, globular structures. The panicle retains its overall shape but the individual units are abnormal."
+    },
+    "geometry": {
+      "shape": "globular/rounded",
+      "status": "PRESENT",
+      "notes": "The abnormal structures are rounded or ball-like, distinct from the typical grain shape. They appear to occupy the position of the grain."
+    },
+    "surface": {
+      "texture": "smooth_to_slightly_rough",
+      "status": "PRESENT",
+      "notes": "The surface of the dark structures appears relatively smooth or slightly textured, not powdery or pustular."
+    },
+    "texture": {
+      "description": "firm/swollen",
+      "status": "PRESENT",
+      "notes": "The structures appear firm and swollen, replacing the normal grain texture."
+    },
+    "color": {
+      "dominant": "dark_purple_to_black",
+      "status": "PRESENT",
+      "notes": "The abnormal structures are dark purple, black, or dark brown. Some green structures are also visible, likely unripe or different stage."
+    },
+    "distribution": {
+      "pattern": "diffuse",
+      "status": "PRESENT",
+      "notes": "The abnormality affects a large portion of the panicle, often mixed with some normal or partially normal grains."
+    },
+    "spatial_location": {
+      "location": "panicle",
+      "status": "PRESENT",
+      "notes": "The abnormality is located on the seed head (panicle)."
+    },
+    "reproductive_structure": {
+      "status": "abnormal",
+      "notes": "The reproductive structure (grains) is replaced by dark, swollen bodies."
+    },
+    "developmental_stage": {
+      "stage": "maturity",
+      "status": "PRESENT",
+      "notes": "The panicles appear to be at or near maturity, as indicated by the presence of some normal grains and the overall size."
+    }
+  },
+  "evidence": {
+    "present": [
+      "Panicle structure",
+      "Dark, swollen, globular structures replacing grains",
+      "Dark purple/black coloration of abnormal structures",
+      "Some green structures present",
+      "Comparison with normal panicle (in some images)"
+    ],
+    "absent": [
+      "Leaf lesions",
+      "Pustules",
+      "Powdery mildew",
+      "Elongated sclerotia (ergot-like structures)"
+    ],
+    "uncertain": [
+      "Internal structure of the dark bodies",
+      "Presence of spores (not visible at this resolution)"
+    ],
+    "not_visible": [
+      "Roots",
+      "Stems (mostly)",
+      "Leaves (mostly)"
+    ]
+  },
+  "evidence_quality": {}
+}

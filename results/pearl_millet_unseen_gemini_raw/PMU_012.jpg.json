@@ -1,0 +1,102 @@
+{
+  "experiment": {
+    "sample_id": "PMU_012.jpg",
+    "model": "gemini-3.8-flash",
+    "question_block": "v4"
+  },
+  "candidate_comparison": {
+    "blast": {
+      "supported_features": [
+        "PRIMARY_STRUCTURE is leaf",
+        "chlorotic halo",
+        "necrotic patches"
+      ],
+      "contradictory_features": [
+        "absence of discrete spindle/diamond-shaped eye spots with acute ends",
+        "absence of pale grayish centers with sharp dark-bordered margins; lesions are diffuse, irregular to oblong and coalescent"
+      ],
+      "unknown_features": [],
+      "compatibility_score": 0.45
+    },
+    "downy_mildew_green_ear": {
+      "supported_features": [
+        "chlorotic bands"
+      ],
+      "contradictory_features": [
+        "discrete coalescent necrotic lesions rather than systemic chlorotic striping or green ear phyllody"
+      ],
+      "unknown_features": [],
+      "compatibility_score": 0.10
+    },
+    "ergot": {
+      "supported_features": [],
+      "contradictory_features": [
+        "PRIMARY_STRUCTURE is leaf blade rather than inflorescence",
+        "absence of honeydew exudate"
+      ],
+      "unknown_features": [],
+      "compatibility_score": 0.0
+    },
+    "smut": {
+      "supported_features": [],
+      "contradictory_features": [
+        "PRIMARY_STRUCTURE is leaf blade rather than inflorescence",
+        "absence of earhead sori"
+      ],
+      "unknown_features": [],
+      "compatibility_score": 0.0
+    },
+    "rust": {
+      "supported_features": [
+        "PRIMARY_STRUCTURE is leaf"
+      ],
+      "contradictory_features": [
+        "flat necrotic leaf spots rather than raised powdery erumpent uredinial pustules",
+        "absence of orange-cinnamon powdery spore dust"
+      ],
+      "unknown_features": [],
+      "compatibility_score": 0.20
+    },
+    "leaf_spots": {
+      "supported_features": [
+        "PRIMARY_STRUCTURE is leaf_blade",
+        "irregular_to_oblong_brown_necrotic_lesions",
+        "coalescing_necrotic_patches_with_chlorotic_margins",
+        "flat_relief_involving_tissue_necrosis",
+        "extensive_foliar_blight_symptom",
+        "characteristic of Cercospora / Bipolaris foliar leaf spot complex"
+      ],
+      "contradictory_features": [],
+      "unknown_features": [
+        "conidiophore microscopic morphology"
+      ],
+      "compatibility_score": 0.92
+    }
+  },
+  "differential": {
+    "top_candidate": "leaf_spots",
+    "runner_up": "blast",
+    "score_margin": 0.47
+  },
+  "ground_truth": "leaf_spots",
+  "sample_observation": {
+    "primary_structure": "leaf_blade",
+    "lesion_profile": "irregular_oblong_necrotic_leaf_spots"
+  },
+  "evidence": {
+    "present": [
+      "irregular to oblong brownish necrotic spots",
+      "coalescing foliar lesions",
+      "chlorotic margins",
+      "flat necrotic relief"
+    ],
+    "absent": [
+      "spindle eye-shaped lesions with gray center",
+      "raised powdery pustules",
+      "inflorescence symptoms"
+    ]
+  },
+  "evidence_quality": {
+    "clarity": "high"
+  }
+}

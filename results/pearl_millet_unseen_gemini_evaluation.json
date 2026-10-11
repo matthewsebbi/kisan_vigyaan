@@ -1,0 +1,48 @@
+{
+  "total_images": 13,
+  "correct_predictions": 13,
+  "incorrect_predictions": 0,
+  "abstentions": 0,
+  "raw_top_1_accuracy": 1.0,
+  "coverage": 1.0,
+  "selective_accuracy": 1.0,
+  "mean_top_vs_runner_up_margin": 0.7392307692307691,
+  "per_disease_metrics": {
+    "blast": {
+      "accuracy": 1.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    },
+    "downy_mildew_green_ear": {
+      "accuracy": 1.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    },
+    "ergot": {
+      "accuracy": 1.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    },
+    "smut": {
+      "accuracy": 1.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    },
+    "rust": {
+      "accuracy": 1.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    },
+    "leaf_spots": {
+      "accuracy": 1.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    }
+  }
+}

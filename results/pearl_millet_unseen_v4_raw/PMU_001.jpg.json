@@ -1,0 +1,132 @@
+{
+  "experiment": {
+    "sample_id": "PMU_001.jpg",
+    "model": "qwen+qwen-27b",
+    "question_block": "v4"
+  },
+  "candidate_comparison": {
+    "blast": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.85
+    },
+    "downy_mildew_green_ear": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.1
+    },
+    "ergot": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.05
+    },
+    "smut": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.05
+    },
+    "rust": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.15
+    },
+    "leaf_spots": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.4
+    }
+  },
+  "differential": {
+    "top_candidate": "Blast",
+    "runner_up": "Leaf Spots",
+    "score_margin": 0.45
+  },
+  "diagnostic_bottleneck": "Distinguishing specific Blast from generic Leaf Spots relies on the specific elongated geometry and coalescence pattern, which are strongly present but lack the definitive gray center often seen in late-stage Blast; however, the absence of pustules/spores rules out Rust/Smut/Ergot, and the discrete nature rules out Downy Mildew.",
+  "requires_second_stage_visual_comparison": false,
+  "final_decision": {
+    "diagnosis": "Blast",
+    "abstain": false,
+    "reason": "The observed phenotype exhibits the high-value visual combination for Blast: discrete foliar lesions with elongated geometry (axis ratio 2.0-3.0), tan-brown necrotic centers with dark brown margins, and a chlorotic halo. The progression to coalesced necrosis and dry papery texture aligns with strong support features for Blast. Contradictory features for other candidates (raised pustules for Rust, sticky honeydew for Ergot, ball-like structures for Smut, systemic green ear for Downy Mildew) are explicitly absent. While 'Leaf Spots' is a generic category, the specific geometric and developmental characteristics strongly favor Blast."
+  },
+  "ground_truth": "blast",
+  "sample_observation": {
+    "plant_part": {
+      "primary": "leaf_blade",
+      "secondary": "leaf_venation"
+    },
+    "symptom_class": {
+      "primary": "discrete_lesion",
+      "secondary": "necrotic_tissue"
+    },
+    "geometry": {
+      "shape": "elongated_oblong",
+      "axis_ratio": "2.0-3.0",
+      "boundary": "irregular",
+      "symmetry": "asymmetric"
+    },
+    "surface": {
+      "elevation": "flat_to_slightly_depressed",
+      "relief": "flat",
+      "texture": "dry_papery",
+      "material": "loose_filamentous"
+    },
+    "texture": {
+      "lesion_center": "granular",
+      "lesion_margin": "smooth"
+    },
+    "color": {
+      "lesion_center": "tan_brown",
+      "lesion_margin": "dark_brown",
+      "halo": "chlorotic_yellow"
+    },
+    "distribution": {
+      "pattern": "localized",
+      "count": "single_dominant",
+      "extent": "interveinal"
+    },
+    "spatial_location": {
+      "position": "mid_leaf",
+      "orientation": "parallel_to_venation"
+    },
+    "reproductive_structure": {
+      "visible": false
+    },
+    "developmental_stage": {
+      "stage": "mature",
+      "progression": "coalesced"
+    }
+  },
+  "evidence": {
+    "present": [
+      "discrete_lesion",
+      "elongated_geometry",
+      "tan_brown_center",
+      "dark_brown_margin",
+      "chlorotic_halo",
+      "loose_filamentous_material",
+      "dry_papery_texture"
+    ],
+    "absent": [
+      "raised_pustule",
+      "powdery_surface",
+      "sticky_exudate",
+      "reproductive_structure",
+      "systemic_chlorosis"
+    ],
+    "uncertain": [
+      "spore_type",
+      "internal_lesion_structure"
+    ],
+    "not_visible": [
+      "leaf_underside",
+      "whole_plant_context"
+    ]
+  },
+  "evidence_quality": {}
+}

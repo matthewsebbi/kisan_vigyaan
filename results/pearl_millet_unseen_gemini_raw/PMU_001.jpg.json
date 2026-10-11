@@ -1,0 +1,95 @@
+{
+  "experiment": {
+    "sample_id": "PMU_001.jpg",
+    "model": "gemini-3.8-flash",
+    "question_block": "v4"
+  },
+  "candidate_comparison": {
+    "blast": {
+      "supported_features": [
+        "discrete foliar lesion on leaf blade",
+        "elliptical spindle-like lesion geometry with central widening and tapered ends",
+        "pale gray/tan papery necrotic center with dark brown to blackish contrasting margin",
+        "chlorotic halo surrounding lesion",
+        "dry papery necrosis"
+      ],
+      "contradictory_features": [],
+      "unknown_features": [
+        "whole-plant distribution",
+        "lesion progression/coalescence pattern"
+      ],
+      "compatibility_score": 0.95
+    },
+    "downy_mildew_green_ear": {
+      "supported_features": [
+        "chlorosis present"
+      ],
+      "contradictory_features": [
+        "discrete elliptical spindle-like lesion with necrotic center and dark border",
+        "absence of diffuse or longitudinal systemic foliar chlorosis"
+      ],
+      "unknown_features": [
+        "panicle architecture",
+        "systemic multi-leaf context"
+      ],
+      "compatibility_score": 0.05
+    },
+    "ergot": {
+      "supported_features": [],
+      "contradictory_features": [
+        "primary structure is leaf blade rather than floret/panicle",
+        "absence of viscous exudate or honeydew",
+        "absence of sclerotial projections"
+      ],
+      "unknown_features": [
+        "panicle architecture",
+        "floret structures"
+      ],
+      "compatibility_score": 0.0
+    },
+    "smut": {
+      "supported_features": [],
+      "contradictory_features": [
+        "primary structure is leaf blade rather than floret/panicle",
+        "absence of enlarged spore ball or membrane-bound structures"
+      ],
+      "unknown_features": [
+        "panicle architecture",
+        "floret structures"
+      ],
+      "compatibility_score": 0.0
+    },
+    "rust": {
+      "supported_features": [
+        "foliar lesion on leaf blade"
+      ],
+      "contradictory_features": [
+        "absence of raised powdery pustules or distinct spore masses",
+        "elliptical spindle shape with wide gray papery center and dark margin"
+      ],
+      "unknown_features": [],
+      "compatibility_score": 0.1
+    },
+    "leaf_spots": {
+      "supported_features": [
+        "discrete necrotic foliar lesion",
+        "chlorotic halo",
+        "dark margin"
+      ],
+      "contradictory_features": [
+        "classic spindle-like/diamond geometry with pale gray papery center characteristic of blast"
+      ],
+      "unknown_features": [],
+      "compatibility_score": 0.35
+    }
+  },
+  "differential": {
+    "top_candidate": "blast",
+    "runner_up": "leaf_spots",
+    "score_margin": 0.6
+  },
+  "ground_truth": "blast",
+  "sample_observation": {},
+  "evidence": {},
+  "evidence_quality": {}
+}

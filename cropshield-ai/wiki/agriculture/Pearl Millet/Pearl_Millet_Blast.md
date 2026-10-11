@@ -1,164 +1,262 @@
-# Pearl Millet Blast
+# Pearl Millet Blast (Magnaporthe grisea)
 
-## Diagnostic Phenotype
+This bank is a representation-aligned update of the supplied Pearl Millet
+Contrastive Phenotype v2 files.
 
-### Primary Affected Plant Parts
+## Shared observation vocabulary
+
+The comparator should map the observed phenotype into these dimensions where
+the corresponding evidence is available:
+
+### Structure
+- leaf_blade
+- leaf_sheath
+- stem
+- panicle
+- spikelet
+- floret
+- grain
+- whole_plant
+
+### Geometry
+- axis_ratio_long_to_short
+- elongation
+- width_profile
+- end_shape
+- symmetry
+- boundary_character
+- discrete_vs_continuous
+
+### Surface
+- elevation
+- physical_relief
+- powder
+- granular_material
+- attached_surface_material
+- texture
+
+### Internal lesion structure
+- center
+- margin
+- center_margin_contrast
+- halo
+- internal_texture
+
+### Reproductive relationship
+- occupies_normal_grain_position
+- relative_size
+- relative_width
+- relative_length
+- rounded_expansion
+- elongated_projection
+- projection_from_individual_floret
+- membrane
+- membrane_state
+- exposed_spore_mass
+- exudate
+
+### Spatial pattern
+- distribution
+- orientation
+- coalescence
+- plant_position
+- repeated_structure_pattern
+
+### Development
+- apparent_stage
+- progression
+- multiple_visible_stages
+
+## Evidence states
+
+For observations supplied by the visual model:
+- PRESENT — directly visible with sufficient confidence.
+- ABSENT — the relevant region is visible at adequate resolution and the
+  feature is reasonably not present.
+- UNCERTAIN — the region is visible but the feature cannot be resolved reliably.
+- NOT_VISIBLE — the relevant region cannot actually be inspected.
+
+Never treat NOT_VISIBLE as ABSENT.
+
+## Comparison principle
+
+The bank should compare morphology first, then supporting color/pattern context.
+Color alone is weak evidence unless tied to a specific structural phenotype.
+
+Measurement-like observations such as axis ratio, relative size, physical relief,
+and floret-to-abnormal-structure relationship should be preferred over relying
+only on categorical words such as "spindle", "oval", "pustule", "ball", or
+"green ear".
+
+## Stage-awareness
+
+Features that are developmental or stage-dependent must not be treated as
+required at every stage. Absence of a later-stage feature cannot by itself
+exclude an earlier-stage presentation.
+
+## Residual-category protection
+
+"Leaf Spots" is a symptom-level category and is not an automatic fallback.
+When decisive morphology is unresolved, uncertainty should be preserved.
+
+
+# Pearl Millet Blast — Contrastive Phenotype v3
+
+## Diagnostic phenotype
+
+### Primary affected plant parts
 - leaf_blade
 - leaf_sheath
 - whole_plant
 
-### Symptom Class
+### Symptom classes
 - necrotic_lesion
 - leaf_blast
 - early_blast_speck
 - foliar_blast
 
-### Lesion / Symptom Geometry
-- Primary shape: `small_oval_to_rounded_early; spindle_diamond_as_lesions_enlarge`
-- Elongation: `low_early_to_high_later`
-- Width profile: `approximately_uniform_early_to_wider_at_center_later`
-- Ends: `rounded_or_irregular_early_to_pointed_tapered_later`
-- Discrete or continuous: `discrete_scattered_to_coalescing`
-- Surface morphology: `flat_or_slightly_raised_early_to_dry_necrotic`
+### Morphology
+Blast can begin as small oval-to-rounded early lesions and develop into
+spindle/diamond-shaped lesions as they enlarge.
 
-### Size
-- Blast may begin as small specks or small lesions on the leaf.
-- Lesions can enlarge progressively into conspicuous spindle- or diamond-shaped lesions.
-- Multiple lesions may occur across individual leaves.
-- Under severe disease pressure, lesions may enlarge, coalesce, and cause extensive leaf damage.
+Preferred primitive observations:
+- axis ratio can increase with lesion development;
+- width may progress from approximately uniform to wider at the center;
+- ends may progress from rounded/irregular to pointed/tapered;
+- lesions can remain discrete or coalesce;
+- surface may be flat or slightly raised early and dry/necrotic later.
+
+Do not require the categorical word "spindle" when the underlying geometry
+supports elongation, central widening, and tapered ends.
 
 ### Color
-- Early lesion color: `reddish_brown_to_brown`
-- Developed lesion center: `gray_to_grayish_brown`
-- Developed lesion margin: `reddish_brown_to_purple_brown_to_dark_brown`
-- Surrounding tissue: `green_to_yellow_chlorotic`
-- Color transition: `distinct_to_gradual`
-- Current/overall colors: reddish_brown, brown, gray, grayish_brown, purple_brown, yellow_chlorotic
+- early lesion: reddish-brown to brown
+- developed center: gray to grayish-brown
+- developed margin: reddish-brown to purple-brown to dark-brown
+- surrounding tissue: green to yellow/chlorotic
+- transition: distinct to gradual
+
+Color is supporting evidence, not identity-defining evidence by itself.
 
 ### Texture
-- Early appearance: `small_speck_or_unclear`
-- Developing lesion: `necrotic`
-- Advanced lesion: `dry_papery_necrotic`
-- Water-soaked appearance may occur during early infection under favorable moisture conditions.
+- small speck or unclear early
+- necrotic during development
+- dry/papery/necrotic when advanced
+- water-soaked appearance may occur early under favorable moisture conditions
 
-### Pattern and Distribution
-- Orientation: `not_strongly_directional_early_to_longitudinal_or_diagonal_later`
-- Distribution: `numerous_small_scattered_lesions`
-- Coalescence: `may_coalesce_in_severe_cases`
-- Density: `sparse_to_dense`
-- Vein relationship: `may_cross_or_ignore_veins`
+### Pattern and distribution
+- numerous small scattered lesions
+- lesions may coalesce
+- orientation can be non-directional early and longitudinal/diagonal later
+- lesions may cross or ignore veins
+- leaf margin/tip can be an important location
 
-### Spatial Location
-- Primary location: `leaf_blade`
-- Important location: `leaf_margin_or_tip`
-- Other possible location: `leaf_sheath`
-- Pearl millet blast is primarily described as a foliar disease; do not automatically infer neck or panicle blast from pearl millet images without evidence.
+## Hallmarks
 
-### Whole-Plant / Field-Level Features
-- increasing_number_of_leaf_lesions
-- extensive_leaf_chlorosis_in_severe_cases
-- premature_leaf_drying
-- reduced_photosynthetic_area
-- severe_leaf_damage
-- reduced_plant_vigor_in_severe_cases
+High-value visual combination:
+1. discrete foliar lesion;
+2. development toward increased elongation;
+3. central widening and tapered/pointed ends when developed;
+4. gray/grayish center in a developed lesion;
+5. darker contrasting margin;
+6. progressive enlargement/coalescence.
 
-## Hallmark Features
-- blast_may_begin_as_small_reddish_brown_or_grayish_specks
-- lesions_progressively_enlarge
-- mature_lesions_can_be_spindle_or_diamond_shaped
-- gray_or_grayish_center_in_developed_lesions
-- reddish_brown_to_dark_margin
-- yellowish_or_chlorotic_halo_may_surround_developed_lesions
-- multiple_lesions_may_occur_on_the_same_leaf
-- lesions_can_coalesce_under_high_disease_pressure
+No single weak feature should substitute for this combination.
 
-## Negative / Exclusion Features
-- numerous_raised_pustules_with_obvious_powdery_spore_mass_as_primary_feature
-- rust_like_orange_pustular_surface_without_necrotic_lesion_development
-- enlarged_smut_spore_balls
-- honeydew_exudation_from_florets
-- green_ear_panicle_transformation
-- diffuse_discoloration_without_distinct_lesions
+## Contrastive evidence
 
-## Differential Diagnosis
+### Against Rust
+Strong support:
+- flat/slightly raised necrotic lesion;
+- dry papery necrosis;
+- developed gray center;
+- elongated spindle/diamond-type geometry;
+- lesion enlargement/coalescence.
 
-### Similar Problems
-- Pearl Millet Rust
-- Pearl Millet Leaf Spots
-- Downy Mildew / Green Ear
-- Smut
-- Ergot
+Strong contradiction:
+- clearly raised localized pustule;
+- powdery/pustular surface;
+- obvious loose spore mass as the primary visible structure.
 
-### Diagnostic Discriminators
-- Do not reject blast solely because an early lesion is small and reddish-brown.
-- Give diagnostic weight to lesion progression from small specks to enlarging necrotic lesions.
-- Developed blast lesions are often spindle- or diamond-shaped with a grayish center and darker margin.
-- Distinguish blast lesions from rust by surface morphology: blast produces necrotic lesions, whereas rust is primarily characterized by raised pustules and spore masses.
-- Distinguish blast from generic leaf spots by evaluating lesion development, geometry, center color, margin, and the presence of coalescing necrosis.
-- Evaluate whether lesions are concentrated near leaf tips or margins when this is visible.
-- Treat uncertainty in lesion stage as uncertainty rather than forcing an advanced-lesion description onto an early-stage image.
+Weak/non-specific:
+- reddish-brown color;
+- multiple lesions.
 
-## Environmental Conditions
+### Against Leaf Spots
+Strong support:
+- developed elongated geometry with central widening/tapered ends;
+- lesion progression toward a characteristic elongated form;
+- gray center with darker margin;
+- progressive/coalescing necrosis.
 
-### Temperature
-- Warm conditions can support blast development; exact thresholds should be locally verified.
+Insufficient alone:
+- circular or oval lesions;
+- brown/reddish-brown color;
+- multiple spots.
 
-### Humidity
-- High humidity favors infection and disease development.
-
-### Rainfall / Moisture
-- Frequent moisture and prolonged leaf wetness can favor infection and repeated disease cycles.
-
-### Soil
-- Not specified in supplied reference.
-
-## Crop Stage
-- Blast can occur during vegetative growth.
-- Foliar symptoms may become more severe as susceptible foliage remains exposed to favorable infection conditions.
-
-## Reference Image Notes
-- The supplied reference image is labeled as Pearl Millet Blast.
-- The visible image represents an appearance in which numerous small reddish-brown lesions/specks are distributed across the leaf.
-- This should be treated as a valid blast presentation rather than automatically classified as rust.
-- The phenotype therefore includes both early small lesions and the later spindle/diamond-shaped necrotic lesion stage.
-
-## Machine-Comparison Notes
+## Evidence weighting
 
 ```yaml
-plant_parts:
-  - leaf_blade
-  - leaf_sheath
-  - whole_plant
+identity_defining:
+  - developed_elongated_lesion_geometry
+  - gray_or_grayish_developed_center_with_contrasting_margin
+  - progression_toward_characteristic_elongation_when_stage_allows
 
-lesion_present: true
-primary_symptom_type: foliar_blast
-primary_shape: small_oval_to_rounded_early_spindle_diamond_later
-elongation: low_early_to_high_later
-width_profile: uniform_early_to_wider_at_center_later
-ends: rounded_early_to_pointed_tapered_later
-elevation: flat_or_slightly_raised
-surface_texture: necrotic_dry_in_developed_lesions
-primary_color: reddish_brown_to_brown
-developed_center_color: gray_to_grayish_brown
-developed_margin_color: reddish_brown_to_purple_brown
-surrounding_tissue: green_to_yellow_chlorotic
-color_transition: distinct_to_gradual
-pattern_distribution: numerous_scattered_to_dense
-coalescence: may_coalesce_in_severe_cases
-vein_relationship: may_cross_or_ignore_veins
-primary_location: leaf_blade
-common_position: leaf_tip_or_leaf_margin
+strong_support:
+  - necrotic_lesion
+  - lesion_progression
+  - central_widening
+  - tapered_or_pointed_ends
+  - dry_papery_necrosis
+  - coalescing_necrosis
+
+weak_or_non_specific:
+  - reddish_brown_color
+  - multiple_leaf_lesions
+  - isolated_oval_early_lesion
+
+contradiction:
+  - clearly_raised_powdery_pustule
+  - obvious_spore_mass_as_primary_surface
+  - enlarged_smut_ball
+  - floret_honeydew
+  - green_ear_transformation
 ```
 
-## Image-Comparison Priority
+## Visibility and stage rules
 
-When comparing a user-supplied crop image against this phenotype, prioritize:
+- Early lesions may genuinely be small and rounded; do not reject early Blast solely
+  because a mature spindle/diamond form is absent.
+- If lesion geometry cannot be resolved, retain uncertainty.
+- If the center is unresolved, do not invent a gray center.
+- If surface elevation is not visible, do not infer raised or flat from color alone.
+- A later-stage Blast image can lack obvious early features.
 
-1. Presence of multiple distinct reddish-brown or grayish lesions/specks.
-2. Evidence of necrotic lesion development rather than a purely raised pustule.
-3. Lesion progression or shape consistent with blast when lesion maturity is visible.
-4. Grayish center and darker reddish-brown margin in developed lesions.
-5. Yellowish/chlorotic tissue surrounding some developed lesions.
-6. Dense or scattered distribution of lesions across the leaf.
-7. Do not require every image to show fully developed spindle/diamond lesions; early blast can appear as small specks/lesions.
-8. Do not classify as rust merely because the lesions are orange/reddish-brown; surface elevation and pustule/spore-mass evidence must also be considered.
+## Machine-comparison notes
+
+```yaml
+primary_location: leaf_blade
+core_morphology: progressive_necrotic_leaf_lesion
+preferred_measurements:
+  - axis_ratio_long_to_short
+  - width_profile
+  - end_shape
+  - center_margin_relationship
+  - lesion_progression
+  - coalescence
+high_value:
+  - developed_elongation
+  - central_widening
+  - gray_center
+  - darker_margin
+anti_features:
+  - clearly_raised_powdery_pustule
+  - obvious_spore_mass
+  - honeydew
+  - smut_ball
+  - green_ear
+uncertainty_features:
+  - lesion_stage_uncertain
+  - geometry_not_resolvable
+  - center_not_resolvable
+  - surface_elevation_not_visible

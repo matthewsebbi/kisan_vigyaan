@@ -1,0 +1,130 @@
+{
+  "experiment": {
+    "sample_id": "PMU_006.jpg",
+    "model": "qwen+qwen-27b",
+    "question_block": "v4"
+  },
+  "candidate_comparison": {
+    "blast": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.1
+    },
+    "downy_mildew_green_ear": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.05
+    },
+    "ergot": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.85
+    },
+    "smut": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.3
+    },
+    "rust": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.1
+    },
+    "leaf_spots": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.05
+    }
+  },
+  "differential": {
+    "top_candidate": "ergot",
+    "runner_up": "smut",
+    "score_margin": 0.55
+  },
+  "diagnostic_bottleneck": "Distinguishing between late-stage Ergot (elongated sclerotia) and Smut (spore masses) based on the 'elongated' vs 'ball-like' geometry and the absence of visible honeydew (which is often absent in late-stage Ergot). The observed 'elongated, conical, spike-like' structures strongly favor Ergot over the typically spherical Smut balls.",
+  "requires_second_stage_visual_comparison": false,
+  "final_decision": {
+    "diagnosis": "ergot",
+    "abstain": false,
+    "reason": "The observed phenotype features elongated, dark, powdery/granular structures projecting from the panicle, replacing grains. This aligns with the identity-defining feature of Ergot: 'elongated projecting late-stage structure associated with an infected floret'. The absence of sticky honeydew is consistent with the late stage of Ergot development where the sclerotium has hardened. Smut is less likely due to the elongated geometry rather than ball-like expansion, and Blast/Rust/Leaf Spots are contradicted by the reproductive structure involvement and lack of foliar lesions."
+  },
+  "ground_truth": "ergot",
+  "sample_observation": {
+    "plant_part": {
+      "primary": "panicle",
+      "secondary": "grains",
+      "tertiary": "florets"
+    },
+    "symptom_class": {
+      "primary": "elongated_projecting_structure",
+      "secondary": "exposed_spore_mass",
+      "tertiary": "necrotic_tissue"
+    },
+    "geometry": {
+      "shape": "elongated, conical, spike-like",
+      "orientation": "projecting outward from the panicle surface",
+      "arrangement": "scattered, irregular distribution along the panicle axis"
+    },
+    "surface": {
+      "elevation": "raised",
+      "relief": "distinct physical relief, protruding from the grain surface",
+      "texture": "granular, powdery, rough"
+    },
+    "texture": {
+      "description": "dry, powdery, granular",
+      "consistency": "loose, friable"
+    },
+    "color": {
+      "primary": "dark grey to black",
+      "secondary": "white to cream (grains)",
+      "contrast": "high contrast between dark structures and pale grains"
+    },
+    "distribution": {
+      "pattern": "scattered, localized clusters",
+      "density": "variable, some areas heavily affected, others sparse"
+    },
+    "spatial_location": {
+      "position": "on the surface of the panicle, associated with individual grains/florets",
+      "extent": "visible along the length of the panicle"
+    },
+    "reproductive_structure": {
+      "status": "affected",
+      "transformation": "grains appear to be replaced or covered by dark, powdery structures",
+      "integrity": "some grains remain intact, others are obscured or transformed"
+    },
+    "developmental_stage": {
+      "stage": "mature grain stage",
+      "progression": "structures appear fully developed, no signs of active growth or exudate"
+    }
+  },
+  "evidence": {
+    "present": [
+      "elongated, dark, powdery structures projecting from the panicle",
+      "high contrast between dark structures and pale grains",
+      "granular, rough texture of the dark structures",
+      "scattered distribution along the panicle",
+      "some intact grains visible between affected areas"
+    ],
+    "absent": [
+      "sticky or wet exudate",
+      "leafy or vegetative transformation of the panicle",
+      "uniform discoloration of the entire panicle"
+    ],
+    "uncertain": [
+      "exact nature of the dark structures (spore mass vs. necrotic tissue)",
+      "whether the structures are replacing or merely covering the grains"
+    ],
+    "not_visible": [
+      "internal structure of the dark masses",
+      "attachment points to the florets",
+      "presence of any membrane or sheath"
+    ]
+  },
+  "evidence_quality": {}
+}

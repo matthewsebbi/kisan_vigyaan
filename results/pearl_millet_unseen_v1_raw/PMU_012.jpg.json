@@ -1,0 +1,138 @@
+{
+  "experiment": {
+    "sample_id": "PMU_012.jpg",
+    "model": "qwen+qwen-27b",
+    "question_block": "v3"
+  },
+  "candidate_comparison": {
+    "blast": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.45
+    },
+    "downy_mildew_green_ear": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.1
+    },
+    "ergot": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.05
+    },
+    "smut": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.05
+    },
+    "rust": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.3
+    },
+    "leaf_spots": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.85
+    }
+  },
+  "differential": {
+    "top_candidate": "leaf_spots",
+    "runner_up": "blast",
+    "score_margin": 0.4
+  },
+  "diagnostic_bottleneck": "Surface texture (flat vs raised) and specific lesion geometry (irregular vs spindle) are indeterminate due to lighting artifacts and resolution limits, making it difficult to definitively rule out early-stage blast or rust.",
+  "requires_second_stage_visual_comparison": true,
+  "final_decision": {
+    "diagnosis": "ABSTAIN",
+    "abstain": true,
+    "reason": "Evidence is insufficient to distinguish between Leaf Spots and Blast due to uncertain surface elevation and lesion shape progression. Second-stage visual comparison is required."
+  },
+  "ground_truth": "leaf_spots",
+  "sample_observation": {
+    "plant_part": {
+      "structure": "leaf_blade",
+      "visibility": "sufficient",
+      "status": "locally damaged"
+    },
+    "symptom_class": {
+      "type": "discrete",
+      "lesion_present": true,
+      "fungal_structure": "uncertain"
+    },
+    "geometry": {
+      "shape": "irregular",
+      "elongated": false,
+      "ends": "indeterminate",
+      "coalescing": true,
+      "progressive": true
+    },
+    "surface": {
+      "raised": "uncertain",
+      "pustular": "uncertain",
+      "powdery": "uncertain",
+      "flat": "uncertain",
+      "dry_necrotic": "uncertain"
+    },
+    "texture": {
+      "surface_texture": "indeterminate",
+      "spore_mass": "not_visible"
+    },
+    "color": {
+      "dominant": "green, yellow, brown, dark brown",
+      "lesion_center": "brown to dark brown",
+      "lesion_margin": "yellow to light brown",
+      "surrounding_tissue": "green",
+      "lighting_artifacts": "present"
+    },
+    "distribution": {
+      "pattern": "scattered",
+      "concentration": "mid-leaf",
+      "vein_relation": "crosses veins",
+      "directional": "no"
+    },
+    "spatial_location": {
+      "primary_abnormality": "leaf blade",
+      "vegetative_reproductive": "vegetative"
+    },
+    "reproductive_structure": {
+      "affected": false
+    },
+    "developmental_stage": {
+      "stage": "mature"
+    }
+  },
+  "evidence": {
+    "present": [
+      "discrete lesions",
+      "chlorotic halo",
+      "necrotic centers",
+      "irregular lesion shape",
+      "scattered distribution"
+    ],
+    "absent": [
+      "spindle/diamond lesion shape",
+      "green-ear transformation",
+      "elongated sclerotial structure",
+      "honeydew"
+    ],
+    "uncertain": [
+      "raised pustules",
+      "powdery material",
+      "flat vs raised surface",
+      "dry/papery texture"
+    ],
+    "not_visible": [
+      "spore mass",
+      "panicle",
+      "stem"
+    ]
+  },
+  "evidence_quality": {}
+}

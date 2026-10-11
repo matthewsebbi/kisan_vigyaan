@@ -1,0 +1,144 @@
+{
+  "experiment": {
+    "sample_id": "leaf spot.webp",
+    "model": "qwen+gpt-oss-120b",
+    "question_block": "v3"
+  },
+  "candidate_comparison": {
+    "blast": {
+      "supported_features": [
+        "discrete_lesions",
+        "dark_brown_margin",
+        "chlorotic_halo",
+        "flat_surface"
+      ],
+      "contradictory_features": [
+        "circular_oval_shape",
+        "tan_necrotic_center"
+      ],
+      "unknown_features": [
+        "lesion_progression",
+        "spindle_or_diamond_developed_lesion"
+      ],
+      "compatibility_score": 0.45
+    },
+    "downy_mildew_green_ear": {
+      "supported_features": [
+        "chlorotic_halo"
+      ],
+      "contradictory_features": [
+        "discrete_lesions",
+        "circular_oval_shape",
+        "dark_brown_margin",
+        "tan_necrotic_center",
+        "flat_surface"
+      ],
+      "unknown_features": [
+        "green_ear",
+        "malformed_leafy_panicle"
+      ],
+      "compatibility_score": 0.1
+    },
+    "ergot": {
+      "supported_features": [],
+      "contradictory_features": [
+        "discrete_lesions",
+        "circular_oval_shape",
+        "dark_brown_margin",
+        "tan_necrotic_center",
+        "flat_surface"
+      ],
+      "unknown_features": [
+        "sticky_honeydew_when_present",
+        "elongated_projecting_sclerotium_in_late_stage"
+      ],
+      "compatibility_score": 0.05
+    },
+    "smut": {
+      "supported_features": [],
+      "contradictory_features": [
+        "discrete_lesions",
+        "circular_oval_shape",
+        "dark_brown_margin",
+        "tan_necrotic_center",
+        "flat_surface"
+      ],
+      "unknown_features": [
+        "enlarged_ball_like_structure",
+        "membrane_covered_or_ruptured_spore_ball"
+      ],
+      "compatibility_score": 0.05
+    },
+    "rust": {
+      "supported_features": [
+        "discrete_lesions"
+      ],
+      "contradictory_features": [
+        "flat_surface",
+        "tan_necrotic_center",
+        "dark_brown_margin"
+      ],
+      "unknown_features": [
+        "clearly_raised_pustule",
+        "powdery_pustular_surface"
+      ],
+      "compatibility_score": 0.2
+    },
+    "leaf_spots": {
+      "supported_features": [
+        "discrete_lesions",
+        "circular_oval_shape",
+        "dark_brown_margin",
+        "tan_necrotic_center",
+        "chlorotic_halo",
+        "flat_surface"
+      ],
+      "contradictory_features": [],
+      "unknown_features": [
+        "specific_pathogen_identity"
+      ],
+      "compatibility_score": 0.95
+    }
+  },
+  "differential": {
+    "top_candidate": "leaf_spots",
+    "runner_up": "blast",
+    "score_margin": 0.5
+  },
+  "diagnostic_bottleneck": "Distinguishing between general leaf spots and early-stage blast based on lesion shape (circular/oval vs. spindle/diamond) and center color (tan vs. gray).",
+  "requires_second_stage_visual_comparison": false,
+  "final_decision": {
+    "diagnosis": "Leaf Spots",
+    "abstain": false,
+    "reason": "The observed features (discrete, circular/oval, flat lesions with dark brown margins and tan necrotic centers) strongly align with the 'Leaf Spots' phenotype. While Blast is a differential, the circular/oval shape and tan center are less characteristic of the typical spindle/diamond shape and gray center of mature blast lesions. The absence of raised pustules rules out Rust, and the lack of panicle symptoms rules out Smut, Ergot, and Downy Mildew/Green Ear."
+  },
+  "ground_truth": "leaf_spots",
+  "sample_observation": {},
+  "evidence": {
+    "present": [
+      "discrete_lesions",
+      "circular_oval_shape",
+      "dark_brown_margin",
+      "tan_necrotic_center",
+      "chlorotic_halo",
+      "flat_surface"
+    ],
+    "absent": [
+      "raised_pustules",
+      "powdery_material",
+      "spore_mass",
+      "honeydew",
+      "elongated_sclerotia",
+      "green_ear_transformation"
+    ],
+    "uncertain": [
+      "presence_of_microscopic_spores",
+      "specific_pathogen_identity"
+    ],
+    "not_visible": [
+      "panicle",
+      "stem_base",
+      "root_system"
+    ]
+  }
+}

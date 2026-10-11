@@ -1,0 +1,259 @@
+PMU_001.jpg
+
+Qwen observation:
+  Present: ...
+  Absent: ...
+  Uncertain: ...
+  Not Visible: ...
+
+candidate comparison:
+  blast                     0.95
+  downy_mildew_green_ear    0.05
+  ergot                     0.0
+  smut                      0.0
+  rust                      0.1
+  leaf_spots                0.35
+
+final:
+  blast (GT: blast)
+----------------------------------------
+
+PMU_001_backup.jpg
+
+Qwen observation:
+  Present: ...
+  Absent: ...
+  Uncertain: ...
+  Not Visible: ...
+
+candidate comparison:
+  blast                     0.95
+  downy_mildew_green_ear    0.1
+  ergot                     0.0
+  smut                      0.0
+  rust                      0.2
+  leaf_spots                0.45
+
+final:
+  blast (GT: blast)
+----------------------------------------
+
+PMU_002.jpg
+
+Qwen observation:
+  Present: ...
+  Absent: ...
+  Uncertain: ...
+  Not Visible: ...
+
+candidate comparison:
+  blast                     0.9
+  downy_mildew_green_ear    0.1
+  ergot                     0.0
+  smut                      0.0
+  rust                      0.15
+  leaf_spots                0.55
+
+final:
+  blast (GT: blast)
+----------------------------------------
+
+PMU_003.jpg
+
+Qwen observation:
+  Present: ...
+  Absent: ...
+  Uncertain: ...
+  Not Visible: ...
+
+candidate comparison:
+  blast                     0.0
+  downy_mildew_green_ear    0.98
+  ergot                     0.0
+  smut                      0.0
+  rust                      0.0
+  leaf_spots                0.0
+
+final:
+  downy_mildew_green_ear (GT: downy_mildew_green_ear)
+----------------------------------------
+
+PMU_004.jpg
+
+Qwen observation:
+  Present: green ear phyllody, foliaceous leafy transformation of spikelets, bushy head architecture...
+  Absent: honeydew droplets, smut sori, leaf pustules...
+  Uncertain: ...
+  Not Visible: ...
+
+candidate comparison:
+  blast                     0.0
+  downy_mildew_green_ear    0.98
+  ergot                     0.0
+  smut                      0.0
+  rust                      0.0
+  leaf_spots                0.0
+
+final:
+  downy_mildew_green_ear (GT: downy_mildew_green_ear)
+----------------------------------------
+
+PMU_005.jpg
+
+Qwen observation:
+  Present: amber honeydew droplets, floret infection, viscous liquid dripping from spikelets...
+  Absent: phyllody, sooty spore balls, foliar lesions...
+  Uncertain: ...
+  Not Visible: ...
+
+candidate comparison:
+  blast                     0.0
+  downy_mildew_green_ear    0.0
+  ergot                     0.96
+  smut                      0.05
+  rust                      0.0
+  leaf_spots                0.0
+
+final:
+  ergot (GT: ergot)
+----------------------------------------
+
+PMU_006.jpg
+
+Qwen observation:
+  Present: dark brown to black protruding sclerotia, floret ovary replacement, compact horn-like fungal structu...
+  Absent: phyllody, powdery pustules, foliar spots...
+  Uncertain: ...
+  Not Visible: ...
+
+candidate comparison:
+  blast                     0.0
+  downy_mildew_green_ear    0.0
+  ergot                     0.95
+  smut                      0.25
+  rust                      0.0
+  leaf_spots                0.0
+
+final:
+  ergot (GT: ergot)
+----------------------------------------
+
+PMU_007.jpg
+
+Qwen observation:
+  Present: copious glistening honeydew exudation, amber/brownish sticky coating on spikelets, sugary disease sy...
+  Absent: phyllody, smut sori, foliar lesions...
+  Uncertain: ...
+  Not Visible: ...
+
+candidate comparison:
+  blast                     0.0
+  downy_mildew_green_ear    0.0
+  ergot                     0.98
+  smut                      0.05
+  rust                      0.0
+  leaf_spots                0.0
+
+final:
+  ergot (GT: ergot)
+----------------------------------------
+
+PMU_008.jpg
+
+Qwen observation:
+  Present: enlarged shiny green oval sori (smut balls), scattered ovaries replaced by sori, protrusion beyond g...
+  Absent: honeydew droplets, phyllody, foliar lesions...
+  Uncertain: ...
+  Not Visible: ...
+
+candidate comparison:
+  blast                     0.0
+  downy_mildew_green_ear    0.0
+  ergot                     0.2
+  smut                      0.96
+  rust                      0.0
+  leaf_spots                0.0
+
+final:
+  smut (GT: smut)
+----------------------------------------
+
+PMU_009.jpg
+
+Qwen observation:
+  Present: green to black enlarged sori, sooty black spore masses replacing grains, healthy vs diseased compari...
+  Absent: honeydew droplets, phyllody, foliar lesions...
+  Uncertain: ...
+  Not Visible: ...
+
+candidate comparison:
+  blast                     0.0
+  downy_mildew_green_ear    0.0
+  ergot                     0.15
+  smut                      0.98
+  rust                      0.0
+  leaf_spots                0.0
+
+final:
+  smut (GT: smut)
+----------------------------------------
+
+PMU_010.jpg
+
+Qwen observation:
+  Present: reddish-brown raised powdery pustules, epidermal rupture, longitudinal alignment along leaf veins, c...
+  Absent: spindle lesions with gray centers, green ear phyllody, honeydew droplets...
+  Uncertain: ...
+  Not Visible: ...
+
+candidate comparison:
+  blast                     0.15
+  downy_mildew_green_ear    0.05
+  ergot                     0.0
+  smut                      0.0
+  rust                      0.97
+  leaf_spots                0.2
+
+final:
+  rust (GT: rust)
+----------------------------------------
+
+PMU_011.jpg
+
+Qwen observation:
+  Present: dense orange-brown powdery pustules, erumpent uredinia bursting through epidermis, linear aggregatio...
+  Absent: spindle eye-shaped necrotic lesions, green ear phyllody, honeydew droplets...
+  Uncertain: ...
+  Not Visible: ...
+
+candidate comparison:
+  blast                     0.1
+  downy_mildew_green_ear    0.05
+  ergot                     0.0
+  smut                      0.0
+  rust                      0.98
+  leaf_spots                0.15
+
+final:
+  rust (GT: rust)
+----------------------------------------
+
+PMU_012.jpg
+
+Qwen observation:
+  Present: irregular to oblong brownish necrotic spots, coalescing foliar lesions, chlorotic margins, flat necr...
+  Absent: spindle eye-shaped lesions with gray center, raised powdery pustules, inflorescence symptoms...
+  Uncertain: ...
+  Not Visible: ...
+
+candidate comparison:
+  blast                     0.45
+  downy_mildew_green_ear    0.1
+  ergot                     0.0
+  smut                      0.0
+  rust                      0.2
+  leaf_spots                0.92
+
+final:
+  leaf_spots (GT: leaf_spots)
+----------------------------------------

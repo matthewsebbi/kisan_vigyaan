@@ -1,0 +1,103 @@
+{
+  "experiment": {
+    "sample_id": "PMU_010.jpg",
+    "model": "gemini-3.8-flash",
+    "question_block": "v4"
+  },
+  "candidate_comparison": {
+    "blast": {
+      "supported_features": [
+        "PRIMARY_STRUCTURE is leaf",
+        "chlorotic halo/background"
+      ],
+      "contradictory_features": [
+        "numerous small raised powdery reddish-brown pustules rather than discrete elliptical spindle-shaped lesions with pale grey centers and dark margins",
+        "relief is raised erupting pustules instead of flat necrotic tissue"
+      ],
+      "unknown_features": [],
+      "compatibility_score": 0.15
+    },
+    "downy_mildew_green_ear": {
+      "supported_features": [
+        "chlorosis on leaf blade"
+      ],
+      "contradictory_features": [
+        "discrete reddish-brown erupting pustules rather than diffuse downy sporulation or systemic yellow-green striping"
+      ],
+      "unknown_features": [],
+      "compatibility_score": 0.05
+    },
+    "ergot": {
+      "supported_features": [],
+      "contradictory_features": [
+        "PRIMARY_STRUCTURE is foliar leaf blade rather than inflorescence",
+        "rust pustules instead of honeydew exudate"
+      ],
+      "unknown_features": [],
+      "compatibility_score": 0.0
+    },
+    "smut": {
+      "supported_features": [],
+      "contradictory_features": [
+        "PRIMARY_STRUCTURE is foliar leaf blade rather than inflorescence",
+        "absence of earhead sori"
+      ],
+      "unknown_features": [],
+      "compatibility_score": 0.0
+    },
+    "rust": {
+      "supported_features": [
+        "PRIMARY_STRUCTURE is leaf_blade",
+        "numerous_small_discrete_raised_pustules (uredinia)",
+        "reddish_brown_to_cinnamon_brown_powdery_spores",
+        "epidermal_rupture_exposing_urediniospores",
+        "chlorotic_halos_surrounding_pustules",
+        "pustules_aligned_longitudinally_along_leaf_veins",
+        "pustule_relief_is_prominently_raised",
+        "characteristic of Puccinia substriata (pearl millet rust)"
+      ],
+      "contradictory_features": [],
+      "unknown_features": [
+        "telia/teliospore transition (dark brown/black pustules in late season)"
+      ],
+      "compatibility_score": 0.97
+    },
+    "leaf_spots": {
+      "supported_features": [
+        "PRIMARY_STRUCTURE is leaf",
+        "chlorotic margins"
+      ],
+      "contradictory_features": [
+        "raised powdery erupting spore pustules (uredinia) rather than flat necrotic leaf spots"
+      ],
+      "unknown_features": [],
+      "compatibility_score": 0.20
+    }
+  },
+  "differential": {
+    "top_candidate": "rust",
+    "runner_up": "leaf_spots",
+    "score_margin": 0.77
+  },
+  "ground_truth": "rust",
+  "sample_observation": {
+    "primary_structure": "leaf_blade",
+    "lesion_profile": "raised_reddish_brown_uredinial_pustules"
+  },
+  "evidence": {
+    "present": [
+      "reddish-brown raised powdery pustules",
+      "epidermal rupture",
+      "longitudinal alignment along leaf veins",
+      "chlorotic halos"
+    ],
+    "absent": [
+      "spindle lesions with gray centers",
+      "green ear phyllody",
+      "honeydew droplets"
+    ]
+  },
+  "evidence_quality": {
+    "clarity": "very_high"
+  }
+}

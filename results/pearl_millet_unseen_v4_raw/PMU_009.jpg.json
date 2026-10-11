@@ -1,0 +1,139 @@
+{
+  "experiment": {
+    "sample_id": "PMU_009.jpg",
+    "model": "qwen+qwen-27b",
+    "question_block": "v4"
+  },
+  "candidate_comparison": {
+    "blast": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.1
+    },
+    "downy_mildew_green_ear": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.2
+    },
+    "ergot": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.85
+    },
+    "smut": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.3
+    },
+    "rust": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.05
+    },
+    "leaf_spots": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.05
+    }
+  },
+  "differential": {
+    "top_candidate": "ergot",
+    "runner_up": "smut",
+    "score_margin": 0.55
+  },
+  "diagnostic_bottleneck": "Distinguishing between Ergot and Smut based on granular texture and dark color; absence of visible honeydew or specific ball-like membrane rupture makes definitive visual separation difficult without microscopic or tactile confirmation.",
+  "requires_second_stage_visual_comparison": true,
+  "final_decision": {
+    "diagnosis": "ergot",
+    "abstain": false,
+    "reason": "The observed 'tissue replacement' with 'hardened', 'granular', 'dark_brown/black' structures on the panicle strongly aligns with Ergot's identity-defining features of elongated/hard structures replacing florets. While Smut is a differential, the 'granular' and 'hardened' texture favors Ergot over the typically loose spore mass of Smut, and the lack of 'green ear' transformation rules out Downy Mildew. Blast and Leaf Spots are foliar diseases and do not match the panicle-centric structural transformation."
+  },
+  "ground_truth": "smut",
+  "sample_observation": {
+    "plant_part": {
+      "primary": "panicle",
+      "secondary": "grains",
+      "tertiary": "stem"
+    },
+    "symptom_class": {
+      "primary": "tissue_replacement",
+      "secondary": "necrotic_tissue",
+      "tertiary": "discoloration"
+    },
+    "geometry": {
+      "shape": "cylindrical",
+      "elongation": "high",
+      "symmetry": "bilateral",
+      "surface_profile": "bumpy/irregular"
+    },
+    "surface": {
+      "elevation": "raised",
+      "relief": "high",
+      "texture": "granular",
+      "finish": "matte"
+    },
+    "texture": {
+      "primary": "hardened",
+      "secondary": "granular",
+      "detail": "discrete rounded structures"
+    },
+    "color": {
+      "primary": "dark_brown",
+      "secondary": "black",
+      "tertiary": "green",
+      "quaternary": "tan",
+      "contrast": "high"
+    },
+    "distribution": {
+      "pattern": "widespread",
+      "coverage": "diffuse",
+      "localization": "panicle-wide"
+    },
+    "spatial_location": {
+      "primary": "panicle",
+      "secondary": "grain_positions",
+      "tertiary": "stem"
+    },
+    "reproductive_structure": {
+      "status": "transformed",
+      "integrity": "compromised",
+      "morphology": "distorted"
+    },
+    "developmental_stage": {
+      "stage": "maturity",
+      "progression": "advanced"
+    }
+  },
+  "evidence": {
+    "present": [
+      "dark granular structures",
+      "green granular structures",
+      "tan granular structures",
+      "irregular surface texture",
+      "panicle distortion",
+      "tissue replacement"
+    ],
+    "absent": [
+      "uniform grain color",
+      "smooth panicle surface",
+      "normal grain arrangement"
+    ],
+    "uncertain": [
+      "specific biological agent",
+      "exact stage of infection",
+      "presence of exudate"
+    ],
+    "not_visible": [
+      "internal tissue structure",
+      "microscopic surface details",
+      "root system"
+    ]
+  },
+  "evidence_quality": {}
+}

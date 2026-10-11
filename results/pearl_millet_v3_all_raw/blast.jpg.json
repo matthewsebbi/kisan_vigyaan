@@ -1,0 +1,191 @@
+{
+  "experiment": {
+    "sample_id": "blast.jpg",
+    "model": "qwen+gpt-oss-120b",
+    "question_block": "v3"
+  },
+  "candidate_comparison": {
+    "blast": {
+      "supported_features": [
+        "necrotic_lesion",
+        "brown_reddish_brown_color",
+        "multiple_scattered_lesions"
+      ],
+      "contradictory_features": [],
+      "unknown_features": [
+        "spindle_or_diamond_shape",
+        "gray_center",
+        "coalescence",
+        "raised_surface"
+      ],
+      "compatibility_score": 0.42
+    },
+    "downy_mildew_green_ear": {
+      "supported_features": [],
+      "contradictory_features": [
+        "chlorotic_leaf_symptoms",
+        "green_ear_transformation"
+      ],
+      "unknown_features": [
+        "systemic_infection",
+        "downy_growth"
+      ],
+      "compatibility_score": 0.07
+    },
+    "ergot": {
+      "supported_features": [],
+      "contradictory_features": [
+        "honeydew_exudation",
+        "panicle_floret_symptoms"
+      ],
+      "unknown_features": [
+        "sticky_honeydew",
+        "elongated_sclerotium"
+      ],
+      "compatibility_score": 0.04
+    },
+    "smut": {
+      "supported_features": [],
+      "contradictory_features": [
+        "enlarged_spore_balls",
+        "panicle_floret_symptoms"
+      ],
+      "unknown_features": [
+        "membrane_covered_structure",
+        "ball_like_geometry"
+      ],
+      "compatibility_score": 0.05
+    },
+    "rust": {
+      "supported_features": [],
+      "contradictory_features": [
+        "raised_powdery_pustules",
+        "powdery_texture"
+      ],
+      "unknown_features": [
+        "uredospore_spores",
+        "lower_leaf_preference"
+      ],
+      "compatibility_score": 0.06
+    },
+    "leaf_spots": {
+      "supported_features": [
+        "discrete_flat_necrotic_spot",
+        "circular_oval_shape",
+        "dry_papery_necrosis",
+        "brown_dark_brown_margin",
+        "scattered_distribution",
+        "vein_independent",
+        "leaf_blade_primary_location"
+      ],
+      "contradictory_features": [],
+      "unknown_features": [
+        "gray_center",
+        "chlorosis",
+        "raised_surface"
+      ],
+      "compatibility_score": 0.84
+    }
+  },
+  "differential": {
+    "top_candidate": "leaf_spots",
+    "runner_up": "blast",
+    "score_margin": 0.42
+  },
+  "diagnostic_bottleneck": "absence of gray necrotic center or spindle/diamond progression prevents definitive exclusion of early blast",
+  "requires_second_stage_visual_comparison": false,
+  "final_decision": {
+    "diagnosis": "leaf_spots",
+    "abstain": false,
+    "reason": "Flat, dry, brown, circular lesions scattered on the leaf blade without raised pustules, gray centers, or systemic panicle symptoms align with the leaf spots phenotype."
+  },
+  "ground_truth": "blast",
+  "sample_observation": {
+    "plant_part": {
+      "structure": "leaf_blade",
+      "status": "visible",
+      "notes": "Single leaf blade held by hand, showing the upper surface."
+    },
+    "symptom_class": {
+      "type": "discrete_lesions",
+      "status": "visible",
+      "notes": "Multiple distinct spots scattered across the leaf surface."
+    },
+    "geometry": {
+      "shape": "circular_to_oval",
+      "elongation": "none",
+      "margin_definition": "distinct",
+      "notes": "Lesions are generally round or slightly oval. Some larger lesions show a slightly irregular or 'bullseye' pattern."
+    },
+    "surface": {
+      "texture": "flat",
+      "raised_features": "absent",
+      "powdery_material": "absent",
+      "exudate": "absent",
+      "notes": "Lesions appear flat and integrated into the leaf tissue. No pustules or powdery masses are visible."
+    },
+    "texture": {
+      "tissue_condition": "necrotic",
+      "dryness": "dry",
+      "notes": "Lesions appear dry and brown, indicating necrotic tissue."
+    },
+    "color": {
+      "lesion_center": "brown_to_reddish_brown",
+      "lesion_margin": "darker_brown",
+      "surrounding_tissue": "green",
+      "chlorosis": "minimal_or_absent",
+      "notes": "Lesions are brown. Some larger lesions have a lighter brown center and a darker brown ring. Surrounding leaf tissue is green."
+    },
+    "distribution": {
+      "pattern": "scattered",
+      "density": "moderate",
+      "vein_relation": "independent",
+      "notes": "Lesions are scattered across the leaf blade, not strictly following veins."
+    },
+    "spatial_location": {
+      "position": "mid_leaf",
+      "concentration": "uniform",
+      "notes": "Lesions are distributed across the visible portion of the leaf blade."
+    },
+    "reproductive_structure": {
+      "status": "not_visible",
+      "notes": "No panicle or grain structures are in the frame."
+    },
+    "developmental_stage": {
+      "status": "vegetative",
+      "notes": "Leaf tissue is green and turgid, indicating a vegetative stage."
+    }
+  },
+  "evidence": {
+    "present": [
+      "discrete_lesions",
+      "brown_necrotic_spots",
+      "circular_oval_shape",
+      "flat_surface",
+      "scattered_distribution"
+    ],
+    "absent": [
+      "raised_pustules",
+      "powdery_material",
+      "spindle_lesions",
+      "chlorotic_halos",
+      "honeydew"
+    ],
+    "uncertain": [
+      "lesion_age_progression",
+      "specific_pathogen_identity"
+    ],
+    "not_visible": [
+      "leaf_underside",
+      "panicle",
+      "stem_base"
+    ]
+  },
+  "evidence_quality": {
+    "overall": "high",
+    "limiting_features": [
+      "single_leaf_view",
+      "no_underside_view"
+    ]
+  }
+}

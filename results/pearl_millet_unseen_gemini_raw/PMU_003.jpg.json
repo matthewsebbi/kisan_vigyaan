@@ -1,0 +1,91 @@
+{
+  "experiment": {
+    "sample_id": "PMU_003.jpg",
+    "model": "gemini-3.8-flash",
+    "question_block": "v4"
+  },
+  "candidate_comparison": {
+    "blast": {
+      "supported_features": [],
+      "contradictory_features": [
+        "leafy_reproductive_transformation",
+        "foliaceous_outgrowths_creating_bushy_profile"
+      ],
+      "unknown_features": [
+        "discrete foliar lesion with gray center"
+      ],
+      "compatibility_score": 0.0
+    },
+    "downy_mildew_green_ear": {
+      "supported_features": [
+        "leafy_reproductive_transformation",
+        "foliaceous_outgrowths_creating_bushy_profile",
+        "florets_replaced_by_slender_green_leaf_like_structures",
+        "leafy_vegetative_transformation",
+        "chlorosis"
+      ],
+      "contradictory_features": [],
+      "unknown_features": [
+        "presence_of_subtle_foliar_downy_growth_due_to_viewing_distance"
+      ],
+      "compatibility_score": 0.98
+    },
+    "ergot": {
+      "supported_features": [],
+      "contradictory_features": [
+        "leafy_reproductive_transformation",
+        "foliaceous_outgrowths_creating_bushy_profile",
+        "absence_of_liquid_exudate"
+      ],
+      "unknown_features": [
+        "sticky_honeydew",
+        "sclerotic_projections"
+      ],
+      "compatibility_score": 0.0
+    },
+    "smut": {
+      "supported_features": [],
+      "contradictory_features": [
+        "leafy_reproductive_transformation",
+        "absence_of_dark_loose_spore_masses",
+        "foliaceous_outgrowths_creating_bushy_profile"
+      ],
+      "unknown_features": [
+        "enlarged_ball_like_structure",
+        "membrane_covered_spore_ball"
+      ],
+      "compatibility_score": 0.0
+    },
+    "rust": {
+      "supported_features": [],
+      "contradictory_features": [
+        "leafy_reproductive_transformation",
+        "absence_of_raised_pustules"
+      ],
+      "unknown_features": [
+        "powdery_uredinial_pustules"
+      ],
+      "compatibility_score": 0.0
+    },
+    "leaf_spots": {
+      "supported_features": [],
+      "contradictory_features": [
+        "primary_abnormality_on_panicle",
+        "leafy_reproductive_transformation"
+      ],
+      "unknown_features": [
+        "discrete_necrotic_foliar_spots"
+      ],
+      "compatibility_score": 0.0
+    }
+  },
+  "differential": {
+    "top_candidate": "downy_mildew_green_ear",
+    "runner_up": "ergot",
+    "score_margin": 0.98
+  },
+  "ground_truth": "downy_mildew_green_ear",
+  "sample_observation": {},
+  "evidence": {},
+  "evidence_quality": {}
+}

@@ -1,0 +1,158 @@
+{
+  "experiment": {
+    "sample_id": "ergot3.jpe",
+    "model": "qwen+gpt-oss-120b",
+    "question_block": "v3"
+  },
+  "candidate_comparison": {
+    "blast": {
+      "supported_features": [],
+      "contradictory_features": [
+        "primary_location_is_panicle_not_leaf",
+        "symptom_is_structural_replacement_not_necrotic_lesion",
+        "presence_of_sclerotial_like_structures"
+      ],
+      "unknown_features": [],
+      "compatibility_score": 0.05
+    },
+    "downy_mildew_green_ear": {
+      "supported_features": [
+        "reduced_or_absent_normal_grain_formation"
+      ],
+      "contradictory_features": [
+        "absence_of_green_ear_symptom",
+        "absence_of_leafy_malformed_panicle",
+        "presence_of_dark_sclerotial_structures_instead_of_green_tissue"
+      ],
+      "unknown_features": [
+        "systemic_chlorosis_status"
+      ],
+      "compatibility_score": 0.1
+    },
+    "ergot": {
+      "supported_features": [
+        "elongated_projecting_sclerotium_in_late_stage",
+        "hard_elongated_late_structure",
+        "dark_color",
+        "floret_associated_structure_replacement"
+      ],
+      "contradictory_features": [
+        "presence_of_white_powdery_masses_may_suggest_secondary_infection_or_different_stage"
+      ],
+      "unknown_features": [
+        "presence_of_honeydew_in_early_stage",
+        "specific_identity_of_white_masses"
+      ],
+      "compatibility_score": 0.95
+    },
+    "smut": {
+      "supported_features": [
+        "dark_color",
+        "sterile_florets_implied_by_replacement"
+      ],
+      "contradictory_features": [
+        "elongated_projecting_sclerotium_without_ball",
+        "absence_of_enlarged_ball_like_structure",
+        "absence_of_membrane_covered_or_ruptured_spore_ball"
+      ],
+      "unknown_features": [
+        "structure_shape_visibility"
+      ],
+      "compatibility_score": 0.2
+    },
+    "rust": {
+      "supported_features": [],
+      "contradictory_features": [
+        "primary_location_is_panicle_not_leaf",
+        "absence_of_raised_powdery_pustules_on_leaf",
+        "symptom_is_structural_replacement_not_pustular"
+      ],
+      "unknown_features": [],
+      "compatibility_score": 0.05
+    },
+    "leaf_spots": {
+      "supported_features": [],
+      "contradictory_features": [
+        "primary_location_is_panicle_not_leaf",
+        "symptom_is_structural_replacement_not_discrete_spots"
+      ],
+      "unknown_features": [],
+      "compatibility_score": 0.05
+    }
+  },
+  "differential": {
+    "top_candidate": "ergot",
+    "runner_up": "smut",
+    "score_margin": 0.75
+  },
+  "ground_truth": "ergot",
+  "sample_observation": {
+    "plant_part": {
+      "structure": "panicle",
+      "status": "reproductive",
+      "visibility": "clear"
+    },
+    "symptom_class": {
+      "type": "structural_replacement",
+      "description": "Panicle head is heavily colonized by dark, elongated structures and white masses.",
+      "status": "PRESENT"
+    },
+    "geometry": {
+      "shape": "elongated",
+      "orientation": "vertical",
+      "status": "PRESENT"
+    },
+    "surface": {
+      "texture": "rough, granular, matted",
+      "features": [
+        "dark elongated bodies",
+        "white powdery/granular masses"
+      ],
+      "status": "PRESENT"
+    },
+    "texture": {
+      "description": "Hard, sclerotial appearance mixed with powdery texture",
+      "status": "PRESENT"
+    },
+    "color": {
+      "dominant": "black, dark brown",
+      "secondary": "white, cream",
+      "status": "PRESENT"
+    },
+    "distribution": {
+      "pattern": "dense, covering the entire visible panicle head",
+      "status": "PRESENT"
+    },
+    "spatial_location": {
+      "location": "terminal panicle",
+      "status": "PRESENT"
+    },
+    "reproductive_structure": {
+      "status": "replaced/abnormal",
+      "details": "Normal grain structure is obscured or replaced by the dark masses and white growth."
+    },
+    "developmental_stage": {
+      "stage": "mature/reproductive",
+      "status": "PRESENT"
+    }
+  },
+  "evidence": {
+    "present": [
+      "Panicle structure",
+      "Dark, elongated, sclerotial-like structures",
+      "White, powdery or granular masses",
+      "Dense coverage of the panicle head"
+    ],
+    "absent": [
+      "Normal grain appearance",
+      "Green leafy tissue on the panicle (Green Ear symptom)"
+    ],
+    "uncertain": [
+      "Specific identity of white masses (spores vs. secondary infection)"
+    ],
+    "not_visible": [
+      "Leaves (for checking Downy Mildew chlorosis)",
+      "Stem base"
+    ]
+  }
+}

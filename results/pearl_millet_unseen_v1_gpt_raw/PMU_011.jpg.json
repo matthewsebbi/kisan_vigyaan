@@ -1,0 +1,132 @@
+{
+  "experiment": {
+    "sample_id": "PMU_011.jpg",
+    "model": "qwen+gpt-oss-120b",
+    "question_block": "v3"
+  },
+  "candidate_comparison": {
+    "blast": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.1
+    },
+    "downy_mildew_green_ear": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.0
+    },
+    "ergot": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.0
+    },
+    "smut": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.0
+    },
+    "rust": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.8
+    },
+    "leaf_spots": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.4
+    }
+  },
+  "differential": {
+    "top_candidate": "rust",
+    "runner_up": "leaf_spots",
+    "score_margin": 0.4
+  },
+  "diagnostic_bottleneck": "absence_of_visible_spore_mass",
+  "requires_second_stage_visual_comparison": false,
+  "final_decision": {
+    "diagnosis": "rust",
+    "abstain": false,
+    "reason": "raised powdery pustules, necrotic dry tissue and scattered circular lesions match rust phenotype"
+  },
+  "ground_truth": "rust",
+  "sample_observation": {
+    "plant_part": {
+      "structure": "leaf_blade",
+      "visibility": "sufficient",
+      "status": "locally damaged"
+    },
+    "symptom_class": {
+      "type": "discrete",
+      "description": "Numerous small, discrete spots and pustules scattered across the leaf surface."
+    },
+    "geometry": {
+      "shape": "circular",
+      "elongation": "no",
+      "ends": "rounded",
+      "coalescence": "yes"
+    },
+    "surface": {
+      "raised": "yes",
+      "texture": "pustular",
+      "powdery": "yes",
+      "exudate": "no"
+    },
+    "texture": {
+      "tissue_state": "necrotic",
+      "dryness": "dry"
+    },
+    "color": {
+      "dominant": "orange-brown",
+      "lesion_center": "orange-brown",
+      "lesion_margin": "indeterminate",
+      "surrounding_tissue": "green"
+    },
+    "distribution": {
+      "pattern": "scattered",
+      "concentration": "mid-leaf",
+      "vein_relation": "crosses veins"
+    },
+    "spatial_location": {
+      "primary_site": "leaf_blade",
+      "vegetative_vs_reproductive": "vegetative"
+    },
+    "reproductive_structure": {
+      "affected": "no",
+      "malformation": "no"
+    },
+    "developmental_stage": {
+      "stage": "mature"
+    }
+  },
+  "evidence": {
+    "present": [
+      "raised pustules",
+      "powdery orange-brown material",
+      "discrete lesions",
+      "scattered distribution",
+      "necrotic tissue"
+    ],
+    "absent": [
+      "spindle/diamond lesions",
+      "green-ear transformation",
+      "elongated sclerotial structures",
+      "honeydew"
+    ],
+    "uncertain": [
+      "chlorotic halo",
+      "specific margin color"
+    ],
+    "not_visible": [
+      "panicle",
+      "stem base",
+      "underside of leaf"
+    ]
+  },
+  "evidence_quality": {}
+}

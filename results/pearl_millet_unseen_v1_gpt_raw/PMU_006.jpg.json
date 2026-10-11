@@ -1,0 +1,130 @@
+{
+  "experiment": {
+    "sample_id": "PMU_006.jpg",
+    "model": "qwen+gpt-oss-120b",
+    "question_block": "v3"
+  },
+  "candidate_comparison": {
+    "blast": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.0
+    },
+    "downy_mildew_green_ear": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.0
+    },
+    "ergot": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.85
+    },
+    "smut": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.2
+    },
+    "rust": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.0
+    },
+    "leaf_spots": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.0
+    }
+  },
+  "differential": {
+    "top_candidate": "ergot",
+    "runner_up": "smut",
+    "score_margin": 0.65
+  },
+  "diagnostic_bottleneck": "Distinguishing Ergot elongated sclerotia from other panicle abnormalities (e.g., smut) without spore or honeydew evidence.",
+  "requires_second_stage_visual_comparison": false,
+  "final_decision": {
+    "diagnosis": "Ergot",
+    "abstain": false,
+    "reason": "Dark, elongated horn\u2011like structures on the panicle correspond to Ergot's characteristic elongated sclerotia; other candidates lack panicle\u2011specific symptoms."
+  },
+  "ground_truth": "ergot",
+  "sample_observation": {
+    "plant_part": {
+      "structure": "panicle",
+      "specifics": "Cylindrical seed head (panicle) densely packed with spherical grains (caryopses).",
+      "status": "Reproductive structure"
+    },
+    "symptom_class": {
+      "type": "Structural replacement / Discrete abnormal structures",
+      "description": "Presence of dark, elongated, horn-like structures interspersed among the normal white grains.",
+      "classification": "Reproductive abnormality"
+    },
+    "geometry": {
+      "normal_grains": "Spherical to sub-spherical, uniform size.",
+      "abnormal_structures": "Elongated, conical or horn-like, tapering to a point.",
+      "orientation": "Abnormal structures project outward from the panicle surface, often at an angle."
+    },
+    "surface": {
+      "normal_grains": "Smooth, matte, white/cream.",
+      "abnormal_structures": "Dark (black/dark grey), appearing hard or sclerotial, with a somewhat rough or textured surface."
+    },
+    "texture": {
+      "normal_grains": "Smooth.",
+      "abnormal_structures": "Hard, solid, distinct from the surrounding soft grain texture."
+    },
+    "color": {
+      "dominant": "White / Cream (normal grains)",
+      "abnormal": "Black / Dark Grey (elongated structures)",
+      "background": "Blurred beige/green"
+    },
+    "distribution": {
+      "pattern": "Scattered / Interspersed",
+      "density": "Moderate; abnormal structures are distributed along the length of the visible panicle section."
+    },
+    "spatial_location": {
+      "position": "On the surface of the panicle, replacing or emerging from the position of individual grains.",
+      "context": "Surrounded by normal developing grains."
+    },
+    "reproductive_structure": {
+      "status": "Affected",
+      "details": "Individual florets appear to be transformed into dark, elongated bodies rather than normal grains."
+    },
+    "developmental_stage": {
+      "stage": "Grain fill / Maturity",
+      "details": "Grains appear full-sized and white, suggesting the plant is in the late reproductive stage."
+    }
+  },
+  "evidence": {
+    "present": [
+      "Panicle structure",
+      "Normal white spherical grains",
+      "Dark, elongated, horn-like structures",
+      "Structures projecting outward from the panicle",
+      "Structures occupying the position of individual grains"
+    ],
+    "absent": [
+      "Leaf blade abnormalities (not visible)",
+      "Powdery mildew (white powder)",
+      "Rust pustules (orange/brown powdery spots)",
+      "Green ear transformation (panicle is not leafy)",
+      "Sticky/mucilaginous exudate (structures appear dry/hard)"
+    ],
+    "uncertain": [
+      "Internal structure of the dark bodies (sclerotium vs. smut ball)",
+      "Specific size comparison relative to a single grain (due to perspective)"
+    ],
+    "not_visible": [
+      "Leaves",
+      "Stem base",
+      "Roots"
+    ]
+  },
+  "evidence_quality": {}
+}

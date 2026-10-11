@@ -68,7 +68,7 @@ REASONING_MODEL = os.getenv("REASONING_MODEL", DEFAULT_MODEL)
 
 # Google Gemini Configuration
 GEMINI_API_KEY = get_gemini_api_key()
-GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-1.5-flash")
+GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-3.1-flash-lite")
 GEMINI_API_BASE = "https://generativelanguage.googleapis.com/v1beta/models"
 
 # Local Ollama Configuration (if running)

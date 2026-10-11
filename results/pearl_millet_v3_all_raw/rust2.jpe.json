@@ -1,0 +1,176 @@
+{
+  "experiment": {
+    "sample_id": "rust2.jpe",
+    "model": "qwen+gpt-oss-120b",
+    "question_block": "v3"
+  },
+  "candidate_comparison": {
+    "blast": {
+      "supported_features": [
+        "reddish_brown_color",
+        "multiple_leaf_lesions",
+        "chlorotic_halo"
+      ],
+      "contradictory_features": [
+        "clearly_raised_powdery_pustule",
+        "circular_to_oval_shape"
+      ],
+      "unknown_features": [
+        "lesion_progression",
+        "grayish_necrotic_center"
+      ],
+      "compatibility_score": 0.2
+    },
+    "downy_mildew_green_ear": {
+      "supported_features": [],
+      "contradictory_features": [
+        "discrete_circular_leaf_spots",
+        "raised_powdery_pustules"
+      ],
+      "unknown_features": [
+        "green_ear",
+        "malformed_panicle"
+      ],
+      "compatibility_score": 0.05
+    },
+    "ergot": {
+      "supported_features": [],
+      "contradictory_features": [
+        "diffuse_leaf_symptoms_as_primary_feature"
+      ],
+      "unknown_features": [
+        "honeydew",
+        "elongated_sclerotium"
+      ],
+      "compatibility_score": 0.0
+    },
+    "smut": {
+      "supported_features": [],
+      "contradictory_features": [
+        "leaf_blade_location"
+      ],
+      "unknown_features": [
+        "enlarged_ball_like_structure",
+        "membrane_covered_spore_ball"
+      ],
+      "compatibility_score": 0.0
+    },
+    "rust": {
+      "supported_features": [
+        "clearly_raised_pustule",
+        "powdery_pustular_surface",
+        "reddish_brown_color",
+        "discrete_pustules"
+      ],
+      "contradictory_features": [],
+      "unknown_features": [
+        "visible_spore_mass"
+      ],
+      "compatibility_score": 0.95
+    },
+    "leaf_spots": {
+      "supported_features": [
+        "multiple_discrete_leaf_spots",
+        "brown_to_dark_brown_lesions"
+      ],
+      "contradictory_features": [
+        "clearly_raised_powdery_pustule"
+      ],
+      "unknown_features": [
+        "flat_dry_necrotic_spot_pattern"
+      ],
+      "compatibility_score": 0.3
+    }
+  },
+  "differential": {
+    "top_candidate": "rust",
+    "runner_up": "leaf_spots",
+    "score_margin": 0.65
+  },
+  "diagnostic_bottleneck": "None. The presence of raised, powdery pustules is a strong identity-defining feature for Rust and a contradiction for Leaf Spots and Blast.",
+  "requires_second_stage_visual_comparison": false,
+  "final_decision": {
+    "diagnosis": "Rust",
+    "abstain": false,
+    "reason": "The observed features of raised, powdery, rust-brown pustules on the leaf blade are highly specific to Rust. These features directly contradict the flat necrotic nature of Leaf Spots and the spindle/diamond shape and lack of pustules in Blast."
+  },
+  "ground_truth": "rust",
+  "sample_observation": {
+    "plant_part": {
+      "structure": "leaf_blade",
+      "visibility": "clear",
+      "notes": "Single leaf blade shown in close-up. Background is blurred vegetation."
+    },
+    "symptom_class": {
+      "type": "discrete_lesions",
+      "description": "Multiple small, distinct spots scattered across the leaf surface.",
+      "status": "PRESENT"
+    },
+    "geometry": {
+      "shape": "circular_to_oval",
+      "elongation": "none",
+      "margins": "distinct",
+      "notes": "Lesions are generally round or slightly oval. No spindle or diamond shapes observed."
+    },
+    "surface": {
+      "texture": "raised_pustular",
+      "status": "PRESENT",
+      "notes": "Lesions appear slightly raised above the leaf surface, consistent with pustules. Some appear to have a powdery or granular texture."
+    },
+    "texture": {
+      "description": "Granular/powdery",
+      "status": "UNCERTAIN",
+      "notes": "Texture suggests powdery spores, but resolution limits definitive confirmation of powdery vs. necrotic."
+    },
+    "color": {
+      "lesion_center": "rust_brown",
+      "lesion_margin": "dark_brown",
+      "surrounding_tissue": "green",
+      "chlorosis": "faint_yellow_halo",
+      "notes": "Lesions are primarily rust-brown. Some larger spots show a faint yellow halo."
+    },
+    "distribution": {
+      "pattern": "scattered",
+      "density": "moderate",
+      "location": "mid_leaf",
+      "notes": "Lesions are distributed across the visible leaf area, not strictly confined to the tip or base."
+    },
+    "spatial_location": {
+      "position": "mid_leaf",
+      "notes": "Lesions are present along the length of the visible leaf blade."
+    },
+    "reproductive_structure": {
+      "status": "NOT_VISIBLE",
+      "notes": "No panicle or grain visible."
+    },
+    "developmental_stage": {
+      "status": "vegetative",
+      "notes": "Leaf tissue appears mature but green."
+    }
+  },
+  "evidence": {
+    "present": [
+      "discrete_lesions",
+      "raised_pustules",
+      "rust_brown_color",
+      "circular_oval_shape",
+      "scattered_distribution"
+    ],
+    "absent": [
+      "spindle_lesions",
+      "diamond_lesions",
+      "large_necrotic_patches",
+      "green_ear_transformation",
+      "elongated_sclerotia"
+    ],
+    "uncertain": [
+      "powdery_material",
+      "chlorotic_halo_extent"
+    ],
+    "not_visible": [
+      "panicle",
+      "stem",
+      "underside_of_leaf"
+    ]
+  }
+}

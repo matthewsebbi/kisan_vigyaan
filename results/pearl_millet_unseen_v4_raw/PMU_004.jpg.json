@@ -1,0 +1,133 @@
+{
+  "experiment": {
+    "sample_id": "PMU_004.jpg",
+    "model": "qwen+qwen-27b",
+    "question_block": "v4"
+  },
+  "candidate_comparison": {
+    "blast": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.05
+    },
+    "downy_mildew_green_ear": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.95
+    },
+    "ergot": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.05
+    },
+    "smut": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.05
+    },
+    "rust": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.05
+    },
+    "leaf_spots": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.05
+    }
+  },
+  "differential": {
+    "top_candidate": "Downy_Mildew_Green_Ear",
+    "runner_up": "Blast",
+    "score_margin": 0.9
+  },
+  "diagnostic_bottleneck": "None, clear identity-defining features present",
+  "requires_second_stage_visual_comparison": false,
+  "final_decision": {
+    "diagnosis": "Downy_Mildew_Green_Ear",
+    "abstain": false,
+    "reason": "The observed phenotype shows a complete transformation of the terminal panicle into a dense, irregular cluster of green leafy tissue (green ear), with no normal grain development. This matches the identity-defining hallmarks of Downy Mildew Green Ear (green-ear-type structural transformation, malformed leafy reproductive architecture). It explicitly contradicts the hallmarks for Blast (discrete lesions, gray centers), Ergot (sticky honeydew, elongated hard structures), and Smut (ball-like spore masses)."
+  },
+  "ground_truth": "downy_mildew_green_ear",
+  "sample_observation": {
+    "plant_part": {
+      "primary": "reproductive_structure",
+      "secondary": [
+        "leaf",
+        "stem"
+      ]
+    },
+    "symptom_class": {
+      "primary": "leafy_reproductive_transformation",
+      "secondary": [
+        "tissue_replacement"
+      ]
+    },
+    "geometry": {
+      "shape": "irregular_bushy_cluster",
+      "elongation": "none",
+      "symmetry": "asymmetric"
+    },
+    "surface": {
+      "elevation": "raised",
+      "relief": "complex_3d_structure",
+      "texture": "foliage_like"
+    },
+    "texture": {
+      "description": "dense_vegetative_growth",
+      "material": "green_leafy_tissue"
+    },
+    "color": {
+      "primary": "green",
+      "secondary": "light_green",
+      "contrast": "high_vs_normal_panicle"
+    },
+    "distribution": {
+      "pattern": "localized",
+      "extent": "single_panicle",
+      "spread": "none"
+    },
+    "spatial_location": {
+      "position": "terminal",
+      "attachment": "stem_tip"
+    },
+    "reproductive_structure": {
+      "status": "transformed",
+      "normal_grains_present": false,
+      "abnormality_type": "proliferation_of_vegetative_tissue"
+    },
+    "developmental_stage": {
+      "stage": "reproductive",
+      "progression": "complete_replacement"
+    }
+  },
+  "evidence": {
+    "present": [
+      "leafy_reproductive_transformation",
+      "dense_green_foliage_cluster",
+      "normal_panicles_in_background",
+      "vegetative_tissue_replacement"
+    ],
+    "absent": [
+      "normal_grain_development_in_affected_panicle",
+      "discrete_leaf_lesions",
+      "powdery_surface_material",
+      "sticky_exudate"
+    ],
+    "uncertain": [
+      "internal_structure_of_transformation",
+      "specific_tissue_type_of_proliferation"
+    ],
+    "not_visible": [
+      "root_system",
+      "underside_of_leaves"
+    ]
+  },
+  "evidence_quality": {}
+}

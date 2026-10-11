@@ -1,0 +1,99 @@
+{
+  "experiment": {
+    "sample_id": "PMU_008.jpg",
+    "model": "gemini-3.8-flash",
+    "question_block": "v4"
+  },
+  "candidate_comparison": {
+    "blast": {
+      "supported_features": [],
+      "contradictory_features": [
+        "PRIMARY_STRUCTURE is earhead/florets",
+        "swollen globose green sori replacing grains",
+        "absence of foliar necrotic spots"
+      ],
+      "unknown_features": [],
+      "compatibility_score": 0.0
+    },
+    "downy_mildew_green_ear": {
+      "supported_features": [
+        "PRIMARY_STRUCTURE is earhead"
+      ],
+      "contradictory_features": [
+        "absence of leafy phyllody / floral bract proliferation",
+        "discrete enlarged shiny green oval sori replacing individual grains rather than leafy transformation"
+      ],
+      "unknown_features": [],
+      "compatibility_score": 0.0
+    },
+    "ergot": {
+      "supported_features": [
+        "PRIMARY_STRUCTURE is earhead/florets",
+        "scattered individual grain replacement"
+      ],
+      "contradictory_features": [
+        "smooth rounded/oval enlarged green sori (smut balls) rather than honey droplets or dark hard horn-like sclerotia",
+        "absence of viscous honeydew exudation"
+      ],
+      "unknown_features": [],
+      "compatibility_score": 0.20
+    },
+    "smut": {
+      "supported_features": [
+        "PRIMARY_STRUCTURE is earhead/florets",
+        "enlarged_oval_globose_sori_replacing_ovaries",
+        "bright_green_to_dark_greenish_brown_smut_balls",
+        "sori_protruding_prominently_beyond_glumes",
+        "scattered_distribution_among_healthy_grains",
+        "intact membrane enclosing immature spore mass",
+        "characteristic symptom of Moesziomyces bullatus (pearl millet smut)"
+      ],
+      "contradictory_features": [],
+      "unknown_features": [
+        "black teliospore mass (internal, visible upon rupture)"
+      ],
+      "compatibility_score": 0.96
+    },
+    "rust": {
+      "supported_features": [],
+      "contradictory_features": [
+        "floral smut sori rather than foliar rust pustules"
+      ],
+      "unknown_features": [],
+      "compatibility_score": 0.0
+    },
+    "leaf_spots": {
+      "supported_features": [],
+      "contradictory_features": [
+        "earhead floret infection rather than foliar necrotic spots"
+      ],
+      "unknown_features": [],
+      "compatibility_score": 0.0
+    }
+  },
+  "differential": {
+    "top_candidate": "smut",
+    "runner_up": "ergot",
+    "score_margin": 0.76
+  },
+  "ground_truth": "smut",
+  "sample_observation": {
+    "primary_structure": "panicle_florets",
+    "sori": "enlarged_green_smut_balls"
+  },
+  "evidence": {
+    "present": [
+      "enlarged shiny green oval sori (smut balls)",
+      "scattered ovaries replaced by sori",
+      "protrusion beyond glumes"
+    ],
+    "absent": [
+      "honeydew droplets",
+      "phyllody",
+      "foliar lesions"
+    ]
+  },
+  "evidence_quality": {
+    "clarity": "very_high"
+  }
+}

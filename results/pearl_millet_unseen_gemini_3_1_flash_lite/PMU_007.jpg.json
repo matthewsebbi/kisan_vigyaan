@@ -1,0 +1,86 @@
+{
+  "experiment": {
+    "sample_id": "PMU_007.jpg",
+    "model": "gemini-3.1-flash-lite",
+    "question_block": "v4"
+  },
+  "candidate_comparison": {
+    "blast": {
+      "supported_features": [],
+      "contradictory_features": [
+        "reproductive_panicle_transformation",
+        "exposed_dark_granular_mass",
+        "ruptured_membranes"
+      ],
+      "unknown_features": [
+        "foliar_lesions"
+      ],
+      "compatibility_score": 0.0
+    },
+    "downy_mildew_green_ear": {
+      "supported_features": [
+        "reproductive_panicle_transformation"
+      ],
+      "contradictory_features": [
+        "exposed_dark_granular_mass",
+        "sticky_exudate"
+      ],
+      "unknown_features": [
+        "leafy_reproductive_architecture"
+      ],
+      "compatibility_score": 0.2
+    },
+    "ergot": {
+      "supported_features": [
+        "sticky_exudate",
+        "floret_association"
+      ],
+      "contradictory_features": [
+        "membrane_covered_or_ruptured_smutted_structure",
+        "exposed_dark_granular_mass"
+      ],
+      "unknown_features": [],
+      "compatibility_score": 0.4
+    },
+    "smut": {
+      "supported_features": [
+        "membrane",
+        "membrane_rupture",
+        "exposed_dark_loose_spore_mass",
+        "floral_parts_replaced",
+        "enlarged_structure"
+      ],
+      "contradictory_features": [
+        "sticky_exudate"
+      ],
+      "unknown_features": [],
+      "compatibility_score": 0.85
+    },
+    "rust": {
+      "supported_features": [],
+      "contradictory_features": [
+        "reproductive_panicle_transformation",
+        "exposed_dark_granular_mass"
+      ],
+      "unknown_features": [],
+      "compatibility_score": 0.0
+    },
+    "leaf_spots": {
+      "supported_features": [],
+      "contradictory_features": [
+        "reproductive_panicle_transformation",
+        "exposed_dark_granular_mass"
+      ],
+      "unknown_features": [],
+      "compatibility_score": 0.0
+    }
+  },
+  "differential": {
+    "top_candidate": "smut",
+    "runner_up": "ergot",
+    "score_margin": 0.45
+  },
+  "ground_truth": "ergot",
+  "sample_observation": {},
+  "evidence": {}
+}

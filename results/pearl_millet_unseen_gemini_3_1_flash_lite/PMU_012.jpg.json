@@ -1,0 +1,95 @@
+{
+  "experiment": {
+    "sample_id": "PMU_012.jpg",
+    "model": "gemini-3.1-flash-lite",
+    "question_block": "v4"
+  },
+  "candidate_comparison": {
+    "blast": {
+      "supported_features": [
+        "discrete_lesion",
+        "multiple_lesions_across_leaf_surface",
+        "lesion_coalescence",
+        "brown_lesion_centers",
+        "chlorosis"
+      ],
+      "contradictory_features": [],
+      "unknown_features": [
+        "developed_elongated_lesion_geometry",
+        "gray_or_grayish_developed_center"
+      ],
+      "compatibility_score": 0.65
+    },
+    "downy_mildew_green_ear": {
+      "supported_features": [
+        "chlorosis"
+      ],
+      "contradictory_features": [
+        "discrete_lesion"
+      ],
+      "unknown_features": [
+        "green_ear_transformation",
+        "systemic_multi_leaf_context"
+      ],
+      "compatibility_score": 0.2
+    },
+    "ergot": {
+      "supported_features": [],
+      "contradictory_features": [
+        "discrete_lesion",
+        "dry_surface_texture"
+      ],
+      "unknown_features": [
+        "floret_associated_sticky_honeydew",
+        "elongated_projecting_hard_structure"
+      ],
+      "compatibility_score": 0.1
+    },
+    "smut": {
+      "supported_features": [],
+      "contradictory_features": [
+        "discrete_lesion",
+        "dry_surface_texture"
+      ],
+      "unknown_features": [
+        "enlarged_ball_like_structure",
+        "membrane_covered_or_ruptured_spore_ball"
+      ],
+      "compatibility_score": 0.1
+    },
+    "rust": {
+      "supported_features": [
+        "discrete_lesion",
+        "chlorosis"
+      ],
+      "contradictory_features": [
+        "flat_surface_elevation"
+      ],
+      "unknown_features": [
+        "pustule_formation",
+        "spore_mass"
+      ],
+      "compatibility_score": 0.3
+    },
+    "leaf_spots": {
+      "supported_features": [
+        "discrete_lesion",
+        "multiple_lesions_across_leaf_surface",
+        "lesion_coalescence",
+        "brown_lesion_centers",
+        "chlorosis"
+      ],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.75
+    }
+  },
+  "differential": {
+    "top_candidate": "leaf_spots",
+    "runner_up": "blast",
+    "score_margin": 0.1
+  },
+  "ground_truth": "leaf_spots",
+  "sample_observation": {},
+  "evidence": {}
+}

@@ -1,0 +1,138 @@
+{
+  "experiment": {
+    "sample_id": "PMU_007.jpg",
+    "model": "qwen+qwen-27b",
+    "question_block": "v4"
+  },
+  "candidate_comparison": {
+    "blast": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.1
+    },
+    "downy_mildew_green_ear": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.95
+    },
+    "ergot": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.05
+    },
+    "smut": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.05
+    },
+    "rust": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.0
+    },
+    "leaf_spots": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.0
+    }
+  },
+  "differential": {
+    "top_candidate": "Downy_Mildew_Green_Ear",
+    "runner_up": "Blast",
+    "score_margin": 0.85
+  },
+  "diagnostic_bottleneck": "None. The transformation of the panicle into leafy, reddish-brown structures with absent grain development is a hallmark of Downy Mildew (Green Ear) in Pearl Millet. Other candidates are contradicted by the lack of discrete lesions (Blast), spore balls (Smut), or honeydew (Ergot).",
+  "requires_second_stage_visual_comparison": false,
+  "final_decision": {
+    "diagnosis": "Downy_Mildew_Green_Ear",
+    "abstain": false,
+    "reason": "The observed phenotype shows a total transformation of the panicle into leafy, shaggy, reddish-brown growth with no normal grain development. This matches the identity-defining characteristics of Downy Mildew Green Ear (malformed leafy reproductive architecture, reduced/absent normal grain formation). It contradicts Smut (no ball-like spore structures), Ergot (no honeydew/elongated hard structures), and Blast (no discrete foliar lesions)."
+  },
+  "ground_truth": "ergot",
+  "sample_observation": {
+    "plant_part": {
+      "primary": "panicle",
+      "secondary": [
+        "spikelet",
+        "floret",
+        "grain"
+      ]
+    },
+    "symptom_class": {
+      "primary": "leafy_reproductive_transformation",
+      "secondary": [
+        "tissue_replacement",
+        "necrotic_tissue"
+      ]
+    },
+    "geometry": {
+      "shape": "cylindrical",
+      "elongation": "high",
+      "symmetry": "radial"
+    },
+    "surface": {
+      "elevation": "highly_rough",
+      "relief": "prominent",
+      "texture": "shaggy",
+      "smoothness": "low"
+    },
+    "texture": {
+      "type": "foliage-like",
+      "detail": "dense, overlapping, crinkled, leaf-like structures"
+    },
+    "color": {
+      "primary": "reddish-brown",
+      "secondary": "green",
+      "pattern": "mottled"
+    },
+    "distribution": {
+      "pattern": "widespread",
+      "coverage": "total_panicle",
+      "uniformity": "high"
+    },
+    "spatial_location": {
+      "region": "reproductive_head",
+      "specifics": "entire visible panicle length"
+    },
+    "reproductive_structure": {
+      "status": "transformed",
+      "normal_grains_visible": false,
+      "abnormal_features": "replacement of grain-bearing spikelets with leafy, reddish-brown growth"
+    },
+    "developmental_stage": {
+      "stage": "reproductive",
+      "maturity": "late"
+    }
+  },
+  "evidence": {
+    "present": [
+      "panicle",
+      "leafy_reproductive_transformation",
+      "reddish-brown_coloration",
+      "shaggy_surface_texture",
+      "dense_foliage_growth",
+      "widespread_distribution"
+    ],
+    "absent": [
+      "normal_grain_development",
+      "smooth_panicle_surface",
+      "discrete_leaf_lesions"
+    ],
+    "uncertain": [
+      "presence_of_exudate",
+      "presence_of_powdery_material"
+    ],
+    "not_visible": [
+      "leaf_blades",
+      "stem_base",
+      "internal_panicle_structure"
+    ]
+  },
+  "evidence_quality": {}
+}

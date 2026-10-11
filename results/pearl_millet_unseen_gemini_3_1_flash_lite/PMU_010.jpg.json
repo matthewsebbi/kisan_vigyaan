@@ -1,0 +1,105 @@
+{
+  "experiment": {
+    "sample_id": "PMU_010.jpg",
+    "model": "gemini-3.1-flash-lite",
+    "question_block": "v4"
+  },
+  "candidate_comparison": {
+    "blast": {
+      "supported_features": [
+        "discrete_lesion",
+        "chlorosis"
+      ],
+      "contradictory_features": [
+        "raised pustules",
+        "granular texture",
+        "ruptured membrane"
+      ],
+      "unknown_features": [
+        "developed_elongated_lesion_geometry",
+        "gray_or_grayish_developed_center"
+      ],
+      "compatibility_score": 0.2
+    },
+    "downy_mildew_green_ear": {
+      "supported_features": [
+        "chlorosis"
+      ],
+      "contradictory_features": [
+        "raised pustules",
+        "granular texture",
+        "ruptured membrane"
+      ],
+      "unknown_features": [
+        "green_ear_transformation",
+        "systemic_multi_leaf_context"
+      ],
+      "compatibility_score": 0.1
+    },
+    "ergot": {
+      "supported_features": [],
+      "contradictory_features": [
+        "raised pustules",
+        "granular texture",
+        "ruptured membrane",
+        "leaf_lesion"
+      ],
+      "unknown_features": [
+        "floret_associated_sticky_honeydew",
+        "elongated_projecting_hard_structure"
+      ],
+      "compatibility_score": 0.0
+    },
+    "smut": {
+      "supported_features": [
+        "membrane",
+        "membrane_state_ruptured",
+        "exposed_material_granular_powder_like"
+      ],
+      "contradictory_features": [
+        "primary_structure_leaf"
+      ],
+      "unknown_features": [
+        "enlarged_ball_like_structure",
+        "floral_parts_enclosed_or_replaced"
+      ],
+      "compatibility_score": 0.4
+    },
+    "rust": {
+      "supported_features": [
+        "raised pustules",
+        "granular texture",
+        "chlorosis",
+        "chlorotic halos",
+        "membrane_ruptured"
+      ],
+      "contradictory_features": [],
+      "unknown_features": [
+        "spore_color"
+      ],
+      "compatibility_score": 0.9
+    },
+    "leaf_spots": {
+      "supported_features": [
+        "discrete_lesion",
+        "chlorosis",
+        "chlorotic halos"
+      ],
+      "contradictory_features": [
+        "raised pustules",
+        "granular texture",
+        "ruptured membrane"
+      ],
+      "unknown_features": [],
+      "compatibility_score": 0.3
+    }
+  },
+  "differential": {
+    "top_candidate": "rust",
+    "runner_up": "smut",
+    "score_margin": 0.5
+  },
+  "ground_truth": "rust",
+  "sample_observation": {},
+  "evidence": {}
+}

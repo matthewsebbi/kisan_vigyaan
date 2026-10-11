@@ -1,0 +1,127 @@
+{
+  "experiment": {
+    "sample_id": "PMU_010.jpg",
+    "model": "qwen+qwen-27b",
+    "question_block": "v4"
+  },
+  "candidate_comparison": {
+    "blast": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.1
+    },
+    "downy_mildew_green_ear": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.05
+    },
+    "ergot": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.0
+    },
+    "smut": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.0
+    },
+    "rust": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.95
+    },
+    "leaf_spots": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.4
+    }
+  },
+  "differential": {
+    "top_candidate": "Rust",
+    "runner_up": "Leaf Spots",
+    "score_margin": 0.55
+  },
+  "diagnostic_bottleneck": "None; features are highly specific to rust (raised pustules, granular texture, chlorotic halo).",
+  "requires_second_stage_visual_comparison": false,
+  "final_decision": {
+    "diagnosis": "Rust",
+    "abstain": false,
+    "reason": "The observed phenotype exhibits classic rust characteristics: discrete, raised, pustule-like structures with a granular/powdery texture and reddish-brown coloration, surrounded by chlorotic halos. These features strongly contradict Blast (which requires elongated gray lesions), Ergot/Smut (floret-based), and Downy Mildew (systemic/green ear). The raised nature distinguishes it from simple Leaf Spots."
+  },
+  "ground_truth": "rust",
+  "sample_observation": {
+    "plant_part": {
+      "primary": "leaf",
+      "secondary": "leaf sheath"
+    },
+    "symptom_class": {
+      "primary": "discrete_lesion",
+      "secondary": "raised_structure"
+    },
+    "geometry": {
+      "shape": "circular to oval",
+      "elongation": "low",
+      "axis_ratio": "~1.0 - 1.3",
+      "boundary": "distinct"
+    },
+    "surface": {
+      "elevation": "raised",
+      "relief": "pustule-like",
+      "texture": "granular",
+      "wetness": "dry"
+    },
+    "texture": {
+      "description": "rough, granular, powdery appearance on lesion surface"
+    },
+    "color": {
+      "lesion": "reddish-brown to dark brown",
+      "halo": "pale yellow to chlorotic",
+      "background": "green"
+    },
+    "distribution": {
+      "pattern": "scattered",
+      "density": "high",
+      "coalescence": "minimal"
+    },
+    "spatial_location": {
+      "position": "leaf blade",
+      "orientation": "parallel to veins"
+    },
+    "reproductive_structure": {
+      "visible": false
+    },
+    "developmental_stage": {
+      "stage": "mature pustules",
+      "progression": "multiple stages visible"
+    }
+  },
+  "evidence": {
+    "present": [
+      "numerous discrete reddish-brown lesions",
+      "raised pustule-like structures",
+      "granular surface texture on lesions",
+      "chlorotic halo surrounding many lesions",
+      "scattered distribution across leaf blade"
+    ],
+    "absent": [
+      "large necrotic patches",
+      "leafy reproductive transformation",
+      "sticky exudate",
+      "elongated projecting structures"
+    ],
+    "uncertain": [
+      "presence of powdery spores (texture suggests but resolution limits confirmation)"
+    ],
+    "not_visible": [
+      "underside of leaf",
+      "reproductive structures (panicle)"
+    ]
+  },
+  "evidence_quality": {}
+}

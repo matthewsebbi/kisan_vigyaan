@@ -1,0 +1,239 @@
+PMU_001.jpg
+
+Qwen observation:
+  Present: discrete lesion, necrotic center, chlorotic halo, elongated shape...
+  Absent: raised pustules, powdery material, spore masses, green-ear transformation...
+  Uncertain: lesion progression, vein interaction...
+  Not Visible: whole plant, panicle, stem...
+
+candidate comparison:
+  blast                     0.4
+  downy_mildew_green_ear    0.1
+  ergot                     0.0
+  smut                      0.0
+  rust                      0.0
+  leaf_spots                0.0
+
+final:
+   (GT: blast)
+----------------------------------------
+
+PMU_002.jpg
+
+Qwen observation:
+  Present: discrete_lesion, dark_brown_center, yellowish_margin, isolated_distribution...
+  Absent: powdery_material, green_ear_transformation, elongated_sclerotia, honeydew...
+  Uncertain: raised_pustule, spindle_shape, dry_papery_texture, spore_mass...
+  Not Visible: panicle, stem, whole_plant...
+
+candidate comparison:
+  blast                     0.4
+  downy_mildew_green_ear    0.0
+  ergot                     0.0
+  smut                      0.0
+  rust                      0.1
+  leaf_spots                0.8
+
+final:
+  leaf_spots (GT: blast)
+----------------------------------------
+
+PMU_003.jpg
+
+Qwen observation:
+  Present: green_ear_transformation, leafy_panicle, vegetative_tissue_on_reproductive_head...
+  Absent: normal_grain_development_on_affected_panicle, raised_pustules, powdery_material, spindle_lesions, ho...
+  Uncertain: ...
+  Not Visible: spore_mass, internal_tissue...
+
+candidate comparison:
+  blast                     0.1
+  downy_mildew_green_ear    0.9
+  ergot                     0.2
+  smut                      0.1
+  rust                      0.3
+  leaf_spots                0.0
+
+final:
+   (GT: downy_mildew_green_ear)
+----------------------------------------
+
+PMU_004.jpg
+
+Qwen observation:
+  Present: Panicle transformed into leafy/vegetative structure, Green ear morphology, Absence of normal grains ...
+  Absent: Normal grain development on affected panicle, Raised pustules, Powdery material, Spindle/diamond les...
+  Uncertain: Specific pathogen identity (visual phenotype only)...
+  Not Visible: Downy/velvety growth (underside of leaves or inside the green ear)...
+
+candidate comparison:
+  blast                     0.0
+  downy_mildew_green_ear    1.0
+  ergot                     0.0
+  smut                      0.0
+  rust                      0.0
+  leaf_spots                0.0
+
+final:
+  downy_mildew_green_ear (GT: downy_mildew_green_ear)
+----------------------------------------
+
+PMU_005.jpg
+
+Qwen observation:
+  Present: Panicle structure, Amber/brown sticky exudate, Droplets of fluid, Florets (grains) visible beneath e...
+  Absent: Green-ear transformation (panicle is not leafy), Elongated dark sclerotia (ergot), Black powdery spo...
+  Uncertain: Internal condition of grains (obscured by exudate), Specific pathogen identity (requires lab confirm...
+  Not Visible: Leaf blades (out of focus/background), Stem base...
+
+candidate comparison:
+  blast                     0.0
+  downy_mildew_green_ear    0.0
+  ergot                     0.0
+  smut                      0.0
+  rust                      0.0
+  leaf_spots                0.0
+
+final:
+  abstain (GT: ergot)
+----------------------------------------
+
+PMU_006.jpg
+
+Qwen observation:
+  Present: Panicle structure, Normal white spherical grains, Dark, elongated, horn-like structures, Structures ...
+  Absent: Leaf blade abnormalities (not visible), Powdery mildew (white powder), Rust pustules (orange/brown p...
+  Uncertain: Internal structure of the dark bodies (sclerotium vs. smut ball), Specific size comparison relative ...
+  Not Visible: Leaves, Stem base, Roots...
+
+candidate comparison:
+  blast                     0.0
+  downy_mildew_green_ear    0.0
+  ergot                     0.85
+  smut                      0.2
+  rust                      0.0
+  leaf_spots                0.0
+
+final:
+  ergot (GT: ergot)
+----------------------------------------
+
+PMU_007.jpg
+
+Qwen observation:
+  Present: Panicle transformation into leafy/vegetative-like tissue, Reddish-brown discoloration of the panicle...
+  Absent: Discrete leaf lesions (on visible leaves), Pustules, Powdery material, Elongated sclerotia (ergot), ...
+  Uncertain: Specific species of pathogen (visuals suggest Downy Mildew 'Green Ear' but color is atypical), Wheth...
+  Not Visible: Roots, Stem base, Internal tissue structure...
+
+candidate comparison:
+  blast                     0.0
+  downy_mildew_green_ear    0.7
+  ergot                     0.1
+  smut                      0.0
+  rust                      0.0
+  leaf_spots                0.0
+
+final:
+   (GT: ergot)
+----------------------------------------
+
+PMU_008.jpg
+
+Qwen observation:
+  Present: Panicle structure, Green, rounded/swollen florets, Brown, dry chaff surrounding the green structures...
+  Absent: Visible black sclerotia (Ergot), Visible powdery white coating (Powdery Mildew), Visible orange/brow...
+  Uncertain: Internal contents of the green structures (spore mass vs. tissue), Whether the green structures are ...
+  Not Visible: Leaves (to check for systemic symptoms), Base of the plant...
+
+candidate comparison:
+  blast                     0.0
+  downy_mildew_green_ear    0.0
+  ergot                     0.3
+  smut                      0.9
+  rust                      0.0
+  leaf_spots                0.0
+
+final:
+  smut (GT: smut)
+----------------------------------------
+
+PMU_009.jpg
+
+Qwen observation:
+  Present: Panicle structure, Dark, swollen, globular structures replacing grains, Dark purple/black coloration...
+  Absent: Leaf lesions, Pustules, Powdery mildew, Elongated sclerotia (ergot-like structures)...
+  Uncertain: Internal structure of the dark bodies, Presence of spores (not visible at this resolution)...
+  Not Visible: Roots, Stems (mostly), Leaves (mostly)...
+
+candidate comparison:
+  blast                     0.05
+  downy_mildew_green_ear    0.05
+  ergot                     0.45
+  smut                      0.85
+  rust                      0.05
+  leaf_spots                0.05
+
+final:
+  smut (GT: smut)
+----------------------------------------
+
+PMU_010.jpg
+
+Qwen observation:
+  Present: raised pustules, powdery material, rust-brown spore masses, discrete lesions, chlorotic halo...
+  Absent: spindle/diamond lesions, green-ear transformation, elongated sclerotial structures, honeydew...
+  Uncertain: membrane status, specific spore type...
+  Not Visible: panicle, stem base, leaf underside...
+
+candidate comparison:
+  blast                     0.1
+  downy_mildew_green_ear    0.1
+  ergot                     0.0
+  smut                      0.0
+  rust                      0.9
+  leaf_spots                0.1
+
+final:
+  rust (GT: rust)
+----------------------------------------
+
+PMU_011.jpg
+
+Qwen observation:
+  Present: raised pustules, powdery orange-brown material, discrete lesions, scattered distribution, necrotic t...
+  Absent: spindle/diamond lesions, green-ear transformation, elongated sclerotial structures, honeydew...
+  Uncertain: chlorotic halo, specific margin color...
+  Not Visible: panicle, stem base, underside of leaf...
+
+candidate comparison:
+  blast                     0.1
+  downy_mildew_green_ear    0.0
+  ergot                     0.0
+  smut                      0.0
+  rust                      0.8
+  leaf_spots                0.4
+
+final:
+  rust (GT: rust)
+----------------------------------------
+
+PMU_012.jpg
+
+Qwen observation:
+  Present: discrete lesions, chlorotic halo, necrotic centers, irregular lesion shape, scattered distribution...
+  Absent: spindle/diamond lesion shape, green-ear transformation, elongated sclerotial structure, honeydew...
+  Uncertain: raised pustules, powdery material, flat vs raised surface, dry/papery texture...
+  Not Visible: spore mass, panicle, stem...
+
+candidate comparison:
+  blast                     0.45
+  downy_mildew_green_ear    0.1
+  ergot                     0.05
+  smut                      0.05
+  rust                      0.2
+  leaf_spots                0.85
+
+final:
+  leaf_spots (GT: leaf_spots)
+----------------------------------------

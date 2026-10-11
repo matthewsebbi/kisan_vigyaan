@@ -87,12 +87,12 @@ export const analyzeLeafWithGroq = async (base64Image, lang = 'en', options = {}
   let lastBackendError = null;
 
   // 1. First attempt: Call KISAN VIGYAAN Backend (/api/predict or port 8000)
-  // With 12-second AbortController timeout to allow neural inference
+  // With 150-second AbortController timeout to allow neural inference
   const backendEndpoints = ['/api/predict', 'http://127.0.0.1:8000/predict'];
 
   for (const endpoint of backendEndpoints) {
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 12000);
+    const timeoutId = setTimeout(() => controller.abort(), 150000);
 
     try {
       const response = await fetch(endpoint, {

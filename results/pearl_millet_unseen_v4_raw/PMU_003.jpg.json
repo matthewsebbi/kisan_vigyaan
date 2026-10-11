@@ -1,0 +1,127 @@
+{
+  "experiment": {
+    "sample_id": "PMU_003.jpg",
+    "model": "qwen+qwen-27b",
+    "question_block": "v4"
+  },
+  "candidate_comparison": {
+    "blast": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.1
+    },
+    "downy_mildew_green_ear": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.95
+    },
+    "ergot": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.05
+    },
+    "smut": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.05
+    },
+    "rust": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.0
+    },
+    "leaf_spots": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.2
+    }
+  },
+  "differential": {
+    "top_candidate": "Downy_Mildew_Green_Ear",
+    "runner_up": "Blast",
+    "score_margin": 0.85
+  },
+  "diagnostic_bottleneck": "None; the presence of leafy reproductive transformation (green ear) is pathognomonic for Downy Mildew in Pearl Millet and explicitly contradicts other candidates like Smut, Ergot, and Blast.",
+  "requires_second_stage_visual_comparison": false,
+  "final_decision": {
+    "diagnosis": "Downy_Mildew_Green_Ear",
+    "abstain": false,
+    "reason": "The observed 'leafy_reproductive_transformation' where normal grain development is replaced by leafy, green structures is the identity-defining hallmark of Downy Mildew (Green Ear). This feature is explicitly listed as a contradiction for Blast, Ergot, and Smut, making the diagnosis clear."
+  },
+  "ground_truth": "downy_mildew_green_ear",
+  "sample_observation": {
+    "plant_part": {
+      "primary": "panicle",
+      "secondary": "leaves",
+      "detail": "The primary focus is the central panicle held by a hand. Surrounding leaves and other background panicles are visible."
+    },
+    "symptom_class": {
+      "primary": "leafy_reproductive_transformation",
+      "secondary": "flat_tissue_discoloration",
+      "detail": "The panicle exhibits a transformation where normal grain development is replaced by leafy, green structures. Leaves show minor flat discoloration."
+    },
+    "geometry": {
+      "panicle": "cylindrical, elongated",
+      "abnormal_structure": "linear, leaf-like, radiating from the central axis",
+      "lesion": "elongated, linear, parallel to leaf veins"
+    },
+    "surface": {
+      "panicle": "textured, composed of numerous small green units",
+      "leaves": "smooth, glossy"
+    },
+    "texture": {
+      "panicle": "dense, granular (normal part) transitioning to leafy/blade-like (abnormal part)",
+      "leaves": "smooth"
+    },
+    "color": {
+      "panicle": "green (normal), light green/yellowish-green (abnormal leafy parts)",
+      "leaves": "green",
+      "lesion": "pale yellow/white"
+    },
+    "distribution": {
+      "panicle": "localized to the lower and middle sections of the central panicle",
+      "leaves": "scattered, minor"
+    },
+    "spatial_location": {
+      "panicle": "central axis, lower to mid-section",
+      "leaves": "mid-leaf blade"
+    },
+    "reproductive_structure": {
+      "status": "transformed",
+      "detail": "Normal grain development is interrupted by the emergence of leaf-like structures (proliferation) in the lower half of the panicle."
+    },
+    "developmental_stage": {
+      "stage": "reproductive (panicle emergence/flowering)",
+      "detail": "The plant is in the reproductive stage, with the panicle fully emerged."
+    }
+  },
+  "evidence": {
+    "present": [
+      "leafy_reproductive_transformation",
+      "green_leafy_structures_on_panicle",
+      "normal_grain_development_in_upper_panicle",
+      "flat_pale_lesions_on_leaves"
+    ],
+    "absent": [
+      "necrotic_tissue_on_panicle",
+      "powdery_surface_material",
+      "sticky_exudate",
+      "dark_spore_mass"
+    ],
+    "uncertain": [
+      "specific_cause_of_leafy_transformation",
+      "extent_of_transformation_in_background_panicles"
+    ],
+    "not_visible": [
+      "internal_structure_of_leafy_panicle_parts",
+      "root_system"
+    ]
+  },
+  "evidence_quality": {}
+}

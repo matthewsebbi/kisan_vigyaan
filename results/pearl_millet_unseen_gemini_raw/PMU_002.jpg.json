@@ -1,0 +1,99 @@
+{
+  "experiment": {
+    "sample_id": "PMU_002.jpg",
+    "model": "gemini-3.8-flash",
+    "question_block": "v4"
+  },
+  "candidate_comparison": {
+    "blast": {
+      "supported_features": [
+        "discrete_lesion on leaf_blade",
+        "elliptical_to_diamond_like geometry with centrally_widened_tapering_along_veins profile",
+        "tapered_to_subacute ends",
+        "pale tan center with dark_brown contrasting margin",
+        "chlorotic halo"
+      ],
+      "contradictory_features": [
+        "absence of coalescence (single lesion at present stage)"
+      ],
+      "unknown_features": [
+        "lesion progression over time",
+        "grayish cast in necrotic center"
+      ],
+      "compatibility_score": 0.9
+    },
+    "downy_mildew_green_ear": {
+      "supported_features": [
+        "chlorosis present along leaf blade"
+      ],
+      "contradictory_features": [
+        "discrete localized diamond-like necrotic lesion rather than diffuse systemic longitudinal chlorotic striping",
+        "absence of downy growth"
+      ],
+      "unknown_features": [
+        "panicle architecture",
+        "systemic multi-leaf context"
+      ],
+      "compatibility_score": 0.1
+    },
+    "ergot": {
+      "supported_features": [],
+      "contradictory_features": [
+        "primary abnormality is a foliar discrete lesion on leaf_blade rather than floret infection",
+        "absence of honeydew exudate or projecting sclerotia"
+      ],
+      "unknown_features": [
+        "floret and panicle structures"
+      ],
+      "compatibility_score": 0.0
+    },
+    "smut": {
+      "supported_features": [],
+      "contradictory_features": [
+        "primary structure is leaf blade with necrotic lesion rather than floral panicle",
+        "absence of enlarged spore ball or sori"
+      ],
+      "unknown_features": [
+        "panicle and grain formation"
+      ],
+      "compatibility_score": 0.0
+    },
+    "rust": {
+      "supported_features": [
+        "discrete localized foliar lesion"
+      ],
+      "contradictory_features": [
+        "flat surface relief lacking raised powdery pustules",
+        "absence of exposed urediniospore mass",
+        "tapered diamond-like necrotic lesion with pale center and dark margin"
+      ],
+      "unknown_features": [
+        "spore production under magnification"
+      ],
+      "compatibility_score": 0.15
+    },
+    "leaf_spots": {
+      "supported_features": [
+        "discrete necrotic foliar lesion",
+        "tan center with dark brown margin",
+        "chlorotic halo"
+      ],
+      "contradictory_features": [
+        "characteristic spindle/diamond-like tapered geometry typical of blast rather than generic irregular or circular leaf spots"
+      ],
+      "unknown_features": [
+        "progression to general leaf blighting"
+      ],
+      "compatibility_score": 0.55
+    }
+  },
+  "differential": {
+    "top_candidate": "blast",
+    "runner_up": "leaf_spots",
+    "score_margin": 0.35
+  },
+  "ground_truth": "blast",
+  "sample_observation": {},
+  "evidence": {},
+  "evidence_quality": {}
+}

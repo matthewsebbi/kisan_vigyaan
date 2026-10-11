@@ -1,0 +1,130 @@
+{
+  "experiment": {
+    "sample_id": "PMU_001.jpg",
+    "model": "qwen+qwen-27b",
+    "question_block": "v3"
+  },
+  "candidate_comparison": {
+    "blast": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.65
+    },
+    "downy_mildew_green_ear": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.1
+    },
+    "ergot": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.05
+    },
+    "smut": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.05
+    },
+    "rust": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.15
+    },
+    "leaf_spots": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.85
+    }
+  },
+  "differential": {
+    "top_candidate": "leaf_spots",
+    "runner_up": "blast",
+    "score_margin": 0.2
+  },
+  "diagnostic_bottleneck": "Distinguishing between general leaf spots and early-stage blast requires assessing lesion geometry (spindle/diamond shape) and specific coloration (gray center vs tan/brown), which are partially ambiguous in the current observation.",
+  "requires_second_stage_visual_comparison": true,
+  "final_decision": {
+    "diagnosis": "ABSTAIN",
+    "abstain": true,
+    "reason": "Evidence is insufficient to definitively distinguish between Leaf Spots and Blast without second-stage visual comparison of lesion geometry and progression."
+  },
+  "ground_truth": "blast",
+  "sample_observation": {
+    "plant_part": {
+      "structure": "leaf_blade",
+      "status": "visible",
+      "notes": "Close-up of a single leaf blade with parallel venation."
+    },
+    "symptom_class": {
+      "type": "necrotic_lesion",
+      "status": "visible",
+      "notes": "A distinct area of tissue death and discoloration."
+    },
+    "geometry": {
+      "shape": "elongated",
+      "status": "visible",
+      "notes": "The lesion is elongated, roughly parallel to the leaf veins, with somewhat irregular margins."
+    },
+    "surface": {
+      "texture": "papery/necrotic",
+      "status": "visible",
+      "notes": "The center of the lesion appears dry, tan, and papery. There is no obvious powdery or granular texture."
+    },
+    "texture": {
+      "description": "dry, necrotic center; smooth green margins",
+      "status": "visible"
+    },
+    "color": {
+      "center": "tan/brown",
+      "margin": "yellow/orange (chlorotic halo)",
+      "surrounding": "green",
+      "status": "visible"
+    },
+    "distribution": {
+      "pattern": "isolated",
+      "status": "visible",
+      "notes": "A single, discrete lesion is visible in the frame."
+    },
+    "spatial_location": {
+      "position": "mid-leaf",
+      "status": "visible",
+      "notes": "Located on the leaf blade, not at the tip or base."
+    },
+    "reproductive_structure": {
+      "status": "not_visible"
+    },
+    "developmental_stage": {
+      "status": "uncertain"
+    }
+  },
+  "evidence": {
+    "present": [
+      "discrete lesion",
+      "necrotic center",
+      "chlorotic halo",
+      "elongated shape"
+    ],
+    "absent": [
+      "raised pustules",
+      "powdery material",
+      "spore masses",
+      "green-ear transformation"
+    ],
+    "uncertain": [
+      "lesion progression",
+      "vein interaction"
+    ],
+    "not_visible": [
+      "whole plant",
+      "panicle",
+      "stem"
+    ]
+  },
+  "evidence_quality": {}
+}

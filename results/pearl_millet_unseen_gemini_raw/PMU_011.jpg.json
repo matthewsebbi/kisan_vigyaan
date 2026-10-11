@@ -1,0 +1,98 @@
+{
+  "experiment": {
+    "sample_id": "PMU_011.jpg",
+    "model": "gemini-3.8-flash",
+    "question_block": "v4"
+  },
+  "candidate_comparison": {
+    "blast": {
+      "supported_features": [
+        "PRIMARY_STRUCTURE is leaf"
+      ],
+      "contradictory_features": [
+        "dense eruption of bright powdery orange-cinnamon uredinial pustules rather than flat necrotic spindle lesions with pale grey centers and dark margins",
+        "relief is prominently powdery/erumpent"
+      ],
+      "unknown_features": [],
+      "compatibility_score": 0.10
+    },
+    "downy_mildew_green_ear": {
+      "supported_features": [
+        "chlorosis on leaf"
+      ],
+      "contradictory_features": [
+        "erumpent powdery reddish-orange pustules rather than downy whitish sporulation or systemic green ear phyllody"
+      ],
+      "unknown_features": [],
+      "compatibility_score": 0.05
+    },
+    "ergot": {
+      "supported_features": [],
+      "contradictory_features": [
+        "PRIMARY_STRUCTURE is foliar leaf blade rather than inflorescence",
+        "absence of honeydew exudate or sclerotia"
+      ],
+      "unknown_features": [],
+      "compatibility_score": 0.0
+    },
+    "smut": {
+      "supported_features": [],
+      "contradictory_features": [
+        "PRIMARY_STRUCTURE is leaf blade rather than inflorescence",
+        "absence of earhead sori"
+      ],
+      "unknown_features": [],
+      "compatibility_score": 0.0
+    },
+    "rust": {
+      "supported_features": [
+        "PRIMARY_STRUCTURE is leaf_blade",
+        "prominent_bright_orange_to_cinnamon_brown_powdery_pustules (uredinia)",
+        "ruptured_epidermis_with_erumpent_urediniospores",
+        "dense_aggregation_and_linear_grouping_along_leaf_veins_and_midrib",
+        "chlorotic_discoloration_surrounding_dense_pustule_clusters",
+        "relief_is_distinctly_raised_and_powdery",
+        "definitive diagnostic presentation of Puccinia substriata (rust)"
+      ],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.98
+    },
+    "leaf_spots": {
+      "supported_features": [
+        "PRIMARY_STRUCTURE is leaf"
+      ],
+      "contradictory_features": [
+        "raised powdery uredinial pustules bursting through epidermis rather than flat necrotic leaf spots"
+      ],
+      "unknown_features": [],
+      "compatibility_score": 0.15
+    }
+  },
+  "differential": {
+    "top_candidate": "rust",
+    "runner_up": "leaf_spots",
+    "score_margin": 0.83
+  },
+  "ground_truth": "rust",
+  "sample_observation": {
+    "primary_structure": "leaf_blade",
+    "lesion_profile": "dense_cinnamon_orange_raised_uredinia"
+  },
+  "evidence": {
+    "present": [
+      "dense orange-brown powdery pustules",
+      "erumpent uredinia bursting through epidermis",
+      "linear aggregation along veins and midrib",
+      "chlorosis"
+    ],
+    "absent": [
+      "spindle eye-shaped necrotic lesions",
+      "green ear phyllody",
+      "honeydew droplets"
+    ]
+  },
+  "evidence_quality": {
+    "clarity": "very_high"
+  }
+}

@@ -1,0 +1,104 @@
+{
+  "experiment": {
+    "sample_id": "PMU_011.jpg",
+    "model": "gemini-3.1-flash-lite",
+    "question_block": "v4"
+  },
+  "candidate_comparison": {
+    "blast": {
+      "supported_features": [
+        "progressive_enlargement",
+        "coalescence"
+      ],
+      "contradictory_features": [
+        "raised_pustule",
+        "ruptured_membrane",
+        "granular_powder_like_material"
+      ],
+      "unknown_features": [
+        "gray_center",
+        "tapered_ends"
+      ],
+      "compatibility_score": 0.1
+    },
+    "downy_mildew_green_ear": {
+      "supported_features": [
+        "chlorosis"
+      ],
+      "contradictory_features": [
+        "raised_pustule",
+        "ruptured_membrane"
+      ],
+      "unknown_features": [
+        "green_ear_transformation",
+        "systemic_pattern"
+      ],
+      "compatibility_score": 0.2
+    },
+    "ergot": {
+      "supported_features": [
+        "projection"
+      ],
+      "contradictory_features": [
+        "granular_powder_like_material",
+        "ruptured_membrane",
+        "absence_of_exudate"
+      ],
+      "unknown_features": [
+        "sticky_honeydew",
+        "floret_association"
+      ],
+      "compatibility_score": 0.1
+    },
+    "smut": {
+      "supported_features": [
+        "membrane",
+        "membrane_state_ruptured",
+        "exposed_material_granular_powder_like"
+      ],
+      "contradictory_features": [
+        "leaf_as_primary_structure"
+      ],
+      "unknown_features": [
+        "enlarged_ball_like_structure",
+        "floret_replacement"
+      ],
+      "compatibility_score": 0.4
+    },
+    "rust": {
+      "supported_features": [
+        "raised_pustules",
+        "granular_texture",
+        "ruptured_epidermis",
+        "orange_brown_coloration",
+        "distributed_lesions"
+      ],
+      "contradictory_features": [],
+      "unknown_features": [
+        "spore_composition"
+      ],
+      "compatibility_score": 0.95
+    },
+    "leaf_spots": {
+      "supported_features": [
+        "lesions"
+      ],
+      "contradictory_features": [
+        "raised_pustule",
+        "ruptured_membrane"
+      ],
+      "unknown_features": [
+        "necrotic_center"
+      ],
+      "compatibility_score": 0.3
+    }
+  },
+  "differential": {
+    "top_candidate": "rust",
+    "runner_up": "smut",
+    "score_margin": 0.55
+  },
+  "ground_truth": "rust",
+  "sample_observation": {},
+  "evidence": {}
+}

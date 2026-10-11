@@ -1,0 +1,100 @@
+{
+  "experiment": {
+    "sample_id": "PMU_004.jpg",
+    "model": "gemini-3.8-flash",
+    "question_block": "v4"
+  },
+  "candidate_comparison": {
+    "blast": {
+      "supported_features": [],
+      "contradictory_features": [
+        "leafy_reproductive_transformation",
+        "bushy_foliaceous_phyllody_panicle",
+        "absence_of_discrete_foliar_lesions"
+      ],
+      "unknown_features": [
+        "foliar necrotic lesions"
+      ],
+      "compatibility_score": 0.0
+    },
+    "downy_mildew_green_ear": {
+      "supported_features": [
+        "PRIMARY_STRUCTURE is panicle/inflorescence",
+        "leafy_reproductive_transformation",
+        "complete_phyllody_with_floral_parts_transformed_into_green_twisted_leafy_bracts",
+        "brush_like_bushy_head_profile",
+        "chlorotic foliage in lower leaves"
+      ],
+      "contradictory_features": [],
+      "unknown_features": [
+        "abaxial downy down on lower leaves"
+      ],
+      "compatibility_score": 0.98
+    },
+    "ergot": {
+      "supported_features": [
+        "PRIMARY_STRUCTURE is panicle"
+      ],
+      "contradictory_features": [
+        "phyllody_and_leafy_bract_transformation_instead_of_honeydew_exudation",
+        "absence_of_sticky_droplets",
+        "absence_of_dark_sclerotial_bodies"
+      ],
+      "unknown_features": [],
+      "compatibility_score": 0.0
+    },
+    "smut": {
+      "supported_features": [
+        "PRIMARY_STRUCTURE is panicle"
+      ],
+      "contradictory_features": [
+        "leafy_vegetative_phyllody_transformation_rather_than_spore_balls",
+        "absence_of_sori_or_black_powdery_teliospores"
+      ],
+      "unknown_features": [],
+      "compatibility_score": 0.0
+    },
+    "rust": {
+      "supported_features": [],
+      "contradictory_features": [
+        "primary manifestation is a massive panicle phyllody transformation",
+        "absence of raised powdery uredinial pustules"
+      ],
+      "unknown_features": [],
+      "compatibility_score": 0.0
+    },
+    "leaf_spots": {
+      "supported_features": [],
+      "contradictory_features": [
+        "panicle leafy malformation rather than foliar necrotic spots"
+      ],
+      "unknown_features": [],
+      "compatibility_score": 0.0
+    }
+  },
+  "differential": {
+    "top_candidate": "downy_mildew_green_ear",
+    "runner_up": "",
+    "score_margin": 0.98
+  },
+  "ground_truth": "downy_mildew_green_ear",
+  "sample_observation": {
+    "primary_structure": "panicle",
+    "lesion_profile": "green_ear_phyllody"
+  },
+  "evidence": {
+    "present": [
+      "green ear phyllody",
+      "foliaceous leafy transformation of spikelets",
+      "bushy head architecture"
+    ],
+    "absent": [
+      "honeydew droplets",
+      "smut sori",
+      "leaf pustules"
+    ]
+  },
+  "evidence_quality": {
+    "clarity": "high"
+  }
+}

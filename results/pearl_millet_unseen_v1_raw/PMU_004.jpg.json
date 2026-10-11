@@ -1,0 +1,129 @@
+{
+  "experiment": {
+    "sample_id": "PMU_004.jpg",
+    "model": "qwen+qwen-27b",
+    "question_block": "v3"
+  },
+  "candidate_comparison": {
+    "blast": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.05
+    },
+    "downy_mildew_green_ear": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.95
+    },
+    "ergot": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.1
+    },
+    "smut": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.05
+    },
+    "rust": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.05
+    },
+    "leaf_spots": {
+      "supported_features": [],
+      "contradictory_features": [],
+      "unknown_features": [],
+      "compatibility_score": 0.05
+    }
+  },
+  "differential": {
+    "top_candidate": "Downy_Mildew_Green_Ear",
+    "runner_up": "Ergot",
+    "score_margin": 0.85
+  },
+  "diagnostic_bottleneck": "None; visual phenotype of 'green ear' is pathognomonic for Downy Mildew in Pearl Millet.",
+  "requires_second_stage_visual_comparison": false,
+  "final_decision": {
+    "diagnosis": "Downy_Mildew_Green_Ear",
+    "abstain": false,
+    "reason": "The observed transformation of the panicle into a leafy, vegetative structure (green ear) is the specific identity gate for Downy Mildew. This morphology explicitly contradicts the anti-features for Blast, Smut, and Leaf Spots, and lacks the sclerotium or honeydew characteristics of Ergot."
+  },
+  "ground_truth": "downy_mildew_green_ear",
+  "sample_observation": {
+    "plant_part": {
+      "primary": "panicle",
+      "secondary": "leaf_blade",
+      "status": "visible"
+    },
+    "symptom_class": {
+      "type": "structural_replacement",
+      "description": "Transformation of the panicle into a leafy, vegetative structure (green ear).",
+      "status": "visible"
+    },
+    "geometry": {
+      "shape": "irregular_bushy",
+      "description": "The affected panicle has lost its compact cylindrical form and expanded into a disorganized mass of narrow, leaf-like structures.",
+      "status": "visible"
+    },
+    "surface": {
+      "texture": "foliar",
+      "description": "The surface of the abnormal structure consists of numerous small, green, leaf-like appendages rather than grain-bearing florets.",
+      "status": "visible"
+    },
+    "texture": {
+      "description": "Vegetative and leafy.",
+      "status": "visible"
+    },
+    "color": {
+      "dominant": "green",
+      "secondary": "brownish_tan (on adjacent normal panicles)",
+      "status": "visible"
+    },
+    "distribution": {
+      "pattern": "localized",
+      "description": "The abnormality is confined to the terminal panicle of the affected plant.",
+      "status": "visible"
+    },
+    "spatial_location": {
+      "description": "Terminal position on the stem.",
+      "status": "visible"
+    },
+    "reproductive_structure": {
+      "status": "visible",
+      "description": "The panicle is transformed into a leafy/vegetative structure. Normal grains are absent from the affected head."
+    },
+    "developmental_stage": {
+      "description": "Reproductive stage (panicle emergence/flowering).",
+      "status": "visible"
+    }
+  },
+  "evidence": {
+    "present": [
+      "Panicle transformed into leafy/vegetative structure",
+      "Green ear morphology",
+      "Absence of normal grains on affected panicle",
+      "Narrow, leaf-like structures replacing florets"
+    ],
+    "absent": [
+      "Normal grain development on affected panicle",
+      "Raised pustules",
+      "Powdery material",
+      "Spindle/diamond lesions",
+      "Elongated sclerotial structures",
+      "Rounded smut/spore-ball structures"
+    ],
+    "uncertain": [
+      "Specific pathogen identity (visual phenotype only)"
+    ],
+    "not_visible": [
+      "Downy/velvety growth (underside of leaves or inside the green ear)"
+    ]
+  },
+  "evidence_quality": {}
+}

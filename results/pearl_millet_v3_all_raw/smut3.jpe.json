@@ -1,0 +1,195 @@
+{
+  "experiment": {
+    "sample_id": "smut3.jpe",
+    "model": "qwen+gpt-oss-120b",
+    "question_block": "v3"
+  },
+  "candidate_comparison": {
+    "blast": {
+      "supported_features": [
+        "dark_brown_to_black_color"
+      ],
+      "contradictory_features": [
+        "primary_location_is_panicle_not_leaf",
+        "swollen_structure_not_flat_lesion",
+        "no_spindle_or_diamond_shape",
+        "no_gray_center"
+      ],
+      "unknown_features": [
+        "lesion_progression"
+      ],
+      "compatibility_score": 0.1
+    },
+    "downy_mildew_green_ear": {
+      "supported_features": [
+        "reproductive_structure_compromised",
+        "loss_of_normal_grain_morphology"
+      ],
+      "contradictory_features": [
+        "no_green_ear_transformation",
+        "no_diffuse_chlorosis",
+        "structures_are_dark_not_green",
+        "no_malformed_leafy_panicle"
+      ],
+      "unknown_features": [
+        "systemic_context"
+      ],
+      "compatibility_score": 0.2
+    },
+    "ergot": {
+      "supported_features": [
+        "dark_color",
+        "hardened_tissue",
+        "floret_associated_location"
+      ],
+      "contradictory_features": [
+        "no_honeydew_visible",
+        "shape_is_swollen_irregular_not_elongated_sclerotium",
+        "no_viscous_texture"
+      ],
+      "unknown_features": [
+        "presence_of_membrane",
+        "internal_spore_mass"
+      ],
+      "compatibility_score": 0.4
+    },
+    "smut": {
+      "supported_features": [
+        "enlarged_swollen_structure",
+        "dark_brown_to_black_color",
+        "hardened_firm_consistency",
+        "loss_of_normal_grain_morphology",
+        "localized_floret_expansion",
+        "possible_membrane"
+      ],
+      "contradictory_features": [
+        "no_exposed_spore_mass_visible_yet",
+        "no_honeydew"
+      ],
+      "unknown_features": [
+        "internal_spore_mass",
+        "membrane_integrity"
+      ],
+      "compatibility_score": 0.9
+    },
+    "rust": {
+      "supported_features": [
+        "dark_color"
+      ],
+      "contradictory_features": [
+        "no_raised_powdery_pustules",
+        "primary_location_is_panicle_not_leaf",
+        "no_reddish_orange_color",
+        "no_powdery_texture"
+      ],
+      "unknown_features": [
+        "surface_elevation"
+      ],
+      "compatibility_score": 0.05
+    },
+    "leaf_spots": {
+      "supported_features": [
+        "dark_color"
+      ],
+      "contradictory_features": [
+        "primary_location_is_panicle_not_leaf",
+        "swollen_structure_not_flat_spot",
+        "no_discrete_flat_necrotic_pattern"
+      ],
+      "unknown_features": [
+        "spot_geometry"
+      ],
+      "compatibility_score": 0.05
+    }
+  },
+  "differential": {
+    "top_candidate": "smut",
+    "runner_up": "ergot",
+    "score_margin": 0.5
+  },
+  "diagnostic_bottleneck": "Distinguishing between Smut and Ergot based on shape (swollen/irregular vs elongated) and presence/absence of honeydew/membrane details which are partially uncertain in the observation.",
+  "requires_second_stage_visual_comparison": false,
+  "final_decision": {
+    "diagnosis": "Smut",
+    "abstain": false,
+    "reason": "The observed phenotype of dark, swollen, hardened structures replacing spikelets on the panicle strongly aligns with Smut characteristics (enlarged spore balls, dark color, loss of grain morphology). Ergot is a distant second but typically presents as elongated sclerotia and often has honeydew in early stages, which is absent here. The 'swollen' and 'irregular' shape favors Smut over the 'elongated' sclerotium of Ergot. Other candidates are ruled out due to location (leaf vs panicle) or specific morphology (flat lesions vs swollen structures)."
+  },
+  "ground_truth": "smut",
+  "sample_observation": {
+    "plant_part": {
+      "primary_structure": "panicle",
+      "secondary_structure": "spikelet",
+      "status": "reproductive"
+    },
+    "symptom_class": {
+      "type": "structural_replacement",
+      "description": "Individual spikelets appear transformed into dark, swollen, or hardened structures. There is a loss of normal grain morphology.",
+      "severity": "moderate_to_severe"
+    },
+    "geometry": {
+      "shape": "irregular",
+      "form": "swollen",
+      "orientation": "projecting_outward",
+      "size_relative_to_normal": "enlarged"
+    },
+    "surface": {
+      "texture": "smooth_to_glossy",
+      "features": [
+        "dark_pigmentation",
+        "possible_membrane"
+      ],
+      "exudate": "none_visible"
+    },
+    "texture": {
+      "tissue_state": "hardened",
+      "consistency": "firm"
+    },
+    "color": {
+      "dominant": "dark_brown_to_black",
+      "secondary": "green",
+      "contrast": "high"
+    },
+    "distribution": {
+      "pattern": "scattered",
+      "density": "intermediate",
+      "location": "along_panicle_axis"
+    },
+    "spatial_location": {
+      "region": "reproductive_head",
+      "specifics": "affecting_multiple_nodes"
+    },
+    "reproductive_structure": {
+      "integrity": "compromised",
+      "grain_development": "abnormal"
+    },
+    "developmental_stage": {
+      "stage": "maturity",
+      "notes": "structures appear fully formed"
+    }
+  },
+  "evidence": {
+    "present": [
+      "darkened_spikelets",
+      "swollen_grain_shapes",
+      "loss_of_normal_grain_color",
+      "elongated_or_irregular_grain_morphology"
+    ],
+    "absent": [
+      "leaf_lesions",
+      "powdery_mildew",
+      "rust_pustules",
+      "honeydew",
+      "green_ear_transformation"
+    ],
+    "uncertain": [
+      "presence_of_membrane",
+      "internal_spore_mass",
+      "specific_disease_agent"
+    ],
+    "not_visible": [
+      "leaf_blade_surface",
+      "stem_base",
+      "root_system"
+    ]
+  }
+}

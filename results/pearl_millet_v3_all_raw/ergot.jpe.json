@@ -1,0 +1,175 @@
+{
+  "experiment": {
+    "sample_id": "ergot.jpe",
+    "model": "qwen+gpt-oss-120b",
+    "question_block": "v3"
+  },
+  "candidate_comparison": {
+    "blast": {
+      "supported_features": [],
+      "contradictory_features": [
+        "symptom class leaf lesions not panicle",
+        "primary affected part leaf_blade not panicle",
+        "absence of necrotic leaf lesions"
+      ],
+      "unknown_features": [],
+      "compatibility_score": -0.25
+    },
+    "downy_mildew_green_ear": {
+      "supported_features": [],
+      "contradictory_features": [
+        "no green ear transformation",
+        "absence of leaf chlorosis",
+        "panicle not malformed leafy structure"
+      ],
+      "unknown_features": [],
+      "compatibility_score": -0.25
+    },
+    "ergot": {
+      "supported_features": [
+        "dark brown/black coloration of abnormal structures",
+        "hard, solid texture of structures",
+        "elongated structures projecting from florets",
+        "structures replace or occupy normal grain position",
+        "scattered distribution on panicle head",
+        "size 2-3x length of normal grains",
+        "presence on reproductive panicle tissue",
+        "absence of powdery spore masses consistent with later stage"
+      ],
+      "contradictory_features": [],
+      "unknown_features": [
+        "internal structure of dark bodies (sclerotium vs other)",
+        "whether membrane is intact or ruptured"
+      ],
+      "compatibility_score": 0.75
+    },
+    "smut": {
+      "supported_features": [
+        "dark coloration of abnormal structures",
+        "presence on panicle head",
+        "scattered distribution",
+        "size larger than normal grains"
+      ],
+      "contradictory_features": [
+        "elongated shape not rounded ball typical of smut",
+        "absence of membrane\u2011covered early structure",
+        "absence of exposed spore mass"
+      ],
+      "unknown_features": [
+        "internal structure of dark bodies",
+        "membrane status"
+      ],
+      "compatibility_score": 0.08
+    },
+    "rust": {
+      "supported_features": [],
+      "contradictory_features": [
+        "symptom class raised powdery pustules not observed",
+        "primary affected part leaf_blade not panicle",
+        "absence of powdery spore surface"
+      ],
+      "unknown_features": [],
+      "compatibility_score": -0.25
+    },
+    "leaf_spots": {
+      "supported_features": [],
+      "contradictory_features": [
+        "symptom class leaf spots not panicle",
+        "primary affected part leaf_blade not panicle",
+        "absence of leaf lesions"
+      ],
+      "unknown_features": [],
+      "compatibility_score": -0.25
+    }
+  },
+  "differential": {
+    "top_candidate": "ergot",
+    "runner_up": "smut",
+    "score_margin": 0.67
+  },
+  "diagnostic_bottleneck": "need confirmation of membrane status or honeydew to fully exclude smut",
+  "requires_second_stage_visual_comparison": false,
+  "final_decision": {
+    "diagnosis": "ergot",
+    "abstain": false,
+    "reason": "Observed dark elongated sclerotial structures replacing grains on the panicle match the hallmark features of Pearl Millet Ergot and are inconsistent with other candidate phenotypes."
+  },
+  "ground_truth": "ergot",
+  "sample_observation": {
+    "plant_part": {
+      "structure": "panicle",
+      "specifics": "Cylindrical panicle head with visible spikelets and grains",
+      "status": "reproductive"
+    },
+    "symptom_class": {
+      "type": "structural_replacement",
+      "description": "Discrete, dark, elongated structures replacing or emerging from individual florets/grains",
+      "pattern": "scattered"
+    },
+    "geometry": {
+      "shape": "elongated",
+      "orientation": "projecting outward from the panicle surface",
+      "size_relative": "Approximately 2-3x the length of adjacent normal grains",
+      "width_relative": "Similar width to adjacent normal grains"
+    },
+    "surface": {
+      "texture": "Smooth, hard, sclerotial appearance",
+      "features": "No visible powdery spores, no visible honeydew, no visible ruptured membranes"
+    },
+    "texture": {
+      "abnormal_structure": "Hard, solid, dark",
+      "normal_structure": "Smooth, pale, grain-like"
+    },
+    "color": {
+      "abnormal_structure": "Dark brown to black",
+      "normal_structure": "Pale cream to white",
+      "background": "Blurred beige/green"
+    },
+    "distribution": {
+      "pattern": "Scattered throughout the visible panicle section",
+      "density": "Moderate"
+    },
+    "spatial_location": {
+      "position": "On the surface of the panicle head",
+      "context": "Interspersed among normal developing grains"
+    },
+    "reproductive_structure": {
+      "status": "Affected",
+      "details": "Individual florets appear to be transformed into or occupied by the dark structures"
+    },
+    "developmental_stage": {
+      "stage": "Grain filling/maturity",
+      "details": "Grains are fully formed and visible"
+    }
+  },
+  "evidence": {
+    "present": [
+      "Elongated dark structures projecting from florets",
+      "Structures occupying the position of normal grains",
+      "Dark brown/black coloration of abnormal structures",
+      "Pale cream coloration of normal grains",
+      "Smooth surface on abnormal structures"
+    ],
+    "absent": [
+      "Powdery spore masses",
+      "Honeydew or sticky exudate",
+      "Green-ear transformation (panicle remains cylindrical)",
+      "Rounded/ball-like smut structures"
+    ],
+    "uncertain": [
+      "Internal structure of the dark bodies (sclerotium vs. other)",
+      "Whether the membrane is intact or ruptured (resolution limits)"
+    ],
+    "not_visible": [
+      "Leaves (for downy mildew check)",
+      "Whole plant context"
+    ]
+  },
+  "evidence_quality": {
+    "overall": "High - Clear macro view of the panicle head with distinct contrast between normal and abnormal structures",
+    "limiting_features": [
+      "Lack of leaf visibility prevents ruling out systemic issues like downy mildew based on vegetative symptoms",
+      "Resolution limits detailed inspection of the surface texture of the dark structures (e.g., checking for fine cracks or spore release)"
+    ]
+  }
+}

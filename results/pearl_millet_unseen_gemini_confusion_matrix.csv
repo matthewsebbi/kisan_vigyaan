@@ -1,0 +1,7 @@
+True_Label,blast,downy_mildew_green_ear,ergot,smut,rust,leaf_spots,abstain
+blast,3,0,0,0,0,0,0
+downy_mildew_green_ear,0,2,0,0,0,0,0
+ergot,0,0,3,0,0,0,0
+smut,0,0,0,2,0,0,0
+rust,0,0,0,0,2,0,0
+leaf_spots,0,0,0,0,0,1,0

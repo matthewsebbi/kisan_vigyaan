@@ -1,0 +1,77 @@
+{
+  "experiment": {
+    "sample_id": "PMU_006.jpg",
+    "model": "gemini-3.1-flash-lite",
+    "question_block": "v4"
+  },
+  "candidate_comparison": {
+    "blast": {
+      "supported_features": [],
+      "contradictory_features": [
+        "elongated_projecting_structure",
+        "transformed_panicle_architecture"
+      ],
+      "unknown_features": [],
+      "compatibility_score": 0.0
+    },
+    "downy_mildew_green_ear": {
+      "supported_features": [
+        "transformed_panicle_architecture"
+      ],
+      "contradictory_features": [
+        "elongated_projecting_structure_instead_of_leafy_transformation"
+      ],
+      "unknown_features": [],
+      "compatibility_score": 0.2
+    },
+    "ergot": {
+      "supported_features": [
+        "elongated_projecting_structure",
+        "floret_association",
+        "relative_grain_displacement"
+      ],
+      "contradictory_features": [
+        "absence_of_exudate"
+      ],
+      "unknown_features": [
+        "viscous_exudate"
+      ],
+      "compatibility_score": 0.75
+    },
+    "smut": {
+      "supported_features": [],
+      "contradictory_features": [
+        "elongated_projecting_structure_without_ball_like_expansion",
+        "absence_of_membrane"
+      ],
+      "unknown_features": [
+        "membrane"
+      ],
+      "compatibility_score": 0.1
+    },
+    "rust": {
+      "supported_features": [],
+      "contradictory_features": [
+        "elongated_projecting_structure"
+      ],
+      "unknown_features": [],
+      "compatibility_score": 0.0
+    },
+    "leaf_spots": {
+      "supported_features": [],
+      "contradictory_features": [
+        "elongated_projecting_structure"
+      ],
+      "unknown_features": [],
+      "compatibility_score": 0.0
+    }
+  },
+  "differential": {
+    "top_candidate": "ergot",
+    "runner_up": "downy_mildew_green_ear",
+    "score_margin": 0.55
+  },
+  "ground_truth": "ergot",
+  "sample_observation": {},
+  "evidence": {}
+}

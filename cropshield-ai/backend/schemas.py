@@ -88,6 +88,8 @@ class EnvironmentalContext(BaseModel):
 
 class PhenotypeExtraction(BaseModel):
     """Fine-grained botanical phenotype extracted from plant imagery."""
+    model_config = {"extra": "allow"}
+    
     is_plant: bool = Field(True, description="Whether image is a verified plant/leaf specimen")
     non_plant_reason: Optional[str] = Field(None, description="Reason if non-plant object/person detected")
     is_healthy: bool = Field(False, description="Whether leaf is healthy with no disease symptoms")

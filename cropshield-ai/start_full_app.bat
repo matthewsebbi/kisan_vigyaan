@@ -4,9 +4,9 @@ echo ======================================================================
 echo   KISAN VIGYAAN: Backend (FastAPI + Qwen3.8-27B) + Frontend (Web UI)
 echo ======================================================================
 echo.
-set VISION_PROVIDER=groq
-echo [1/3] Launching Backend Server on port 8000 (Groq Primary)...
-start "KISAN VIGYAAN Backend (Port 8000)" cmd /k "cd /d %~dp0 && set VISION_PROVIDER=groq && python -m backend.main"
+set VISION_PROVIDER=gemini
+echo [1/3] Launching Backend Server on port 8000 (Gemini Primary)...
+start "KISAN VIGYAAN Backend (Port 8000)" cmd /k "cd /d %~dp0 && set VISION_PROVIDER=gemini && python -m backend.main"
 
 echo [2/4] Building production UI bundle...
 call npm run build
